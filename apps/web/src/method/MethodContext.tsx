@@ -13,10 +13,8 @@ const STORAGE_KEY = 'hijri.methodId';
 
 function readInitial(): CalculationMethodId {
   const raw = localStorage.getItem(STORAGE_KEY);
-  if (raw === 'civil' || raw === 'estimate' || raw === 'yallop' || raw === 'odeh') {
-    const m = METHODS.find((x) => x.id === raw);
-    if (m?.enabled) return raw;
-  }
+  const match = METHODS.find((x) => x.id === raw && x.enabled);
+  if (match) return match.id;
   return 'estimate';
 }
 

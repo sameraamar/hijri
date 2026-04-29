@@ -1,11 +1,14 @@
 import { NavLink, Navigate, Route, Routes } from 'react-router-dom';
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import i18n, { isRtlLanguage, type SupportedLanguage } from './i18n/i18n';
 import { useMethod } from './method/MethodContext';
 import { METHODS } from './method/types';
 import type { CalculationMethodId } from './method/types';
+import ThemeToggle from './components/ThemeToggle';
+import PageSkeleton from './components/PageSkeleton';
+import NavMore, { type NavItem } from './components/NavMore';
 
 const CalendarPage = lazy(() => import('./pages/CalendarPage'));
 const ConvertPage = lazy(() => import('./pages/ConvertPage'));
@@ -15,14 +18,10 @@ const MethodsPage = lazy(() => import('./pages/MethodsPage'));
 const HistoryPage = lazy(() => import('./pages/HistoryPage'));
 const ScholarsPage = lazy(() => import('./pages/ScholarsPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
+const TodayPage = lazy(() => import('./pages/TodayPage'));
 
 function isCalculationMethodId(value: string): value is CalculationMethodId {
-  return value === 'civil' || value === 'estimate' || value === 'yallop' || value === 'odeh';
-}
-
-function setDocumentLanguage(lang: SupportedLanguage) {
-  document.documentElement.lang = lang;
-  document.documentElement.dir = isRtlLanguage(lang) ? 'rtl' : 'ltr';
+  return METHODS.some((m) => m.id === value);
 }
 
 export default function App() {
@@ -30,14 +29,18 @@ export default function App() {
   const { methodId, setMethodId } = useMethod();
 
   const lang = (i18n.language || 'en') as SupportedLanguage;
-  setDocumentLanguage(lang);
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = isRtlLanguage(lang) ? 'rtl' : 'ltr';
+  }, [lang]);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
-      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100">
+      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:border-slate-700 dark:bg-slate-900/95 dark:supports-[backdrop-filter]:bg-slate-900/80">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
           <div className="flex items-center gap-4">
-            <NavLink to="/holidays" className="flex items-center gap-2 text-lg font-bold tracking-tight text-slate-900 hover:opacity-80 transition-opacity">
+            <NavLink to="/calendar" className="flex items-center gap-2 text-lg font-bold tracking-tight text-slate-900 hover:opacity-80 transition-opacity dark:text-slate-100">
               <svg className="h-6 w-6 flex-shrink-0" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <rect width="32" height="32" rx="6" fill="#0f172a"/>
                 <circle cx="15" cy="16" r="10" fill="#fbbf24"/>
@@ -47,42 +50,48 @@ export default function App() {
               {t('app.title')}
             </NavLink>
             <nav className="hidden items-center gap-1 md:flex">
-              {[
+              {([
+                { to: '/today', label: t('app.nav.today') },
                 { to: '/calendar', label: t('app.nav.calendar') },
                 { to: '/holidays', label: t('app.nav.holidays') },
                 { to: '/convert', label: t('app.nav.convert') },
-                { to: '/details', label: t('app.nav.details') },
-                { to: '/history', label: t('app.nav.history') },
                 { to: '/methods', label: t('app.nav.methods') },
-                { to: '/scholars', label: t('app.nav.scholars') },
-                { to: '/about', label: t('app.nav.about') },
-              ].map((item) => (
+              ] as NavItem[]).map((item) => (
                 <NavLink
                   key={item.to}
                   to={item.to}
                   className={({ isActive }: { isActive: boolean }) =>
                     `rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
                       isActive
-                        ? 'bg-slate-900 text-white shadow-sm'
-                        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                        ? 'bg-slate-900 text-white shadow-sm dark:bg-slate-100 dark:text-slate-900'
+                        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100'
                     }`
                   }
                 >
                   {item.label}
                 </NavLink>
               ))}
+              <NavMore
+                items={[
+                  { to: '/details', label: t('app.nav.details') },
+                  { to: '/history', label: t('app.nav.history') },
+                  { to: '/scholars', label: t('app.nav.scholars') },
+                  { to: '/about', label: t('app.nav.about') },
+                ]}
+              />
             </nav>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 md:border-s md:border-slate-200 md:ps-3 md:dark:border-slate-700">
             <select
-              className="control-sm flex-1 sm:w-56 sm:flex-none"
+              className="control-sm flex-1 sm:w-44 sm:flex-none"
               value={methodId}
               onChange={(e) => {
                 const v = e.target.value;
                 if (isCalculationMethodId(v)) setMethodId(v);
               }}
               aria-label={t('app.method.label')}
+              title={t('app.method.label')}
             >
               {METHODS.map((m) => (
                 <option key={m.id} value={m.id} disabled={!m.enabled}>
@@ -91,19 +100,22 @@ export default function App() {
               ))}
             </select>
             <select
-              className="control-sm w-auto cursor-pointer text-sm"
+              className="control-sm w-auto cursor-pointer text-xs uppercase tracking-wider"
               value={lang}
               onChange={(e) => i18n.changeLanguage(e.target.value)}
               aria-label="Language"
+              title="Language"
             >
-              <option value="en">English</option>
-              <option value="ar">عربي</option>
+              <option value="en">EN</option>
+              <option value="ar">AR</option>
             </select>
+            <ThemeToggle />
           </div>
         </div>
 
         <nav className="mx-auto flex max-w-6xl items-center gap-1 overflow-x-auto px-4 pb-2 md:hidden">
           {[
+            { to: '/today', label: t('app.nav.today') },
             { to: '/calendar', label: t('app.nav.calendar') },
             { to: '/holidays', label: t('app.nav.holidays') },
             { to: '/convert', label: t('app.nav.convert') },
@@ -119,8 +131,8 @@ export default function App() {
               className={({ isActive }: { isActive: boolean }) =>
                 `flex-shrink-0 rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
                   isActive
-                    ? 'bg-slate-900 text-white shadow-sm'
-                    : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200'
+                    ? 'bg-slate-900 text-white shadow-sm dark:bg-slate-100 dark:text-slate-900'
+                    : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100 dark:active:bg-slate-700'
                 }`
               }
             >
@@ -131,9 +143,10 @@ export default function App() {
       </header>
 
       <main className="mx-auto max-w-6xl px-3 py-4 sm:px-4 sm:py-8">
-        <Suspense fallback={<div className="py-12 text-center text-sm text-slate-400">Loading…</div>}>
+        <Suspense fallback={<PageSkeleton />}>
           <Routes>
-            <Route path="/" element={<Navigate to="/holidays" replace />} />
+            <Route path="/" element={<Navigate to="/today" replace />} />
+            <Route path="/today" element={<TodayPage />} />
             <Route path="/calendar" element={<CalendarPage />} />
             <Route path="/convert" element={<ConvertPage />} />
             <Route path="/details" element={<DetailsPage />} />
@@ -146,8 +159,8 @@ export default function App() {
         </Suspense>
       </main>
 
-      <footer className="border-t border-slate-200 bg-white">
-        <div className="mx-auto max-w-6xl px-4 py-6 text-center text-xs text-slate-500 space-y-3">
+      <footer className="border-t border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+        <div className="mx-auto max-w-6xl px-4 py-6 text-center text-xs text-slate-500 space-y-3 dark:text-slate-400">
           <p className="max-w-2xl mx-auto leading-relaxed">{t('app.footer.disclaimer')}</p>
 
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-500">

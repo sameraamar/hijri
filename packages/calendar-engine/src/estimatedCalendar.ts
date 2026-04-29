@@ -4,6 +4,8 @@ import { gregorianToHijriCivil } from './civil.js';
 import {
   estimateMonthStartLikelihoodAtSunset,
   meetsCrescentVisibilityCriteriaAtSunset,
+  meetsMabimsCriteriaAtSunset,
+  MABIMS_CRITERIA,
   type CrescentVisibilityCriteria
 } from './monthStartEstimate.js';
 import { yallopMonthStartEstimate, meetsYallopCriteriaAtSunset } from './yallop.js';
@@ -59,7 +61,7 @@ export type EstimatedCalendarOptions = {
    * Which rule to use when deciding whether the crescent conditions on evening D
    * imply that D+1 becomes Hijri day 1.
    */
-  monthStartRule?: 'geometric' | 'score-threshold' | 'yallop' | 'odeh';
+  monthStartRule?: 'geometric' | 'score-threshold' | 'yallop' | 'odeh' | 'mabims';
 
   /**
    * Criteria for the "geometric" rule.
@@ -92,6 +94,38 @@ function meetsScoreThresholdAtSunset(est: ReturnType<typeof estimateMonthStartLi
   return moonVisibleAtSunset && typeof score === 'number' && score >= threshold;
 }
 
+// Module-level LRU cache for buildEstimatedHijriCalendarRange.
+// Astronomy calls dominate runtime; UI pages frequently rebuild overlapping ranges
+// (per-render useMemo, multiple pages mounting on route change, etc.).
+const ESTIMATE_CACHE_MAX = 50;
+const estimateCache = new Map<string, EstimatedHijriDay[]>();
+
+function dateKey(d: GregorianDate): string {
+  return `${d.year}-${d.month}-${d.day}`;
+}
+
+function cacheKey(
+  start: GregorianDate,
+  end: GregorianDate,
+  location: { latitude: number; longitude: number },
+  options: EstimatedCalendarOptions
+): string {
+  // Round coordinates to 4 decimal places (~11m). Tighter precision rarely changes
+  // the calendar but ensures cache hits survive trivial picker jitter.
+  const lat = location.latitude.toFixed(4);
+  const lon = location.longitude.toFixed(4);
+  const rule = options.monthStartRule ?? 'geometric';
+  const minEnd = options.minEndOfMonthDay ?? 29;
+  const threshold = options.visibilityScoreThreshold ?? 0.4;
+  const geom = JSON.stringify(options.geometricCriteria ?? {});
+  return `${dateKey(start)}|${dateKey(end)}|${lat}|${lon}|${rule}|${minEnd}|${threshold}|${geom}`;
+}
+
+/** Test-only hook — clears the LRU cache so unit tests are deterministic. */
+export function clearEstimatedCalendarCache(): void {
+  estimateCache.clear();
+}
+
 /**
  * Builds an *estimated* Hijri calendar for a Gregorian date range.
  *
@@ -102,6 +136,8 @@ function meetsScoreThresholdAtSunset(est: ReturnType<typeof estimateMonthStartLi
  * Notes:
  * - This is an informational estimate driven by the evening heuristic.
  * - We cap month lengths to 29/30 by only allowing a month to end on day 29 or 30.
+ * - Results are cached at module level (LRU). Identical inputs return the same array
+ *   reference; do not mutate the returned array.
  */
 export function buildEstimatedHijriCalendarRange(
   start: GregorianDate,
@@ -109,6 +145,15 @@ export function buildEstimatedHijriCalendarRange(
   location: { latitude: number; longitude: number },
   options: EstimatedCalendarOptions = {}
 ): EstimatedHijriDay[] {
+  const key = cacheKey(start, end, location, options);
+  const hit = estimateCache.get(key);
+  if (hit) {
+    // LRU touch: move to most-recent.
+    estimateCache.delete(key);
+    estimateCache.set(key, hit);
+    return hit;
+  }
+
   const minEndOfMonthDay = options.minEndOfMonthDay ?? 29;
   const monthStartRule = options.monthStartRule ?? 'geometric';
   const visibilityScoreThreshold = options.visibilityScoreThreshold ?? 0.4;
@@ -141,9 +186,11 @@ export function buildEstimatedHijriCalendarRange(
         ? meetsYallopCriteriaAtSunset(est)
         : monthStartRule === 'odeh'
           ? meetsOdehCriteriaAtSunset(est)
-          : monthStartRule === 'score-threshold'
-            ? meetsScoreThresholdAtSunset(est, visibilityScoreThreshold)
-            : meetsCrescentVisibilityCriteriaAtSunset(est, geometricCriteria);
+          : monthStartRule === 'mabims'
+            ? meetsMabimsCriteriaAtSunset(est)
+            : monthStartRule === 'score-threshold'
+              ? meetsScoreThresholdAtSunset(est, visibilityScoreThreshold)
+              : meetsCrescentVisibilityCriteriaAtSunset(est, geometricCriteria);
 
     const monthStartTomorrow =
       (canEndThisMonth && astronomySaysMonthStartTomorrow) ||
@@ -154,6 +201,12 @@ export function buildEstimatedHijriCalendarRange(
     g = addDaysUtc(g, 1);
   }
 
+  // LRU eviction: drop oldest if over capacity.
+  if (estimateCache.size >= ESTIMATE_CACHE_MAX) {
+    const oldest = estimateCache.keys().next().value;
+    if (oldest !== undefined) estimateCache.delete(oldest);
+  }
+  estimateCache.set(key, days);
   return days;
 }
 

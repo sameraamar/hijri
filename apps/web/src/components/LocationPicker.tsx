@@ -132,9 +132,17 @@ export default function LocationPicker() {
             onClick={useMyLocation}
             disabled={isLocating}
             aria-label={t('location.useMyLocation')}
+            aria-busy={isLocating}
             title={t('location.useMyLocation')}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 sm:mr-1"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm-8.95 3a8.96 8.96 0 017.95-7.95V1h2v2.05A8.96 8.96 0 0120.95 11H23v2h-2.05A8.96 8.96 0 0113 20.95V23h-2v-2.05A8.96 8.96 0 013.05 13H1v-2h2.05zM12 18a6 6 0 100-12 6 6 0 000 12z"/></svg>
+            {isLocating ? (
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" className="w-4 h-4 sm:mr-1 animate-spin" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeOpacity="0.25"/>
+                <path d="M22 12a10 10 0 0 0-10-10" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 sm:mr-1"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm-8.95 3a8.96 8.96 0 017.95-7.95V1h2v2.05A8.96 8.96 0 0120.95 11H23v2h-2.05A8.96 8.96 0 0113 20.95V23h-2v-2.05A8.96 8.96 0 013.05 13H1v-2h2.05zM12 18a6 6 0 100-12 6 6 0 000 12z"/></svg>
+            )}
             <span className="hidden sm:inline">{t('location.useMyLocation')}</span>
           </button>
         </div>

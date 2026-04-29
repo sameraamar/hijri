@@ -7,6 +7,7 @@ import App from './App.tsx';
 import { initI18n } from './i18n/i18n';
 import { LocationProvider } from './location/LocationContext';
 import { MethodProvider } from './method/MethodContext';
+import { ThemeProvider } from './theme/ThemeContext';
 
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -26,15 +27,17 @@ initI18n('en');
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <LocationProvider>
-      <MethodProvider>
-        <BrowserRouter
-          basename={import.meta.env.BASE_URL}
-          future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-        >
-          <App />
-        </BrowserRouter>
-      </MethodProvider>
-    </LocationProvider>
+    <ThemeProvider>
+      <LocationProvider>
+        <MethodProvider>
+          <BrowserRouter
+            basename={import.meta.env.BASE_URL}
+            future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+          >
+            <App />
+          </BrowserRouter>
+        </MethodProvider>
+      </LocationProvider>
+    </ThemeProvider>
   </StrictMode>
 );

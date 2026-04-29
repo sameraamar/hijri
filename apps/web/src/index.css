@@ -14,14 +14,15 @@ body {
 @layer base {
   body {
     @apply bg-slate-50 text-slate-900 antialiased;
+    @apply dark:bg-slate-900 dark:text-slate-100;
   }
 
   a {
-    @apply text-slate-900;
+    @apply text-slate-900 dark:text-slate-100;
   }
 
   :focus-visible {
-    @apply outline-none ring-2 ring-slate-300;
+    @apply outline-none ring-2 ring-slate-300 dark:ring-slate-500;
   }
 }
 
@@ -36,36 +37,42 @@ body {
 
   .card {
     @apply overflow-hidden rounded-lg border border-slate-200 bg-white;
+    @apply dark:border-slate-700 dark:bg-slate-800;
   }
 
   .card-header {
     @apply flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-slate-50 px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3;
+    @apply dark:border-slate-700 dark:bg-slate-900/40;
   }
 
   .card-title {
-    @apply text-sm font-semibold text-slate-900;
+    @apply text-sm font-semibold text-slate-900 dark:text-slate-100;
   }
 
   .control {
     @apply w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400;
+    @apply dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500;
   }
 
   .control-sm {
     @apply w-full rounded-md border border-slate-200 bg-white px-2 py-1.5 text-sm text-slate-900;
+    @apply dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100;
   }
 
   .btn {
     @apply inline-flex items-center justify-center rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-900 hover:bg-slate-50 active:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-60;
+    @apply dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700 dark:active:bg-slate-700;
     /* Ensure minimum 44px tap target on touch devices */
     min-height: 44px;
   }
 
   .btn-sm {
     @apply inline-flex items-center justify-center rounded-md border border-slate-200 bg-white px-2 py-1.5 text-sm font-medium text-slate-900 hover:bg-slate-50 active:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-60;
+    @apply dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700 dark:active:bg-slate-700;
     min-height: 36px;
   }
 
   .muted {
-    @apply text-sm text-slate-600;
+    @apply text-sm text-slate-600 dark:text-slate-300;
   }
 }

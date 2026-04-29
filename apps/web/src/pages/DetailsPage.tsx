@@ -13,8 +13,10 @@ import LocationPicker from '../components/LocationPicker';
 import MoonPhaseIcon from '../components/MoonPhaseIcon';
 import HorizonDiagram from '../components/HorizonDiagram';
 import CrescentScoreBar from '../components/CrescentScoreBar';
+import { likelihoodStyle, type VisibilityStatusKey } from '../components/likelihood';
 import { useAppLocation } from '../location/LocationContext';
 import { useMethod } from '../method/MethodContext';
+import { isAstronomicalMethod, methodIdToRule } from '../method/types';
 import { getTimeZoneForLocation } from '../timezone';
 import { formatHijriDateDisplay, formatLocalizedNumber, formatIsoDateDisplay } from '../utils/dateFormat';
 import { usePageMeta } from '../hooks/usePageMeta';
@@ -30,17 +32,6 @@ function pad2(n: number): string {
 
 function isoDate(y: number, m: number, d: number): string {
   return `${y}-${pad2(m)}-${pad2(d)}`;
-}
-
-type VisibilityStatusKey = 'noChance' | 'veryLow' | 'low' | 'medium' | 'high' | 'unknown';
-
-function likelihoodStyle(likelihood: string): { badgeClass: string; dotClass: string } {
-  if (likelihood === 'noChance') return { badgeClass: 'bg-slate-100 text-slate-800 ring-1 ring-slate-200', dotClass: 'bg-slate-500' };
-  if (likelihood === 'veryLow') return { badgeClass: 'bg-rose-50 text-rose-700 ring-1 ring-rose-100', dotClass: 'bg-rose-400' };
-  if (likelihood === 'high') return { badgeClass: 'bg-emerald-50 text-emerald-800 ring-1 ring-emerald-200', dotClass: 'bg-emerald-500' };
-  if (likelihood === 'medium') return { badgeClass: 'bg-amber-50 text-amber-800 ring-1 ring-amber-200', dotClass: 'bg-amber-500' };
-  if (likelihood === 'low') return { badgeClass: 'bg-rose-50 text-rose-800 ring-1 ring-rose-200', dotClass: 'bg-rose-500' };
-  return { badgeClass: 'bg-slate-50 text-slate-700 ring-1 ring-slate-200', dotClass: 'bg-slate-400' };
 }
 
 type DetailRow = {
@@ -148,7 +139,7 @@ export default function DetailsPage() {
 
     // Build estimated Hijri mapping
     const estimatedByIso = new Map<string, { year: number; month: number; day: number }>();
-    if (methodId === 'estimate' || methodId === 'yallop' || methodId === 'odeh') {
+    if (isAstronomicalMethod(methodId)) {
       const startDate = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0));
       startDate.setUTCDate(startDate.getUTCDate() - 90);
       const endDate = new Date(Date.UTC(year, month - 1, dim, 0, 0, 0));
@@ -158,7 +149,7 @@ export default function DetailsPage() {
       const calendar = buildEstimatedHijriCalendarRange(
         start, end,
         { latitude: location.latitude, longitude: location.longitude },
-        { monthStartRule: methodId === 'yallop' ? 'yallop' : methodId === 'odeh' ? 'odeh' : 'geometric' }
+        { monthStartRule: methodIdToRule(methodId) }
       );
       for (const item of calendar) {
         estimatedByIso.set(isoDate(item.gregorian.year, item.gregorian.month, item.gregorian.day), item.hijri);
@@ -184,7 +175,7 @@ export default function DetailsPage() {
     const getHijriForDay = (d: number) => {
       const iso = isoDate(year, month, d);
       if (methodId === 'civil') return gregorianToHijriCivil({ year, month, day: d });
-      if (methodId === 'estimate' || methodId === 'yallop' || methodId === 'odeh') return estimatedByIso.get(iso) ?? null;
+      if (isAstronomicalMethod(methodId)) return estimatedByIso.get(iso) ?? null;
       return null;
     };
 
@@ -197,7 +188,7 @@ export default function DetailsPage() {
       nextDate.setDate(nextDate.getDate() + 1);
       const nextHijri = methodId === 'civil'
         ? gregorianToHijriCivil({ year: nextDate.getFullYear(), month: nextDate.getMonth() + 1, day: nextDate.getDate() })
-        : (methodId === 'estimate' || methodId === 'yallop' || methodId === 'odeh')
+        : isAstronomicalMethod(methodId)
           ? (estimatedByIso.get(isoDate(nextDate.getFullYear(), nextDate.getMonth() + 1, nextDate.getDate())) ?? null)
           : null;
       if (nextHijri?.day === 1) monthStartCandidatesIso.add(isoDate(nextDate.getFullYear(), nextDate.getMonth() + 1, nextDate.getDate()));

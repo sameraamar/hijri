@@ -16,8 +16,10 @@ import LocationPicker from '../components/LocationPicker';
 import MoonPhaseIcon from '../components/MoonPhaseIcon';
 import HorizonDiagram from '../components/HorizonDiagram';
 import CrescentScoreBar from '../components/CrescentScoreBar';
+import { likelihoodStyle, VISIBILITY_LEGEND_ORDER, type VisibilityStatusKey } from '../components/likelihood';
 import { useAppLocation } from '../location/LocationContext';
 import { useMethod } from '../method/MethodContext';
+import { isAstronomicalMethod, methodIdToRule } from '../method/types';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { useUrlNumber } from '../hooks/useUrlNumber';
 import { getTimeZoneForLocation } from '../timezone';
@@ -82,36 +84,12 @@ function clamp0to100(n: number): number {
   return Math.max(0, Math.min(100, Math.round(n)));
 }
 
-type VisibilityStatusKey = 'noChance' | 'veryLow' | 'low' | 'medium' | 'high' | 'unknown';
-
 function visibilityStatusFromEstimate(
   est: ReturnType<typeof estimateMonthStartLikelihoodAtSunset> | undefined
 ): VisibilityStatusKey {
   const status = getMonthStartSignalLevel(est);
   return status === 'unknown' ? 'unknown' : status;
 }
-
-function likelihoodStyle(likelihood: string): { badgeClass: string; dotClass: string; scoreClass: string } {
-  // Keep this compact and consistent across calendar + details.
-  // Uses Tailwind's built-in semantic colors (no custom hex).
-  if (likelihood === 'noChance') {
-    return { badgeClass: 'bg-slate-100 text-slate-800 ring-1 ring-slate-200', dotClass: 'bg-slate-500', scoreClass: 'bg-slate-200/80 text-slate-700' };
-  }
-  if (likelihood === 'veryLow') {
-    return { badgeClass: 'bg-rose-50 text-rose-700 ring-1 ring-rose-100', dotClass: 'bg-rose-400', scoreClass: 'bg-rose-100/80 text-rose-700' };
-  }
-  if (likelihood === 'high') {
-    return { badgeClass: 'bg-emerald-50 text-emerald-800 ring-1 ring-emerald-200', dotClass: 'bg-emerald-500', scoreClass: 'bg-emerald-100/80 text-emerald-800' };
-  }
-  if (likelihood === 'medium') {
-    return { badgeClass: 'bg-amber-50 text-amber-800 ring-1 ring-amber-200', dotClass: 'bg-amber-500', scoreClass: 'bg-amber-100/80 text-amber-800' };
-  }
-  if (likelihood === 'low') {
-    return { badgeClass: 'bg-rose-50 text-rose-800 ring-1 ring-rose-200', dotClass: 'bg-rose-500', scoreClass: 'bg-rose-100/80 text-rose-800' };
-  }
-  return { badgeClass: 'bg-slate-50 text-slate-700 ring-1 ring-slate-200', dotClass: 'bg-slate-400', scoreClass: 'bg-slate-200/80 text-slate-700' };
-}
-
 
 function MetricRow({ label, value }: { label: string; value: string }) {
   return (
@@ -135,17 +113,20 @@ export default function CalendarPage() {
   // Close expanded popup when month/year changes
   useEffect(() => { setExpandedDay(null); }, [month, year]);
 
-  // Close expanded popup on outside click
+  // Close expanded popup on outside click. Scoped to mousedown (not capture-phase click)
+  // so interactions with sibling components (e.g. LocationPicker map below) don't dismiss
+  // the popover unexpectedly.
   const calendarRef = useRef<HTMLElement>(null);
   useEffect(() => {
+    if (expandedDay === null) return;
     const handler = (e: MouseEvent) => {
-      if (calendarRef.current && !calendarRef.current.contains(e.target as Node)) {
-        setExpandedDay(null);
-      }
+      const root = calendarRef.current;
+      if (!root) return;
+      if (!root.contains(e.target as Node)) setExpandedDay(null);
     };
-    document.addEventListener('click', handler, true);
-    return () => document.removeEventListener('click', handler, true);
-  }, []);
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [expandedDay]);
 
   const today = new Date();
   const todayY = today.getFullYear();
@@ -209,12 +190,13 @@ export default function CalendarPage() {
   const monthData = useMemo(() => {
     const days: CalendarDay[] = [];
     const dim = daysInGregorianMonth(year, month);
-    const offset = new Date(year, month - 1, 1).getDay();
+    // UTC-anchored offset to stay consistent with the rest of the file's UTC arithmetic.
+    const offset = new Date(Date.UTC(year, month - 1, 1)).getUTCDay();
 
     // Build estimate-mode Hijri mapping with some "warm-up" days before the month,
     // otherwise starting mid-stream can seed the estimated calendar incorrectly.
     const estimatedByIso = new Map<string, { year: number; month: number; day: number }>();
-    if (methodId === 'estimate' || methodId === 'yallop' || methodId === 'odeh') {
+    if (isAstronomicalMethod(methodId)) {
       const startDate = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0));
       startDate.setUTCDate(startDate.getUTCDate() - 90);
       const endDate = new Date(Date.UTC(year, month - 1, dim, 0, 0, 0));
@@ -227,11 +209,7 @@ export default function CalendarPage() {
         start,
         end,
         { latitude: location.latitude, longitude: location.longitude },
-        methodId === 'yallop'
-          ? { monthStartRule: 'yallop' }
-          : methodId === 'odeh'
-            ? { monthStartRule: 'odeh' }
-            : { monthStartRule: 'geometric' }
+        { monthStartRule: methodIdToRule(methodId) }
       );
 
       for (const item of calendar) {
@@ -266,7 +244,7 @@ export default function CalendarPage() {
     const getHijriForDay = (d: number) => {
       const iso = isoDate(year, month, d);
       if (methodId === 'civil') return gregorianToHijriCivil({ year, month, day: d });
-      if (methodId === 'estimate' || methodId === 'yallop' || methodId === 'odeh') return estimatedByIso.get(iso) ?? null;
+      if (isAstronomicalMethod(methodId)) return estimatedByIso.get(iso) ?? null;
       return null;
     };
 
@@ -371,7 +349,7 @@ export default function CalendarPage() {
               month: nextDate.getMonth() + 1,
               day: nextDate.getDate()
             })
-          : (methodId === 'estimate' || methodId === 'yallop' || methodId === 'odeh')
+          : isAstronomicalMethod(methodId)
             ? (estimatedByIso.get(isoDate(nextDate.getFullYear(), nextDate.getMonth() + 1, nextDate.getDate())) ?? null)
             : null;
 
@@ -648,10 +626,14 @@ export default function CalendarPage() {
               return (
                 <div
                   key={d.day}
+                  data-day={d.day}
+                  role="gridcell"
+                  aria-label={`${d.day} — ${hijriDisplay}`}
                   className={
                     `group relative ${bg} p-1 text-start transition-colors sm:p-2.5 ` +
+                    `dark:bg-slate-800 ${d.isHijriMonthStart ? 'dark:bg-slate-700/40' : ''} ` +
                     `${d.isToday ? 'ring-2 ring-blue-400' : ''} ` +
-                    `${expandedDay === d.day ? 'bg-blue-50' : 'hover:bg-slate-50'} ` +
+                    `${expandedDay === d.day ? 'bg-blue-50 dark:bg-slate-700' : 'hover:bg-slate-50 dark:hover:bg-slate-700/60'} ` +
                     'cursor-pointer'
                   }
                   tabIndex={0}
@@ -659,9 +641,36 @@ export default function CalendarPage() {
                     setExpandedDay(expandedDay === d.day ? null : d.day);
                   }}
                   onKeyDown={(e) => {
+                    const focusDay = (target: number) => {
+                      if (target < 1 || target > monthData.days.length) return;
+                      const next = e.currentTarget.parentElement?.querySelector<HTMLDivElement>(
+                        `[data-day="${target}"]`
+                      );
+                      if (next) {
+                        e.preventDefault();
+                        next.focus();
+                      }
+                    };
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       setExpandedDay(expandedDay === d.day ? null : d.day);
+                    } else if (e.key === 'Escape') {
+                      if (expandedDay !== null) {
+                        e.preventDefault();
+                        setExpandedDay(null);
+                      }
+                    } else if (e.key === 'ArrowRight') {
+                      focusDay(d.day + 1);
+                    } else if (e.key === 'ArrowLeft') {
+                      focusDay(d.day - 1);
+                    } else if (e.key === 'ArrowDown') {
+                      focusDay(d.day + 7);
+                    } else if (e.key === 'ArrowUp') {
+                      focusDay(d.day - 7);
+                    } else if (e.key === 'Home') {
+                      focusDay(1);
+                    } else if (e.key === 'End') {
+                      focusDay(monthData.days.length);
                     }
                   }}
                 >
@@ -1005,25 +1014,37 @@ export default function CalendarPage() {
         {t('app.method.label')}: {t(`app.method.${methodId}`)}
       </div>
 
-      {methodId === 'civil' || methodId === 'estimate' || methodId === 'yallop' || methodId === 'odeh' ? (
+      {methodId ? (
         <div className="space-y-2 text-xs text-slate-600">
           <div>{t('probability.disclaimer')}</div>
 
           <div className="card p-3">
-            <div className="text-xs font-semibold text-slate-900">{t('probability.legendTitle')}</div>
+            <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">{t('probability.legendTitle')}</div>
             <div className="mt-2 space-y-2 leading-relaxed">
-              {(['noChance', 'veryLow', 'low', 'medium', 'high'] as VisibilityStatusKey[]).map((k) => {
+              {VISIBILITY_LEGEND_ORDER.map((k) => {
                 const style = likelihoodStyle(k);
                 return (
                   <div key={k} className="flex flex-wrap items-start gap-2">
                     <span className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-medium ${style.badgeClass}`}>
-                      <span className={`h-1.5 w-1.5 rounded-full ${style.dotClass}`} />
+                      <span
+                        className={`inline-flex h-3.5 w-3.5 items-center justify-center rounded-full text-[9px] font-bold leading-none text-white ${style.dotClass}`}
+                        aria-hidden="true"
+                      >
+                        {style.glyph}
+                      </span>
                       {t(`probability.${k}`)}
                     </span>
-                    <span className="text-slate-600">{t(`probability.${k}Desc`)}</span>
+                    <span className="text-slate-600 dark:text-slate-300">{t(`probability.${k}Desc`)}</span>
                   </div>
                 );
               })}
+              <div className="flex flex-wrap items-start gap-2 pt-1 border-t border-slate-100 dark:border-slate-700">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-700 ring-1 ring-slate-200 dark:bg-slate-700/60 dark:text-slate-100 dark:ring-slate-600">
+                  <span aria-hidden="true">★</span>
+                  {t('probability.mostLikely')}
+                </span>
+                <span className="text-slate-600 dark:text-slate-300">{t('probability.mostLikelyDesc')}</span>
+              </div>
             </div>
           </div>
         </div>

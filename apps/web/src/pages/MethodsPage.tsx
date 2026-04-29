@@ -5,25 +5,10 @@ import {
   MoonAgeDiagram,
   MoonsetLagDiagram,
 } from '../components/KeyConceptsDiagrams';
+import { likelihoodStyle, type VisibilityStatusKey } from '../components/likelihood';
 import { usePageMeta } from '../hooks/usePageMeta';
 
-type SignalLevel = 'noChance' | 'veryLow' | 'low' | 'medium' | 'high';
-
-function likelihoodStyle(level: SignalLevel): { badgeClass: string; dotClass: string } {
-  if (level === 'noChance') {
-    return { badgeClass: 'bg-slate-100 text-slate-800 ring-1 ring-slate-200', dotClass: 'bg-slate-500' };
-  }
-  if (level === 'veryLow') {
-    return { badgeClass: 'bg-rose-50 text-rose-700 ring-1 ring-rose-100', dotClass: 'bg-rose-400' };
-  }
-  if (level === 'low') {
-    return { badgeClass: 'bg-rose-50 text-rose-800 ring-1 ring-rose-200', dotClass: 'bg-rose-500' };
-  }
-  if (level === 'medium') {
-    return { badgeClass: 'bg-amber-50 text-amber-800 ring-1 ring-amber-200', dotClass: 'bg-amber-500' };
-  }
-  return { badgeClass: 'bg-emerald-50 text-emerald-800 ring-1 ring-emerald-200', dotClass: 'bg-emerald-500' };
-}
+type SignalLevel = Exclude<VisibilityStatusKey, 'unknown'>;
 
 export default function MethodsPage() {
   const { t, i18n } = useTranslation();

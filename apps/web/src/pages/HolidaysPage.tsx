@@ -3,6 +3,7 @@ import {
   getCivilHolidaysForGregorianYearWithEstimate,
   getMonthStartSignalLevel,
   meetsCrescentVisibilityCriteriaAtSunset,
+  meetsMabimsCriteriaAtSunset,
   yallopMonthStartEstimate,
   meetsYallopCriteriaAtSunset,
   odehMonthStartEstimate,
@@ -12,9 +13,12 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import i18n from '../i18n/i18n';
 import LocationPicker from '../components/LocationPicker';
+import { likelihoodStyle, type VisibilityStatusKey } from '../components/likelihood';
 import { useAppLocation } from '../location/LocationContext';
 import { useMethod } from '../method/MethodContext';
+import { isAstronomicalMethod } from '../method/types';
 import { formatHijriDateDisplay, formatIsoDateDisplay } from '../utils/dateFormat';
+import { buildIcal, downloadIcal } from '../utils/icalExport';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { useUrlNumber } from '../hooks/useUrlNumber';
 
@@ -45,32 +49,11 @@ function clamp0to100(n: number): number {
   return Math.max(0, Math.min(100, Math.round(n)));
 }
 
-type VisibilityStatusKey = 'noChance' | 'veryLow' | 'low' | 'medium' | 'high' | 'unknown';
-
 function visibilityStatusFromEstimate(
   est: ReturnType<typeof estimateMonthStartLikelihoodAtSunset> | undefined
 ): VisibilityStatusKey {
   const status = getMonthStartSignalLevel(est);
   return status === 'unknown' ? 'unknown' : status;
-}
-
-function likelihoodStyle(likelihood: string): { badgeClass: string; dotClass: string } {
-  if (likelihood === 'noChance') {
-    return { badgeClass: 'bg-slate-100 text-slate-800 ring-1 ring-slate-200', dotClass: 'bg-slate-500' };
-  }
-  if (likelihood === 'veryLow') {
-    return { badgeClass: 'bg-rose-50 text-rose-700 ring-1 ring-rose-100', dotClass: 'bg-rose-400' };
-  }
-  if (likelihood === 'high') {
-    return { badgeClass: 'bg-emerald-50 text-emerald-800 ring-1 ring-emerald-200', dotClass: 'bg-emerald-500' };
-  }
-  if (likelihood === 'medium') {
-    return { badgeClass: 'bg-amber-50 text-amber-800 ring-1 ring-amber-200', dotClass: 'bg-amber-500' };
-  }
-  if (likelihood === 'low') {
-    return { badgeClass: 'bg-rose-50 text-rose-800 ring-1 ring-rose-200', dotClass: 'bg-rose-500' };
-  }
-  return { badgeClass: 'bg-slate-50 text-slate-700 ring-1 ring-slate-200', dotClass: 'bg-slate-400' };
 }
 
 export default function HolidaysPage() {
@@ -81,14 +64,11 @@ export default function HolidaysPage() {
   const [year, setYear] = useUrlNumber('year', currentYear);
 
   const holidays = useMemo(() => {
-    if (methodId === 'civil' || methodId === 'estimate' || methodId === 'yallop' || methodId === 'odeh') {
-      return getCivilHolidaysForGregorianYearWithEstimate(year, {
-        latitude: location.latitude,
-        longitude: location.longitude
-      });
-    }
-    return [];
-  }, [year, methodId, location.latitude, location.longitude]);
+    return getCivilHolidaysForGregorianYearWithEstimate(year, {
+      latitude: location.latitude,
+      longitude: location.longitude
+    });
+  }, [year, location.latitude, location.longitude]);
 
   const renderCandidateDates = (
     eventDate: { year: number; month: number; day: number },
@@ -123,6 +103,7 @@ export default function HolidaysPage() {
 
     const meetsCriteriaFn = methodId === 'yallop' ? (est: ReturnType<typeof estimateMonthStartLikelihoodAtSunset>) => meetsYallopCriteriaAtSunset(est)
       : methodId === 'odeh' ? (est: ReturnType<typeof estimateMonthStartLikelihoodAtSunset>) => meetsOdehCriteriaAtSunset(est)
+      : methodId === 'mabims' ? (est: ReturnType<typeof estimateMonthStartLikelihoodAtSunset>) => meetsMabimsCriteriaAtSunset(est)
       : meetsCrescentVisibilityCriteriaAtSunset;
 
     let candidates = monthStartDays
@@ -269,6 +250,22 @@ export default function HolidaysPage() {
 
   usePageMeta('seo.holidays.title', 'seo.holidays.description', year);
 
+  const exportToIcs = () => {
+    const calendarName = `Hijri holidays ${year} (${t(`app.method.${methodId}`)})`;
+    const events = holidays.map((h) => {
+      const target = h.estimatedGregorian ?? h.gregorian;
+      return {
+        id: h.id,
+        name: t(h.nameKey),
+        gregorian: target,
+        description: `${t('app.method.label')}: ${t(`app.method.${methodId}`)}`
+      };
+    });
+    if (events.length === 0) return;
+    const ics = buildIcal(events, calendarName);
+    downloadIcal(`hijri-holidays-${year}-${methodId}.ics`, ics);
+  };
+
   return (
     <div className="page">
       <div className="page-header">
@@ -276,6 +273,19 @@ export default function HolidaysPage() {
           <h1 className="text-2xl font-semibold tracking-tight">{t('holidays.title')}</h1>
           <div className="muted">{t('app.method.label')}: {t(`app.method.${methodId}`)}</div>
         </div>
+        <button
+          type="button"
+          onClick={exportToIcs}
+          disabled={holidays.length === 0}
+          className="btn-sm whitespace-nowrap"
+          aria-label={t('today.exportHolidays')}
+          title={t('today.exportHolidays')}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 sm:mr-1.5" aria-hidden="true">
+            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+          </svg>
+          <span>{t('today.exportHolidays')}</span>
+        </button>
       </div>
 
       <div className="card">
@@ -323,7 +333,7 @@ export default function HolidaysPage() {
             >
               <div className="text-sm font-medium">{t(h.nameKey)}</div>
 
-              {(methodId === 'estimate' || methodId === 'yallop' || methodId === 'odeh') ? (
+              {isAstronomicalMethod(methodId) ? (
                 <>
                   {renderCandidateDates(h.gregorian, h.hijri, h.estimatedGregorian ?? undefined)}
                 </>
@@ -340,7 +350,7 @@ export default function HolidaysPage() {
         </div>
       </div>
 
-      {(methodId === 'estimate' || methodId === 'yallop' || methodId === 'odeh') ? <LocationPicker /> : null}
+      {isAstronomicalMethod(methodId) ? <LocationPicker /> : null}
 
       <div className="text-xs text-slate-600">
         {t('app.method.label')}: {t(`app.method.${methodId}`)}

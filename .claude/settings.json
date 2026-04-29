@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc *)",
+      "Bash(npm test *)",
+      "Bash(node -e \"console.log\\('en ok:', !!require\\('c:/Users/saaamar/repos/hijri/apps/web/src/i18n/en.json'\\).today.title\\); console.log\\('ar ok:', !!require\\('c:/Users/saaamar/repos/hijri/apps/web/src/i18n/ar.json'\\).today.title\\);\")"
+    ]
+  }
+}

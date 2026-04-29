@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import LocationPicker from '../components/LocationPicker';
 import { useAppLocation } from '../location/LocationContext';
 import { useMethod } from '../method/MethodContext';
+import { isAstronomicalMethod, methodIdToRule } from '../method/types';
 import { formatGregorianDateDisplay, formatHijriDateDisplay, formatIsoDateDisplay } from '../utils/dateFormat';
 import { usePageMeta } from '../hooks/usePageMeta';
 
@@ -33,7 +34,7 @@ export default function ConvertPage() {
     const [y, m, d] = gregIso.split('-').map((x) => Number(x));
     if (!y || !m || !d) return null;
     if (methodId === 'civil') return gregorianToHijriCivil({ year: y, month: m, day: d });
-    if (methodId === 'estimate' || methodId === 'yallop' || methodId === 'odeh') {
+    if (isAstronomicalMethod(methodId)) {
       const dim = new Date(Date.UTC(y, m, 0)).getUTCDate();
       const startDate = new Date(Date.UTC(y, m - 1, 1, 0, 0, 0));
       startDate.setUTCDate(startDate.getUTCDate() - 90);
@@ -44,7 +45,7 @@ export default function ConvertPage() {
         { year: startDate.getUTCFullYear(), month: startDate.getUTCMonth() + 1, day: startDate.getUTCDate() },
         { year: endDate.getUTCFullYear(), month: endDate.getUTCMonth() + 1, day: endDate.getUTCDate() },
         { latitude: location.latitude, longitude: location.longitude },
-        { monthStartRule: methodId === 'yallop' ? 'yallop' : methodId === 'odeh' ? 'odeh' : 'geometric' }
+        { monthStartRule: methodIdToRule(methodId) }
       );
 
       const key = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
@@ -62,7 +63,7 @@ export default function ConvertPage() {
   const gregorianFromHijri = useMemo(() => {
     try {
       if (methodId === 'civil') return hijriCivilToGregorian(hijri);
-      if (methodId === 'estimate' || methodId === 'yallop' || methodId === 'odeh') {
+      if (isAstronomicalMethod(methodId)) {
         const target = hijriCivilToGregorian(hijri);
         const center = new Date(Date.UTC(target.year, target.month - 1, target.day, 0, 0, 0));
         const start = new Date(center);
@@ -74,7 +75,7 @@ export default function ConvertPage() {
           { year: start.getUTCFullYear(), month: start.getUTCMonth() + 1, day: start.getUTCDate() },
           { year: end.getUTCFullYear(), month: end.getUTCMonth() + 1, day: end.getUTCDate() },
           { latitude: location.latitude, longitude: location.longitude },
-          { monthStartRule: methodId === 'yallop' ? 'yallop' : methodId === 'odeh' ? 'odeh' : 'geometric' }
+          { monthStartRule: methodIdToRule(methodId) }
         );
 
         const match = findEstimatedGregorianForHijriDate(calendar, hijri, target);

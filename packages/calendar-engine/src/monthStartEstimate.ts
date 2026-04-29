@@ -101,6 +101,34 @@ export function meetsCrescentVisibilityCriteriaAtSunset(
   );
 }
 
+/**
+ * MABIMS 2016 / "Imkanur Rukyat" criteria, adopted by Indonesia, Malaysia,
+ * Brunei and Singapore. Used as a published-criterion preset in addition to
+ * the heuristic estimator.
+ *
+ * Reference: Joint MABIMS 2016 resolution (Mudzakarah Rukyat dan Taqwim Islam).
+ *
+ * Thresholds:
+ *   - Topocentric Moon altitude ≥ 3.0°
+ *   - Geocentric elongation    ≥ 6.4°
+ *   - Moon age (since conjunction) ≥ 8 hours
+ *   - Lag (moonset − sunset)   > 0
+ */
+export const MABIMS_CRITERIA: Required<Pick<
+  CrescentVisibilityCriteria,
+  'minLagMinutes' | 'minMoonAltitudeDeg' | 'minMoonAgeHours' | 'minMoonElongationDeg'
+>> = {
+  minLagMinutes: 0,
+  minMoonAltitudeDeg: 3,
+  minMoonAgeHours: 8,
+  minMoonElongationDeg: 6.4
+};
+
+/** True when the evening's metrics satisfy MABIMS 2016 visibility thresholds. */
+export function meetsMabimsCriteriaAtSunset(est: MonthStartEstimate): boolean {
+  return meetsCrescentVisibilityCriteriaAtSunset(est, MABIMS_CRITERIA);
+}
+
 const SYNODIC_MONTH_DAYS = 29.530588853;
 const MAX_CRESCENT_AGE_HOURS_FOR_MONTH_START = 72;
 

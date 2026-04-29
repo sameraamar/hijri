@@ -2,14 +2,20 @@
   "app": {
     "title": "Hijri Calendar",
     "nav": {
+      "today": "Today",
       "calendar": "Calendar",
       "convert": "Convert",
       "details": "Details",
       "holidays": "Holidays",
-      "methods": "Theory & Methods",
+      "methods": "Methods",
       "history": "History",
       "scholars": "Scholars",
-      "about": "About"
+      "about": "About",
+      "more": "More"
+    },
+    "theme": {
+      "toLight": "Switch to light mode",
+      "toDark": "Switch to dark mode"
     },
     "language": {
       "en": "English",
@@ -17,10 +23,11 @@
     },
     "method": {
       "label": "Method",
-      "civil": "Tabular (Islamic Civil)",
-      "estimate": "Astronomical estimate (visibility-based)",
-      "yallop": "Yallop q-test (1997)",
-      "odeh": "Odeh criterion (2004)",
+      "civil": "Tabular",
+      "estimate": "Visibility heuristic",
+      "mabims": "MABIMS",
+      "yallop": "Yallop (q)",
+      "odeh": "Odeh (V)",
       "ummalqura": "Umm al-Qura",
       "comingSoon": "coming soon"
     },
@@ -32,6 +39,19 @@
       "copyright": "© {{year}} Samer Aamar. All rights reserved.",
       "license": "MIT License"
     }
+  },
+  "today": {
+    "title": "Today",
+    "todayIs": "Today is",
+    "currentLocation": "Showing for",
+    "nextHolidayLabel": "Next holiday",
+    "inDays": "in {{count}} days",
+    "inDay": "in {{count}} day",
+    "todayBadge": "today",
+    "moonPhase": "Moon phase",
+    "tonightVisibility": "Tonight's month-start signal",
+    "tonightVisibilityHint": "Whether tonight (around local sunset) could mark the start of a new Hijri month. Not a measure of how bright the Moon is.",
+    "exportHolidays": "Export holidays (.ics)"
   },
   "calendar": {
     "year": "Year",
@@ -291,8 +311,8 @@
     "eveningEstimate": "This evening's visibility test",
     "monthStartSignalFor": "Previous evening's test for",
     "basedOn": "Observed on",
-    "noChance": "None",
-    "noChanceHint": "Moon sets at/before sunset (no crescent possible).",
+    "noChance": "No chance",
+    "noChanceHint": "This evening cannot mark a new Hijri month start (we're not near a new moon, or the Moon sets at/before sunset).",
     "veryHigh": "High",
     "veryLow": "Faint",
     "low": "Low",
@@ -324,11 +344,13 @@
     "odehArcv": "ARCV (arc of vision)",
     "odehArcl": "ARCL (elongation)",
     "odehWidth": "W' (crescent width)",
-    "noChanceDesc": "Moon sets at or before sunset, or is at/below the horizon at sunset; practical visibility is not possible.",
+    "noChanceDesc": "This evening cannot be the start of a new Hijri month (e.g., we are past the first half of the lunar cycle, or the Moon sets at/before sunset). The score reflects month-start likelihood, not whether the Moon is visible.",
     "veryLowDesc": "Extremely weak conditions; crescent is unlikely visible and confidence for month start is minimal.",
     "lowDesc": "Poor conditions for a visible crescent (e.g., Moon very low, setting too soon, or very young).",
     "mediumDesc": "Borderline/mixed conditions; visibility depends on observer skill and local atmosphere.",
-    "highDesc": "Strong conditions (Moon higher, well separated from the Sun, older, stays up longer after sunset)."
+    "highDesc": "Strong conditions (Moon higher, well separated from the Sun, older, stays up longer after sunset).",
+    "mostLikely": "Most likely month start",
+    "mostLikelyDesc": "When several days score positively, the highest-scoring candidate is highlighted with a star."
   },
   "countries": {
     "sa": "Saudi Arabia",
@@ -373,6 +395,7 @@
     "colMonth": "Month",
     "colOfficial": "Official",
     "colEstimate": "Estimate",
+    "colMabims": "MABIMS",
     "colYallop": "Yallop",
     "colOdeh": "Odeh",
     "matches": "matches",

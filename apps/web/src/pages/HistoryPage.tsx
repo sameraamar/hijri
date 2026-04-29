@@ -67,6 +67,7 @@ type MonthRow = {
   officialMethod?: string;
   civil: MethodPrediction;
   estimate: MethodPrediction | null;
+  mabims: MethodPrediction | null;
   yallop: MethodPrediction | null;
   odeh: MethodPrediction | null;
 };
@@ -79,7 +80,7 @@ type MonthRow = {
 function buildYearCalendar(
   hijriYear: number,
   location: { latitude: number; longitude: number },
-  rule: 'geometric' | 'yallop' | 'odeh',
+  rule: 'geometric' | 'mabims' | 'yallop' | 'odeh',
 ) {
   // Month 1 civil reference → go back 90 days for warm-up
   const civilRefStart = hijriCivilToGregorian({ year: hijriYear, month: 1, day: 1 });
@@ -201,6 +202,7 @@ export default function HistoryPage() {
   // instead of per-month (was 36 calls).
   const rows: MonthRow[] = useMemo(() => {
     const geoCal = buildYearCalendar(deferredYear, location, 'geometric');
+    const mabCal = buildYearCalendar(deferredYear, location, 'mabims');
     const yalCal = buildYearCalendar(deferredYear, location, 'yallop');
     const odeCal = buildYearCalendar(deferredYear, location, 'odeh');
 
@@ -218,6 +220,7 @@ export default function HistoryPage() {
         officialMethod: decl?.method,
         civil: makeCivilPrediction(deferredYear, hijriMonth, official),
         estimate: extractPrediction(geoCal, deferredYear, hijriMonth, official),
+        mabims: extractPrediction(mabCal, deferredYear, hijriMonth, official),
         yallop: extractPrediction(yalCal, deferredYear, hijriMonth, official),
         odeh: extractPrediction(odeCal, deferredYear, hijriMonth, official),
       };
@@ -229,12 +232,29 @@ export default function HistoryPage() {
     const withOfficial = rows.filter((r) => r.official);
     const total = withOfficial.length;
     if (total === 0) return null;
+
+    const avgAbsDiff = (pick: (r: MonthRow) => MethodPrediction | null) => {
+      const diffs = withOfficial
+        .map((r) => pick(r))
+        .filter((p): p is MethodPrediction => p !== null && p.diff !== null)
+        .map((p) => Math.abs(p.diff as number));
+      if (diffs.length === 0) return null;
+      const sum = diffs.reduce((a, b) => a + b, 0);
+      return sum / diffs.length;
+    };
+
     return {
       total,
       civilMatch: withOfficial.filter((r) => r.civil.match).length,
       estimateMatch: withOfficial.filter((r) => r.estimate?.match).length,
+      mabimsMatch: withOfficial.filter((r) => r.mabims?.match).length,
       yallopMatch: withOfficial.filter((r) => r.yallop?.match).length,
       odehMatch: withOfficial.filter((r) => r.odeh?.match).length,
+      civilAvgDiff: avgAbsDiff((r) => r.civil),
+      estimateAvgDiff: avgAbsDiff((r) => r.estimate),
+      mabimsAvgDiff: avgAbsDiff((r) => r.mabims),
+      yallopAvgDiff: avgAbsDiff((r) => r.yallop),
+      odehAvgDiff: avgAbsDiff((r) => r.odeh),
     };
   }, [rows]);
 
@@ -297,19 +317,30 @@ export default function HistoryPage() {
 
       {/* Summary stats — only when official data exists */}
       {stats && (
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 mb-4">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-5 mb-4">
           {[
-            { label: t('app.method.civil'), match: stats.civilMatch },
-            { label: t('history.colEstimate'), match: stats.estimateMatch },
-            { label: t('history.colYallop'), match: stats.yallopMatch },
-            { label: t('history.colOdeh'), match: stats.odehMatch },
-          ].map((s) => (
-            <div key={s.label} className="card p-3 text-center">
-              <div className="text-xs text-slate-500">{s.label}</div>
-              <div className="text-lg font-bold text-slate-900">{s.match}/{stats.total}</div>
-              <div className="text-[11px] text-slate-500">{t('history.matches')}</div>
-            </div>
-          ))}
+            { label: t('app.method.civil'), match: stats.civilMatch, avg: stats.civilAvgDiff },
+            { label: t('history.colEstimate'), match: stats.estimateMatch, avg: stats.estimateAvgDiff },
+            { label: t('history.colMabims'), match: stats.mabimsMatch, avg: stats.mabimsAvgDiff },
+            { label: t('history.colYallop'), match: stats.yallopMatch, avg: stats.yallopAvgDiff },
+            { label: t('history.colOdeh'), match: stats.odehMatch, avg: stats.odehAvgDiff },
+          ].map((s) => {
+            const pct = stats.total > 0 ? Math.round((s.match / stats.total) * 100) : 0;
+            return (
+              <div key={s.label} className="card p-3 text-center">
+                <div className="text-xs text-slate-500 dark:text-slate-400">{s.label}</div>
+                <div className="text-lg font-bold text-slate-900 dark:text-slate-100">{s.match}/{stats.total}</div>
+                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                  {pct}% {t('history.matches')}
+                </div>
+                {s.avg !== null && (
+                  <div className="text-[11px] text-slate-400 dark:text-slate-500" title="Average absolute difference vs official, in days">
+                    Δ {s.avg.toFixed(1)}d avg
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
 
@@ -324,6 +355,7 @@ export default function HistoryPage() {
               <th className="px-2 py-2 text-start font-medium">{t('history.colOfficial')}</th>
               <th className="px-2 py-2 text-center font-medium">{t('app.method.civil')}</th>
               <th className="px-2 py-2 text-center font-medium">{t('history.colEstimate')}</th>
+              <th className="px-2 py-2 text-center font-medium">{t('history.colMabims')}</th>
               <th className="px-2 py-2 text-center font-medium">{t('history.colYallop')}</th>
               <th className="px-2 py-2 text-center font-medium">{t('history.colOdeh')}</th>
             </tr>
@@ -349,6 +381,7 @@ export default function HistoryPage() {
                 </td>
                 <PredictionCell pred={row.civil} />
                 <PredictionCell pred={row.estimate} />
+                <PredictionCell pred={row.mabims} />
                 <PredictionCell pred={row.yallop} />
                 <PredictionCell pred={row.odeh} />
               </tr>
