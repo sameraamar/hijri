@@ -297,7 +297,7 @@ export function yallopMonthStartEstimate(
 
   const result = computeYallopQTest(date, location);
   if (!result) {
-    return { likelihood: 'unknown', metrics: {} };
+    return { kind: 'yallop', likelihood: 'unknown', metrics: {} };
   }
 
   // Check moon age at sunset — if too old, this isn't a new-month crescent
@@ -313,6 +313,7 @@ export function yallopMonthStartEstimate(
   // Not near new moon → not relevant for month start
   if (moonAgeAtSunset > MAX_CRESCENT_AGE_HOURS || phase > 0.5) {
     return {
+      kind: 'yallop',
       likelihood: 'low',
       metrics: {
         sunriseUtcIso: sunriseIso,
@@ -324,6 +325,7 @@ export function yallopMonthStartEstimate(
         moonElongationDeg: result.arclDeg,
         moonAgeHours: result.moonAgeHours,
         moonIlluminationFraction: result.moonIlluminationFraction,
+        moonPhase: phase,
         visibilityScore: 0,
         visibilityPercent: 0,
       },
@@ -367,6 +369,7 @@ export function yallopMonthStartEstimate(
   }
 
   return {
+    kind: 'yallop',
     likelihood,
     metrics: {
       sunriseUtcIso: sunriseIso,
@@ -382,6 +385,7 @@ export function yallopMonthStartEstimate(
       moonElongationDeg: result.arclDeg,
       moonAgeHours: result.moonAgeHours,
       moonIlluminationFraction: result.moonIlluminationFraction,
+      moonPhase: phase,
       visibilityScore,
       visibilityPercent,
       // Yallop-specific details

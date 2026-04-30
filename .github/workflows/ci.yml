@@ -35,5 +35,8 @@ jobs:
       - name: Type-check web app
         run: npx --workspace=apps/web tsc -b
 
+      - name: Lint
+        run: npm run lint
+
       - name: Run tests (engine + web)
         run: npm test

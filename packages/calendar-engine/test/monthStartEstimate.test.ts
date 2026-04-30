@@ -111,7 +111,65 @@ describe('month-start estimate (heuristic)', () => {
     const visibility = getMoonVisibilityLevel(est);
     const signal = getMonthStartSignalLevel(est);
 
-    expect(['noChance', 'veryLow', 'low', 'medium', 'high', 'unknown']).toContain(visibility);
-    expect(['noChance', 'veryLow', 'low', 'medium', 'high', 'unknown']).toContain(signal);
+    const allowed = ['notApplicable', 'noChance', 'veryLow', 'low', 'medium', 'high', 'unknown'];
+    expect(allowed).toContain(visibility);
+    expect(allowed).toContain(signal);
+  });
+
+  test('exposes moonPhase (0..1) on every estimator output', () => {
+    const est = estimateMonthStartLikelihoodAtSunset(
+      { year: 2026, month: 4, day: 25 },
+      { latitude: 21.3891, longitude: 39.8579 }
+    );
+
+    expect(typeof est.metrics.moonPhase).toBe('number');
+    expect(est.metrics.moonPhase).toBeGreaterThanOrEqual(0);
+    expect(est.metrics.moonPhase).toBeLessThan(1);
+  });
+
+  test('mid-month evening (waning, ≥9d after new moon) is notApplicable, not noChance', () => {
+    // Mid-Hijri-month at Makkah on 2026-04-25 — Moon age is ~9 days past
+    // the 2026-04-16 conjunction, well past the 72h month-start window.
+    const est = estimateMonthStartLikelihoodAtSunset(
+      { year: 2026, month: 4, day: 25 },
+      { latitude: 21.3891, longitude: 39.8579 }
+    );
+
+    expect(est.metrics.moonAgeHours).toBeGreaterThan(72);
+    expect(getMonthStartSignalLevel(est)).toBe('notApplicable');
+    expect(getMoonVisibilityLevel(est)).toBe('notApplicable');
+  });
+
+  test('within the new-moon window, level is never notApplicable', () => {
+    // 2026-04-17 — one day after the 2026-04-16 conjunction. Moon age ≈ 18h.
+    // Whatever the score is, the window IS applicable.
+    const est = estimateMonthStartLikelihoodAtSunset(
+      { year: 2026, month: 4, day: 17 },
+      { latitude: 21.3891, longitude: 39.8579 }
+    );
+
+    expect(est.metrics.moonAgeHours).toBeLessThan(72);
+    expect(getMonthStartSignalLevel(est)).not.toBe('notApplicable');
+    expect(getMoonVisibilityLevel(est)).not.toBe('notApplicable');
+  });
+
+  test('moonPhase > 0.5 (waning) marks notApplicable even when age is low', () => {
+    // Synthesize an estimate with low age but waning phase — purely a unit
+    // test of the classifier (not produced by the real estimator).
+    const synthetic: Parameters<typeof getMonthStartSignalLevel>[0] = {
+      kind: 'heuristic',
+      likelihood: 'low',
+      metrics: {
+        moonAgeHours: 30,
+        moonPhase: 0.6, // waning, contrived
+        lagMinutes: 5,
+        moonAltitudeDeg: 5,
+        moonElongationDeg: 8,
+        visibilityPercent: 20
+      }
+    };
+
+    expect(getMonthStartSignalLevel(synthetic)).toBe('notApplicable');
+    expect(getMoonVisibilityLevel(synthetic)).toBe('notApplicable');
   });
 });

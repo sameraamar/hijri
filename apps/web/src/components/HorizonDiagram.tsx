@@ -33,11 +33,12 @@ export default function HorizonDiagram({
   height = 100,
   className,
 }: HorizonDiagramProps) {
-  // Layout constants
-  const horizonY = height * 0.62;          // horizon line y
-  const degScale = (height * 0.45) / 20;   // pixels per degree (20° fills ~45% of height)
-  const sunX = width * 0.3;
-  const moonX = width * 0.7;
+  // Layout constants — leave room for labels at top and sides.
+  const padTop = 18;                       // reserved for elongation label
+  const horizonY = height * 0.6;           // horizon line y (slightly higher than midline)
+  const degScale = Math.max(1, (horizonY - padTop) / 25); // px per ° (clamped 25° fills sky area)
+  const sunX = width * 0.28;
+  const moonX = width * 0.62;              // pulled in from 0.7 so altitude label has room
 
   // Clamp altitudes for visual sanity
   const clampAlt = (d: number) => Math.max(-10, Math.min(25, d));
@@ -72,39 +73,60 @@ export default function HorizonDiagram({
 
       {/* Horizon line */}
       <line x1={0} y1={horizonY} x2={width} y2={horizonY} stroke="#64748b" strokeWidth={1} strokeDasharray="4 2" />
-      <text x={4} y={horizonY - 3} fill="#94a3b8" fontSize={8} fontFamily="system-ui">
+      <text x={4} y={horizonY - 4} fill="#cbd5e1" fontSize={11} fontFamily="system-ui">
         0°
       </text>
 
       {/* Sun (below horizon) */}
       <circle cx={sunX} cy={sunY} r={sunR} fill="#f97316" opacity={0.85} />
-      <text x={sunX} y={sunY + sunR + 10} textAnchor="middle" fill="#f97316" fontSize={8} fontFamily="system-ui">
+      <text x={sunX} y={sunY + sunR + 12} textAnchor="middle" fill="#f97316" fontSize={11} fontFamily="system-ui">
         ☉
       </text>
 
       {/* Moon */}
       <circle cx={moonX} cy={moonY} r={moonR} fill={moonFill} />
-      {/* Moon altitude label */}
-      <text x={moonX + moonR + 3} y={moonY + 3} fill="#fbbf24" fontSize={8} fontFamily="system-ui">
-        {moonAltitudeDeg.toFixed(1)}°
-      </text>
-      <text x={moonX} y={moonY - moonR - 3} textAnchor="middle" fill="#e2e8f0" fontSize={8} fontFamily="system-ui">
+      <text x={moonX} y={moonY - moonR - 4} textAnchor="middle" fill="#e2e8f0" fontSize={12} fontFamily="system-ui">
         ☽
       </text>
 
-      {/* Dashed line between sun and moon with arc label */}
+      {/* Moon altitude label — anchored to the right edge, clamped inside the
+          SVG so it never overflows even when the moon sits at high altitude. */}
+      {(() => {
+        const text = `alt ${moonAltitudeDeg.toFixed(1)}°`;
+        // Approximate label width (system-ui at 11px ≈ 6px per character).
+        const approxW = text.length * 6 + 4;
+        const labelX = Math.min(moonX + moonR + 4 + approxW, width - 4);
+        const labelY = moonAltitudeDeg > 12 ? moonY + moonR + 13 : moonY + 4;
+        return (
+          <text
+            x={labelX}
+            y={labelY}
+            textAnchor="end"
+            fill="#fbbf24"
+            fontSize={11}
+            fontFamily="system-ui"
+            fontWeight="600"
+          >
+            <title>Moon altitude above horizon at sunset</title>
+            {text}
+          </text>
+        );
+      })()}
+
+      {/* Dashed line between sun and moon with arc label (Sun–Moon angular separation) */}
       <line x1={sunX} y1={sunY} x2={moonX} y2={moonY} stroke="#94a3b8" strokeWidth={0.5} strokeDasharray="3 2" />
       {typeof arcDeg === 'number' && (
         <text
           x={(sunX + moonX) / 2}
-          y={Math.min(sunY, moonY) - 6}
+          y={Math.max(13, Math.min(sunY, moonY) - 8)}
           textAnchor="middle"
-          fill="#cbd5e1"
-          fontSize={9}
+          fill="#f1f5f9"
+          fontSize={11}
           fontFamily="system-ui"
           fontWeight="bold"
         >
-          {arcDeg.toFixed(1)}°
+          <title>Sun–Moon elongation (0° at conjunction, ~180° at full moon)</title>
+          Δ {arcDeg.toFixed(1)}°
         </text>
       )}
 
@@ -112,10 +134,10 @@ export default function HorizonDiagram({
       {typeof lagMinutes === 'number' && (
         <text
           x={width / 2}
-          y={height - 4}
+          y={height - 5}
           textAnchor="middle"
-          fill="#94a3b8"
-          fontSize={8}
+          fill="#cbd5e1"
+          fontSize={11}
           fontFamily="system-ui"
         >
           lag {Math.round(lagMinutes)} min

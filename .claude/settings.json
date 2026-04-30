@@ -3,7 +3,15 @@
     "allow": [
       "Bash(npx tsc *)",
       "Bash(npm test *)",
-      "Bash(node -e \"console.log\\('en ok:', !!require\\('c:/Users/saaamar/repos/hijri/apps/web/src/i18n/en.json'\\).today.title\\); console.log\\('ar ok:', !!require\\('c:/Users/saaamar/repos/hijri/apps/web/src/i18n/ar.json'\\).today.title\\);\")"
+      "Bash(node -e \"console.log\\('en ok:', !!require\\('c:/Users/saaamar/repos/hijri/apps/web/src/i18n/en.json'\\).today.title\\); console.log\\('ar ok:', !!require\\('c:/Users/saaamar/repos/hijri/apps/web/src/i18n/ar.json'\\).today.title\\);\")",
+      "Bash(grep -r \"probability\\\\\\\\.no\" c:\\\\Users\\\\saaamar\\\\repos\\\\hijri\\\\apps\\\\web\\\\src --include=\"*.tsx\" --include=\"*.ts\")",
+      "Bash(xargs grep *)",
+      "Bash(node scripts/_temp_add_not_applicable.mjs)",
+      "Bash(rm scripts/_temp_add_not_applicable.mjs)",
+      "Bash(node -e ' *)",
+      "Bash(npx eslint *)",
+      "Read(//c/Users/saaamar/**)",
+      "Bash(node --input-type=module -e ' *)"
     ]
   }
 }

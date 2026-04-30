@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+
+import LocaleNavLink from './LocaleNavLink';
 
 export type NavItem = { to: string; label: string };
 
@@ -61,7 +62,7 @@ export default function NavMore({ items }: { items: NavItem[] }) {
           className="absolute end-0 mt-1 min-w-[10rem] rounded-md border border-slate-200 bg-white py-1 shadow-lg ring-1 ring-black/5 dark:border-slate-700 dark:bg-slate-800 dark:ring-white/5 z-50"
         >
           {items.map((item) => (
-            <NavLink
+            <LocaleNavLink
               key={item.to}
               to={item.to}
               role="menuitem"
@@ -75,7 +76,7 @@ export default function NavMore({ items }: { items: NavItem[] }) {
               }
             >
               {item.label}
-            </NavLink>
+            </LocaleNavLink>
           ))}
         </div>
       ) : null}

@@ -17,6 +17,7 @@ export default function MethodsPage() {
   const tocImplemented = [
     { id: 'civil', label: t('methods.civil.title') },
     { id: 'estimate', label: t('methods.estimate.title') },
+    { id: 'mabims', label: t('methods.mabims.title') },
     { id: 'yallop', label: t('methods.yallop.title') },
     { id: 'odeh', label: t('methods.odeh.title') },
   ];
@@ -344,6 +345,68 @@ export default function MethodsPage() {
               <a href="https://adsabs.harvard.edu/full/1988QJRAS..29..511S" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Schaefer (1988)</a>
               <span>•</span>
               <a href="https://github.com/cosinekitty/astronomy" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">astronomy-engine</a>
+            </div>
+          </div>
+        </section>
+
+        {/* ── MABIMS ── */}
+        <section id="mabims" className="card scroll-mt-24">
+          <div className="card-header">
+            <div className="card-title">{t('methods.mabims.title')}</div>
+          </div>
+          <div className="space-y-3 p-4 text-sm text-slate-700 dark:text-slate-200">
+            <div>{t('methods.mabims.summary')}</div>
+
+            <div>
+              <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">{t('methods.characteristics')}</div>
+              <ul className="mt-2 list-disc space-y-1 ps-5">
+                <li>{t('methods.mabims.ch1')}</li>
+                <li>{t('methods.mabims.ch2')}</li>
+                <li>{t('methods.mabims.ch3')}</li>
+                <li>{t('methods.mabims.ch4')}</li>
+              </ul>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div>
+                <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">{t('methods.pros')}</div>
+                <ul className="mt-2 list-disc space-y-1 ps-5">
+                  <li>{t('methods.mabims.pro1')}</li>
+                  <li>{t('methods.mabims.pro2')}</li>
+                </ul>
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">{t('methods.cons')}</div>
+                <ul className="mt-2 list-disc space-y-1 ps-5">
+                  <li>{t('methods.mabims.con1')}</li>
+                  <li>{t('methods.mabims.con2')}</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="rounded-md border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-900/40 dark:text-slate-300">
+              {t('methods.mabims.note')}
+            </div>
+
+            <div className="flex flex-wrap gap-3 border-t border-slate-100 pt-3 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400">
+              <span>{t('methods.references')}:</span>
+              <a
+                href="https://en.wikipedia.org/wiki/Lunar_calendar#Islamic_calendar"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline dark:text-blue-300"
+              >
+                Wikipedia: Islamic calendar
+              </a>
+              <span>•</span>
+              <a
+                href="https://moonsighting.com/criteria.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline dark:text-blue-300"
+              >
+                moonsighting.com — criteria
+              </a>
             </div>
           </div>
         </section>

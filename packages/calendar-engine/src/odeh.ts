@@ -287,7 +287,7 @@ export function odehMonthStartEstimate(
 
   const result = computeOdehVTest(date, location);
   if (!result) {
-    return { likelihood: 'unknown', metrics: {} };
+    return { kind: 'odeh', likelihood: 'unknown', metrics: {} };
   }
 
   // Check moon age at sunset — if too old, this isn't a new-month crescent
@@ -303,6 +303,7 @@ export function odehMonthStartEstimate(
   // Not near new moon → not relevant for month start
   if (moonAgeAtSunset > MAX_CRESCENT_AGE_HOURS || phase > 0.5) {
     return {
+      kind: 'odeh',
       likelihood: 'low',
       metrics: {
         sunriseUtcIso: sunriseIso,
@@ -314,6 +315,7 @@ export function odehMonthStartEstimate(
         moonElongationDeg: result.arclDeg,
         moonAgeHours: result.moonAgeHours,
         moonIlluminationFraction: result.moonIlluminationFraction,
+        moonPhase: phase,
         visibilityScore: 0,
         visibilityPercent: 0,
       },
@@ -357,6 +359,7 @@ export function odehMonthStartEstimate(
   }
 
   return {
+    kind: 'odeh',
     likelihood,
     metrics: {
       sunriseUtcIso: sunriseIso,
@@ -372,6 +375,7 @@ export function odehMonthStartEstimate(
       moonElongationDeg: result.arclDeg,
       moonAgeHours: result.moonAgeHours,
       moonIlluminationFraction: result.moonIlluminationFraction,
+      moonPhase: phase,
       visibilityScore,
       visibilityPercent,
       // Odeh-specific details

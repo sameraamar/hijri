@@ -11,7 +11,8 @@
       "history": "History",
       "scholars": "Scholars",
       "about": "About",
-      "more": "More"
+      "more": "More",
+      "visibilityMap": "Visibility map"
     },
     "theme": {
       "toLight": "Switch to light mode",
@@ -38,6 +39,11 @@
       "contact": "Direct contact / suggestions:",
       "copyright": "© {{year}} Samer Aamar. All rights reserved.",
       "license": "MIT License"
+    },
+    "aiBanner": {
+      "title": "AI translation — review needed",
+      "body": "This page is in English, the original language. The non-English versions of this site (Arabic, Turkish, French, Indonesian, Urdu) were machine-translated from English by AI; mistakes and inaccuracies are possible there. Native-speaker review is welcome — open an issue or PR on GitHub.",
+      "dismiss": "Dismiss"
     }
   },
   "today": {
@@ -51,7 +57,8 @@
     "moonPhase": "Moon phase",
     "tonightVisibility": "Tonight's month-start signal",
     "tonightVisibilityHint": "Whether tonight (around local sunset) could mark the start of a new Hijri month. Not a measure of how bright the Moon is.",
-    "exportHolidays": "Export holidays (.ics)"
+    "exportHolidays": "Export holidays (.ics)",
+    "nextMonthInDays": "Next Hijri month in approximately {{count}} days."
   },
   "calendar": {
     "year": "Year",
@@ -138,35 +145,35 @@
       "title": "Key Astronomical Concepts",
       "intro": "All crescent-visibility models rely on four measurable quantities computed at the moment of local sunset. Understanding these helps interpret the scores shown throughout the app.",
       "altitudeTitle": "Moon Altitude (h)",
-      "altitude": "The angle of the moon above the observer's horizon at the moment of sunset, measured in degrees. If h \u2264 0\u00b0, the moon is below the horizon and cannot be seen. A higher altitude gives the crescent more contrast against the twilight sky. Typical range for a young crescent: \u22125\u00b0 to +15\u00b0.",
+      "altitude": "The angle of the moon above the observer's horizon at the moment of sunset, measured in degrees. If h ≤ 0°, the moon is below the horizon and cannot be seen. A higher altitude gives the crescent more contrast against the twilight sky. Typical range for a young crescent: −5° to +15°.",
       "altitudeWiki": "https://en.wikipedia.org/wiki/Horizontal_coordinate_system",
-      "elongationTitle": "Moon\u2013Sun Elongation (\u0394)",
-      "elongation": "The angular separation between the moon and the sun as seen from Earth, measured in degrees. Below about 6\u00b0 (the Danjon limit), the crescent has never been reliably observed with any instrument. Greater elongation means a wider, brighter crescent.",
+      "elongationTitle": "Moon–Sun Elongation (Δ)",
+      "elongation": "The angular separation between the moon and the sun as seen from Earth, measured in degrees. Below about 6° (the Danjon limit), the crescent has never been reliably observed with any instrument. Greater elongation means a wider, brighter crescent.",
       "elongationWiki": "https://en.wikipedia.org/wiki/Elongation_(astronomy)",
       "moonAgeTitle": "Moon Age (A)",
-      "moonAge": "The time elapsed since the last sun\u2013moon conjunction (astronomical new moon), measured in hours. A crescent younger than about 12 hours is essentially invisible. Between 15\u201324 hours it may become visible under ideal conditions. Beyond 72 hours it is no longer a \u2018new\u2019 crescent.",
+      "moonAge": "The time elapsed since the last sun–moon conjunction (astronomical new moon), measured in hours. A crescent younger than about 12 hours is essentially invisible. Between 15–24 hours it may become visible under ideal conditions. Beyond 72 hours it is no longer a ‘new’ crescent.",
       "moonAgeWiki": "https://en.wikipedia.org/wiki/New_moon",
       "lagTitle": "Moonset Lag (L)",
-      "lag": "The time difference between sunset and moonset, measured in minutes. If L \u2264 0, the moon sets before the sun and the crescent is not observable. A larger lag gives more time to spot the crescent in the darkening sky after sunset.",
+      "lag": "The time difference between sunset and moonset, measured in minutes. If L ≤ 0, the moon sets before the sun and the crescent is not observable. A larger lag gives more time to spot the crescent in the darkening sky after sunset.",
       "lagWiki": "https://en.wikipedia.org/wiki/Moonset",
       "wikiLink": "Learn more",
       "glossaryTitle": "Other Terms Used in This App",
       "conjunctionTitle": "Conjunction (New Moon)",
-      "conjunction": "The moment when the sun and moon have the same ecliptic longitude as seen from Earth. This is the astronomical new moon \u2014 the moon is between the Earth and the sun, and its illuminated side faces away from us. It marks the starting point from which moon age (A) is measured. The crescent becomes potentially visible only some hours after conjunction.",
+      "conjunction": "The moment when the sun and moon have the same ecliptic longitude as seen from Earth. This is the astronomical new moon — the moon is between the Earth and the sun, and its illuminated side faces away from us. It marks the starting point from which moon age (A) is measured. The crescent becomes potentially visible only some hours after conjunction.",
       "conjunctionWiki": "https://en.wikipedia.org/wiki/New_moon",
-      "danjonTitle": "Danjon Limit (~6\u00b0\u20137\u00b0)",
-      "danjon": "An observational lower bound on the moon\u2013sun elongation below which the lunar crescent has never been reliably observed. Andr\u00e9 Danjon (1936) estimated it at about 7\u00b0; Odeh (2004) refined it to 6.4\u00b0. All visibility models in this app treat elongation below this limit as \u2018not visible\u2019.",
+      "danjonTitle": "Danjon Limit (~6°–7°)",
+      "danjon": "An observational lower bound on the moon–sun elongation below which the lunar crescent has never been reliably observed. André Danjon (1936) estimated it at about 7°; Odeh (2004) refined it to 6.4°. All visibility models in this app treat elongation below this limit as ‘not visible’.",
       "danjonWiki": "https://en.wikipedia.org/wiki/Danjon_limit",
       "arcvTitle": "ARCV (Arc of Vision)",
-      "arcv": "The angular difference in altitude between the moon and the sun at sunset, measured in degrees. Used by the Yallop and Odeh methods as a primary predictor. A larger ARCV means the moon is higher above the sun at the horizon \u2014 making the crescent easier to see.",
+      "arcv": "The angular difference in altitude between the moon and the sun at sunset, measured in degrees. Used by the Yallop and Odeh methods as a primary predictor. A larger ARCV means the moon is higher above the sun at the horizon — making the crescent easier to see.",
       "arcvWiki": "https://en.wikipedia.org/wiki/Crescent#Visibility",
-      "crescentWidthTitle": "W\u2019 (Topocentric Crescent Width)",
-      "crescentWidth": "The apparent angular width of the illuminated crescent as seen from the observer\u2019s location, measured in arc-minutes. Wider crescents are brighter and easier to spot. Yallop and Odeh both use W\u2019 in their polynomial formulas.",
+      "crescentWidthTitle": "W’ (Topocentric Crescent Width)",
+      "crescentWidth": "The apparent angular width of the illuminated crescent as seen from the observer’s location, measured in arc-minutes. Wider crescents are brighter and easier to spot. Yallop and Odeh both use W’ in their polynomial formulas.",
       "illuminationTitle": "Moon Illumination (%)",
-      "illumination": "The fraction of the moon\u2019s visible disc that is lit by the sun, expressed as a percentage. At conjunction it is ~0%; at full moon it is 100%. For a young crescent (the first 1\u20133 days), illumination typically ranges from 0% to about 10%. This value is shown in the calendar and detail views.",
+      "illumination": "The fraction of the moon’s visible disc that is lit by the sun, expressed as a percentage. At conjunction it is ~0%; at full moon it is 100%. For a young crescent (the first 1–3 days), illumination typically ranges from 0% to about 10%. This value is shown in the calendar and detail views.",
       "illuminationWiki": "https://en.wikipedia.org/wiki/Lunar_phase",
       "waxingWaningTitle": "Waxing vs. Waning",
-      "waxingWaning": "After conjunction the illuminated portion grows each day \u2014 this is waxing (crescent \u2192 first quarter \u2192 full). After full moon it shrinks \u2014 this is waning. Only the waxing crescent in the first 72 hours after conjunction is relevant for \u2018new month\u2019 detection; a waning moon automatically receives a score of 0.",
+      "waxingWaning": "After conjunction the illuminated portion grows each day — this is waxing (crescent → first quarter → full). After full moon it shrinks — this is waning. Only the waxing crescent in the first 72 hours after conjunction is relevant for ‘new month’ detection; a waning moon automatically receives a score of 0.",
       "waxingWaningWiki": "https://en.wikipedia.org/wiki/Lunar_phase"
     },
     "characteristics": "Characteristics",
@@ -302,6 +309,19 @@
     "babylonian": {
       "title": "Babylonian / Lag-based rule",
       "summary": "One of the oldest known empirical rules, dating back to Babylonian astronomy: the crescent is declared visible when the moonset lag (time between sunset and moonset) exceeds a fixed threshold, typically about 48 minutes. This simple rule captures the basic idea that the moon must be above the horizon long enough after sunset, but it ignores factors such as elongation, atmospheric extinction, and location."
+    },
+    "mabims": {
+      "title": "MABIMS 2016 / Imkanur Rukyat",
+      "summary": "A published, multi-country crescent visibility criterion adopted in 2016 by MABIMS — the joint religious authority of Indonesia, Malaysia, Brunei, and Singapore. It tightens the older MABIMS thresholds to better match observed crescent sightings.",
+      "ch1": "Topocentric Moon altitude at sunset ≥ 3°",
+      "ch2": "Geocentric Moon–Sun elongation ≥ 6.4°",
+      "ch3": "Moon age (since conjunction) ≥ 8 hours",
+      "ch4": "Moonset lag (after sunset) > 0 minutes",
+      "pro1": "Published, regionally adopted criterion — defensible reference",
+      "pro2": "All thresholds are simple geometric numbers; results are reproducible",
+      "con1": "Stricter than the in-house heuristic — predicts fewer month-starts",
+      "con2": "Calibrated for South-East Asia; may be conservative for Middle East / North Africa",
+      "note": "Adopted in 2016 by Indonesia, Malaysia, Brunei, and Singapore as a joint criterion (replacing the older MABIMS thresholds of altitude ≥ 2°, elongation ≥ 3°, age ≥ 8h). Historical accuracy on 164 official declarations across 5 countries (AH 1427–1447): 52% exact match, mean absolute difference 1.71 days."
     }
   },
   "probability": {
@@ -344,13 +364,17 @@
     "odehArcv": "ARCV (arc of vision)",
     "odehArcl": "ARCL (elongation)",
     "odehWidth": "W' (crescent width)",
-    "noChanceDesc": "This evening cannot be the start of a new Hijri month (e.g., we are past the first half of the lunar cycle, or the Moon sets at/before sunset). The score reflects month-start likelihood, not whether the Moon is visible.",
+    "noChanceDesc": "The crescent test was run for tonight and conditions ruled out a sighting (e.g. the Moon sets at or before sunset, or the score is too low to mark a new month).",
     "veryLowDesc": "Extremely weak conditions; crescent is unlikely visible and confidence for month start is minimal.",
     "lowDesc": "Poor conditions for a visible crescent (e.g., Moon very low, setting too soon, or very young).",
     "mediumDesc": "Borderline/mixed conditions; visibility depends on observer skill and local atmosphere.",
     "highDesc": "Strong conditions (Moon higher, well separated from the Sun, older, stays up longer after sunset).",
     "mostLikely": "Most likely month start",
-    "mostLikelyDesc": "When several days score positively, the highest-scoring candidate is highlighted with a star."
+    "mostLikelyDesc": "When several days score positively, the highest-scoring candidate is highlighted with a star.",
+    "lag": "Lag",
+    "notApplicable": "Mid-month",
+    "notApplicableDesc": "We are not near a new moon — the crescent test does not apply right now. The Moon is visible, but no Hijri month can start tonight.",
+    "notApplicableHint": "Mid-Hijri-month: this evening is not a candidate for a new month. The crescent test only applies in the last days of the current Hijri month."
   },
   "countries": {
     "sa": "Saudi Arabia",
@@ -487,9 +511,13 @@
     "ourResearchDesc": "Our comprehensive survey of 15 Hijri month-start methods, with formulae, pseudocode, and citations from the academic literature"
   },
   "seo": {
+    "today": {
+      "title": "Today's Hijri Date — Hijri Calendar",
+      "description": "See today's Hijri date, the next Islamic holiday with countdown, tonight's crescent moon visibility, and the current moon phase. Free Hijri calendar with multi-method support (MABIMS, Yallop, Odeh, civil)."
+    },
     "calendar": {
       "title": "Hijri Calendar — Monthly Islamic Calendar View",
-      "description": "Browse the Islamic (Hijri) calendar month by month with crescent moon visibility estimates. Supports Yallop, Odeh, and tabular civil methods."
+      "description": "Browse the Islamic (Hijri) calendar month by month with crescent moon visibility estimates. Supports MABIMS, Yallop, Odeh, and tabular civil methods."
     },
     "convert": {
       "title": "Hijri Date Converter — Gregorian to Hijri & Hijri to Gregorian",
@@ -508,8 +536,8 @@
       "description": "Compare officially declared Hijri month starts with astronomically calculated dates for Saudi Arabia and other countries."
     },
     "methods": {
-      "title": "Theory & Calculation Methods — Yallop, Odeh, Civil & More",
-      "description": "Learn about Islamic calendar calculation methods: Yallop q-test, Odeh criterion, tabular civil calendar, Umm al-Qura, Schaefer, and more. Astronomical crescent visibility models explained."
+      "title": "Theory & Calculation Methods — MABIMS, Yallop, Odeh, Civil",
+      "description": "Learn about Islamic calendar calculation methods: MABIMS 2016 (Imkanur Rukyat), Yallop q-test, Odeh criterion, tabular civil calendar, Umm al-Qura, Schaefer, and more. Astronomical crescent visibility models explained."
     },
     "scholars": {
       "title": "Islamic Scholars on Moon Sighting — Local vs Global",
@@ -519,5 +547,21 @@
       "title": "About Hijri Calendar — Free Open-Source Islamic Calendar",
       "description": "Hijri Calendar is a free, open-source Islamic calendar app. No tracking, no cookies, fully private. Built by Samer Aamar."
     }
+  },
+  "visibilityMap": {
+    "title": "Crescent visibility — world map",
+    "eveningOf": "Evening of",
+    "nextEvening": "Next evening",
+    "notAvailableForCivil": "The visibility map needs an astronomical method (Visibility heuristic, MABIMS, Yallop, or Odeh). Switch the method in the header.",
+    "computing": "Computing visibility for ~500 locations…",
+    "legendHigh": "High score (≥65%)",
+    "legendMedium": "Medium (33–65%)",
+    "legendLow": "Low (<33%)",
+    "legendGated": "No chance (method excludes)",
+    "summary": "Month-start positive at {{positive}} of {{total}} sample locations.",
+    "disclaimer": "Each dot samples a 10°×10° grid cell at local sunset on the selected evening. Real-world visibility depends on weather and observer skill.",
+    "prevEvening": "Previous evening",
+    "notApplicableBanner": "This date is mid-Hijri-month — the crescent test does not apply. The visibility map is most informative on the last days of a Hijri month (around the 29th). Pick a date near a month boundary.",
+    "legendNotApplicable": "Mid-month — test not applicable"
   }
 }

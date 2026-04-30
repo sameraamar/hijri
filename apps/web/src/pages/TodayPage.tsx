@@ -8,16 +8,17 @@ import {
 } from '@hijri/calendar-engine';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 
 import CrescentScoreBar from '../components/CrescentScoreBar';
-import HorizonDiagram from '../components/HorizonDiagram';
+import DayMetrics from '../components/DayMetrics';
+import LocaleLink from '../components/LocaleLink';
 import LocationPicker from '../components/LocationPicker';
 import MoonPhaseIcon from '../components/MoonPhaseIcon';
 import { likelihoodStyle, type VisibilityStatusKey } from '../components/likelihood';
 import { useAppLocation } from '../location/LocationContext';
 import { useMethod } from '../method/MethodContext';
 import { usePageMeta } from '../hooks/usePageMeta';
+import { getTimeZoneForLocation } from '../timezone';
 import { daysBetweenUtc, sameDate } from '../utils/dateMath';
 import { formatHijriDateDisplay, formatGregorianDateDisplay } from '../utils/dateFormat';
 import { buildIcal, downloadIcal } from '../utils/icalExport';
@@ -41,9 +42,9 @@ export default function TodayPage() {
   const { t, i18n } = useTranslation();
   const { methodId } = useMethod();
   const { location } = useAppLocation();
-  usePageMeta('today.title', 'app.footer.disclaimer');
+  usePageMeta('seo.today.title', 'seo.today.description');
 
-  const today = useMemo(todayGregorian, []);
+  const today = useMemo(() => todayGregorian(), []);
 
   const hijriToday = useMemo(() => gregorianToHijriCivil(today), [today]);
 
@@ -89,6 +90,21 @@ export default function TodayPage() {
 
   const hijriDisplay = formatHijriDateDisplay(hijriToday, i18n.language);
   const gregorianDisplay = formatGregorianDateDisplay(today, i18n.language);
+
+  const timeZone = useMemo(
+    () => getTimeZoneForLocation(location.latitude, location.longitude),
+    [location.latitude, location.longitude]
+  );
+  const localTimeFormatter = useMemo(
+    () => new Intl.DateTimeFormat(i18n.language, { hour: '2-digit', minute: '2-digit', hour12: false, timeZone }),
+    [i18n.language, timeZone]
+  );
+  const fmtLocalTime = (iso?: string): string | null => {
+    if (!iso) return null;
+    const d = new Date(iso);
+    if (!Number.isFinite(d.getTime())) return null;
+    return localTimeFormatter.format(d);
+  };
 
   return (
     <div className="page">
@@ -166,40 +182,52 @@ export default function TodayPage() {
               {t('today.tonightVisibilityHint')}
             </div>
           </div>
-          <Link
+          <LocaleLink
             to={`/calendar?year=${today.year}&month=${today.month}`}
             className="whitespace-nowrap text-xs text-blue-600 hover:underline dark:text-blue-300"
           >
             {t('app.nav.calendar')} →
-          </Link>
+          </LocaleLink>
         </div>
-        <div className="mt-2 flex flex-wrap items-center gap-3">
-          <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-sm font-medium ${tonightStyle.badgeClass}`}>
-            <span
-              className={`inline-flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-bold leading-none text-white ${tonightStyle.dotClass}`}
-              aria-hidden="true"
-            >
-              {tonightStyle.glyph}
+
+        {tonightStatus === 'notApplicable' ? (
+          // Mid-Hijri-month — there's nothing to test tonight. Replace the
+          // red-looking badge + score bar with a calm informational notice.
+          <div className="mt-3 rounded-md border border-slate-200 bg-slate-50 p-3 text-xs leading-relaxed text-slate-700 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-200">
+            <div className="font-semibold">{t('probability.notApplicable')}</div>
+            <div className="mt-1">{t('probability.notApplicableHint')}</div>
+            {typeof tonightEst.metrics.moonAgeHours === 'number' && (
+              <div className="mt-2 text-slate-500 dark:text-slate-400">
+                {t('today.nextMonthInDays', {
+                  count: Math.max(1, Math.round(30 - tonightEst.metrics.moonAgeHours / 24))
+                })}
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="mt-2 flex flex-wrap items-center gap-3">
+            <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-sm font-medium ${tonightStyle.badgeClass}`}>
+              <span
+                className={`inline-flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-bold leading-none text-white ${tonightStyle.dotClass}`}
+                aria-hidden="true"
+              >
+                {tonightStyle.glyph}
+              </span>
+              {t(`probability.${tonightStatus}`)}
             </span>
-            {t(`probability.${tonightStatus}`)}
-          </span>
-          <span className="text-sm text-slate-700 dark:text-slate-200">{tonightPercent}%</span>
-          {typeof tonightEst.metrics.visibilityPercent === 'number' && (
-            <CrescentScoreBar percent={tonightEst.metrics.visibilityPercent} width={120} />
-          )}
-        </div>
-        {typeof tonightEst.metrics.moonAltitudeDeg === 'number' && (
-          <div className="mt-3 flex justify-center">
-            <HorizonDiagram
-              moonAltitudeDeg={tonightEst.metrics.moonAltitudeDeg}
-              sunAltitudeDeg={tonightEst.metrics.sunAltitudeDeg ?? -1}
-              arcDeg={tonightEst.metrics.moonElongationDeg}
-              lagMinutes={tonightEst.metrics.lagMinutes}
-              width={220}
-              height={120}
-            />
+            <span className="text-sm text-slate-700 dark:text-slate-200">{tonightPercent}%</span>
+            {typeof tonightEst.metrics.visibilityPercent === 'number' && (
+              <CrescentScoreBar percent={tonightEst.metrics.visibilityPercent} width={120} />
+            )}
           </div>
         )}
+
+        {/* Full per-day metrics — same card the Calendar popup shows.
+            Side-by-side on wide screens, stacked on mobile. */}
+        <div className="mt-4 border-t border-slate-100 pt-3 text-xs dark:border-slate-700">
+          <DayMetrics est={tonightEst} fmtLocalTime={fmtLocalTime} size="comfortable" layout="split" />
+        </div>
+
         <div className="mt-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
           {t('probability.disclaimer')}
         </div>

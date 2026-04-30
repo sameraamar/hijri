@@ -21,27 +21,10 @@ import { formatHijriDateDisplay, formatIsoDateDisplay } from '../utils/dateForma
 import { buildIcal, downloadIcal } from '../utils/icalExport';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { useUrlNumber } from '../hooks/useUrlNumber';
+import { addDaysUtc, fmtIso as fmtGregorianIso, utcKey, type GregorianDate } from '../utils/dateMath';
 
-function pad2(n: number): string {
-  return String(n).padStart(2, '0');
-}
-
-function fmtGregorianIso(d: { year: number; month: number; day: number }): string {
-  return `${d.year}-${pad2(d.month)}-${pad2(d.day)}`;
-}
-
-function weekday(d: { year: number; month: number; day: number }): string {
+function weekday(d: GregorianDate): string {
   return new Date(d.year, d.month - 1, d.day).toLocaleDateString(i18n.language, { weekday: 'short' });
-}
-
-function addDaysUtc(d: { year: number; month: number; day: number }, deltaDays: number): { year: number; month: number; day: number } {
-  const dt = new Date(Date.UTC(d.year, d.month - 1, d.day, 0, 0, 0));
-  dt.setUTCDate(dt.getUTCDate() + deltaDays);
-  return { year: dt.getUTCFullYear(), month: dt.getUTCMonth() + 1, day: dt.getUTCDate() };
-}
-
-function utcKey(d: { year: number; month: number; day: number }): number {
-  return Date.UTC(d.year, d.month - 1, d.day, 0, 0, 0);
 }
 
 function clamp0to100(n: number): number {
@@ -115,7 +98,9 @@ export default function HolidaysPage() {
         );
 
         const statusKey = visibilityStatusFromEstimate(est);
-        if (statusKey === 'noChance') return null;
+        // Both `noChance` (tested negative) and `notApplicable` (mid-month, test
+        // doesn't apply) mean "not a candidate for this date" — drop either.
+        if (statusKey === 'noChance' || statusKey === 'notApplicable') return null;
 
         const percent = typeof est.metrics.visibilityPercent === 'number' ? clamp0to100(est.metrics.visibilityPercent) : null;
         const lagMinutes = typeof est.metrics.lagMinutes === 'number' ? Math.round(est.metrics.lagMinutes) : null;

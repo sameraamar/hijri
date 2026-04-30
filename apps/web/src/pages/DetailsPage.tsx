@@ -21,18 +21,7 @@ import { getTimeZoneForLocation } from '../timezone';
 import { formatHijriDateDisplay, formatLocalizedNumber, formatIsoDateDisplay } from '../utils/dateFormat';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { useUrlNumber } from '../hooks/useUrlNumber';
-
-function daysInGregorianMonth(year: number, month: number): number {
-  return new Date(year, month, 0).getDate();
-}
-
-function pad2(n: number): string {
-  return String(n).padStart(2, '0');
-}
-
-function isoDate(y: number, m: number, d: number): string {
-  return `${y}-${pad2(m)}-${pad2(d)}`;
-}
+import { daysInGregorianMonth, isoDate } from '../utils/dateMath';
 
 type DetailRow = {
   gregorianIso: string;
@@ -230,7 +219,7 @@ export default function DetailsPage() {
         const ddPrev = new Date(dd); ddPrev.setUTCDate(ddPrev.getUTCDate() - 1);
         const ddPrevIso = isoDate(ddPrev.getUTCFullYear(), ddPrev.getUTCMonth() + 1, ddPrev.getUTCDate());
         const ddSignal = getMonthStartSignalLevel(estimateByIso.get(ddPrevIso));
-        if (ddSignal === 'noChance') {
+        if (ddSignal === 'noChance' || ddSignal === 'notApplicable') {
           const daysFromX = Math.round((dd.getTime() - x.getTime()) / 86400000);
           const daysFromS = Math.round((dd.getTime() - s.getTime()) / 86400000);
           if (Math.abs(daysFromX) > 1 && Math.abs(daysFromS) > 1) continue;
@@ -248,7 +237,9 @@ export default function DetailsPage() {
     for (let d = 1; d < dim; d++) {
       if (!indicatorDays.has(d) || !indicatorDays.has(d + 1)) continue;
       const a = signalForDay(d); const b = signalForDay(d + 1);
-      if (a === 'noChance' && b === 'noChance') indicatorDays.delete(d);
+      const aIsNotCandidate = a === 'noChance' || a === 'notApplicable';
+      const bIsNotCandidate = b === 'noChance' || b === 'notApplicable';
+      if (aIsNotCandidate && bIsNotCandidate) indicatorDays.delete(d);
       if ((a === 'medium' || a === 'high') && b !== 'unknown') indicatorDays.delete(d + 1);
     }
 

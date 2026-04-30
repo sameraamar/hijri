@@ -12,21 +12,19 @@ import { usePageMeta } from '../hooks/usePageMeta';
 import { useUrlNumber } from '../hooks/useUrlNumber';
 import { useUrlString } from '../hooks/useUrlString';
 
+import {
+  addDaysUtc as addDays,
+  daysBetweenUtc as diffDays,
+  fmtIso,
+  sameDate,
+  type GregorianDate
+} from '../utils/dateMath';
+
 // ---------------------------------------------------------------------------
 // Constants & helpers
 // ---------------------------------------------------------------------------
 const HIJRI_YEARS = Array.from({ length: 21 }, (_, i) => 1427 + i); // 1427-1447
 const HIJRI_MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);   // 1-12
-
-function pad2(n: number): string {
-  return String(n).padStart(2, '0');
-}
-
-type GregorianDate = { year: number; month: number; day: number };
-
-function fmtIso(d: GregorianDate): string {
-  return `${d.year}-${pad2(d.month)}-${pad2(d.day)}`;
-}
 
 function fmtLocale(d: GregorianDate): string {
   return new Date(d.year, d.month - 1, d.day).toLocaleDateString(i18n.language, {
@@ -34,22 +32,6 @@ function fmtLocale(d: GregorianDate): string {
     month: 'short',
     day: 'numeric',
   });
-}
-
-function sameDate(a: GregorianDate, b: GregorianDate): boolean {
-  return a.year === b.year && a.month === b.month && a.day === b.day;
-}
-
-function diffDays(a: GregorianDate, b: GregorianDate): number {
-  const da = Date.UTC(a.year, a.month - 1, a.day);
-  const db = Date.UTC(b.year, b.month - 1, b.day);
-  return Math.round((db - da) / 86400000);
-}
-
-function addDays(d: GregorianDate, n: number): GregorianDate {
-  const dt = new Date(Date.UTC(d.year, d.month - 1, d.day));
-  dt.setUTCDate(dt.getUTCDate() + n);
-  return { year: dt.getUTCFullYear(), month: dt.getUTCMonth() + 1, day: dt.getUTCDate() };
 }
 
 // ---------------------------------------------------------------------------
@@ -194,7 +176,10 @@ export default function HistoryPage() {
   const isPending = countryId !== deferredCountryId || hijriYear !== deferredYear;
 
   const country = COUNTRIES.find((c) => c.id === deferredCountryId)!;
-  const location = { latitude: country.latitude, longitude: country.longitude };
+  const location = useMemo(
+    () => ({ latitude: country.latitude, longitude: country.longitude }),
+    [country.latitude, country.longitude]
+  );
   const hasOfficial = hasAnyOfficialData(deferredCountryId);
 
   // Build one row per Hijri month for the selected year.
@@ -225,7 +210,7 @@ export default function HistoryPage() {
         odeh: extractPrediction(odeCal, deferredYear, hijriMonth, official),
       };
     });
-  }, [deferredCountryId, deferredYear, location.latitude, location.longitude]);
+  }, [deferredCountryId, deferredYear, location]);
 
   // Summary stats — only over months that have official data
   const stats = useMemo(() => {

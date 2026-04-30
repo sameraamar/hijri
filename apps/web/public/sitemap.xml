@@ -1,47 +1,135 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://sameraamar.github.io/hijri/</loc>
-    <changefreq>weekly</changefreq>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sameraamar.github.io/hijri/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://sameraamar.github.io/hijri/ar" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sameraamar.github.io/hijri/tr" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sameraamar.github.io/hijri/fr" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://sameraamar.github.io/hijri/id" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://sameraamar.github.io/hijri/ur" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sameraamar.github.io/hijri/" />
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://sameraamar.github.io/hijri/holidays</loc>
+    <loc>https://sameraamar.github.io/hijri/today</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sameraamar.github.io/hijri/today" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://sameraamar.github.io/hijri/ar/today" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sameraamar.github.io/hijri/tr/today" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sameraamar.github.io/hijri/fr/today" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://sameraamar.github.io/hijri/id/today" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://sameraamar.github.io/hijri/ur/today" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sameraamar.github.io/hijri/today" />
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://sameraamar.github.io/hijri/calendar</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sameraamar.github.io/hijri/calendar" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://sameraamar.github.io/hijri/ar/calendar" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sameraamar.github.io/hijri/tr/calendar" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sameraamar.github.io/hijri/fr/calendar" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://sameraamar.github.io/hijri/id/calendar" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://sameraamar.github.io/hijri/ur/calendar" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sameraamar.github.io/hijri/calendar" />
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://sameraamar.github.io/hijri/calendar</loc>
+    <loc>https://sameraamar.github.io/hijri/holidays</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sameraamar.github.io/hijri/holidays" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://sameraamar.github.io/hijri/ar/holidays" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sameraamar.github.io/hijri/tr/holidays" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sameraamar.github.io/hijri/fr/holidays" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://sameraamar.github.io/hijri/id/holidays" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://sameraamar.github.io/hijri/ur/holidays" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sameraamar.github.io/hijri/holidays" />
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://sameraamar.github.io/hijri/convert</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sameraamar.github.io/hijri/convert" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://sameraamar.github.io/hijri/ar/convert" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sameraamar.github.io/hijri/tr/convert" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sameraamar.github.io/hijri/fr/convert" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://sameraamar.github.io/hijri/id/convert" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://sameraamar.github.io/hijri/ur/convert" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sameraamar.github.io/hijri/convert" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sameraamar.github.io/hijri/details</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sameraamar.github.io/hijri/details" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://sameraamar.github.io/hijri/ar/details" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sameraamar.github.io/hijri/tr/details" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sameraamar.github.io/hijri/fr/details" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://sameraamar.github.io/hijri/id/details" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://sameraamar.github.io/hijri/ur/details" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sameraamar.github.io/hijri/details" />
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://sameraamar.github.io/hijri/visibility-map</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sameraamar.github.io/hijri/visibility-map" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://sameraamar.github.io/hijri/ar/visibility-map" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sameraamar.github.io/hijri/tr/visibility-map" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sameraamar.github.io/hijri/fr/visibility-map" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://sameraamar.github.io/hijri/id/visibility-map" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://sameraamar.github.io/hijri/ur/visibility-map" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sameraamar.github.io/hijri/visibility-map" />
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://sameraamar.github.io/hijri/history</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sameraamar.github.io/hijri/history" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://sameraamar.github.io/hijri/ar/history" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sameraamar.github.io/hijri/tr/history" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sameraamar.github.io/hijri/fr/history" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://sameraamar.github.io/hijri/id/history" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://sameraamar.github.io/hijri/ur/history" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sameraamar.github.io/hijri/history" />
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sameraamar.github.io/hijri/methods</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sameraamar.github.io/hijri/methods" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://sameraamar.github.io/hijri/ar/methods" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sameraamar.github.io/hijri/tr/methods" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sameraamar.github.io/hijri/fr/methods" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://sameraamar.github.io/hijri/id/methods" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://sameraamar.github.io/hijri/ur/methods" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sameraamar.github.io/hijri/methods" />
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://sameraamar.github.io/hijri/scholars</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sameraamar.github.io/hijri/scholars" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://sameraamar.github.io/hijri/ar/scholars" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sameraamar.github.io/hijri/tr/scholars" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sameraamar.github.io/hijri/fr/scholars" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://sameraamar.github.io/hijri/id/scholars" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://sameraamar.github.io/hijri/ur/scholars" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sameraamar.github.io/hijri/scholars" />
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://sameraamar.github.io/hijri/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sameraamar.github.io/hijri/about" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://sameraamar.github.io/hijri/ar/about" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sameraamar.github.io/hijri/tr/about" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sameraamar.github.io/hijri/fr/about" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://sameraamar.github.io/hijri/id/about" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://sameraamar.github.io/hijri/ur/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sameraamar.github.io/hijri/about" />
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>

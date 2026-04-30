@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
 import App from './App.tsx';
-import { initI18n } from './i18n/i18n';
+import { initI18n, detectInitialLanguage } from './i18n/i18n';
 import { LocationProvider } from './location/LocationContext';
 import { MethodProvider } from './method/MethodContext';
 import { ThemeProvider } from './theme/ThemeContext';
@@ -23,7 +23,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
-initI18n('en');
+initI18n(detectInitialLanguage());
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

@@ -14,8 +14,7 @@ import { useTranslation } from 'react-i18next';
 
 import LocationPicker from '../components/LocationPicker';
 import MoonPhaseIcon from '../components/MoonPhaseIcon';
-import HorizonDiagram from '../components/HorizonDiagram';
-import CrescentScoreBar from '../components/CrescentScoreBar';
+import DayMetrics from '../components/DayMetrics';
 import { likelihoodStyle, VISIBILITY_LEGEND_ORDER, type VisibilityStatusKey } from '../components/likelihood';
 import { useAppLocation } from '../location/LocationContext';
 import { useMethod } from '../method/MethodContext';
@@ -24,11 +23,7 @@ import { usePageMeta } from '../hooks/usePageMeta';
 import { useUrlNumber } from '../hooks/useUrlNumber';
 import { getTimeZoneForLocation } from '../timezone';
 import { formatHijriDateDisplay, formatLocalizedNumber } from '../utils/dateFormat';
-
-function daysInGregorianMonth(year: number, month: number): number {
-  // month: 1-12
-  return new Date(year, month, 0).getDate();
-}
+import { daysInGregorianMonth, isoDate } from '../utils/dateMath';
 
 type DayEstimate = {
   likelihoodKey: string;
@@ -62,14 +57,6 @@ type CalendarDay = {
   isPotentialMonthStartEve: boolean;
   showIndicator: boolean;
 };
-
-function pad2(n: number): string {
-  return String(n).padStart(2, '0');
-}
-
-function isoDate(y: number, m: number, d: number): string {
-  return `${y}-${pad2(m)}-${pad2(d)}`;
-}
 
 function heatClassForPercent(p: number): string {
   if (p >= 85) return 'bg-slate-300';
@@ -748,7 +735,11 @@ export default function CalendarPage() {
                     <div className="hidden sm:block absolute left-0 right-0 top-full z-50 mt-1 sm:left-2 sm:right-auto sm:w-96 sm:max-w-[calc(100vw-2rem)]">
                       <div className="max-h-[60vh] overflow-auto select-text rounded-md border border-slate-200 bg-white p-2.5 text-xs shadow-lg sm:max-h-[70vh] sm:p-3">
                         <div className="space-y-3">
-                          <div className="text-[11px] leading-relaxed text-slate-600">{t('holidays.monthStartRuleNote')}</div>
+                          <div className="text-[11px] leading-relaxed text-slate-600 dark:text-slate-300">
+                            {eveStatusKey === 'notApplicable'
+                              ? t('probability.notApplicableHint')
+                              : t('holidays.monthStartRuleNote')}
+                          </div>
 
                           <div>
                             <div className="text-[11px] font-semibold text-slate-900">
@@ -757,105 +748,12 @@ export default function CalendarPage() {
                             </div>
 
                             {thisEst ? (
-                              <div className="mt-2 space-y-1">
-                                {methodId === 'yallop' && thisEst.metrics.yallopQ != null ? (
-                                  <>
-                                    <MetricRow label={t('probability.yallopQ')} value={thisEst.metrics.yallopQ.toFixed(3)} />
-                                    <MetricRow label={t('probability.yallopZone')} value={thisEst.metrics.yallopZone ? `${thisEst.metrics.yallopZone} — ${thisEst.metrics.yallopZoneDescription ?? ''}` : '—'} />
-                                    {typeof thisEst.metrics.yallopArcvDeg === 'number' ? <MetricRow label={t('probability.yallopArcv')} value={`${thisEst.metrics.yallopArcvDeg.toFixed(2)}°`} /> : null}
-                                    {typeof thisEst.metrics.yallopWidthArcmin === 'number' ? <MetricRow label={t('probability.yallopWidth')} value={`${thisEst.metrics.yallopWidthArcmin.toFixed(2)}'`} /> : null}
-                                    {thisEst.metrics.yallopBestTimeUtcIso ? <MetricRow label={t('probability.yallopBestTime')} value={fmtLocalTime(thisEst.metrics.yallopBestTimeUtcIso) ?? '—'} /> : null}
-                                    <div className="border-t border-slate-100 pt-1 mt-1" />
-                                  </>
-                                ) : methodId === 'odeh' && thisEst.metrics.odehV != null ? (
-                                  <>
-                                    <MetricRow label={t('probability.odehV')} value={thisEst.metrics.odehV.toFixed(3)} />
-                                    <MetricRow label={t('probability.odehZone')} value={thisEst.metrics.odehZone ? `${thisEst.metrics.odehZone} — ${thisEst.metrics.odehZoneDescription ?? ''}` : '—'} />
-                                    {typeof thisEst.metrics.odehArcvDeg === 'number' ? <MetricRow label={t('probability.odehArcv')} value={`${thisEst.metrics.odehArcvDeg.toFixed(2)}°`} /> : null}
-                                    {typeof thisEst.metrics.odehWidthArcmin === 'number' ? <MetricRow label={t('probability.odehWidth')} value={`${thisEst.metrics.odehWidthArcmin.toFixed(2)}'`} /> : null}
-                                    {thisEst.metrics.odehBestTimeUtcIso ? <MetricRow label={t('probability.odehBestTime')} value={fmtLocalTime(thisEst.metrics.odehBestTimeUtcIso) ?? '—'} /> : null}
-                                    <div className="border-t border-slate-100 pt-1 mt-1" />
-                                  </>
-                                ) : (
-                                  <>
-                                    <MetricRow
-                                      label={t('probability.crescentScore')}
-                                      value={
-                                        typeof thisEst.metrics.visibilityPercent === 'number'
-                                          ? `${clamp0to100(thisEst.metrics.visibilityPercent)}%`
-                                          : '—'
-                                      }
-                                    />
-                                    <div className="border-t border-slate-100 pt-1 mt-1" />
-                                  </>
-                                )}
-                                <MetricRow label={t('probability.sunsetLocal')} value={fmtLocalTime(thisEst.metrics.sunsetUtcIso) ?? '—'} />
-                                <MetricRow label={t('probability.moonsetLocal')} value={fmtLocalTime(thisEst.metrics.moonsetUtcIso) ?? '—'} />
-                                <MetricRow
-                                  label={t('probability.lagMinutes')}
-                                  value={
-                                    typeof thisEst.metrics.lagMinutes === 'number'
-                                      ? String(Math.round(thisEst.metrics.lagMinutes))
-                                      : '—'
-                                  }
+                              <div className="mt-2">
+                                <DayMetrics
+                                  est={thisEst}
+                                  fmtLocalTime={fmtLocalTime}
+                                  size="compact"
                                 />
-                                <MetricRow
-                                  label={t('holidays.moonIllumination')}
-                                  value={
-                                    typeof thisEst.metrics.moonIlluminationFraction === 'number'
-                                      ? `${Math.round(thisEst.metrics.moonIlluminationFraction * 100)}%`
-                                      : '—'
-                                  }
-                                />
-                                <MetricRow
-                                  label={t('holidays.moonAltitude')}
-                                  value={
-                                    typeof thisEst.metrics.moonAltitudeDeg === 'number'
-                                      ? `${thisEst.metrics.moonAltitudeDeg.toFixed(1)}°`
-                                      : '—'
-                                  }
-                                />
-                                <MetricRow
-                                  label={t('holidays.moonElongation')}
-                                  value={
-                                    typeof thisEst.metrics.moonElongationDeg === 'number'
-                                      ? `${thisEst.metrics.moonElongationDeg.toFixed(1)}°`
-                                      : '—'
-                                  }
-                                />
-                                <MetricRow
-                                  label={t('holidays.moonAge')}
-                                  value={
-                                    typeof thisEst.metrics.moonAgeHours === 'number'
-                                      ? `${thisEst.metrics.moonAgeHours.toFixed(1)}h`
-                                      : '—'
-                                  }
-                                />
-                                {/* Visual: Horizon diagram + Moon phase */}
-                                <div className="mt-3 flex items-center justify-center gap-4 border-t border-slate-100 pt-2">
-                                  {typeof thisEst.metrics.moonAltitudeDeg === 'number' && (
-                                    <HorizonDiagram
-                                      moonAltitudeDeg={thisEst.metrics.moonAltitudeDeg}
-                                      sunAltitudeDeg={thisEst.metrics.sunAltitudeDeg ?? -1}
-                                      arcDeg={thisEst.metrics.moonElongationDeg}
-                                      lagMinutes={thisEst.metrics.lagMinutes}
-                                      width={150}
-                                      height={90}
-                                    />
-                                  )}
-                                  {typeof thisEst.metrics.moonIlluminationFraction === 'number' && (
-                                    <div className="flex flex-col items-center gap-1">
-                                      <MoonPhaseIcon illumination={thisEst.metrics.moonIlluminationFraction} size={36} />
-                                      <span className="text-[10px] text-slate-500">{Math.round(thisEst.metrics.moonIlluminationFraction * 100)}%</span>
-                                    </div>
-                                  )}
-                                </div>
-                                {typeof thisEst.metrics.visibilityPercent === 'number' && (
-                                  <div className="mt-2 flex items-center gap-2">
-                                    <span className="text-[11px] text-slate-500">{t('probability.crescentScore')}:</span>
-                                    <CrescentScoreBar percent={thisEst.metrics.visibilityPercent} width={80} />
-                                  </div>
-                                )}
                               </div>
                             ) : (
                               <div className="mt-2 text-[11px] text-slate-600">—</div>
@@ -891,7 +789,9 @@ export default function CalendarPage() {
                                   }
                                 />
                                 {eveStatusKey === 'noChance' ? (
-                                  <div className="text-[11px] text-slate-600">{t('probability.noChanceHint')}</div>
+                                  <div className="text-[11px] text-slate-600 dark:text-slate-300">{t('probability.noChanceHint')}</div>
+                                ) : eveStatusKey === 'notApplicable' ? (
+                                  <div className="text-[11px] text-slate-600 dark:text-slate-300">{t('probability.notApplicableHint')}</div>
                                 ) : null}
                               </div>
                             </div>
@@ -945,63 +845,12 @@ export default function CalendarPage() {
             </div>
 
             {thisEst ? (
-              <div className="text-xs space-y-0.5">
-                {methodId === 'yallop' && thisEst.metrics.yallopQ != null ? (
-                  <>
-                    <MetricRow label={t('probability.yallopQ')} value={thisEst.metrics.yallopQ.toFixed(3)} />
-                    <MetricRow label={t('probability.yallopZone')} value={thisEst.metrics.yallopZone ? `${thisEst.metrics.yallopZone} — ${thisEst.metrics.yallopZoneDescription ?? ''}` : '—'} />
-                    {typeof thisEst.metrics.yallopArcvDeg === 'number' ? <MetricRow label={t('probability.yallopArcv')} value={`${thisEst.metrics.yallopArcvDeg.toFixed(2)}°`} /> : null}
-                    {typeof thisEst.metrics.yallopWidthArcmin === 'number' ? <MetricRow label={t('probability.yallopWidth')} value={`${thisEst.metrics.yallopWidthArcmin.toFixed(2)}'`} /> : null}
-                    {thisEst.metrics.yallopBestTimeUtcIso ? <MetricRow label={t('probability.yallopBestTime')} value={fmtLocalTime(thisEst.metrics.yallopBestTimeUtcIso) ?? '—'} /> : null}
-                  </>
-                ) : methodId === 'odeh' && thisEst.metrics.odehV != null ? (
-                  <>
-                    <MetricRow label={t('probability.odehV')} value={thisEst.metrics.odehV.toFixed(3)} />
-                    <MetricRow label={t('probability.odehZone')} value={thisEst.metrics.odehZone ? `${thisEst.metrics.odehZone} — ${thisEst.metrics.odehZoneDescription ?? ''}` : '—'} />
-                    {typeof thisEst.metrics.odehArcvDeg === 'number' ? <MetricRow label={t('probability.odehArcv')} value={`${thisEst.metrics.odehArcvDeg.toFixed(2)}°`} /> : null}
-                    {typeof thisEst.metrics.odehWidthArcmin === 'number' ? <MetricRow label={t('probability.odehWidth')} value={`${thisEst.metrics.odehWidthArcmin.toFixed(2)}'`} /> : null}
-                    {thisEst.metrics.odehBestTimeUtcIso ? <MetricRow label={t('probability.odehBestTime')} value={fmtLocalTime(thisEst.metrics.odehBestTimeUtcIso) ?? '—'} /> : null}
-                  </>
-                ) : (
-                  <>
-                    <MetricRow label={t('probability.crescentScore')} value={typeof thisEst.metrics.visibilityPercent === 'number' ? `${clamp0to100(thisEst.metrics.visibilityPercent)}%` : '—'} />
-                    <div className="border-t border-slate-100 pt-1 mt-1" />
-                  </>
-                )}
-                <MetricRow label={t('probability.lagMinutes')} value={typeof thisEst.metrics.lagMinutes === 'number' ? String(Math.round(thisEst.metrics.lagMinutes)) : '—'} />
-                <MetricRow label={t('holidays.moonIllumination')} value={typeof thisEst.metrics.moonIlluminationFraction === 'number' ? `${Math.round(thisEst.metrics.moonIlluminationFraction * 100)}%` : '—'} />
-                <MetricRow label={t('holidays.moonAltitude')} value={typeof thisEst.metrics.moonAltitudeDeg === 'number' ? `${thisEst.metrics.moonAltitudeDeg.toFixed(1)}°` : '—'} />
-                <MetricRow label={t('holidays.moonElongation')} value={typeof thisEst.metrics.moonElongationDeg === 'number' ? `${thisEst.metrics.moonElongationDeg.toFixed(1)}°` : '—'} />
-                <MetricRow label={t('holidays.moonAge')} value={typeof thisEst.metrics.moonAgeHours === 'number' ? `${thisEst.metrics.moonAgeHours.toFixed(1)}h` : '—'} />
-                <div className="border-t border-slate-100 pt-1 mt-1">
-                  <MetricRow label={t('probability.sunsetLocal')} value={fmtLocalTime(thisEst.metrics.sunsetUtcIso) ?? '—'} />
-                  <MetricRow label={t('probability.moonsetLocal')} value={fmtLocalTime(thisEst.metrics.moonsetUtcIso) ?? '—'} />
-                </div>
-                {/* Visual: Horizon diagram + Moon phase */}
-                <div className="mt-3 flex items-center justify-center gap-4 border-t border-slate-100 pt-2">
-                  {typeof thisEst.metrics.moonAltitudeDeg === 'number' && (
-                    <HorizonDiagram
-                      moonAltitudeDeg={thisEst.metrics.moonAltitudeDeg}
-                      sunAltitudeDeg={thisEst.metrics.sunAltitudeDeg ?? -1}
-                      arcDeg={thisEst.metrics.moonElongationDeg}
-                      lagMinutes={thisEst.metrics.lagMinutes}
-                      width={180}
-                      height={100}
-                    />
-                  )}
-                  {typeof thisEst.metrics.moonIlluminationFraction === 'number' && (
-                    <div className="flex flex-col items-center gap-1">
-                      <MoonPhaseIcon illumination={thisEst.metrics.moonIlluminationFraction} size={40} />
-                      <span className="text-[10px] text-slate-500">{Math.round(thisEst.metrics.moonIlluminationFraction * 100)}%</span>
-                    </div>
-                  )}
-                </div>
-                {typeof thisEst.metrics.visibilityPercent === 'number' && (
-                  <div className="mt-2 flex items-center gap-2">
-                    <span className="text-[11px] text-slate-500">{t('probability.crescentScore')}:</span>
-                    <CrescentScoreBar percent={thisEst.metrics.visibilityPercent} width={100} />
-                  </div>
-                )}
+              <div className="text-xs">
+                <DayMetrics
+                  est={thisEst}
+                  fmtLocalTime={fmtLocalTime}
+                  size="comfortable"
+                />
               </div>
             ) : <div className="text-xs text-slate-500">—</div>}
           </div>

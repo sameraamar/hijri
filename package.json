@@ -15,7 +15,7 @@
     "test": "npm-run-all -s test:engine test:web",
     "test:engine": "npm run -w @hijri/calendar-engine test",
     "test:web": "npm run -w @hijri/web test",
-    "lint": "echo \"No lint configured yet\"",
+    "lint": "npm run -w @hijri/web lint",
     "generate:data": "node scripts/csv-to-declarations.mjs",
     "validate:methods": "npm run -w @hijri/calendar-engine build && node scripts/validate-methods.mjs"
   },

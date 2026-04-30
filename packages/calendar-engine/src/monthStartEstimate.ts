@@ -9,45 +9,99 @@ export type ObserverLocation = {
 
 export type MonthStartLikelihood = 'low' | 'medium' | 'high' | 'unknown';
 
-export type MonthStartEstimate = {
-  likelihood: MonthStartLikelihood;
-  metrics: {
-    sunriseUtcIso?: string;
-    sunsetUtcIso?: string;
-    moonriseUtcIso?: string;
-    moonsetUtcIso?: string;
-    lagMinutes?: number;
-    moonAltitudeDeg?: number;
-    moonAzimuthDeg?: number;
-    sunAltitudeDeg?: number;
-    sunAzimuthDeg?: number;
-    relativeAzimuthDeg?: number;
-    moonElongationDeg?: number;
-    moonAgeHours?: number;
-    moonIlluminationFraction?: number;
-    visibilityScore?: number; // 0..1
-    visibilityPercent?: number; // 0..100
-    // Yallop-specific fields (only present when method is Yallop)
-    yallopQ?: number;
-    yallopZone?: string; // 'A'..'F'
-    yallopZoneDescription?: string;
-    yallopBestTimeUtcIso?: string;
-    yallopArclDeg?: number; // ARCL
-    yallopArcvDeg?: number; // ARCV
-    yallopWidthArcmin?: number; // W'
-    // Odeh-specific fields (only present when method is Odeh)
-    odehV?: number;
-    odehZone?: string; // 'A'..'D'
-    odehZoneDescription?: string;
-    odehBestTimeUtcIso?: string;
-    odehArclDeg?: number; // ARCL
-    odehArcvDeg?: number; // ARCV
-    odehWidthArcmin?: number; // W'
-  };
+/** Identifies which estimator produced a `MonthStartEstimate`. */
+export type EstimateKind = 'heuristic' | 'yallop' | 'odeh';
+
+/** Astronomy values shared by every estimator (computed at local sunset). */
+export type HeuristicMetrics = {
+  sunriseUtcIso?: string;
+  sunsetUtcIso?: string;
+  moonriseUtcIso?: string;
+  moonsetUtcIso?: string;
+  lagMinutes?: number;
+  moonAltitudeDeg?: number;
+  moonAzimuthDeg?: number;
+  sunAltitudeDeg?: number;
+  sunAzimuthDeg?: number;
+  relativeAzimuthDeg?: number;
+  moonElongationDeg?: number;
+  moonAgeHours?: number;
+  moonIlluminationFraction?: number;
+  /**
+   * Moon's synodic phase as a fraction in `[0, 1)`:
+   * 0 = new moon (conjunction), 0.25 = first quarter, 0.5 = full moon,
+   * 0.75 = last quarter. Values > 0.5 mean we're in the *waning* half of
+   * the cycle (past full); values ≤ 0.5 are *waxing*.
+   */
+  moonPhase?: number;
+  visibilityScore?: number; // 0..1
+  visibilityPercent?: number; // 0..100
 };
 
-export type MoonVisibilityLevel = 'noChance' | 'veryLow' | 'low' | 'medium' | 'high' | 'unknown';
-export type MonthStartSignalLevel = 'noChance' | 'veryLow' | 'low' | 'medium' | 'high' | 'unknown';
+/** Yallop-specific metrics in addition to the shared heuristic block. */
+export type YallopMetricsExtra = {
+  yallopQ?: number;
+  yallopZone?: string; // 'A'..'F'
+  yallopZoneDescription?: string;
+  yallopBestTimeUtcIso?: string;
+  yallopArclDeg?: number; // ARCL
+  yallopArcvDeg?: number; // ARCV
+  yallopWidthArcmin?: number; // W'
+};
+
+/** Odeh-specific metrics in addition to the shared heuristic block. */
+export type OdehMetricsExtra = {
+  odehV?: number;
+  odehZone?: string; // 'A'..'D'
+  odehZoneDescription?: string;
+  odehBestTimeUtcIso?: string;
+  odehArclDeg?: number; // ARCL
+  odehArcvDeg?: number; // ARCV
+  odehWidthArcmin?: number; // W'
+};
+
+/**
+ * Result of any month-start estimator. Discriminated by `kind`:
+ *
+ *   if (est.kind === 'yallop') { /* yallopQ, yallopZone, ... safely accessible */ /* }
+ *
+ * The legacy union shape (all optional fields on `metrics`) is preserved so
+ * existing call sites continue to compile; new code should narrow on `kind`.
+ */
+export type MonthStartEstimate = {
+  /** Which estimator produced this result. */
+  kind: EstimateKind;
+  likelihood: MonthStartLikelihood;
+  metrics: HeuristicMetrics & YallopMetricsExtra & OdehMetricsExtra;
+};
+
+export type HeuristicEstimate = MonthStartEstimate & { kind: 'heuristic' };
+export type YallopEstimate = MonthStartEstimate & { kind: 'yallop' };
+export type OdehEstimate = MonthStartEstimate & { kind: 'odeh' };
+
+export function isYallopEstimate(est: MonthStartEstimate | undefined): est is YallopEstimate {
+  return est?.kind === 'yallop';
+}
+
+export function isOdehEstimate(est: MonthStartEstimate | undefined): est is OdehEstimate {
+  return est?.kind === 'odeh';
+}
+
+export function isHeuristicEstimate(est: MonthStartEstimate | undefined): est is HeuristicEstimate {
+  return est?.kind === 'heuristic';
+}
+
+/**
+ * `notApplicable` — we are mid-Hijri-month (moon age > the month-start window,
+ *                   or in the waning half of the cycle). The crescent test
+ *                   is not relevant; no algorithm would say a new month *could*
+ *                   start tonight. Distinct from `noChance`, which means the
+ *                   test was relevant but conditions failed.
+ */
+export type MoonVisibilityLevel =
+  | 'notApplicable' | 'noChance' | 'veryLow' | 'low' | 'medium' | 'high' | 'unknown';
+export type MonthStartSignalLevel =
+  | 'notApplicable' | 'noChance' | 'veryLow' | 'low' | 'medium' | 'high' | 'unknown';
 
 export type DailyMonthStartSignal = {
   gregorian: GregorianDate;
@@ -186,10 +240,10 @@ export function estimateMonthStartLikelihoodAtSunset(date: GregorianDate, locati
   // Using a UTC day anchor keeps results stable regardless of device timezone.
   const sunsetTime = Astronomy.SearchRiseSet(Astronomy.Body.Sun, observer, -1, startOfDayUtc, 2);
   const sunset = sunsetTime?.date;
-  if (!sunset) return { likelihood: 'unknown', metrics: {} };
+  if (!sunset) return { kind: 'heuristic', likelihood: 'unknown', metrics: {} };
 
   const sunsetIso = safeIso(sunset);
-  if (!sunsetIso) return { likelihood: 'unknown', metrics: {} };
+  if (!sunsetIso) return { kind: 'heuristic', likelihood: 'unknown', metrics: {} };
 
   const sunEq = Astronomy.Equator(Astronomy.Body.Sun, sunset, observer, true, true);
   const sunHor = Astronomy.Horizon(sunset, observer, sunEq.ra, sunEq.dec, 'normal');
@@ -264,6 +318,7 @@ export function estimateMonthStartLikelihoodAtSunset(date: GregorianDate, locati
   const visibilityPercent = Math.round(visibilityScore * 100);
 
   return {
+    kind: 'heuristic',
     likelihood,
     metrics: {
       sunriseUtcIso: sunriseIso,
@@ -279,6 +334,7 @@ export function estimateMonthStartLikelihoodAtSunset(date: GregorianDate, locati
       moonElongationDeg,
       moonAgeHours,
       moonIlluminationFraction,
+      moonPhase: phase,
       visibilityScore,
       visibilityPercent
     }
@@ -308,8 +364,24 @@ function classifyFromPercent(percent: number): Exclude<MonthStartSignalLevel, 'u
   return 'high';
 }
 
+/**
+ * True when the evening is *not* a candidate for a Hijri month-start.
+ * The crescent test isn't relevant in this regime — moon age has run past
+ * the new-moon window, or we're already in the waning half of the cycle.
+ */
+function isNotApplicable(est: MonthStartEstimate): boolean {
+  const age = est.metrics.moonAgeHours;
+  if (typeof age === 'number' && age > MAX_CRESCENT_AGE_HOURS_FOR_MONTH_START) return true;
+  const phase = est.metrics.moonPhase;
+  if (typeof phase === 'number' && phase > 0.5) return true;
+  return false;
+}
+
 export function getMoonVisibilityLevel(est: MonthStartEstimate | undefined): MoonVisibilityLevel {
   if (!est) return 'unknown';
+  // Check `notApplicable` *before* `noChance` so mid-month evenings are not
+  // mislabelled as if a test had failed.
+  if (isNotApplicable(est)) return 'notApplicable';
   const lag = est.metrics.lagMinutes;
   const moonAltitudeDeg = est.metrics.moonAltitudeDeg;
   const percent = clampPercent(est.metrics.visibilityPercent ?? 0);
@@ -322,6 +394,7 @@ export function getMoonVisibilityLevel(est: MonthStartEstimate | undefined): Moo
 
 export function getMonthStartSignalLevel(est: MonthStartEstimate | undefined): MonthStartSignalLevel {
   if (!est) return 'unknown';
+  if (isNotApplicable(est)) return 'notApplicable';
   const lag = est.metrics.lagMinutes;
   if (typeof lag === 'number' && lag <= 0) return 'noChance';
   const percent = clampPercent(est.metrics.visibilityPercent ?? 0);

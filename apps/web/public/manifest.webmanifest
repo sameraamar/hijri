@@ -1,8 +1,8 @@
 {
   "name": "Hijri Calendar",
   "short_name": "Hijri",
-  "description": "Islamic (Hijri) calendar with Gregorian↔Hijri date converter, crescent visibility estimates (Yallop, Odeh), and Islamic holiday dates.",
-  "start_url": "/hijri/",
+  "description": "Islamic (Hijri) calendar with today's Hijri date, Gregorian to Hijri date converter, crescent visibility estimates (MABIMS, Yallop, Odeh), and Islamic holiday dates.",
+  "start_url": "/hijri/today",
   "scope": "/hijri/",
   "display": "standalone",
   "background_color": "#0f172a",

@@ -1,14 +1,25 @@
-import { NavLink, Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { Suspense, lazy, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import i18n, { isRtlLanguage, type SupportedLanguage } from './i18n/i18n';
+import i18n, {
+  buildLocalePath,
+  isRtlLanguage,
+  isSupportedLanguage,
+  supportedLanguages,
+  DEFAULT_LANGUAGE,
+  type SupportedLanguage
+} from './i18n/i18n';
 import { useMethod } from './method/MethodContext';
 import { METHODS } from './method/types';
 import type { CalculationMethodId } from './method/types';
 import ThemeToggle from './components/ThemeToggle';
 import PageSkeleton from './components/PageSkeleton';
 import NavMore, { type NavItem } from './components/NavMore';
+import LocaleNavLink from './components/LocaleNavLink';
+import AiTranslationBanner from './components/AiTranslationBanner';
+import { useLanguageSync } from './hooks/useLanguageSync';
+import { useLocale, useLocalelessPath } from './hooks/useLocale';
 
 const CalendarPage = lazy(() => import('./pages/CalendarPage'));
 const ConvertPage = lazy(() => import('./pages/ConvertPage'));
@@ -19,28 +30,64 @@ const HistoryPage = lazy(() => import('./pages/HistoryPage'));
 const ScholarsPage = lazy(() => import('./pages/ScholarsPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const TodayPage = lazy(() => import('./pages/TodayPage'));
+const VisibilityMapPage = lazy(() => import('./pages/VisibilityMapPage'));
 
 function isCalculationMethodId(value: string): value is CalculationMethodId {
   return METHODS.some((m) => m.id === value);
 }
 
+/**
+ * Inner Routes — locale-agnostic. Mounted from both the no-prefix and the
+ * `/ar/*`-style outer routes. Inner paths are relative to the parent wildcard.
+ */
+function LocaleRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<Navigate to="today" replace />} />
+      <Route path="today" element={<TodayPage />} />
+      <Route path="calendar" element={<CalendarPage />} />
+      <Route path="convert" element={<ConvertPage />} />
+      <Route path="details" element={<DetailsPage />} />
+      <Route path="holidays" element={<HolidaysPage />} />
+      <Route path="history" element={<HistoryPage />} />
+      <Route path="methods" element={<MethodsPage />} />
+      <Route path="visibility-map" element={<VisibilityMapPage />} />
+      <Route path="scholars" element={<ScholarsPage />} />
+      <Route path="about" element={<AboutPage />} />
+    </Routes>
+  );
+}
+
 export default function App() {
   const { t } = useTranslation();
   const { methodId, setMethodId } = useMethod();
+  const navigate = useNavigate();
+  const localelessPath = useLocalelessPath();
+  const currentLocale = useLocale();
 
-  const lang = (i18n.language || 'en') as SupportedLanguage;
+  useLanguageSync();
+
+  const lang = (i18n.language || DEFAULT_LANGUAGE) as SupportedLanguage;
 
   useEffect(() => {
     document.documentElement.lang = lang;
     document.documentElement.dir = isRtlLanguage(lang) ? 'rtl' : 'ltr';
   }, [lang]);
 
+  const handleLanguageChange = (next: string) => {
+    if (!isSupportedLanguage(next) || next === currentLocale) return;
+    // Switch i18n synchronously to avoid a one-frame English-under-Arabic-URL flicker.
+    i18n.changeLanguage(next);
+    const newPath = buildLocalePath(localelessPath, next);
+    navigate(newPath + window.location.search + window.location.hash, { replace: true });
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100">
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:border-slate-700 dark:bg-slate-900/95 dark:supports-[backdrop-filter]:bg-slate-900/80">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
           <div className="flex items-center gap-4">
-            <NavLink to="/calendar" className="flex items-center gap-2 text-lg font-bold tracking-tight text-slate-900 hover:opacity-80 transition-opacity dark:text-slate-100">
+            <LocaleNavLink to="/calendar" className="flex items-center gap-2 text-lg font-bold tracking-tight text-slate-900 hover:opacity-80 transition-opacity dark:text-slate-100">
               <svg className="h-6 w-6 flex-shrink-0" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <rect width="32" height="32" rx="6" fill="#0f172a"/>
                 <circle cx="15" cy="16" r="10" fill="#fbbf24"/>
@@ -48,7 +95,7 @@ export default function App() {
                 <polygon points="24,8 25.2,11.2 28,11.2 25.8,13.2 26.6,16 24,14.2 21.4,16 22.2,13.2 20,11.2 22.8,11.2" fill="#fbbf24" opacity="0.9"/>
               </svg>
               {t('app.title')}
-            </NavLink>
+            </LocaleNavLink>
             <nav className="hidden items-center gap-1 md:flex">
               {([
                 { to: '/today', label: t('app.nav.today') },
@@ -57,7 +104,7 @@ export default function App() {
                 { to: '/convert', label: t('app.nav.convert') },
                 { to: '/methods', label: t('app.nav.methods') },
               ] as NavItem[]).map((item) => (
-                <NavLink
+                <LocaleNavLink
                   key={item.to}
                   to={item.to}
                   className={({ isActive }: { isActive: boolean }) =>
@@ -69,12 +116,13 @@ export default function App() {
                   }
                 >
                   {item.label}
-                </NavLink>
+                </LocaleNavLink>
               ))}
               <NavMore
                 items={[
                   { to: '/details', label: t('app.nav.details') },
                   { to: '/history', label: t('app.nav.history') },
+                  { to: '/visibility-map', label: t('app.nav.visibilityMap') },
                   { to: '/scholars', label: t('app.nav.scholars') },
                   { to: '/about', label: t('app.nav.about') },
                 ]}
@@ -102,12 +150,13 @@ export default function App() {
             <select
               className="control-sm w-auto cursor-pointer text-xs uppercase tracking-wider"
               value={lang}
-              onChange={(e) => i18n.changeLanguage(e.target.value)}
+              onChange={(e) => handleLanguageChange(e.target.value)}
               aria-label="Language"
               title="Language"
             >
-              <option value="en">EN</option>
-              <option value="ar">AR</option>
+              {supportedLanguages.map((l) => (
+                <option key={l} value={l}>{l.toUpperCase()}</option>
+              ))}
             </select>
             <ThemeToggle />
           </div>
@@ -125,7 +174,7 @@ export default function App() {
             { to: '/scholars', label: t('app.nav.scholars') },
             { to: '/about', label: t('app.nav.about') },
           ].map((item) => (
-            <NavLink
+            <LocaleNavLink
               key={item.to}
               to={item.to}
               className={({ isActive }: { isActive: boolean }) =>
@@ -137,24 +186,24 @@ export default function App() {
               }
             >
               {item.label}
-            </NavLink>
+            </LocaleNavLink>
           ))}
         </nav>
       </header>
 
+      <AiTranslationBanner />
+
       <main className="mx-auto max-w-6xl px-3 py-4 sm:px-4 sm:py-8">
         <Suspense fallback={<PageSkeleton />}>
           <Routes>
-            <Route path="/" element={<Navigate to="/today" replace />} />
-            <Route path="/today" element={<TodayPage />} />
-            <Route path="/calendar" element={<CalendarPage />} />
-            <Route path="/convert" element={<ConvertPage />} />
-            <Route path="/details" element={<DetailsPage />} />
-            <Route path="/holidays" element={<HolidaysPage />} />
-            <Route path="/history" element={<HistoryPage />} />
-            <Route path="/methods" element={<MethodsPage />} />
-            <Route path="/scholars" element={<ScholarsPage />} />
-            <Route path="/about" element={<AboutPage />} />
+            {/* Locale-prefixed routes (Arabic, future Turkish, ...). */}
+            {supportedLanguages
+              .filter((l) => l !== DEFAULT_LANGUAGE)
+              .map((l) => (
+                <Route key={l} path={`/${l}/*`} element={<LocaleRoutes />} />
+              ))}
+            {/* Default English (no prefix). */}
+            <Route path="/*" element={<LocaleRoutes />} />
           </Routes>
         </Suspense>
       </main>

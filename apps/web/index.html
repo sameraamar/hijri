@@ -4,14 +4,14 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/hijri/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hijri Calendar — Islamic Calendar & Gregorian↔Hijri Date Converter</title>
+    <title>Hijri Calendar — Today's Hijri Date, Gregorian↔Hijri Converter & Crescent Visibility</title>
     <meta
       name="description"
-      content="Free Hijri (Islamic) calendar app — convert Gregorian to Hijri dates, browse Islamic holidays (Ramadan, Eid al-Fitr, Eid al-Adha, Ashura), and explore crescent moon visibility using Yallop, Odeh, and tabular (civil) methods. Bilingual English/Arabic. التقويم الهجري — تحويل التاريخ الهجري ومواعيد رمضان وعيد الفطر وعيد الأضحى ورؤية الهلال"
+      content="Free Hijri (Islamic) calendar app — see today's Hijri date, convert Gregorian to Hijri dates, browse Islamic holidays (Ramadan, Eid al-Fitr, Eid al-Adha, Ashura), and compare crescent moon visibility using MABIMS, Yallop, Odeh, and tabular (civil) methods. Bilingual English/Arabic. التقويم الهجري — التاريخ الهجري اليوم وتحويل التاريخ ومواعيد رمضان وعيد الفطر وعيد الأضحى ورؤية الهلال"
     />
     <meta
       name="keywords"
-      content="hijri calendar, islamic calendar, hijri date converter, gregorian to hijri, hijri to gregorian, ramadan dates, eid al-fitr, eid al-adha, crescent moon visibility, moon sighting, hilal, yallop criterion, odeh criterion, islamic holidays, umm al-qura, ashura, day of arafah, muharram, shaban, ramadan, shawwal, dhul hijjah, التقويم الهجري, تقويم إسلامي, تحويل التاريخ الهجري, تحويل ميلادي هجري, رمضان, موعد رمضان, عيد الفطر, متى عيد الفطر, عيد الأضحى, متى عيد الأضحى, رؤية الهلال, الهلال, يوم عرفة, عاشوراء, المحرم, شعبان, شوال, ذو الحجة, أم القرى, تقويم أم القرى, أشهر هجرية, يالوب, عوده, رأس السنة الهجرية"
+      content="hijri calendar, today hijri date, islamic calendar, hijri date converter, gregorian to hijri, hijri to gregorian, ramadan dates, eid al-fitr, eid al-adha, crescent moon visibility, moon sighting, hilal, mabims, imkanur rukyat, yallop criterion, odeh criterion, islamic holidays, umm al-qura, ashura, day of arafah, muharram, shaban, ramadan, shawwal, dhul hijjah, التقويم الهجري, التاريخ الهجري اليوم, تقويم إسلامي, تحويل التاريخ الهجري, تحويل ميلادي هجري, رمضان, موعد رمضان, عيد الفطر, متى عيد الفطر, عيد الأضحى, متى عيد الأضحى, رؤية الهلال, الهلال, يوم عرفة, عاشوراء, المحرم, شعبان, شوال, ذو الحجة, أم القرى, تقويم أم القرى, أشهر هجرية, يالوب, عوده, مابيمس, رأس السنة الهجرية"
     />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="googlebot" content="index, follow" />
@@ -19,18 +19,21 @@
     <link rel="canonical" href="https://sameraamar.github.io/hijri/" />
     <link rel="manifest" href="/hijri/manifest.webmanifest" />
 
-    <!-- Language alternates -->
-    <link rel="alternate" hreflang="en" href="https://sameraamar.github.io/hijri/" />
-    <link rel="alternate" hreflang="ar" href="https://sameraamar.github.io/hijri/" />
+    <!--
+      Language alternates: deferred to Tier 2.
+      Until distinct per-language URLs exist (e.g. ?lang=ar or /ar/), pointing
+      multiple hreflang values at the same href confuses Google. Keep only the
+      x-default so the page is treated as locale-neutral.
+    -->
     <link rel="alternate" hreflang="x-default" href="https://sameraamar.github.io/hijri/" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hijri Calendar" />
-    <meta property="og:title" content="Hijri Calendar — Islamic Calendar & Date Converter" />
+    <meta property="og:title" content="Hijri Calendar — Today's Hijri Date & Gregorian↔Hijri Converter" />
     <meta
       property="og:description"
-      content="Convert Gregorian and Hijri dates, browse Islamic holidays (Ramadan, Eid al-Fitr, Eid al-Adha), and compare crescent visibility methods (Yallop, Odeh). Bilingual English/Arabic. تحويل التاريخ الهجري ومواعيد رمضان والأعياد"
+      content="See today's Hijri date, convert Gregorian↔Hijri, browse Islamic holidays (Ramadan, Eid al-Fitr, Eid al-Adha), and compare crescent visibility methods (MABIMS, Yallop, Odeh). Bilingual English/Arabic. تحويل التاريخ الهجري ومواعيد رمضان والأعياد"
     />
     <meta property="og:url" content="https://sameraamar.github.io/hijri/" />
     <meta property="og:image" content="https://sameraamar.github.io/hijri/og-image.svg" />
@@ -42,10 +45,10 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hijri Calendar — Islamic Calendar & Date Converter" />
+    <meta name="twitter:title" content="Hijri Calendar — Today's Hijri Date & Date Converter" />
     <meta
       name="twitter:description"
-      content="Bilingual Hijri calendar app with Gregorian↔Hijri conversion, Islamic holiday dates, and crescent visibility estimates (Yallop & Odeh)."
+      content="Bilingual Hijri calendar app with today's Hijri date, Gregorian↔Hijri conversion, Islamic holiday dates, and crescent visibility estimates (MABIMS, Yallop, Odeh)."
     />
     <meta name="twitter:image" content="https://sameraamar.github.io/hijri/og-image.svg" />
     <meta name="twitter:image:alt" content="Hijri Calendar — crescent moon with Islamic calendar app preview" />
@@ -57,7 +60,7 @@
         "name": "Hijri Calendar",
         "alternateName": "التقويم الهجري",
         "url": "https://sameraamar.github.io/hijri/",
-        "description": "Free Islamic (Hijri) calendar with Gregorian↔Hijri date converter, crescent moon visibility estimates using Yallop, Odeh, and tabular methods, and Islamic holiday dates.",
+        "description": "Free Islamic (Hijri) calendar showing today's Hijri date, Gregorian↔Hijri date converter, crescent moon visibility estimates using MABIMS, Yallop, Odeh, and tabular methods, and Islamic holiday dates.",
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Any",
         "inLanguage": ["en", "ar"],
@@ -71,13 +74,17 @@
           "name": "Samer Aamar"
         },
         "featureList": [
+          "Today's Hijri date and next holiday countdown",
           "Gregorian to Hijri date conversion",
           "Hijri to Gregorian date conversion",
-          "Islamic holiday dates (Ramadan, Eid al-Fitr, Eid al-Adha)",
+          "Islamic holiday dates (Ramadan, Eid al-Fitr, Eid al-Adha, Ashura, Arafah)",
           "Crescent moon visibility estimates",
-          "Yallop q-test criterion",
-          "Odeh criterion",
+          "MABIMS 2016 (Imkanur Rukyat) criterion",
+          "Yallop q-test criterion (1997)",
+          "Odeh criterion (2004)",
           "Tabular (Islamic Civil) calendar",
+          "iCal/Google Calendar holiday export",
+          "Method-vs-official accuracy comparison",
           "Bilingual English and Arabic interface"
         ]
       }
@@ -87,9 +94,9 @@
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Hijri Calendar", "item": "https://sameraamar.github.io/hijri/" },
-          { "@type": "ListItem", "position": 2, "name": "Holidays", "item": "https://sameraamar.github.io/hijri/holidays" },
-          { "@type": "ListItem", "position": 3, "name": "Calendar", "item": "https://sameraamar.github.io/hijri/calendar" },
+          { "@type": "ListItem", "position": 1, "name": "Today", "item": "https://sameraamar.github.io/hijri/today" },
+          { "@type": "ListItem", "position": 2, "name": "Calendar", "item": "https://sameraamar.github.io/hijri/calendar" },
+          { "@type": "ListItem", "position": 3, "name": "Holidays", "item": "https://sameraamar.github.io/hijri/holidays" },
           { "@type": "ListItem", "position": 4, "name": "Convert", "item": "https://sameraamar.github.io/hijri/convert" },
           { "@type": "ListItem", "position": 5, "name": "Methods", "item": "https://sameraamar.github.io/hijri/methods" }
         ]
@@ -114,8 +121,8 @@
     <noscript>
       <div style="max-width:600px;margin:2rem auto;padding:1rem;font-family:system-ui,sans-serif;text-align:center">
         <h1>Hijri Calendar — التقويم الهجري</h1>
-        <p>Free Islamic calendar app with Gregorian↔Hijri date conversion, Islamic holiday dates (Ramadan, Eid al-Fitr, Eid al-Adha), and crescent moon visibility estimates using Yallop and Odeh astronomical criteria.</p>
-        <p>تطبيق مجاني للتقويم الهجري مع تحويل التواريخ بين الميلادي والهجري ومواعيد المناسبات الإسلامية (رمضان، عيد الفطر، عيد الأضحى، يوم عرفة، عاشوراء، رأس السنة الهجرية) وتقديرات رؤية الهلال باستخدام معايير يالوب وعوده الفلكية. يشمل جميع الأشهر الهجرية: المحرّم، صفر، ربيع الأول، ربيع الثاني، جمادى الأولى، جمادى الآخرة، رجب، شعبان، رمضان، شوّال، ذو القعدة، وذو الحجة.</p>
+        <p>Free Islamic calendar app showing today's Hijri date, Gregorian↔Hijri date conversion, Islamic holiday dates (Ramadan, Eid al-Fitr, Eid al-Adha, Ashura, Arafah), and crescent moon visibility estimates using MABIMS, Yallop, and Odeh astronomical criteria.</p>
+        <p>تطبيق مجاني للتقويم الهجري يعرض التاريخ الهجري اليوم مع تحويل التواريخ بين الميلادي والهجري ومواعيد المناسبات الإسلامية (رمضان، عيد الفطر، عيد الأضحى، يوم عرفة، عاشوراء، رأس السنة الهجرية) وتقديرات رؤية الهلال باستخدام معايير مابيمس ويالوب وعوده الفلكية. يشمل جميع الأشهر الهجرية: المحرّم، صفر، ربيع الأول، ربيع الثاني، جمادى الأولى، جمادى الآخرة، رجب، شعبان، رمضان، شوّال، ذو القعدة، وذو الحجة.</p>
         <p style="margin-top:1rem;color:#666">Please enable JavaScript to use this application.</p>
       </div>
     </noscript>
