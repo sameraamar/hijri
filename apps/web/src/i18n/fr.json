@@ -547,22 +547,31 @@
     "about": {
       "title": "À propos du Calendrier hégirien — Calendrier islamique gratuit et open source",
       "description": "Le Calendrier hégirien est une application de calendrier islamique gratuite et open source. Pas de suivi, pas de cookies, entièrement privé. Construit par Samer Aamar."
+    },
+    "visibilityMap": {
+      "title": "Visibilité de la Lune — Carte mondiale",
+      "description": "Carte mondiale de la visibilité de la Lune pour n'importe quel soir. Aux frontières des mois hégiriens, affiche le test du croissant par lieu (Yallop, Odeh, MABIMS, heuristique). Mi-mois, affiche l'altitude de la Lune au coucher du Soleil pour chaque lieu."
     }
   },
   "visibilityMap": {
-    "title": "Visibilité du croissant — carte mondiale",
+    "title": "Visibilité de la Lune — carte mondiale",
     "eveningOf": "Soir du",
     "nextEvening": "Soir suivant",
     "notAvailableForCivil": "La carte de visibilité nécessite une méthode astronomique (Heuristique, MABIMS, Yallop ou Odeh). Changez la méthode dans l’en-tête.",
     "computing": "Calcul de la visibilité pour ~500 emplacements…",
-    "legendHigh": "Score élevé (≥65%)",
-    "legendMedium": "Moyen (33–65%)",
-    "legendLow": "Faible (<33%)",
-    "legendGated": "Exclu (le critère ne le retient pas)",
-    "summary": "Début de mois positif sur {{positive}} des {{total}} emplacements.",
+    "skyHeader": "La Lune dans le ciel ce soir",
+    "skyBanner": "Chaque cellule indique la hauteur de la Lune au-dessus de l'horizon au coucher du Soleil local — c'est là que la Lune se trouvera dans le ciel ce soir.",
+    "crescentHeader": "Un nouveau mois hégirien peut-il commencer ce soir ? — période de doute",
+    "crescentBanner": "Nous sommes près d'une frontière de mois hégirien. La possibilité d'observer le croissant depuis un lieu dépend de la méthode active, du coucher du Soleil local, de la hauteur de la Lune, de son âge et de son élongation. La carte ci-dessous montre le verdict de la méthode active pour chaque lieu.",
+    "summary": "Croissant visible dans {{positive}} des {{total}} emplacements.",
     "disclaimer": "Chaque point échantillonne une cellule de grille 10°×10° au coucher du Soleil local le soir choisi.",
     "prevEvening": "Soir précédent",
-    "notApplicableBanner": "Cette date est au milieu d'un mois hégirien — le test du croissant ne s'applique pas. La carte de visibilité est la plus informative dans les derniers jours d'un mois hégirien (autour du 29). Choisissez une date près d'une frontière de mois.",
-    "legendNotApplicable": "Mi-mois — test non applicable"
+    "legendMoonHigh": "Lune haute au coucher (>30°)",
+    "legendMoonMed": "Altitude moyenne (10–30°)",
+    "legendMoonLow": "Basse (0–10°)",
+    "legendMoonBelow": "Lune sous l’horizon au coucher (toujours là — se lève plus tard ce soir)",
+    "legendCrescentVisible": "Le croissant devrait être visible",
+    "legendCrescentBorderline": "Limite — proche mais ne passe pas",
+    "legendCrescentNotVisible": "Croissant non visible"
   }
 }

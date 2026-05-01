@@ -547,22 +547,31 @@
     "about": {
       "title": "Tentang Kalender Hijriah — Kalender Islam Gratis Sumber Terbuka",
       "description": "Kalender Hijriah adalah aplikasi kalender Islam gratis dan sumber terbuka. Tanpa pelacakan, tanpa cookie, sepenuhnya privat. Dibangun oleh Samer Aamar."
+    },
+    "visibilityMap": {
+      "title": "Visibilitas Bulan — Peta Dunia",
+      "description": "Peta dunia visibilitas Bulan untuk malam apa pun. Di batas bulan Hijriah, menampilkan hasil tes hilal per lokasi (Yallop, Odeh, MABIMS, heuristik). Di tengah bulan, menampilkan ketinggian Bulan saat matahari terbenam untuk setiap lokasi."
     }
   },
   "visibilityMap": {
-    "title": "Visibilitas hilal — peta dunia",
+    "title": "Visibilitas Bulan — peta dunia",
     "eveningOf": "Malam",
     "nextEvening": "Malam berikutnya",
     "notAvailableForCivil": "Peta visibilitas memerlukan metode astronomi (Heuristik, MABIMS, Yallop, atau Odeh). Ubah metode di header.",
     "computing": "Menghitung visibilitas untuk ~500 lokasi…",
-    "legendHigh": "Tinggi (≥65%)",
-    "legendMedium": "Sedang (33–65%)",
-    "legendLow": "Rendah (<33%)",
-    "legendGated": "Tidak mungkin (dikecualikan oleh metode)",
-    "summary": "Awal bulan positif di {{positive}}/{{total}} lokasi sampel.",
+    "skyHeader": "Bulan di langit malam ini",
+    "skyBanner": "Setiap sel menunjukkan ketinggian Bulan di atas ufuk saat matahari terbenam lokal — di sanalah Bulan akan berada di langit malam ini.",
+    "crescentHeader": "Mungkinkah bulan Hijriah baru dimulai malam ini? — masa keraguan",
+    "crescentBanner": "Kita dekat batas bulan Hijriah. Apakah hilal akan terlihat dari suatu lokasi bergantung pada metode aktif, waktu matahari terbenam lokal, ketinggian Bulan, usianya, dan elongasinya. Peta di bawah menunjukkan keputusan metode aktif untuk setiap lokasi.",
+    "summary": "Hilal terlihat di {{positive}}/{{total}} lokasi sampel.",
     "disclaimer": "Setiap titik mewakili sel grid 10°×10° saat matahari terbenam lokal pada malam yang dipilih.",
     "prevEvening": "Malam sebelumnya",
-    "notApplicableBanner": "Tanggal ini berada di tengah bulan Hijriah — tes hilal tidak berlaku. Peta visibilitas paling informatif di hari-hari terakhir bulan Hijriah (sekitar tanggal 29). Pilih tanggal dekat batas bulan.",
-    "legendNotApplicable": "Tengah bulan — tes tidak berlaku"
+    "legendMoonHigh": "Bulan tinggi saat matahari terbenam (>30°)",
+    "legendMoonMed": "Ketinggian sedang (10–30°)",
+    "legendMoonLow": "Rendah (0–10°)",
+    "legendMoonBelow": "Bulan di bawah ufuk saat matahari terbenam (masih ada — terbit malam nanti)",
+    "legendCrescentVisible": "Hilal seharusnya terlihat",
+    "legendCrescentBorderline": "Marginal — dekat tetapi tidak melewati ambang",
+    "legendCrescentNotVisible": "Hilal tidak terlihat"
   }
 }

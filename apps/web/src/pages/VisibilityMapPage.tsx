@@ -1,12 +1,14 @@
 import {
+  classifyCrescentVisibility,
   estimateMonthStartLikelihoodAtSunset,
-  yallopMonthStartEstimate,
-  odehMonthStartEstimate,
-  getMonthStartSignalLevel,
+  isHijriBoundaryDate,
   meetsCrescentVisibilityCriteriaAtSunset,
   meetsMabimsCriteriaAtSunset,
-  meetsYallopCriteriaAtSunset,
   meetsOdehCriteriaAtSunset,
+  meetsYallopCriteriaAtSunset,
+  odehMonthStartEstimate,
+  yallopMonthStartEstimate,
+  type CrescentVisibilityState,
   type MonthStartEstimate
 } from '@hijri/calendar-engine';
 import { useEffect, useMemo, useState } from 'react';
@@ -19,18 +21,68 @@ import { isAstronomicalMethod } from '../method/types';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { addDaysUtc } from '../utils/dateMath';
 
+/**
+ * Each grid cell carries the data needed by *both* sections:
+ *   - `moonAltitudeDeg` — drives the always-shown "Moon in the sky" map.
+ *   - `crescentState` — drives the conditional "Crescent visibility" map
+ *     (only rendered on Hijri-boundary dates).
+ * The grid is computed once per (date, method) and reused across both maps.
+ */
 type GridCell = {
   lat: number;
   lon: number;
-  /** 0..1 visibility score; null when not relevant. */
-  score: number | null;
-  /** Did this point's evening pass the active method's month-start gate? */
-  monthStartPositive: boolean;
+  moonAltitudeDeg: number | null;
+  crescentState: CrescentVisibilityState;
 };
 
-const GRID_STEP_DEG = 10; // 10° × 10° grid → 18 × 36 = 648 points
+const GRID_STEP_DEG = 10; // 10° × 10° grid → 14 × 36 = 504 points after lat clipping
 const LAT_RANGE = { min: -60, max: 70 }; // Skip extreme polar latitudes (no civil twilight)
 const LON_RANGE = { min: -180, max: 170 };
+
+/** Altitude buckets used by the top "Moon in the sky" map. */
+type AltitudeBucket = 'high' | 'medium' | 'low' | 'below';
+
+function altitudeBucket(altDeg: number | null): AltitudeBucket | null {
+  if (altDeg === null) return null;
+  if (altDeg < 0) return 'below';
+  if (altDeg >= 30) return 'high';
+  if (altDeg >= 10) return 'medium';
+  return 'low';
+}
+
+function altitudeBucketColor(b: AltitudeBucket): string {
+  switch (b) {
+    case 'high': return likelihoodStyle('high').dotHex;
+    case 'medium': return likelihoodStyle('medium').dotHex;
+    case 'low': return likelihoodStyle('low').dotHex;
+    case 'below': return likelihoodStyle('noChance').dotHex;
+  }
+}
+
+function altitudeRadius(altDeg: number | null): number {
+  if (altDeg === null) return 4;
+  if (altDeg < 0) return 4;
+  return 5 + Math.min(5, Math.round(altDeg / 12));
+}
+
+/** 3-state palette for the crescent-visibility map — same gradient family as
+ *  the altitude legend so users don't have to learn new colors, but
+ *  semantically distinct (legend explains the meaning per section). */
+function crescentStateColor(s: CrescentVisibilityState): string {
+  switch (s) {
+    case 'visible': return likelihoodStyle('high').dotHex;
+    case 'borderline': return likelihoodStyle('medium').dotHex;
+    case 'notVisible': return likelihoodStyle('noChance').dotHex;
+  }
+}
+
+function crescentStateRadius(s: CrescentVisibilityState): number {
+  switch (s) {
+    case 'visible': return 8;
+    case 'borderline': return 6;
+    case 'notVisible': return 4;
+  }
+}
 
 function todayUtc(): { year: number; month: number; day: number } {
   const d = new Date();
@@ -50,29 +102,6 @@ function gregorianFromIso(iso: string): { year: number; month: number; day: numb
   return { year: Number(y), month: Number(mo), day: Number(d) };
 }
 
-/**
- * Map a grid cell's score + gate decision to a palette color.
- *
- * Single palette source: `likelihoodStyle` from components/likelihood.ts —
- * keeps the visibility map visually consistent with calendar / today / methods
- * legends across the app. Cells the active method excludes (gated-out) get the
- * same gray as `noChance` in the calendar — distinct from the rose used for
- * low scores.
- */
-function colourForScore(score: number | null, monthStartPositive: boolean): string {
-  if (score === null) return likelihoodStyle('unknown').dotHex;
-  if (!monthStartPositive) return likelihoodStyle('noChance').dotHex;
-  if (score >= 0.66) return likelihoodStyle('high').dotHex;
-  if (score >= 0.33) return likelihoodStyle('medium').dotHex;
-  return likelihoodStyle('low').dotHex;
-}
-
-function radiusForScore(score: number | null, mostLikely: boolean): number {
-  if (mostLikely) return 9;
-  if (score === null) return 4;
-  return 4 + Math.round(score * 6);
-}
-
 export default function VisibilityMapPage() {
   const { t } = useTranslation();
   const { methodId } = useMethod();
@@ -83,33 +112,16 @@ export default function VisibilityMapPage() {
   const [computing, setComputing] = useState(false);
 
   const date = useMemo(() => gregorianFromIso(dateIso), [dateIso]);
-
-  // Probe Makkah to see whether the chosen evening is mid-Hijri-month for
-  // any reasonable observer. Moon age varies only ~±8h across longitudes,
-  // so if Makkah is past the 72h window, every grid cell will be too — and
-  // running the full grid would just produce a uniform "n/a" carpet.
-  const isMidMonth = useMemo(() => {
-    if (!date || !isAstronomicalMethod(methodId)) return false;
-    const probe = (
-      methodId === 'yallop' ? yallopMonthStartEstimate
-      : methodId === 'odeh' ? odehMonthStartEstimate
-      : estimateMonthStartLikelihoodAtSunset
-    )(date, { latitude: 21.3891, longitude: 39.8579 });
-    return getMonthStartSignalLevel(probe) === 'notApplicable';
-  }, [date, methodId]);
+  const showCrescentSection = useMemo(
+    () => (date && isAstronomicalMethod(methodId) ? isHijriBoundaryDate(date) : false),
+    [date, methodId]
+  );
 
   useEffect(() => {
     if (!date) return;
-    if (isMidMonth) {
-      // Skip the heavy grid render entirely — banner explains why.
-      setGrid([]);
-      setComputing(false);
-      return;
-    }
     setComputing(true);
     setGrid([]);
 
-    // Pick the estimator + gate predicate matching the active method.
     const estFn = methodId === 'yallop'
       ? yallopMonthStartEstimate
       : methodId === 'odeh'
@@ -122,7 +134,6 @@ export default function VisibilityMapPage() {
       return meetsCrescentVisibilityCriteriaAtSunset(est);
     };
 
-    // Compute the grid in chunks via setTimeout so the main thread stays responsive.
     const cells: Array<{ lat: number; lon: number }> = [];
     for (let lat = LAT_RANGE.min; lat <= LAT_RANGE.max; lat += GRID_STEP_DEG) {
       for (let lon = LON_RANGE.min; lon <= LON_RANGE.max; lon += GRID_STEP_DEG) {
@@ -141,13 +152,14 @@ export default function VisibilityMapPage() {
         const { lat, lon } = cells[i];
         try {
           const est = estFn(date, { latitude: lat, longitude: lon });
-          const score = typeof est.metrics.visibilityPercent === 'number'
-            ? est.metrics.visibilityPercent / 100
+          const passes = gateFn(est);
+          const moonAltitudeDeg = typeof est.metrics.moonAltitudeDeg === 'number'
+            ? est.metrics.moonAltitudeDeg
             : null;
-          const positive = gateFn(est);
-          out.push({ lat, lon, score, monthStartPositive: positive });
+          const crescentState = classifyCrescentVisibility(est, passes);
+          out.push({ lat, lon, moonAltitudeDeg, crescentState });
         } catch {
-          out.push({ lat, lon, score: null, monthStartPositive: false });
+          out.push({ lat, lon, moonAltitudeDeg: null, crescentState: 'notVisible' });
         }
       }
       if (i < cells.length) {
@@ -162,19 +174,29 @@ export default function VisibilityMapPage() {
     return () => {
       cancelled = true;
     };
-  }, [date, methodId, isMidMonth]);
+  }, [date, methodId]);
 
-  // The "most likely" point is the highest-scoring positive cell.
-  const mostLikelyKey = useMemo(() => {
-    let best: GridCell | null = null;
+  // Context-aware legend bookkeeping: which buckets actually appear in the
+  // current grid? Only show those in the legend.
+  const altitudeBucketsPresent = useMemo(() => {
+    const set = new Set<AltitudeBucket>();
     for (const c of grid) {
-      if (!c.monthStartPositive || c.score === null) continue;
-      if (!best || (best.score ?? 0) < c.score) best = c;
+      const b = altitudeBucket(c.moonAltitudeDeg);
+      if (b) set.add(b);
     }
-    return best ? `${best.lat}:${best.lon}` : null;
+    return set;
   }, [grid]);
 
-  const positiveCount = grid.filter((c) => c.monthStartPositive).length;
+  const crescentStatesPresent = useMemo(() => {
+    const set = new Set<CrescentVisibilityState>();
+    for (const c of grid) set.add(c.crescentState);
+    return set;
+  }, [grid]);
+
+  const visibleCount = useMemo(
+    () => grid.filter((c) => c.crescentState === 'visible').length,
+    [grid]
+  );
 
   return (
     <div className="page">
@@ -236,69 +258,153 @@ export default function VisibilityMapPage() {
         <div className="card p-4 text-sm text-slate-700 dark:text-slate-200">
           {t('visibilityMap.notAvailableForCivil')}
         </div>
-      ) : isMidMonth ? (
-        <div className="card p-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
-          <div className="font-semibold text-slate-900 dark:text-slate-100">
-            {t('probability.notApplicable')}
-          </div>
-          <div className="mt-1 text-xs text-slate-600 dark:text-slate-300">
-            {t('visibilityMap.notApplicableBanner')}
-          </div>
-        </div>
       ) : (
         <>
-          <div className="card overflow-hidden">
-            <div className="relative h-[480px] w-full">
-              <MapContainer
-                center={[20, 30]}
-                zoom={2}
-                minZoom={1}
-                maxZoom={4}
-                worldCopyJump
-                style={{ height: '100%', width: '100%' }}
-              >
-                <TileLayer
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                />
-                {grid.map((c) => {
-                  const key = `${c.lat}:${c.lon}`;
-                  const mostLikely = key === mostLikelyKey;
-                  return (
-                    <CircleMarker
-                      key={key}
-                      center={[c.lat, c.lon]}
-                      radius={radiusForScore(c.score, mostLikely)}
-                      pathOptions={{
-                        color: mostLikely ? '#7c3aed' : colourForScore(c.score, c.monthStartPositive),
-                        fillColor: colourForScore(c.score, c.monthStartPositive),
-                        fillOpacity: c.monthStartPositive ? 0.7 : 0.35,
-                        weight: mostLikely ? 3 : 1,
-                      }}
-                    />
-                  );
-                })}
-              </MapContainer>
-            </div>
-            {computing && (
-              <div className="absolute inset-x-0 top-0 z-50 bg-amber-100/80 px-3 py-1 text-center text-xs text-amber-900 dark:bg-amber-900/60 dark:text-amber-100">
-                {t('visibilityMap.computing')}
+          {/* ─── Section 1: always-shown "Moon in the sky tonight" ─── */}
+          <section className="space-y-2">
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+              {t('visibilityMap.skyHeader')}
+            </h2>
+            <div className="card p-3 text-xs leading-relaxed bg-slate-50 dark:bg-slate-800/60">
+              <div className="text-slate-600 dark:text-slate-300">
+                {t('visibilityMap.skyBanner')}
               </div>
-            )}
-          </div>
+            </div>
 
-          <div className="card p-3 text-xs">
-            <div className="font-semibold text-slate-900 dark:text-slate-100">{t('probability.legendTitle')}</div>
-            <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
-              <LegendDot color={likelihoodStyle('high').dotHex} label={t('visibilityMap.legendHigh')} />
-              <LegendDot color={likelihoodStyle('medium').dotHex} label={t('visibilityMap.legendMedium')} />
-              <LegendDot color={likelihoodStyle('low').dotHex} label={t('visibilityMap.legendLow')} />
-              <LegendDot color={likelihoodStyle('noChance').dotHex} label={t('visibilityMap.legendGated')} />
+            <div className="card overflow-hidden">
+              <div className="relative h-[420px] w-full">
+                <MapContainer
+                  center={[20, 30]}
+                  zoom={2}
+                  minZoom={1}
+                  maxZoom={4}
+                  worldCopyJump
+                  style={{ height: '100%', width: '100%' }}
+                >
+                  <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  />
+                  {grid.map((c) => {
+                    const bucket = altitudeBucket(c.moonAltitudeDeg);
+                    if (!bucket) return null;
+                    const fill = altitudeBucketColor(bucket);
+                    // "Below horizon" cells render as a hollow ring (outline,
+                    // no fill) so users read "Moon present but hidden under
+                    // the horizon at sunset" rather than "no data".
+                    const isBelow = bucket === 'below';
+                    return (
+                      <CircleMarker
+                        key={`alt-${c.lat}:${c.lon}`}
+                        center={[c.lat, c.lon]}
+                        radius={altitudeRadius(c.moonAltitudeDeg)}
+                        pathOptions={{
+                          color: fill,
+                          fillColor: fill,
+                          fillOpacity: isBelow ? 0 : 0.7,
+                          weight: isBelow ? 1.5 : 1,
+                          dashArray: isBelow ? '2 2' : undefined,
+                        }}
+                      />
+                    );
+                  })}
+                </MapContainer>
+              </div>
+              {computing && (
+                <div className="absolute inset-x-0 top-0 z-50 bg-amber-100/80 px-3 py-1 text-center text-xs text-amber-900 dark:bg-amber-900/60 dark:text-amber-100">
+                  {t('visibilityMap.computing')}
+                </div>
+              )}
             </div>
-            <div className="mt-2 text-slate-500 dark:text-slate-400">
-              {t('visibilityMap.summary', { positive: positiveCount, total: grid.length })}
+
+            <div className="card p-3 text-xs">
+              <div className="font-semibold text-slate-900 dark:text-slate-100">
+                {t('probability.legendTitle')}
+              </div>
+              <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {altitudeBucketsPresent.has('high') && (
+                  <LegendDot color={altitudeBucketColor('high')} label={t('visibilityMap.legendMoonHigh')} />
+                )}
+                {altitudeBucketsPresent.has('medium') && (
+                  <LegendDot color={altitudeBucketColor('medium')} label={t('visibilityMap.legendMoonMed')} />
+                )}
+                {altitudeBucketsPresent.has('low') && (
+                  <LegendDot color={altitudeBucketColor('low')} label={t('visibilityMap.legendMoonLow')} />
+                )}
+                {altitudeBucketsPresent.has('below') && (
+                  <LegendDot color={altitudeBucketColor('below')} label={t('visibilityMap.legendMoonBelow')} hollow />
+                )}
+              </div>
             </div>
-          </div>
+          </section>
+
+          {/* ─── Section 2: conditional "Crescent visibility — period of doubt" ─── */}
+          {showCrescentSection && (
+            <section className="space-y-2">
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                {t('visibilityMap.crescentHeader')}
+              </h2>
+              <div className="card p-3 text-xs leading-relaxed bg-amber-50 dark:bg-amber-900/30 border-amber-200 dark:border-amber-800">
+                <div className="text-slate-700 dark:text-slate-200">
+                  {t('visibilityMap.crescentBanner')}
+                </div>
+              </div>
+
+              <div className="card overflow-hidden">
+                <div className="relative h-[420px] w-full">
+                  <MapContainer
+                    center={[20, 30]}
+                    zoom={2}
+                    minZoom={1}
+                    maxZoom={4}
+                    worldCopyJump
+                    style={{ height: '100%', width: '100%' }}
+                  >
+                    <TileLayer
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                    />
+                    {grid.map((c) => {
+                      const fill = crescentStateColor(c.crescentState);
+                      return (
+                        <CircleMarker
+                          key={`crc-${c.lat}:${c.lon}`}
+                          center={[c.lat, c.lon]}
+                          radius={crescentStateRadius(c.crescentState)}
+                          pathOptions={{
+                            color: fill,
+                            fillColor: fill,
+                            fillOpacity: c.crescentState === 'notVisible' ? 0.35 : 0.8,
+                            weight: 1,
+                          }}
+                        />
+                      );
+                    })}
+                  </MapContainer>
+                </div>
+              </div>
+
+              <div className="card p-3 text-xs">
+                <div className="font-semibold text-slate-900 dark:text-slate-100">
+                  {t('probability.legendTitle')}
+                </div>
+                <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-3">
+                  {crescentStatesPresent.has('visible') && (
+                    <LegendDot color={crescentStateColor('visible')} label={t('visibilityMap.legendCrescentVisible')} />
+                  )}
+                  {crescentStatesPresent.has('borderline') && (
+                    <LegendDot color={crescentStateColor('borderline')} label={t('visibilityMap.legendCrescentBorderline')} />
+                  )}
+                  {crescentStatesPresent.has('notVisible') && (
+                    <LegendDot color={crescentStateColor('notVisible')} label={t('visibilityMap.legendCrescentNotVisible')} />
+                  )}
+                </div>
+                <div className="mt-2 text-slate-500 dark:text-slate-400">
+                  {t('visibilityMap.summary', { positive: visibleCount, total: grid.length })}
+                </div>
+              </div>
+            </section>
+          )}
 
           <div className="text-[11px] text-slate-500 dark:text-slate-400">
             {t('visibilityMap.disclaimer')}
@@ -309,12 +415,16 @@ export default function VisibilityMapPage() {
   );
 }
 
-function LegendDot({ color, label }: { color: string; label: string }) {
+function LegendDot({ color, label, hollow }: { color: string; label: string; hollow?: boolean }) {
   return (
     <div className="flex items-center gap-2">
       <span
         className="inline-block h-3 w-3 rounded-full"
-        style={{ backgroundColor: color }}
+        style={
+          hollow
+            ? { border: `1.5px dashed ${color}`, backgroundColor: 'transparent' }
+            : { backgroundColor: color }
+        }
         aria-hidden="true"
       />
       <span className="text-slate-700 dark:text-slate-200">{label}</span>

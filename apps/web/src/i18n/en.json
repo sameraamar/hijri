@@ -546,22 +546,31 @@
     "about": {
       "title": "About Hijri Calendar — Free Open-Source Islamic Calendar",
       "description": "Hijri Calendar is a free, open-source Islamic calendar app. No tracking, no cookies, fully private. Built by Samer Aamar."
+    },
+    "visibilityMap": {
+      "title": "Moon Visibility — World Map",
+      "description": "World map of Moon visibility for any evening. At Hijri month boundaries, see the per-location crescent test (Yallop, Odeh, MABIMS, heuristic). Mid-month, see Moon altitude at sunset for each location."
     }
   },
   "visibilityMap": {
-    "title": "Crescent visibility — world map",
+    "title": "Moon visibility — world map",
     "eveningOf": "Evening of",
     "nextEvening": "Next evening",
     "notAvailableForCivil": "The visibility map needs an astronomical method (Visibility heuristic, MABIMS, Yallop, or Odeh). Switch the method in the header.",
     "computing": "Computing visibility for ~500 locations…",
-    "legendHigh": "High score (≥65%)",
-    "legendMedium": "Medium (33–65%)",
-    "legendLow": "Low (<33%)",
-    "legendGated": "No chance (method excludes)",
-    "summary": "Month-start positive at {{positive}} of {{total}} sample locations.",
+    "skyHeader": "Moon in the sky tonight",
+    "skyBanner": "Each cell shows the Moon's altitude above the horizon at local sunset — that's where the Moon will be in the sky tonight.",
+    "crescentHeader": "Could a new Hijri month start tonight? — period of doubt",
+    "crescentBanner": "We're near a Hijri month boundary. Whether the new crescent will be visible from a location depends on the active method, the local sunset, the Moon's altitude, age and elongation. The map below shows the active method's verdict per location.",
+    "summary": "Crescent visible at {{positive}} of {{total}} sample locations.",
     "disclaimer": "Each dot samples a 10°×10° grid cell at local sunset on the selected evening. Real-world visibility depends on weather and observer skill.",
     "prevEvening": "Previous evening",
-    "notApplicableBanner": "This date is mid-Hijri-month — the crescent test does not apply. The visibility map is most informative on the last days of a Hijri month (around the 29th). Pick a date near a month boundary.",
-    "legendNotApplicable": "Mid-month — test not applicable"
+    "legendMoonHigh": "Moon high at sunset (>30°)",
+    "legendMoonMed": "Moon mid altitude (10–30°)",
+    "legendMoonLow": "Moon low (0–10°)",
+    "legendMoonBelow": "Moon below horizon at sunset (still up — rises later tonight)",
+    "legendCrescentVisible": "Crescent should be visible",
+    "legendCrescentBorderline": "Borderline — close but does not pass",
+    "legendCrescentNotVisible": "Crescent not visible"
   }
 }

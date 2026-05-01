@@ -547,22 +547,31 @@
     "about": {
       "title": "Hicri Takvim Hakkında — Ücretsiz Açık Kaynaklı İslami Takvim",
       "description": "Hicri Takvim ücretsiz, açık kaynaklı bir İslami takvim uygulamasıdır. İzleme yok, çerez yok, tam gizlilik. Samer Aamar tarafından geliştirildi."
+    },
+    "visibilityMap": {
+      "title": "Ay Görünürlüğü — Dünya Haritası",
+      "description": "Herhangi bir akşam için Ay görünürlüğü dünya haritası. Hicri ay sınırlarında, her konum için hilal testi sonucunu (Yallop, Odeh, MABIMS, sezgisel) gösterir. Ay ortasında, her konum için gün batımındaki Ay yüksekliğini gösterir."
     }
   },
   "visibilityMap": {
-    "title": "Hilal görünürlüğü — dünya haritası",
+    "title": "Ay görünürlüğü — dünya haritası",
     "eveningOf": "Akşam",
     "nextEvening": "Sonraki akşam",
     "notAvailableForCivil": "Görünürlük haritası bir astronomik yöntem ister (Görünürlük tahmini, MABIMS, Yallop veya Odeh). Üst kısımdan yöntemi değiştirin.",
     "computing": "~500 konum için görünürlük hesaplanıyor…",
-    "legendHigh": "Yüksek (≥65%)",
-    "legendMedium": "Orta (33–65%)",
-    "legendLow": "Düşük (<33%)",
-    "legendGated": "İmkansız (yöntem hariç tutar)",
-    "summary": "Ay başlangıcı {{positive}}/{{total}} konumda pozitif.",
+    "skyHeader": "Bu gece gökyüzünde Ay",
+    "skyBanner": "Her hücre, yerel gün batımında ufkun üzerindeki Ay yüksekliğini gösterir — Ay bu gece gökyüzünde işte buralarda olacaktır.",
+    "crescentHeader": "Bu gece yeni bir Hicri ay başlayabilir mi? — şüphe dönemi",
+    "crescentBanner": "Bir Hicri ay sınırına yakınız. Hilalin bir konumdan görünür olup olmadığı; etkin yönteme, yerel gün batımı zamanına, Ay'ın yüksekliğine, yaşına ve sapmasına bağlıdır. Aşağıdaki harita, etkin yöntemin her konum için verdiği kararı gösterir.",
+    "summary": "Hilal {{positive}}/{{total}} konumda görünür.",
     "disclaimer": "Her nokta seçili akşamda yerel gün batımında 10°×10° lık şebeke hücresi temsil eder.",
     "prevEvening": "Önceki akşam",
-    "notApplicableBanner": "Bu tarih Hicri ay ortasında — hilal testi uygulanmaz. Görünürlük haritası Hicri ayın son günlerinde (29. civarı) en bilgilendiricidir. Ay sınırına yakın bir tarih seçin.",
-    "legendNotApplicable": "Ay ortası — test uygulanmaz"
+    "legendMoonHigh": "Gün batımında Ay yüksek (>30°)",
+    "legendMoonMed": "Orta yükseklik (10–30°)",
+    "legendMoonLow": "Alçak (0–10°)",
+    "legendMoonBelow": "Gün batımında Ay ufkun altında (hâlâ orada — gece ilerleyince doğar)",
+    "legendCrescentVisible": "Hilal görünür olmalı",
+    "legendCrescentBorderline": "Sınırda — yakın ama eşiği geçmiyor",
+    "legendCrescentNotVisible": "Hilal görünür değil"
   }
 }

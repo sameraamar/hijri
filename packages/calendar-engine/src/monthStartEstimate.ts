@@ -365,6 +365,65 @@ function classifyFromPercent(percent: number): Exclude<MonthStartSignalLevel, 'u
 }
 
 /**
+ * Classify a Gregorian date by its proximity to a lunar conjunction (new moon).
+ * Independent of any observer's location. A date is a Hijri month-boundary
+ * candidate if either:
+ *   - it is within the young-crescent visibility window after the most recent
+ *     conjunction (`MAX_CRESCENT_AGE_HOURS_FOR_MONTH_START`), OR
+ *   - it is within ~36 hours *before* the next conjunction — westward observers
+ *     may experience their local sunset *after* a conjunction whose UTC time
+ *     is on the calendar day's nominal noon reference.
+ *
+ * Used by the visibility map page to decide whether to render the
+ * crescent-visibility section beneath the altitude map.
+ */
+export function isHijriBoundaryDate(date: GregorianDate): boolean {
+  const ref = new Date(Date.UTC(date.year, date.month - 1, date.day, 12, 0, 0));
+  const prevConj = Astronomy.SearchMoonPhase(0, ref, -40);
+  const nextConj = Astronomy.SearchMoonPhase(0, ref, +40);
+  if (!prevConj || !nextConj) return false;
+  const hoursSincePrev = (ref.getTime() - prevConj.date.getTime()) / 3600000;
+  const hoursUntilNext = (nextConj.date.getTime() - ref.getTime()) / 3600000;
+  return hoursSincePrev <= MAX_CRESCENT_AGE_HOURS_FOR_MONTH_START || hoursUntilNext <= 36;
+}
+
+/**
+ * Three-state crescent-visibility classification, unified across all methods.
+ * The visibility map's bottom section uses this so the legend is identical
+ * regardless of which method is active.
+ *
+ *   - `visible`: the active method says the crescent should be visible from
+ *     this location (Yallop A/B, Odeh A, heuristic/MABIMS gate-passes).
+ *   - `borderline`: the method's metric is close to its threshold but does
+ *     not pass (Yallop C/D, Odeh B/C, score in (0, threshold) for heuristic).
+ *   - `notVisible`: clearly excluded (Yallop E/F, Odeh D, score 0 or
+ *     `notApplicable`).
+ */
+export type CrescentVisibilityState = 'visible' | 'borderline' | 'notVisible';
+
+export function classifyCrescentVisibility(
+  est: MonthStartEstimate,
+  methodPasses: boolean
+): CrescentVisibilityState {
+  if (methodPasses) return 'visible';
+  if (est.kind === 'yallop') {
+    const z = est.metrics.yallopZone;
+    if (z === 'C' || z === 'D') return 'borderline';
+    return 'notVisible';
+  }
+  if (est.kind === 'odeh') {
+    const z = est.metrics.odehZone;
+    if (z === 'B' || z === 'C') return 'borderline';
+    return 'notVisible';
+  }
+  // Heuristic / MABIMS path: we have a continuous score. A near-miss (some
+  // metrics OK, others just under threshold) reads as borderline.
+  const percent = est.metrics.visibilityPercent ?? 0;
+  if (percent >= 25) return 'borderline';
+  return 'notVisible';
+}
+
+/**
  * True when the evening is *not* a candidate for a Hijri month-start.
  * The crescent test isn't relevant in this regime — moon age has run past
  * the new-moon window, or we're already in the waning half of the cycle.

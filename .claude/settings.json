@@ -11,7 +11,11 @@
       "Bash(node -e ' *)",
       "Bash(npx eslint *)",
       "Read(//c/Users/saaamar/**)",
-      "Bash(node --input-type=module -e ' *)"
+      "Bash(node --input-type=module -e ' *)",
+      "Bash(node scripts/_temp_moon_visibility.mjs)",
+      "Bash(rm scripts/_temp_moon_visibility.mjs)",
+      "Bash(npm --workspace apps/web run lint)",
+      "Bash(npm --workspace apps/web run build)"
     ]
   }
 }
