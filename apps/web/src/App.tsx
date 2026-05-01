@@ -170,6 +170,7 @@ export default function App() {
             { to: '/convert', label: t('app.nav.convert') },
             { to: '/details', label: t('app.nav.details') },
             { to: '/history', label: t('app.nav.history') },
+            { to: '/visibility-map', label: t('app.nav.visibilityMap') },
             { to: '/methods', label: t('app.nav.methods') },
             { to: '/scholars', label: t('app.nav.scholars') },
             { to: '/about', label: t('app.nav.about') },
