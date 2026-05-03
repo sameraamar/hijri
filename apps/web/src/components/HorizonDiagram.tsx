@@ -104,8 +104,12 @@ export default function HorizonDiagram({
         width={w}
         height={h}
         viewBox={`0 0 ${w} ${h}`}
+        preserveAspectRatio="xMidYMid meet"
         className={className}
-        style={{ overflow: 'visible' }}
+        // `max-width: 100%` + `height: auto` lets the SVG shrink to fit narrow
+        // containers (e.g. mobile day-detail card) while preserving its
+        // square aspect ratio so the dome and labels never get clipped.
+        style={{ overflow: 'visible', maxWidth: '100%', height: 'auto', display: 'block' }}
         aria-label={`Horizon diagram: moon at ${moonAltitudeDeg.toFixed(1)}°`}
       >
         <defs>
@@ -215,7 +219,9 @@ export default function HorizonDiagram({
             e.stopPropagation();
             setExpanded(true);
           }}
-          className="cursor-zoom-in border-0 bg-transparent p-0 leading-none transition-transform hover:scale-[1.02]"
+          // `min-w-0` lets this button shrink inside flex rows so the SVG can
+          // scale down on narrow viewports instead of overflowing the card.
+          className="block min-w-0 max-w-full cursor-zoom-in border-0 bg-transparent p-0 leading-none transition-transform hover:scale-[1.02]"
           aria-label="Expand horizon diagram"
           title="Click to enlarge"
         >

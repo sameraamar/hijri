@@ -735,8 +735,20 @@ export default function CalendarPage() {
                     ) : null}
                   </div>
 
-                  {expandedDay === d.day ? (
-                    <div className="hidden sm:block absolute left-0 right-0 top-full z-50 mt-1 sm:left-2 sm:right-auto sm:w-96 sm:max-w-[calc(100vw-2rem)]">
+                  {expandedDay === d.day ? (() => {
+                    // Column index 0 (Sun) … 6 (Sat) for this cell. Right-anchor
+                    // the popover for the last three columns (Thu/Fri/Sat) so the
+                    // 24rem-wide panel can't overflow the viewport's right edge —
+                    // when it does, the page gets a horizontal scrollbar AND the
+                    // outside-click handler dismisses the popover the moment the
+                    // user scrolls to see it.
+                    const colIndex = (monthData.offset + (d.day - 1)) % 7;
+                    const anchorRight = colIndex >= 4;
+                    const sideClass = anchorRight
+                      ? 'sm:right-2 sm:left-auto'
+                      : 'sm:left-2 sm:right-auto';
+                    return (
+                    <div className={`hidden sm:block absolute left-0 right-0 top-full z-50 mt-1 ${sideClass} sm:w-96 sm:max-w-[calc(100vw-2rem)]`}>
                       <div className="max-h-[60vh] overflow-auto select-text rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-2.5 text-xs shadow-lg sm:max-h-[70vh] sm:p-3">
                         <div className="space-y-3">
                           <div className="text-[11px] leading-relaxed text-slate-600 dark:text-slate-300">
@@ -803,7 +815,8 @@ export default function CalendarPage() {
                         </div>
                       </div>
                     </div>
-                  ) : null}
+                    );
+                  })() : null}
                 </div>
               );
             })}
