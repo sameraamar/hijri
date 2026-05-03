@@ -168,7 +168,7 @@ export default function DayMetrics({
         {typeof est.metrics.moonIlluminationFraction === 'number' && (
           <div className="flex flex-col items-center gap-1">
             <MoonPhaseIcon illumination={est.metrics.moonIlluminationFraction} size={phaseSize} />
-            <span className="text-[10px] text-slate-500 dark:text-slate-400">
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 dark:text-slate-500">
               {Math.round(est.metrics.moonIlluminationFraction * 100)}%
             </span>
           </div>
@@ -176,7 +176,7 @@ export default function DayMetrics({
       </div>
       {typeof est.metrics.visibilityPercent === 'number' && (
         <div className="flex items-center gap-2">
-          <span className="text-[11px] text-slate-500 dark:text-slate-400">{t('probability.crescentScore')}:</span>
+          <span className="text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-500">{t('probability.crescentScore')}:</span>
           <CrescentScoreBar percent={est.metrics.visibilityPercent} width={scoreBarW} />
         </div>
       )}

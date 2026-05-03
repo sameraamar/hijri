@@ -109,7 +109,7 @@ export default function ConvertPage() {
           <h2 className="card-title">{t('convert.gregorianToHijri')}</h2>
         </div>
         <div className="space-y-3 p-4">
-          <label className="block text-sm text-slate-700">
+          <label className="block text-sm text-slate-700 dark:text-slate-200">
             {t('convert.gregorianDate')}
             <input
               className="control mt-1"
@@ -117,16 +117,16 @@ export default function ConvertPage() {
               value={gregIso}
               onChange={(e) => setGregIso(e.target.value)}
             />
-            <div className="mt-1 text-xs text-slate-500">{gregorianDisplay}</div>
+            <div className="mt-1 text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">{gregorianDisplay}</div>
           </label>
 
-          <div className="rounded-md border border-slate-200 bg-slate-50 p-3 text-sm">
+          <div className="rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-sm">
             {hijriFromGregorian ? (
               <div>
                 {t('convert.hijriDate')}: {formatHijriDateDisplay(hijriFromGregorian, i18n.language)}
               </div>
             ) : (
-              <div className="text-slate-600">—</div>
+              <div className="text-slate-600 dark:text-slate-300">—</div>
             )}
           </div>
         </div>
@@ -138,7 +138,7 @@ export default function ConvertPage() {
         </div>
 
         <div className="grid grid-cols-3 gap-2 p-4">
-          <label className="text-sm text-slate-700">
+          <label className="text-sm text-slate-700 dark:text-slate-200">
             {t('convert.year')}
             <input
               className="control mt-1"
@@ -147,7 +147,7 @@ export default function ConvertPage() {
               onChange={(e) => setHijri({ ...hijri, year: Number(e.target.value) })}
             />
           </label>
-          <label className="text-sm text-slate-700">
+          <label className="text-sm text-slate-700 dark:text-slate-200">
             {t('convert.month')}
             <input
               className="control mt-1"
@@ -158,7 +158,7 @@ export default function ConvertPage() {
               onChange={(e) => setHijri({ ...hijri, month: Number(e.target.value) })}
             />
           </label>
-          <label className="text-sm text-slate-700">
+          <label className="text-sm text-slate-700 dark:text-slate-200">
             {t('convert.day')}
             <input
               className="control mt-1"
@@ -172,13 +172,13 @@ export default function ConvertPage() {
         </div>
 
         <div className="px-4 pb-4">
-          <div className="rounded-md border border-slate-200 bg-slate-50 p-3 text-sm">
+          <div className="rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-sm">
           {gregorianFromHijri ? (
             <div>
               {t('convert.gregorianDate')}: {formatGregorianDateDisplay(gregorianFromHijri, i18n.language)}
             </div>
           ) : (
-            <div className="text-slate-600">—</div>
+            <div className="text-slate-600 dark:text-slate-300">—</div>
           )}
           </div>
         </div>

@@ -125,13 +125,13 @@ export default function TodayPage() {
             onClick={() => setCurrentDate((d) => addDaysUtc(d, -1))}
             aria-label={t('today.prevDay')}
             title={t('today.prevDay')}
-            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 transition-colors dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:bg-slate-800 hover:text-slate-900 dark:text-slate-100 active:bg-slate-200 dark:active:bg-slate-700 dark:bg-slate-700 transition-colors dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 rtl:rotate-180" aria-hidden="true">
               <path fillRule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clipRule="evenodd"/>
             </svg>
           </button>
-          <label className="text-xs text-slate-600 dark:text-slate-400">
+          <label className="text-xs text-slate-600 dark:text-slate-300 dark:text-slate-400 dark:text-slate-500">
             <span className="sr-only">{t('today.selectedDayIs')}</span>
             <input
               type="date"
@@ -150,7 +150,7 @@ export default function TodayPage() {
             onClick={() => setCurrentDate((d) => addDaysUtc(d, 1))}
             aria-label={t('today.nextDay')}
             title={t('today.nextDay')}
-            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 transition-colors dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:bg-slate-800 hover:text-slate-900 dark:text-slate-100 active:bg-slate-200 dark:active:bg-slate-700 dark:bg-slate-700 transition-colors dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 rtl:rotate-180" aria-hidden="true">
               <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd"/>
@@ -168,26 +168,28 @@ export default function TodayPage() {
       </div>
 
       <section className="card p-4 sm:p-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <div className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">
-              {isViewingToday ? t('today.todayIs') : t('today.selectedDayIs')}
-            </div>
-            <div className="mt-1 text-2xl font-semibold text-slate-900 dark:text-slate-100 sm:text-3xl">{hijriDisplay}</div>
-            <div className="text-sm text-slate-600 dark:text-slate-300">{gregorianDisplay}</div>
-            <div className="mt-2 text-xs text-slate-500 dark:text-slate-400">
-              {t('today.currentLocation')}: {location.name} ({location.latitude.toFixed(2)}°, {location.longitude.toFixed(2)}°)
-            </div>
+        <div>
+          <div className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400 dark:text-slate-500">
+            {isViewingToday ? t('today.todayIs') : t('today.selectedDayIs')}
           </div>
-          {typeof tonightEst.metrics.moonIlluminationFraction === 'number' && (
-            <div className="flex flex-col items-center gap-1 self-start sm:self-center">
-              <MoonPhaseIcon illumination={tonightEst.metrics.moonIlluminationFraction} size={64} />
-              <span className="text-xs text-slate-500 dark:text-slate-400">
-                {Math.round(tonightEst.metrics.moonIlluminationFraction * 100)}%
-              </span>
-              <span className="text-[10px] uppercase tracking-wide text-slate-400 dark:text-slate-500">{t('today.moonPhase')}</span>
-            </div>
-          )}
+          <div className="mt-1 text-2xl font-semibold text-slate-900 dark:text-slate-100 sm:text-3xl">{hijriDisplay}</div>
+          <div className="text-sm text-slate-600 dark:text-slate-300">{gregorianDisplay}</div>
+          <div className="mt-2 text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
+            {t('today.currentLocation')}: {location.name} ({location.latitude.toFixed(2)}°, {location.longitude.toFixed(2)}°)
+          </div>
+        </div>
+
+        {/* Full per-day metrics with the horizon diagram — promoted to the
+            top of the page so it's the first thing the user sees. */}
+        <div className="mt-4 border-t border-slate-100 pt-3 text-xs dark:border-slate-700">
+          <DayMetrics
+            est={tonightEst}
+            fmtLocalTime={fmtLocalTime}
+            size="comfortable"
+            layout="split"
+            gregorianDateStr={gregorianDisplay}
+            hijriDateStr={hijriDisplay}
+          />
         </div>
       </section>
 
@@ -195,7 +197,7 @@ export default function TodayPage() {
         <section className="card p-4 sm:p-6">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <div className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              <div className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400 dark:text-slate-500">
                 {t('today.nextHolidayLabel')}
               </div>
               <div className="mt-1 text-xl font-semibold text-slate-900 dark:text-slate-100">
@@ -231,8 +233,8 @@ export default function TodayPage() {
       <section className="card p-4 sm:p-6">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <div className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">{t('today.tonightVisibility')}</div>
-            <div className="mt-1 max-w-xl text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
+            <div className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400 dark:text-slate-500">{t('today.tonightVisibility')}</div>
+            <div className="mt-1 max-w-xl text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 dark:text-slate-500">
               {t('today.tonightVisibilityHint')}
             </div>
           </div>
@@ -251,7 +253,7 @@ export default function TodayPage() {
             <div className="font-semibold">{t('probability.notApplicable')}</div>
             <div className="mt-1">{t('probability.notApplicableHint')}</div>
             {typeof tonightEst.metrics.moonAgeHours === 'number' && (
-              <div className="mt-2 text-slate-500 dark:text-slate-400">
+              <div className="mt-2 text-slate-500 dark:text-slate-400 dark:text-slate-500">
                 {t('today.nextMonthInDays', {
                   count: Math.max(1, Math.round(30 - tonightEst.metrics.moonAgeHours / 24))
                 })}
@@ -276,20 +278,9 @@ export default function TodayPage() {
           </div>
         )}
 
-        {/* Full per-day metrics — same card the Calendar popup shows.
-            Side-by-side on wide screens, stacked on mobile. */}
-        <div className="mt-4 border-t border-slate-100 pt-3 text-xs dark:border-slate-700">
-          <DayMetrics
-            est={tonightEst}
-            fmtLocalTime={fmtLocalTime}
-            size="comfortable"
-            layout="split"
-            gregorianDateStr={gregorianDisplay}
-            hijriDateStr={hijriDisplay}
-          />
-        </div>
+        {/* Full per-day metrics moved up into the header section above. */}
 
-        <div className="mt-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+        <div className="mt-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400 dark:text-slate-500">
           {t('probability.disclaimer')}
         </div>
       </section>

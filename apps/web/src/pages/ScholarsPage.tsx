@@ -10,33 +10,33 @@ export default function ScholarsPage() {
       <div className="page-header">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">{t('scholars.title')}</h1>
-          <p className="mt-1 text-sm text-slate-500">{t('scholars.subtitle')}</p>
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400 dark:text-slate-500">{t('scholars.subtitle')}</p>
         </div>
       </div>
 
       <div className="space-y-6">
         {/* ── Introduction ── */}
         <section className="card">
-          <div className="p-4 text-sm leading-relaxed text-slate-700">
+          <div className="p-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
             <p>{t('scholars.intro')}</p>
           </div>
         </section>
 
         {/* ── The Core Question ── */}
-        <h2 className="text-lg font-semibold tracking-tight text-slate-900">{t('scholars.coreQuestion')}</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">{t('scholars.coreQuestion')}</h2>
         <section className="card">
-          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700">
+          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
             <p>{t('scholars.coreQuestionBody')}</p>
           </div>
         </section>
 
         {/* ── Position 1: Local Sighting ── */}
-        <h2 className="text-lg font-semibold tracking-tight text-slate-900">{t('scholars.localSighting.title')}</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">{t('scholars.localSighting.title')}</h2>
         <section className="card">
-          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700">
+          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
             <p>{t('scholars.localSighting.body')}</p>
-            <div className="rounded-md bg-slate-50 p-3 text-xs text-slate-600">
-              <span className="font-semibold text-slate-800">{t('scholars.scholarsLabel')}: </span>
+            <div className="rounded-md bg-slate-50 dark:bg-slate-800 p-3 text-xs text-slate-600 dark:text-slate-300">
+              <span className="font-semibold text-slate-800 dark:text-slate-100">{t('scholars.scholarsLabel')}: </span>
               {t('scholars.localSighting.scholars')}
             </div>
             <div className="rounded-md bg-blue-50 p-3 text-xs text-blue-800">
@@ -47,12 +47,12 @@ export default function ScholarsPage() {
         </section>
 
         {/* ── Position 2: Global Sighting ── */}
-        <h2 className="text-lg font-semibold tracking-tight text-slate-900">{t('scholars.globalSighting.title')}</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">{t('scholars.globalSighting.title')}</h2>
         <section className="card">
-          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700">
+          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
             <p>{t('scholars.globalSighting.body')}</p>
-            <div className="rounded-md bg-slate-50 p-3 text-xs text-slate-600">
-              <span className="font-semibold text-slate-800">{t('scholars.scholarsLabel')}: </span>
+            <div className="rounded-md bg-slate-50 dark:bg-slate-800 p-3 text-xs text-slate-600 dark:text-slate-300">
+              <span className="font-semibold text-slate-800 dark:text-slate-100">{t('scholars.scholarsLabel')}: </span>
               {t('scholars.globalSighting.scholars')}
             </div>
             <div className="rounded-md bg-blue-50 p-3 text-xs text-blue-800">
@@ -63,12 +63,12 @@ export default function ScholarsPage() {
         </section>
 
         {/* ── Position 3: Astronomical Calculation ── */}
-        <h2 className="text-lg font-semibold tracking-tight text-slate-900">{t('scholars.calculation.title')}</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">{t('scholars.calculation.title')}</h2>
         <section className="card">
-          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700">
+          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
             <p>{t('scholars.calculation.body')}</p>
-            <div className="rounded-md bg-slate-50 p-3 text-xs text-slate-600">
-              <span className="font-semibold text-slate-800">{t('scholars.scholarsLabel')}: </span>
+            <div className="rounded-md bg-slate-50 dark:bg-slate-800 p-3 text-xs text-slate-600 dark:text-slate-300">
+              <span className="font-semibold text-slate-800 dark:text-slate-100">{t('scholars.scholarsLabel')}: </span>
               {t('scholars.calculation.scholars')}
             </div>
             <div className="rounded-md bg-blue-50 p-3 text-xs text-blue-800">
@@ -79,9 +79,9 @@ export default function ScholarsPage() {
         </section>
 
         {/* ── Position 4: Follow Saudi Arabia ── */}
-        <h2 className="text-lg font-semibold tracking-tight text-slate-900">{t('scholars.followSaudi.title')}</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">{t('scholars.followSaudi.title')}</h2>
         <section className="card">
-          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700">
+          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
             <p>{t('scholars.followSaudi.body')}</p>
             <div className="rounded-md bg-blue-50 p-3 text-xs text-blue-800">
               <span className="font-semibold">{t('scholars.practiceLabel')}: </span>
@@ -91,17 +91,17 @@ export default function ScholarsPage() {
         </section>
 
         {/* ── Naked Eye vs Telescope ── */}
-        <h2 className="text-lg font-semibold tracking-tight text-slate-900">{t('scholars.instruments.title')}</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">{t('scholars.instruments.title')}</h2>
         <section className="card">
-          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700">
+          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
             <p>{t('scholars.instruments.body')}</p>
           </div>
         </section>
 
         {/* ── Why Countries Differ ── */}
-        <h2 className="text-lg font-semibold tracking-tight text-slate-900">{t('scholars.whyDiffer.title')}</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">{t('scholars.whyDiffer.title')}</h2>
         <section className="card">
-          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700">
+          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
             <p>{t('scholars.whyDiffer.body')}</p>
             <ul className="list-disc space-y-1.5 ps-5">
               <li>{t('scholars.whyDiffer.reason1')}</li>

@@ -69,8 +69,8 @@ type DetailRow = {
 function MetricRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between gap-2 py-0.5">
-      <span className="text-slate-600">{label}</span>
-      <span className="text-slate-900 font-medium whitespace-nowrap">{value}</span>
+      <span className="text-slate-600 dark:text-slate-300">{label}</span>
+      <span className="text-slate-900 dark:text-slate-100 font-medium whitespace-nowrap">{value}</span>
     </div>
   );
 }
@@ -349,7 +349,7 @@ export default function DetailsPage() {
             type="button"
             onClick={goPrevMonth}
             aria-label={t('calendar.prevMonth')}
-            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 transition-colors"
+            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 dark:text-slate-100 active:bg-slate-200 dark:active:bg-slate-700 dark:bg-slate-700 transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 rtl:rotate-180"><path fillRule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clipRule="evenodd"/></svg>
           </button>
@@ -361,7 +361,7 @@ export default function DetailsPage() {
             type="button"
             onClick={goNextMonth}
             aria-label={t('calendar.nextMonth')}
-            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 transition-colors"
+            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 dark:text-slate-100 active:bg-slate-200 dark:active:bg-slate-700 dark:bg-slate-700 transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 rtl:rotate-180"><path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd"/></svg>
           </button>
@@ -370,49 +370,49 @@ export default function DetailsPage() {
             onClick={() => { const now = new Date(); setYear(now.getFullYear()); setMonth(now.getMonth() + 1); }}
             aria-label={t('calendar.today')}
             title={t('calendar.today')}
-            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 transition-colors"
+            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 dark:text-slate-100 active:bg-slate-200 dark:active:bg-slate-700 dark:bg-slate-700 transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-[18px] h-[18px]"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
           </button>
         </div>
         {hijriRangeLabel ? (
-          <span className="text-xs text-slate-500">({hijriRangeLabel})</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">({hijriRangeLabel})</span>
         ) : null}
       </div>
 
-      <div className="text-xs text-slate-500 mb-2">{t('probability.eveningEstimateHint')}</div>
+      <div className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 mb-2">{t('probability.eveningEstimateHint')}</div>
 
       {/* ── Desktop: table ── */}
       <section className="card hidden sm:block">
         <div className="overflow-x-auto">
           <table className="min-w-[1080px] w-full border-separate border-spacing-0 [&_th]:text-center [&_td]:text-center">
             <thead>
-              <tr className="text-left text-xs font-semibold text-slate-700">
-                <th className="sticky top-0 bg-slate-50 border-b border-slate-200 px-2 py-2">{t('convert.gregorianDateShort')}</th>
-                <th className="sticky top-0 bg-slate-50 border-b border-slate-200 px-2 py-2">{t('calendar.dayOfWeek')}</th>
-                <th className="sticky top-0 bg-slate-50 border-b border-slate-200 px-2 py-2">{t('convert.hijriDate')}</th>
-                <th className="sticky top-0 bg-slate-50 border-b border-slate-200 px-2 py-2 text-center">🌙</th>
-                <th className="sticky top-0 bg-slate-50 border-b border-slate-200 px-2 py-2">{t('probability.labelShort')}</th>
+              <tr className="text-left text-xs font-semibold text-slate-700 dark:text-slate-200">
+                <th className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2">{t('convert.gregorianDateShort')}</th>
+                <th className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2">{t('calendar.dayOfWeek')}</th>
+                <th className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2">{t('convert.hijriDate')}</th>
+                <th className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2 text-center">🌙</th>
+                <th className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2">{t('probability.labelShort')}</th>
                 {methodId === 'yallop' ? (
                   <>
-                    <th className="sticky top-0 bg-slate-50 border-b border-slate-200 px-2 py-2">{t('probability.yallopQ')}</th>
-                    <th className="sticky top-0 bg-slate-50 border-b border-slate-200 px-2 py-2">{t('probability.yallopZone')}</th>
+                    <th className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2">{t('probability.yallopQ')}</th>
+                    <th className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2">{t('probability.yallopZone')}</th>
                   </>
                 ) : methodId === 'odeh' ? (
                   <>
-                    <th className="sticky top-0 bg-slate-50 border-b border-slate-200 px-2 py-2">{t('probability.odehV')}</th>
-                    <th className="sticky top-0 bg-slate-50 border-b border-slate-200 px-2 py-2">{t('probability.odehZone')}</th>
+                    <th className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2">{t('probability.odehV')}</th>
+                    <th className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2">{t('probability.odehZone')}</th>
                   </>
                 ) : (
-                  <th className="sticky top-0 bg-slate-50 border-b border-slate-200 px-2 py-2">{t('probability.crescentScore')}</th>
+                  <th className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2">{t('probability.crescentScore')}</th>
                 )}
-                <th className="sticky top-0 bg-slate-50 border-b border-slate-200 px-2 py-2">{t('holidays.moonIllumination')}</th>
-                <th className="sticky top-0 bg-slate-50 border-b border-slate-200 px-2 py-2">{t('holidays.moonAltitude')}</th>
-                <th className="sticky top-0 bg-slate-50 border-b border-slate-200 px-2 py-2">{t('holidays.moonElongation')}</th>
-                <th className="sticky top-0 bg-slate-50 border-b border-slate-200 px-2 py-2">{t('holidays.moonAge')}</th>
-                <th className="sticky top-0 bg-slate-50 border-b border-slate-200 px-2 py-2">{t('probability.lagMinutes')}</th>
-                <th className="sticky top-0 bg-slate-50 border-b border-slate-200 px-2 py-2">{t('probability.sunRiseSetLocal')}</th>
-                <th className="sticky top-0 bg-slate-50 border-b border-slate-200 px-2 py-2">{t('probability.moonRiseSetLocal')}</th>
+                <th className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2">{t('holidays.moonIllumination')}</th>
+                <th className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2">{t('holidays.moonAltitude')}</th>
+                <th className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2">{t('holidays.moonElongation')}</th>
+                <th className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2">{t('holidays.moonAge')}</th>
+                <th className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2">{t('probability.lagMinutes')}</th>
+                <th className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2">{t('probability.sunRiseSetLocal')}</th>
+                <th className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-2 py-2">{t('probability.moonRiseSetLocal')}</th>
               </tr>
             </thead>
             <tbody>
@@ -425,16 +425,16 @@ export default function DetailsPage() {
                   ? formatHijriDateDisplay({ day: row.hijriDay, month: row.hijriMonth, year: row.hijriYear }, i18n.language)
                   : row.hijriText;
                 return (
-                  <tr key={row.gregorianIso} className="text-xs text-slate-800">
-                    <td className="border-b border-slate-100 px-2 py-2 font-medium text-slate-900 whitespace-nowrap">{gregorianDisplay}</td>
-                    <td className="border-b border-slate-100 px-2 py-2 whitespace-nowrap text-slate-600">{row.dayOfWeek}</td>
-                    <td className="border-b border-slate-100 px-2 py-2 whitespace-nowrap">{hijriDisplay}</td>
-                    <td className="border-b border-slate-100 px-2 py-2 text-center">
+                  <tr key={row.gregorianIso} className="text-xs text-slate-800 dark:text-slate-100">
+                    <td className="border-b border-slate-100 dark:border-slate-700 px-2 py-2 font-medium text-slate-900 dark:text-slate-100 whitespace-nowrap">{gregorianDisplay}</td>
+                    <td className="border-b border-slate-100 dark:border-slate-700 px-2 py-2 whitespace-nowrap text-slate-600 dark:text-slate-300">{row.dayOfWeek}</td>
+                    <td className="border-b border-slate-100 dark:border-slate-700 px-2 py-2 whitespace-nowrap">{hijriDisplay}</td>
+                    <td className="border-b border-slate-100 dark:border-slate-700 px-2 py-2 text-center">
                       {typeof row.estimate.moonIlluminationFraction === 'number'
                         ? <MoonPhaseIcon illumination={row.estimate.moonIlluminationFraction} size={20} />
                         : '—'}
                     </td>
-                    <td className="border-b border-slate-100 px-2 py-2 whitespace-nowrap">
+                    <td className="border-b border-slate-100 dark:border-slate-700 px-2 py-2 whitespace-nowrap">
                       {row.isIndicatorDay ? (
                         <span className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-medium ${style.badgeClass}`}>
                           {isMostLikely ? (
@@ -445,21 +445,21 @@ export default function DetailsPage() {
                           {t(`probability.${statusKey}`)}
                         </span>
                       ) : (
-                        <span className="text-slate-600">{t(`probability.${statusKey}`)}</span>
+                        <span className="text-slate-600 dark:text-slate-300">{t(`probability.${statusKey}`)}</span>
                       )}
                     </td>
                     {methodId === 'yallop' ? (
                       <>
-                        <td className="border-b border-slate-100 px-2 py-2 whitespace-nowrap">{typeof row.estimate.yallopQ === 'number' ? row.estimate.yallopQ.toFixed(3) : '—'}</td>
-                        <td className="border-b border-slate-100 px-2 py-2 whitespace-nowrap">{row.estimate.yallopZone ? `${row.estimate.yallopZone} — ${row.estimate.yallopZoneDescription ?? ''}` : '—'}</td>
+                        <td className="border-b border-slate-100 dark:border-slate-700 px-2 py-2 whitespace-nowrap">{typeof row.estimate.yallopQ === 'number' ? row.estimate.yallopQ.toFixed(3) : '—'}</td>
+                        <td className="border-b border-slate-100 dark:border-slate-700 px-2 py-2 whitespace-nowrap">{row.estimate.yallopZone ? `${row.estimate.yallopZone} — ${row.estimate.yallopZoneDescription ?? ''}` : '—'}</td>
                       </>
                     ) : methodId === 'odeh' ? (
                       <>
-                        <td className="border-b border-slate-100 px-2 py-2 whitespace-nowrap">{typeof row.estimate.odehV === 'number' ? row.estimate.odehV.toFixed(3) : '—'}</td>
-                        <td className="border-b border-slate-100 px-2 py-2 whitespace-nowrap">{row.estimate.odehZone ? `${row.estimate.odehZone} — ${row.estimate.odehZoneDescription ?? ''}` : '—'}</td>
+                        <td className="border-b border-slate-100 dark:border-slate-700 px-2 py-2 whitespace-nowrap">{typeof row.estimate.odehV === 'number' ? row.estimate.odehV.toFixed(3) : '—'}</td>
+                        <td className="border-b border-slate-100 dark:border-slate-700 px-2 py-2 whitespace-nowrap">{row.estimate.odehZone ? `${row.estimate.odehZone} — ${row.estimate.odehZoneDescription ?? ''}` : '—'}</td>
                       </>
                     ) : (
-                      <td className="border-b border-slate-100 px-2 py-2 whitespace-nowrap">
+                      <td className="border-b border-slate-100 dark:border-slate-700 px-2 py-2 whitespace-nowrap">
                         {typeof row.estimate.crescentScorePercent === 'number' ? (
                           (() => {
                             const pct = Math.max(0, Math.min(100, Math.round(row.estimate.crescentScorePercent ?? 0)));
@@ -481,15 +481,15 @@ export default function DetailsPage() {
                         ) : '—'}
                       </td>
                     )}
-                    <td className="border-b border-slate-100 px-2 py-2 whitespace-nowrap">{typeof row.estimate.moonIlluminationPercent === 'number' ? `${row.estimate.moonIlluminationPercent}%` : '—'}</td>
-                    <td className="border-b border-slate-100 px-2 py-2 whitespace-nowrap">{typeof row.estimate.moonAltitudeDeg === 'number' ? `${row.estimate.moonAltitudeDeg.toFixed(1)}°` : '—'}</td>
-                    <td className="border-b border-slate-100 px-2 py-2 whitespace-nowrap">{typeof row.estimate.moonElongationDeg === 'number' ? `${row.estimate.moonElongationDeg.toFixed(1)}°` : '—'}</td>
-                    <td className="border-b border-slate-100 px-2 py-2 whitespace-nowrap">{typeof row.estimate.moonAgeHours === 'number' ? `${row.estimate.moonAgeHours.toFixed(1)}h` : '—'}</td>
-                    <td className="border-b border-slate-100 px-2 py-2 whitespace-nowrap">{typeof row.estimate.lagMinutes === 'number' ? Math.round(row.estimate.lagMinutes) : '—'}</td>
-                    <td className="border-b border-slate-100 px-2 py-2 whitespace-nowrap">
+                    <td className="border-b border-slate-100 dark:border-slate-700 px-2 py-2 whitespace-nowrap">{typeof row.estimate.moonIlluminationPercent === 'number' ? `${row.estimate.moonIlluminationPercent}%` : '—'}</td>
+                    <td className="border-b border-slate-100 dark:border-slate-700 px-2 py-2 whitespace-nowrap">{typeof row.estimate.moonAltitudeDeg === 'number' ? `${row.estimate.moonAltitudeDeg.toFixed(1)}°` : '—'}</td>
+                    <td className="border-b border-slate-100 dark:border-slate-700 px-2 py-2 whitespace-nowrap">{typeof row.estimate.moonElongationDeg === 'number' ? `${row.estimate.moonElongationDeg.toFixed(1)}°` : '—'}</td>
+                    <td className="border-b border-slate-100 dark:border-slate-700 px-2 py-2 whitespace-nowrap">{typeof row.estimate.moonAgeHours === 'number' ? `${row.estimate.moonAgeHours.toFixed(1)}h` : '—'}</td>
+                    <td className="border-b border-slate-100 dark:border-slate-700 px-2 py-2 whitespace-nowrap">{typeof row.estimate.lagMinutes === 'number' ? Math.round(row.estimate.lagMinutes) : '—'}</td>
+                    <td className="border-b border-slate-100 dark:border-slate-700 px-2 py-2 whitespace-nowrap">
                       {`${fmtLocalTime(row.estimate.sunriseUtcIso) ?? '—'} → ${fmtLocalTime(row.estimate.sunsetUtcIso) ?? '—'}`}
                     </td>
-                    <td className="border-b border-slate-100 px-2 py-2 whitespace-nowrap">
+                    <td className="border-b border-slate-100 dark:border-slate-700 px-2 py-2 whitespace-nowrap">
                       {`${fmtLocalTime(row.estimate.moonriseUtcIso) ?? '—'} → ${fmtLocalTime(row.estimate.moonsetUtcIso) ?? '—'}`}
                     </td>
                   </tr>
@@ -512,19 +512,19 @@ export default function DetailsPage() {
             <div
               key={row.day}
               className={`rounded-lg border px-3 py-2.5 text-sm cursor-pointer transition-colors ${
-                isExpanded ? 'border-blue-300 bg-blue-50/50' : 'border-slate-200 bg-white'
+                isExpanded ? 'border-blue-300 bg-blue-50/50 dark:border-blue-500 dark:bg-blue-900/30' : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800'
               }`}
               onClick={() => setExpandedDay(isExpanded ? null : row.day)}
             >
               {/* Summary row */}
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <span className="font-semibold text-slate-900">{row.day}</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-100">{row.day}</span>
                   {typeof row.estimate.moonIlluminationFraction === 'number' && (
                     <MoonPhaseIcon illumination={row.estimate.moonIlluminationFraction} size={18} />
                   )}
-                  <span className="text-xs text-slate-500">{row.dayOfWeek}</span>
-                  <span className="text-xs text-slate-500">{row.hijriDay && row.hijriMonth && row.hijriYear ? formatHijriDateDisplay({ day: row.hijriDay, month: row.hijriMonth, year: row.hijriYear }, i18n.language) : row.hijriText}</span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">{row.dayOfWeek}</span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">{row.hijriDay && row.hijriMonth && row.hijriYear ? formatHijriDateDisplay({ day: row.hijriDay, month: row.hijriMonth, year: row.hijriYear }, i18n.language) : row.hijriText}</span>
                 </div>
                 {row.isIndicatorDay ? (
                   <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${style.badgeClass}`}>
@@ -540,7 +540,7 @@ export default function DetailsPage() {
 
               {/* Expanded detail */}
               {isExpanded ? (
-                <div className="mt-2 border-t border-slate-100 pt-2 text-xs">
+                <div className="mt-2 border-t border-slate-100 dark:border-slate-700 pt-2 text-xs">
                   {/* Horizon diagram */}
                   {typeof row.estimate.moonAltitudeDeg === 'number' && (
                     <div className="flex justify-center mb-2">
@@ -556,14 +556,14 @@ export default function DetailsPage() {
                             : row.hijriText
                         }
                         width={200}
-                        height={110}
+                        height={200}
                       />
                     </div>
                   )}
                   {/* Crescent score bar */}
                   {typeof row.estimate.crescentScorePercent === 'number' && (
                     <div className="flex items-center justify-between gap-2 py-1">
-                      <span className="text-slate-600">{t('probability.crescentScore')}</span>
+                      <span className="text-slate-600 dark:text-slate-300">{t('probability.crescentScore')}</span>
                       <CrescentScoreBar percent={row.estimate.crescentScorePercent} width={80} />
                     </div>
                   )}

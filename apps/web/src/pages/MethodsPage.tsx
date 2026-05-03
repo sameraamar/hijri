@@ -41,18 +41,18 @@ export default function MethodsPage() {
       <div className="space-y-4">
         {/* ── Table of Contents ── */}
         <nav className="card p-4 text-sm">
-          <div className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-2">{t('methods.toc')}</div>
+          <div className="text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500 mb-2">{t('methods.toc')}</div>
           <div className="space-y-1">
             <div className="mt-1">
               <a href="#key-concepts" className="font-medium text-blue-600 hover:underline">{t('methods.keyConcepts.title')}</a>
             </div>
-            <div className="font-medium text-slate-700 mt-2">{t('methods.implementedSection')}</div>
+            <div className="font-medium text-slate-700 dark:text-slate-200 mt-2">{t('methods.implementedSection')}</div>
             <ul className="list-disc ps-5 space-y-0.5">
               {tocImplemented.map((item) => (
                 <li key={item.id}><a href={`#${item.id}`} className="text-blue-600 hover:underline">{item.label}</a></li>
               ))}
             </ul>
-            <div className="font-medium text-slate-700 mt-2">{t('methods.otherSection')}</div>
+            <div className="font-medium text-slate-700 dark:text-slate-200 mt-2">{t('methods.otherSection')}</div>
             <ul className="list-disc ps-5 space-y-0.5">
               {tocOther.map((item) => (
                 <li key={item.id}><a href={`#${item.id}`} className="text-blue-600 hover:underline">{item.label}</a></li>
@@ -69,45 +69,45 @@ export default function MethodsPage() {
           <div className="card-header">
             <div className="card-title">{t('methods.keyConcepts.title')}</div>
           </div>
-          <div className="space-y-4 p-4 text-sm text-slate-700">
+          <div className="space-y-4 p-4 text-sm text-slate-700 dark:text-slate-200">
             <div>{t('methods.keyConcepts.intro')}</div>
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {/* Moon Altitude */}
-              <div className="rounded-lg border border-slate-200 bg-white p-3">
-                <div className="text-xs font-semibold text-slate-900 mb-2">{t('methods.keyConcepts.altitudeTitle')}</div>
+              <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-3">
+                <div className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-2">{t('methods.keyConcepts.altitudeTitle')}</div>
                 <AltitudeDiagram className="w-full max-w-[260px] mx-auto rounded" />
-                <div className="mt-2 text-[12px] leading-relaxed text-slate-600">{t('methods.keyConcepts.altitude')}</div>
+                <div className="mt-2 text-[12px] leading-relaxed text-slate-600 dark:text-slate-300">{t('methods.keyConcepts.altitude')}</div>
                 <a href={t('methods.keyConcepts.altitudeWiki')} target="_blank" rel="noopener noreferrer" className="mt-1 inline-block text-[11px] text-blue-600 hover:underline">
                   {t('methods.keyConcepts.wikiLink')} →
                 </a>
               </div>
 
               {/* Elongation */}
-              <div className="rounded-lg border border-slate-200 bg-white p-3">
-                <div className="text-xs font-semibold text-slate-900 mb-2">{t('methods.keyConcepts.elongationTitle')}</div>
+              <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-3">
+                <div className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-2">{t('methods.keyConcepts.elongationTitle')}</div>
                 <ElongationDiagram className="w-full max-w-[260px] mx-auto rounded" />
-                <div className="mt-2 text-[12px] leading-relaxed text-slate-600">{t('methods.keyConcepts.elongation')}</div>
+                <div className="mt-2 text-[12px] leading-relaxed text-slate-600 dark:text-slate-300">{t('methods.keyConcepts.elongation')}</div>
                 <a href={t('methods.keyConcepts.elongationWiki')} target="_blank" rel="noopener noreferrer" className="mt-1 inline-block text-[11px] text-blue-600 hover:underline">
                   {t('methods.keyConcepts.wikiLink')} →
                 </a>
               </div>
 
               {/* Moon Age */}
-              <div className="rounded-lg border border-slate-200 bg-white p-3">
-                <div className="text-xs font-semibold text-slate-900 mb-2">{t('methods.keyConcepts.moonAgeTitle')}</div>
+              <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-3">
+                <div className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-2">{t('methods.keyConcepts.moonAgeTitle')}</div>
                 <MoonAgeDiagram className="w-full max-w-[260px] mx-auto rounded" />
-                <div className="mt-2 text-[12px] leading-relaxed text-slate-600">{t('methods.keyConcepts.moonAge')}</div>
+                <div className="mt-2 text-[12px] leading-relaxed text-slate-600 dark:text-slate-300">{t('methods.keyConcepts.moonAge')}</div>
                 <a href={t('methods.keyConcepts.moonAgeWiki')} target="_blank" rel="noopener noreferrer" className="mt-1 inline-block text-[11px] text-blue-600 hover:underline">
                   {t('methods.keyConcepts.wikiLink')} →
                 </a>
               </div>
 
               {/* Moonset Lag */}
-              <div className="rounded-lg border border-slate-200 bg-white p-3">
-                <div className="text-xs font-semibold text-slate-900 mb-2">{t('methods.keyConcepts.lagTitle')}</div>
+              <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-3">
+                <div className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-2">{t('methods.keyConcepts.lagTitle')}</div>
                 <MoonsetLagDiagram className="w-full max-w-[260px] mx-auto rounded" />
-                <div className="mt-2 text-[12px] leading-relaxed text-slate-600">{t('methods.keyConcepts.lag')}</div>
+                <div className="mt-2 text-[12px] leading-relaxed text-slate-600 dark:text-slate-300">{t('methods.keyConcepts.lag')}</div>
                 <a href={t('methods.keyConcepts.lagWiki')} target="_blank" rel="noopener noreferrer" className="mt-1 inline-block text-[11px] text-blue-600 hover:underline">
                   {t('methods.keyConcepts.wikiLink')} →
                 </a>
@@ -116,7 +116,7 @@ export default function MethodsPage() {
 
             {/* ── Glossary of other terms ── */}
             <div className="mt-2">
-              <div className="text-xs font-semibold text-slate-900 mb-3">{t('methods.keyConcepts.glossaryTitle')}</div>
+              <div className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-3">{t('methods.keyConcepts.glossaryTitle')}</div>
               <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
                 {([
                   { titleKey: 'conjunctionTitle', descKey: 'conjunction', wikiKey: 'conjunctionWiki' },
@@ -126,9 +126,9 @@ export default function MethodsPage() {
                   { titleKey: 'illuminationTitle', descKey: 'illumination', wikiKey: 'illuminationWiki' },
                   { titleKey: 'waxingWaningTitle', descKey: 'waxingWaning', wikiKey: 'waxingWaningWiki' },
                 ] as const).map((item) => (
-                  <div key={item.titleKey} className="rounded-lg border border-slate-200 bg-white p-3">
-                    <div className="text-xs font-semibold text-slate-900 mb-1">{t(`methods.keyConcepts.${item.titleKey}`)}</div>
-                    <div className="text-[12px] leading-relaxed text-slate-600">{t(`methods.keyConcepts.${item.descKey}`)}</div>
+                  <div key={item.titleKey} className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-3">
+                    <div className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">{t(`methods.keyConcepts.${item.titleKey}`)}</div>
+                    <div className="text-[12px] leading-relaxed text-slate-600 dark:text-slate-300">{t(`methods.keyConcepts.${item.descKey}`)}</div>
                     {item.wikiKey ? (
                       <a href={t(`methods.keyConcepts.${item.wikiKey}`)} target="_blank" rel="noopener noreferrer" className="mt-1 inline-block text-[11px] text-blue-600 hover:underline">
                         {t('methods.keyConcepts.wikiLink')} →
@@ -142,18 +142,18 @@ export default function MethodsPage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <h2 className="text-lg font-semibold tracking-tight text-slate-900">{t('methods.implementedSection')}</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">{t('methods.implementedSection')}</h2>
 
         {/* ── Tabular / Civil ── */}
         <section id="civil" className="card scroll-mt-24">
           <div className="card-header">
             <div className="card-title">{t('methods.civil.title')}</div>
           </div>
-          <div className="space-y-3 p-4 text-sm text-slate-700">
+          <div className="space-y-3 p-4 text-sm text-slate-700 dark:text-slate-200">
             <div>{t('methods.civil.summary')}</div>
 
             <div>
-              <div className="text-xs font-semibold text-slate-900">{t('methods.characteristics')}</div>
+              <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">{t('methods.characteristics')}</div>
               <ul className="mt-2 list-disc space-y-1 ps-5">
                 <li>{t('methods.civil.ch1')}</li>
                 <li>{t('methods.civil.ch2')}</li>
@@ -162,23 +162,23 @@ export default function MethodsPage() {
             </div>
 
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-              <div className="rounded-md border border-slate-200 bg-slate-50 p-3">
-                <div className="text-xs font-semibold text-slate-900">{t('methods.pros')}</div>
-                <ul className="mt-2 list-disc space-y-1 ps-5 text-sm text-slate-700">
+              <div className="rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3">
+                <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">{t('methods.pros')}</div>
+                <ul className="mt-2 list-disc space-y-1 ps-5 text-sm text-slate-700 dark:text-slate-200">
                   <li>{t('methods.civil.pro1')}</li>
                   <li>{t('methods.civil.pro2')}</li>
                 </ul>
               </div>
-              <div className="rounded-md border border-slate-200 bg-slate-50 p-3">
-                <div className="text-xs font-semibold text-slate-900">{t('methods.cons')}</div>
-                <ul className="mt-2 list-disc space-y-1 ps-5 text-sm text-slate-700">
+              <div className="rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3">
+                <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">{t('methods.cons')}</div>
+                <ul className="mt-2 list-disc space-y-1 ps-5 text-sm text-slate-700 dark:text-slate-200">
                   <li>{t('methods.civil.con1')}</li>
                   <li>{t('methods.civil.con2')}</li>
                 </ul>
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-3 border-t border-slate-100 pt-3 text-xs text-slate-500">
+            <div className="flex flex-wrap gap-3 border-t border-slate-100 dark:border-slate-700 pt-3 text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
               <span>{t('methods.references')}:</span>
               <a href="https://en.wikipedia.org/wiki/Tabular_Islamic_calendar" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Wikipedia: Tabular Islamic calendar</a>
               <span>•</span>
@@ -196,13 +196,13 @@ export default function MethodsPage() {
           <div className="card-header">
             <div className="card-title">{t('methods.estimate.title')}</div>
           </div>
-          <div className="space-y-4 p-4 text-sm text-slate-700">
+          <div className="space-y-4 p-4 text-sm text-slate-700 dark:text-slate-200">
             <div>{t('methods.estimate.summary')}</div>
 
             {/* Input variables — moved to top */}
             <div>
-              <div className="text-xs font-semibold text-slate-900">{t('methods.estimate.inputsTitle')}</div>
-              <ul className="mt-2 list-disc space-y-1 ps-5 text-slate-600">
+              <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">{t('methods.estimate.inputsTitle')}</div>
+              <ul className="mt-2 list-disc space-y-1 ps-5 text-slate-600 dark:text-slate-300">
                 <li>{t('methods.estimate.input1')}</li>
                 <li>{t('methods.estimate.input2')}</li>
                 <li>{t('methods.estimate.input3')}</li>
@@ -212,18 +212,18 @@ export default function MethodsPage() {
 
             {/* How it works — step by step */}
             <div>
-              <div className="text-xs font-semibold text-slate-900">{t('methods.estimate.howItWorksTitle')}</div>
+              <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">{t('methods.estimate.howItWorksTitle')}</div>
               <div className="mt-2 space-y-3">
                 {([1, 2, 3, 4, 5] as const).map((n) => (
                   <div key={n}>
-                    <div className="font-medium text-slate-800">
+                    <div className="font-medium text-slate-800 dark:text-slate-100">
                       {t(`methods.estimate.step${n}title`)}
                     </div>
-                    <div className="mt-0.5 ps-3 text-slate-600">
+                    <div className="mt-0.5 ps-3 text-slate-600 dark:text-slate-300">
                       {n === 3 ? (
                         <>
                           <div>{t(`methods.estimate.step${n}`)}</div>
-                          <div className="mt-1 text-center font-mono text-slate-800">
+                          <div className="mt-1 text-center font-mono text-slate-800 dark:text-slate-100">
                             {i18n.language === 'ar' ? 'المؤشر' : 'Score'} = 0.35 × s<sub>h</sub> + 0.35 × s<sub>Δ</sub> + 0.20 × s<sub>A</sub> + 0.10 × s<sub>L</sub>
                           </div>
                         </>
@@ -233,9 +233,9 @@ export default function MethodsPage() {
                     </div>
                     {n === 2 && (
                       <div className="mt-2 overflow-x-auto ps-3">
-                        <table className="min-w-full text-xs border border-slate-200 rounded">
+                        <table className="min-w-full text-xs border border-slate-200 dark:border-slate-700 rounded">
                           <thead>
-                            <tr className="bg-slate-100 text-slate-700">
+                            <tr className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
                               <th className="px-2 py-1 text-start font-semibold">{t('methods.estimate.step2colVar')}</th>
                               <th className="px-2 py-1 text-center font-semibold">{t('methods.estimate.step2colMin')}</th>
                               <th className="px-2 py-1 text-center font-semibold">{t('methods.estimate.step2colMax')}</th>
@@ -251,13 +251,13 @@ export default function MethodsPage() {
                               { v: 'A', desc: 'step2ageDesc', min: '12 h', max: '24 h', low: '12', high: '24', w: '20%' },
                               { v: 'L', desc: 'step2lagDesc', min: '0 min', max: '60 min', low: '0', high: '60', w: '10%' },
                             ] as const).map((r) => (
-                              <tr key={r.v} className="hover:bg-slate-50 align-top">
+                              <tr key={r.v} className="hover:bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-800 align-top">
                                 <td className="px-2 py-1 font-mono font-bold text-indigo-700">{r.v}</td>
                                 <td className="px-2 py-1 text-center font-mono">{r.min}</td>
                                 <td className="px-2 py-1 text-center font-mono">{r.max}</td>
-                                <td className="px-2 py-1 font-mono text-slate-800 whitespace-nowrap">s<sub>{r.v}</sub> = ({r.v} − {r.low}) / ({r.high} − {r.low})</td>
+                                <td className="px-2 py-1 font-mono text-slate-800 dark:text-slate-100 whitespace-nowrap">s<sub>{r.v}</sub> = ({r.v} − {r.low}) / ({r.high} − {r.low})</td>
                                 <td className="px-2 py-1 text-center font-semibold">{r.w}</td>
-                                <td className="px-2 py-1 text-slate-500">{t(`methods.estimate.${r.desc}`)}</td>
+                                <td className="px-2 py-1 text-slate-500 dark:text-slate-400 dark:text-slate-500">{t(`methods.estimate.${r.desc}`)}</td>
                               </tr>
                             ))}
                           </tbody>
@@ -265,7 +265,7 @@ export default function MethodsPage() {
                       </div>
                     )}
                     {n === 4 && (
-                      <ul className="mt-1 list-disc space-y-1 ps-8 text-slate-600">
+                      <ul className="mt-1 list-disc space-y-1 ps-8 text-slate-600 dark:text-slate-300">
                         <li>{t('methods.estimate.step4a')}</li>
                         <li>{t('methods.estimate.step4b')}</li>
                         <li>{t('methods.estimate.step4c')}</li>
@@ -278,29 +278,29 @@ export default function MethodsPage() {
 
             {/* Exclusivity rule */}
             <div>
-              <div className="text-xs font-semibold text-slate-900">{t('methods.estimate.exclusivityTitle')}</div>
-              <div className="mt-1 ps-3 text-slate-600">{t('methods.estimate.exclusivity')}</div>
+              <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">{t('methods.estimate.exclusivityTitle')}</div>
+              <div className="mt-1 ps-3 text-slate-600 dark:text-slate-300">{t('methods.estimate.exclusivity')}</div>
             </div>
 
             {/* Worked examples */}
             <div>
-              <div className="text-xs font-semibold text-slate-900">{t('methods.estimate.examplesTitle')}</div>
+              <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">{t('methods.estimate.examplesTitle')}</div>
               {([1, 2] as const).map((ex) => (
-                <div key={ex} className="mt-3 rounded border border-slate-200 bg-slate-50 p-3">
-                  <div className="text-xs font-semibold text-slate-800 mb-2">{t(`methods.estimate.ex${ex}title`)}</div>
+                <div key={ex} className="mt-3 rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3">
+                  <div className="text-xs font-semibold text-slate-800 dark:text-slate-100 mb-2">{t(`methods.estimate.ex${ex}title`)}</div>
                   <table className="text-xs font-mono w-full">
                     <tbody>
                       {/* Raw values */}
-                      <tr><td colSpan={5} className="pb-1 text-slate-500 font-sans font-semibold">{t('methods.estimate.exRawValues')}</td></tr>
+                      <tr><td colSpan={5} className="pb-1 text-slate-500 dark:text-slate-400 dark:text-slate-500 font-sans font-semibold">{t('methods.estimate.exRawValues')}</td></tr>
                       {(['h', 'Δ', 'A', 'L'] as const).map((v) => (
-                        <tr key={v} className="text-slate-700">
+                        <tr key={v} className="text-slate-700 dark:text-slate-200">
                           <td className="pe-2 py-0.5 font-bold text-indigo-700">{v}</td>
                           <td className="px-1 py-0.5">=</td>
                           <td className="px-2 py-0.5">{t(`methods.estimate.ex${ex}${v}`)}</td>
                         </tr>
                       ))}
                       {/* Normalized scores */}
-                      <tr><td colSpan={5} className="pt-2 pb-1 text-slate-500 font-sans font-semibold">{t('methods.estimate.exNormalized')}</td></tr>
+                      <tr><td colSpan={5} className="pt-2 pb-1 text-slate-500 dark:text-slate-400 dark:text-slate-500 font-sans font-semibold">{t('methods.estimate.exNormalized')}</td></tr>
                       {(['h', 'Δ', 'A', 'L'] as const).map((v) => (
                         <tr key={v} className="text-emerald-700">
                           <td className="pe-2 py-0.5">s<sub>{v}</sub></td>
@@ -309,13 +309,13 @@ export default function MethodsPage() {
                         </tr>
                       ))}
                       {/* Final score */}
-                      <tr><td colSpan={5} className="pt-2 pb-1 text-slate-500 font-sans font-semibold">{t('methods.estimate.exFinalScore')}</td></tr>
-                      <tr className="text-slate-800 font-semibold">
+                      <tr><td colSpan={5} className="pt-2 pb-1 text-slate-500 dark:text-slate-400 dark:text-slate-500 font-sans font-semibold">{t('methods.estimate.exFinalScore')}</td></tr>
+                      <tr className="text-slate-800 dark:text-slate-100 font-semibold">
                         <td className="pe-2 py-0.5">{i18n.language === 'ar' ? 'المؤشر' : 'Score'}</td>
                         <td className="px-1 py-0.5">=</td>
                         <td className="px-2 py-0.5">{t(`methods.estimate.ex${ex}score`)}</td>
                       </tr>
-                      <tr className="text-slate-800 font-semibold">
+                      <tr className="text-slate-800 dark:text-slate-100 font-semibold">
                         <td className="pe-2 py-0.5">{i18n.language === 'ar' ? 'التصنيف' : 'Label'}</td>
                         <td className="px-1 py-0.5">=</td>
                         <td className="px-2 py-0.5">{t(`methods.estimate.ex${ex}label`)}</td>
@@ -326,13 +326,13 @@ export default function MethodsPage() {
               ))}
             </div>
 
-            <div className="text-xs italic text-slate-500">{t('methods.estimate.impl')}</div>
+            <div className="text-xs italic text-slate-500 dark:text-slate-400 dark:text-slate-500">{t('methods.estimate.impl')}</div>
 
-            <div className="rounded-md border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600">
+            <div className="rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-xs text-slate-600 dark:text-slate-300">
               {t('methods.estimate.note')}
             </div>
 
-            <div className="flex flex-wrap gap-3 border-t border-slate-100 pt-3 text-xs text-slate-500">
+            <div className="flex flex-wrap gap-3 border-t border-slate-100 dark:border-slate-700 pt-3 text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
               <span>{t('methods.references')}:</span>
               <a href="https://en.wikipedia.org/wiki/New_moon" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Wikipedia: New moon</a>
               <span>•</span>
@@ -384,11 +384,11 @@ export default function MethodsPage() {
               </div>
             </div>
 
-            <div className="rounded-md border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-900/40 dark:text-slate-300">
+            <div className="rounded-md border border-slate-200 bg-slate-50 dark:bg-slate-800 p-3 text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-900/40 dark:text-slate-300">
               {t('methods.mabims.note')}
             </div>
 
-            <div className="flex flex-wrap gap-3 border-t border-slate-100 pt-3 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400">
+            <div className="flex flex-wrap gap-3 border-t border-slate-100 pt-3 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400 dark:text-slate-500">
               <span>{t('methods.references')}:</span>
               <a
                 href="https://en.wikipedia.org/wiki/Lunar_calendar#Islamic_calendar"
@@ -416,11 +416,11 @@ export default function MethodsPage() {
           <div className="card-header">
             <div className="card-title">{t('methods.yallop.title')}</div>
           </div>
-          <div className="space-y-3 p-4 text-sm text-slate-700">
+          <div className="space-y-3 p-4 text-sm text-slate-700 dark:text-slate-200">
             <div>{t('methods.yallop.summary')}</div>
 
             <div>
-              <div className="text-xs font-semibold text-slate-900">{t('methods.characteristics')}</div>
+              <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">{t('methods.characteristics')}</div>
               <ul className="mt-2 list-disc space-y-1 ps-5">
                 <li>{t('methods.yallop.ch1')}</li>
                 <li>{t('methods.yallop.ch2')}</li>
@@ -429,7 +429,7 @@ export default function MethodsPage() {
             </div>
 
             <div>
-              <div className="text-xs font-semibold text-slate-900">{t('methods.yallop.zonesTitle')}</div>
+              <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">{t('methods.yallop.zonesTitle')}</div>
               <div className="mt-2 space-y-2">
                 {(
                   [
@@ -455,11 +455,11 @@ export default function MethodsPage() {
               </div>
             </div>
 
-            <div className="rounded-md border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600">
+            <div className="rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-xs text-slate-600 dark:text-slate-300">
               {t('methods.yallop.note')}
             </div>
 
-            <div className="flex flex-wrap gap-3 border-t border-slate-100 pt-3 text-xs text-slate-500">
+            <div className="flex flex-wrap gap-3 border-t border-slate-100 dark:border-slate-700 pt-3 text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
               <span>{t('methods.references')}:</span>
               <a href="https://astronomycenter.net/pdf/yallop_1997.pdf" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Yallop (1997)</a>
               <span>•</span>
@@ -475,11 +475,11 @@ export default function MethodsPage() {
           <div className="card-header">
             <div className="card-title">{t('methods.odeh.title')}</div>
           </div>
-          <div className="space-y-3 p-4 text-sm text-slate-700">
+          <div className="space-y-3 p-4 text-sm text-slate-700 dark:text-slate-200">
             <div>{t('methods.odeh.summary')}</div>
 
             <div>
-              <div className="text-xs font-semibold text-slate-900">{t('methods.characteristics')}</div>
+              <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">{t('methods.characteristics')}</div>
               <ul className="mt-2 list-disc space-y-1 ps-5">
                 <li>{t('methods.odeh.ch1')}</li>
                 <li>{t('methods.odeh.ch2')}</li>
@@ -488,7 +488,7 @@ export default function MethodsPage() {
             </div>
 
             <div>
-              <div className="text-xs font-semibold text-slate-900">{t('methods.odeh.zonesTitle')}</div>
+              <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">{t('methods.odeh.zonesTitle')}</div>
               <div className="mt-2 space-y-2">
                 {(
                   [
@@ -512,11 +512,11 @@ export default function MethodsPage() {
               </div>
             </div>
 
-            <div className="rounded-md border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600">
+            <div className="rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 text-xs text-slate-600 dark:text-slate-300">
               {t('methods.odeh.note')}
             </div>
 
-            <div className="flex flex-wrap gap-3 border-t border-slate-100 pt-3 text-xs text-slate-500">
+            <div className="flex flex-wrap gap-3 border-t border-slate-100 dark:border-slate-700 pt-3 text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
               <span>{t('methods.references')}:</span>
               <a href="https://www.icoproject.org/pdf/2004Odeh.pdf" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Odeh (2004)</a>
               <span>•</span>
@@ -526,19 +526,19 @@ export default function MethodsPage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <h2 className="text-lg font-semibold tracking-tight text-slate-900">{t('methods.otherSection')}</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">{t('methods.otherSection')}</h2>
 
         {/* ── Umm al-Qura ── */}
         <section id="ummalqura" className="card scroll-mt-24 opacity-80">
           <div className="card-header">
             <div className="card-title flex items-center gap-2">
               {t('methods.ummalqura.title')}
-              <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-500 ring-1 ring-slate-200">{t('methods.notImplemented')}</span>
+              <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 dark:text-slate-500 ring-1 ring-slate-200 dark:ring-slate-700">{t('methods.notImplemented')}</span>
             </div>
           </div>
-          <div className="space-y-3 p-4 text-sm text-slate-700">
+          <div className="space-y-3 p-4 text-sm text-slate-700 dark:text-slate-200">
             <div>{t('methods.ummalqura.summary')}</div>
-            <div className="flex flex-wrap gap-3 border-t border-slate-100 pt-3 text-xs text-slate-500">
+            <div className="flex flex-wrap gap-3 border-t border-slate-100 dark:border-slate-700 pt-3 text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
               <span>{t('methods.references')}:</span>
               <a href="https://en.wikipedia.org/wiki/Umm_al-Qura_calendar" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Wikipedia: Umm al-Qura calendar</a>
             </div>
@@ -550,12 +550,12 @@ export default function MethodsPage() {
           <div className="card-header">
             <div className="card-title flex items-center gap-2">
               {t('methods.schaefer.title')}
-              <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-500 ring-1 ring-slate-200">{t('methods.notImplemented')}</span>
+              <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 dark:text-slate-500 ring-1 ring-slate-200 dark:ring-slate-700">{t('methods.notImplemented')}</span>
             </div>
           </div>
-          <div className="space-y-3 p-4 text-sm text-slate-700">
+          <div className="space-y-3 p-4 text-sm text-slate-700 dark:text-slate-200">
             <div>{t('methods.schaefer.summary')}</div>
-            <div className="flex flex-wrap gap-3 border-t border-slate-100 pt-3 text-xs text-slate-500">
+            <div className="flex flex-wrap gap-3 border-t border-slate-100 dark:border-slate-700 pt-3 text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
               <span>{t('methods.references')}:</span>
               <a href="https://astronomycenter.net/pdf/schaefer_1996.pdf" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Schaefer (1996)</a>
               <span>•</span>
@@ -569,10 +569,10 @@ export default function MethodsPage() {
           <div className="card-header">
             <div className="card-title flex items-center gap-2">
               {t('methods.sultan.title')}
-              <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-500 ring-1 ring-slate-200">{t('methods.notImplemented')}</span>
+              <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 dark:text-slate-500 ring-1 ring-slate-200 dark:ring-slate-700">{t('methods.notImplemented')}</span>
             </div>
           </div>
-          <div className="space-y-3 p-4 text-sm text-slate-700">
+          <div className="space-y-3 p-4 text-sm text-slate-700 dark:text-slate-200">
             <div>{t('methods.sultan.summary')}</div>
           </div>
         </section>
@@ -582,10 +582,10 @@ export default function MethodsPage() {
           <div className="card-header">
             <div className="card-title flex items-center gap-2">
               {t('methods.danjon.title')}
-              <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-500 ring-1 ring-slate-200">{t('methods.notImplemented')}</span>
+              <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 dark:text-slate-500 ring-1 ring-slate-200 dark:ring-slate-700">{t('methods.notImplemented')}</span>
             </div>
           </div>
-          <div className="space-y-3 p-4 text-sm text-slate-700">
+          <div className="space-y-3 p-4 text-sm text-slate-700 dark:text-slate-200">
             <div>{t('methods.danjon.summary')}</div>
           </div>
         </section>
@@ -595,20 +595,20 @@ export default function MethodsPage() {
           <div className="card-header">
             <div className="card-title flex items-center gap-2">
               {t('methods.babylonian.title')}
-              <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-500 ring-1 ring-slate-200">{t('methods.notImplemented')}</span>
+              <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[11px] font-medium text-slate-500 dark:text-slate-400 dark:text-slate-500 ring-1 ring-slate-200 dark:ring-slate-700">{t('methods.notImplemented')}</span>
             </div>
           </div>
-          <div className="space-y-3 p-4 text-sm text-slate-700">
+          <div className="space-y-3 p-4 text-sm text-slate-700 dark:text-slate-200">
             <div>{t('methods.babylonian.summary')}</div>
           </div>
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <h2 id="references" className="text-lg font-semibold tracking-tight text-slate-900 scroll-mt-24">{t('about.furtherReadingTitle')}</h2>
+        <h2 id="references" className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100 scroll-mt-24">{t('about.furtherReadingTitle')}</h2>
         <section className="card">
           <div className="p-4">
             <ul className="space-y-3 text-sm">
-              <li className="text-xs font-semibold uppercase tracking-wide text-slate-400">Wikipedia</li>
+              <li className="text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">Wikipedia</li>
               <li>
                 <a href="https://en.wikipedia.org/wiki/Islamic_calendar" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Islamic calendar</a>
               </li>
@@ -625,45 +625,45 @@ export default function MethodsPage() {
                 <a href="https://en.wikipedia.org/wiki/Lunar_phase" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Lunar phase</a>
               </li>
 
-              <li className="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-400">{t('about.ourResearch')}</li>
+              <li className="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">{t('about.ourResearch')}</li>
               <li>
                 <a href="https://github.com/sameraamar/hijri/blob/main/docs/calculation-methods.md" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{t('about.ourResearchLink')}</a>
-                <span className="text-slate-500"> — {t('about.ourResearchDesc')}</span>
+                <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500"> — {t('about.ourResearchDesc')}</span>
               </li>
 
-              <li className="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-400">Academic &amp; Scientific</li>
+              <li className="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">Academic &amp; Scientific</li>
               <li>
                 <a href="https://www.researchgate.net/publication/354067468_Predicting_the_First_Visibility_of_the_Lunar_Crescent" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Segura, W. (2021). <em>Predicting the First Visibility of the Lunar Crescent.</em></a>
               </li>
               <li>
                 <a href="https://www.researchgate.net/publication/323945073_Calendrical_Calculations_The_Ultimate_Edition" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Reingold, E. M. &amp; Dershowitz, N. (2018). <em>Calendrical Calculations: The Ultimate Edition.</em></a>
-                <span className="text-slate-500"> — Cambridge University Press</span>
+                <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500"> — Cambridge University Press</span>
               </li>
               <li>
                 <a href="https://www.researchgate.net/publication/225099773_New_Criterion_for_Lunar_Crescent_Visibility" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Odeh, M. (2004). <em>New Criterion for Lunar Crescent Visibility.</em></a>
-                <span className="text-slate-500"> — Experimental Astronomy, Vol. 18, pp. 39–64</span>
+                <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500"> — Experimental Astronomy, Vol. 18, pp. 39–64</span>
               </li>
               <li>
                 <a href="https://astronomycenter.net/pdf/yallop_1997.pdf" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Yallop, B. D. (1997). <em>A Method for Predicting the First Sighting of the New Crescent Moon.</em></a>
-                <span className="text-slate-500"> — NAO Technical Note No. 69, HM Nautical Almanac Office</span>
+                <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500"> — NAO Technical Note No. 69, HM Nautical Almanac Office</span>
               </li>
               <li>
                 <a href="https://astronomycenter.net/pdf/schaefer_1996.pdf" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Schaefer, B. E. (1996). <em>Lunar Crescent Visibility.</em></a>
-                <span className="text-slate-500"> — Quarterly Journal of the Royal Astronomical Society, Vol. 37, pp. 759–768</span>
+                <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500"> — Quarterly Journal of the Royal Astronomical Society, Vol. 37, pp. 759–768</span>
               </li>
               <li>
                 <a href="https://www.cs.tau.ac.il/~nachumd/papers/CalendricalCalculationsII.pdf" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Reingold, E. M., Dershowitz, N. &amp; Clamen, S. M. (1993). <em>Calendrical Calculations, II: Three Historical Calendars.</em></a>
-                <span className="text-slate-500"> — Software—Practice and Experience, Vol. 23(4), pp. 383–404</span>
+                <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500"> — Software—Practice and Experience, Vol. 23(4), pp. 383–404</span>
               </li>
               <li>
                 <a href="https://adsabs.harvard.edu/full/1988QJRAS..29..511S" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Schaefer, B. E. (1988). <em>Visibility of the Lunar Crescent.</em></a>
-                <span className="text-slate-500"> — Quarterly Journal of the Royal Astronomical Society, Vol. 29, pp. 511–523</span>
+                <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500"> — Quarterly Journal of the Royal Astronomical Society, Vol. 29, pp. 511–523</span>
               </li>
 
-              <li className="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-400">Software</li>
+              <li className="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">Software</li>
               <li>
                 <a href="https://github.com/cosinekitty/astronomy" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">astronomy-engine</a>
-                <span className="text-slate-500"> — npm package for sun/moon ephemeris calculations</span>
+                <span className="text-slate-500 dark:text-slate-400 dark:text-slate-500"> — npm package for sun/moon ephemeris calculations</span>
               </li>
             </ul>
           </div>

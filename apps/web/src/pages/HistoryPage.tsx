@@ -146,14 +146,14 @@ function MatchBadge({ match, diff }: { match: boolean | null; diff: number | nul
 
 function PredictionCell({ pred }: { pred: MethodPrediction | null }) {
   if (!pred) {
-    return <td className="px-2 py-2 text-center text-slate-400">—</td>;
+    return <td className="px-2 py-2 text-center text-slate-400 dark:text-slate-500">—</td>;
   }
   const bg = pred.match === true ? 'bg-emerald-50/50' : '';
   return (
     <td className={`px-2 py-2 text-center ${bg}`}>
-      <div className="text-[11px] text-slate-700">{fmtIso(pred.gregorian)}</div>
+      <div className="text-[11px] text-slate-700 dark:text-slate-200">{fmtIso(pred.gregorian)}</div>
       {pred.match !== null && pred.diff !== null && pred.diff !== 0 && (
-        <span className="text-[10px] font-medium text-slate-400">
+        <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500">
           {pred.diff > 0 ? `+${pred.diff}d` : `${pred.diff}d`}
         </span>
       )}
@@ -258,12 +258,12 @@ export default function HistoryPage() {
       {/* Selectors */}
       <div className="flex flex-wrap items-end gap-3 mb-4">
         {/* Country */}
-        <label className="flex flex-col gap-1 text-xs font-medium text-slate-600">
+        <label className="flex flex-col gap-1 text-xs font-medium text-slate-600 dark:text-slate-300">
           {t('history.selectCountry')}
           <select
             value={countryId}
             onChange={(e) => setCountryId(e.target.value)}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-300"
+            className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 shadow-sm focus:border-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-300 dark:ring-slate-600"
           >
             {COUNTRIES.map((c) => (
               <option key={c.id} value={c.id}>
@@ -274,12 +274,12 @@ export default function HistoryPage() {
         </label>
 
         {/* Year */}
-        <label className="flex flex-col gap-1 text-xs font-medium text-slate-600">
+        <label className="flex flex-col gap-1 text-xs font-medium text-slate-600 dark:text-slate-300">
           {t('history.selectYear')}
           <select
             value={hijriYear}
             onChange={(e) => setHijriYear(Number(e.target.value))}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-300"
+            className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 shadow-sm focus:border-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-300 dark:ring-slate-600"
           >
             {HIJRI_YEARS.map((y) => (
               <option key={y} value={y}>
@@ -313,13 +313,13 @@ export default function HistoryPage() {
             const pct = stats.total > 0 ? Math.round((s.match / stats.total) * 100) : 0;
             return (
               <div key={s.label} className="card p-3 text-center">
-                <div className="text-xs text-slate-500 dark:text-slate-400">{s.label}</div>
+                <div className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">{s.label}</div>
                 <div className="text-lg font-bold text-slate-900 dark:text-slate-100">{s.match}/{stats.total}</div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-500">
                   {pct}% {t('history.matches')}
                 </div>
                 {s.avg !== null && (
-                  <div className="text-[11px] text-slate-400 dark:text-slate-500" title="Average absolute difference vs official, in days">
+                  <div className="text-[11px] text-slate-400 dark:text-slate-500 dark:text-slate-400" title="Average absolute difference vs official, in days">
                     Δ {s.avg.toFixed(1)}d avg
                   </div>
                 )}
@@ -333,8 +333,8 @@ export default function HistoryPage() {
       <div className={`card overflow-x-auto transition-opacity ${isPending ? 'opacity-40' : ''}`}>
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-slate-200 bg-slate-50 text-xs text-slate-500">
-              <th className="px-2 py-2 text-start font-medium sticky start-0 bg-slate-50 z-10">
+            <tr className="border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
+              <th className="px-2 py-2 text-start font-medium sticky start-0 bg-slate-50 dark:bg-slate-800 z-10">
                 {t('history.colMonth')}
               </th>
               <th className="px-2 py-2 text-start font-medium">{t('history.colOfficial')}</th>
@@ -347,15 +347,15 @@ export default function HistoryPage() {
           </thead>
           <tbody className="divide-y divide-slate-100">
             {rows.map((row) => (
-              <tr key={row.hijriMonth} className="hover:bg-slate-50/80 transition-colors">
-                <td className="px-2 py-2 font-medium text-slate-900 sticky start-0 bg-white z-10 whitespace-nowrap">
+              <tr key={row.hijriMonth} className="hover:bg-slate-50 dark:hover:bg-slate-800 dark:bg-slate-800/80 transition-colors">
+                <td className="px-2 py-2 font-medium text-slate-900 dark:text-slate-100 sticky start-0 bg-white dark:bg-slate-800 z-10 whitespace-nowrap">
                   {t(`hijriMonths.${row.hijriMonth}`)}
                 </td>
-                <td className={`px-2 py-2 text-slate-700 ${row.official && row.estimate && row.estimate.match === false ? 'bg-rose-50/50' : ''}`}>
+                <td className={`px-2 py-2 text-slate-700 dark:text-slate-200 ${row.official && row.estimate && row.estimate.match === false ? 'bg-rose-50/50' : ''}`}>
                   {row.official ? (
                     <>
                       <div className="text-[11px]">{fmtLocale(row.official)}</div>
-                      <div className="text-[10px] text-slate-500">{fmtIso(row.official)}</div>
+                      <div className="text-[10px] text-slate-500 dark:text-slate-400 dark:text-slate-500">{fmtIso(row.official)}</div>
                       {row.estimate && row.estimate.match !== null && (
                         <MatchBadge match={row.estimate.match} diff={row.estimate.diff !== null ? -row.estimate.diff : null} />
                       )}
@@ -376,7 +376,7 @@ export default function HistoryPage() {
       </div>
 
       {/* Legend + notes */}
-      <div className="mt-3 space-y-2 text-xs text-slate-500">
+      <div className="mt-3 space-y-2 text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
         <div className="flex flex-wrap items-center gap-3">
           <span className="inline-flex items-center gap-1 text-emerald-600">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-3.5 h-3.5">

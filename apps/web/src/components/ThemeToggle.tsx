@@ -13,7 +13,7 @@ export default function ThemeToggle() {
       onClick={toggleTheme}
       aria-label={isDark ? t('app.theme.toLight') : t('app.theme.toDark')}
       title={isDark ? t('app.theme.toLight') : t('app.theme.toDark')}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-slate-100"
+      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 bg-white text-slate-600 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:text-slate-100 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-slate-100"
     >
       {isDark ? (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">

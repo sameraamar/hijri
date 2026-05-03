@@ -214,13 +214,13 @@ export default function VisibilityMapPage() {
             }}
             aria-label={t('visibilityMap.prevEvening')}
             title={t('visibilityMap.prevEvening')}
-            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 transition-colors dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:bg-slate-800 hover:text-slate-900 dark:text-slate-100 active:bg-slate-200 dark:active:bg-slate-700 dark:bg-slate-700 transition-colors dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 rtl:rotate-180" aria-hidden="true">
               <path fillRule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clipRule="evenodd"/>
             </svg>
           </button>
-          <label className="text-xs text-slate-600 dark:text-slate-400">
+          <label className="text-xs text-slate-600 dark:text-slate-300 dark:text-slate-400 dark:text-slate-500">
             <span className="sr-only">{t('visibilityMap.eveningOf')}</span>
             <input
               type="date"
@@ -238,7 +238,7 @@ export default function VisibilityMapPage() {
             }}
             aria-label={t('visibilityMap.nextEvening')}
             title={t('visibilityMap.nextEvening')}
-            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 transition-colors dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:bg-slate-800 hover:text-slate-900 dark:text-slate-100 active:bg-slate-200 dark:active:bg-slate-700 dark:bg-slate-700 transition-colors dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 rtl:rotate-180" aria-hidden="true">
               <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd"/>
@@ -399,14 +399,14 @@ export default function VisibilityMapPage() {
                     <LegendDot color={crescentStateColor('notVisible')} label={t('visibilityMap.legendCrescentNotVisible')} />
                   )}
                 </div>
-                <div className="mt-2 text-slate-500 dark:text-slate-400">
+                <div className="mt-2 text-slate-500 dark:text-slate-400 dark:text-slate-500">
                   {t('visibilityMap.summary', { positive: visibleCount, total: grid.length })}
                 </div>
               </div>
             </section>
           )}
 
-          <div className="text-[11px] text-slate-500 dark:text-slate-400">
+          <div className="text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-500">
             {t('visibilityMap.disclaimer')}
           </div>
         </>

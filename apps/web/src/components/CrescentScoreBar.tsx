@@ -24,7 +24,7 @@ export default function CrescentScoreBar({ percent, width = 60, showLabel = true
   return (
     <span className={`inline-flex items-center gap-1.5 ${className ?? ''}`}>
       <span
-        className="relative inline-block rounded-full bg-slate-200 overflow-hidden"
+        className="relative inline-block rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden"
         style={{ width, height: 6 }}
       >
         <span
@@ -33,7 +33,7 @@ export default function CrescentScoreBar({ percent, width = 60, showLabel = true
         />
       </span>
       {showLabel && (
-        <span className="text-[11px] font-medium text-slate-600 tabular-nums">{pct}%</span>
+        <span className="text-[11px] font-medium text-slate-600 dark:text-slate-300 tabular-nums">{pct}%</span>
       )}
     </span>
   );

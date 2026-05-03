@@ -10,7 +10,7 @@ export default function PageSkeleton() {
         <div className="h-5 w-32 rounded bg-slate-200 dark:bg-slate-700" />
         <div className="mt-3 grid grid-cols-7 gap-1">
           {Array.from({ length: 35 }).map((_, i) => (
-            <div key={i} className="h-12 rounded bg-slate-100 dark:bg-slate-700/60" />
+            <div key={i} className="h-12 rounded bg-slate-100 dark:bg-slate-800 dark:bg-slate-700/60" />
           ))}
         </div>
       </div>

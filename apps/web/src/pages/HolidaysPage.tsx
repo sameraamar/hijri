@@ -151,12 +151,12 @@ export default function HolidaysPage() {
     const monthStartLabel = formatHijriDateDisplay({ year: hijri.year, month: hijri.month, day: 1 }, i18n.language);
 
     return (
-      <div className="mt-2 rounded-md border border-slate-200 bg-slate-50 p-2 text-[11px] text-slate-700">
+      <div className="mt-2 rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-2 text-[11px] text-slate-700 dark:text-slate-200">
         <div className="font-medium">
           {isMonthStartEvent ? t('probability.monthStartSignalFor') : t('holidays.possibleEventDates')}:
         </div>
         {!isMonthStartEvent ? (
-          <div className="mt-0.5 text-[11px] text-slate-600">
+          <div className="mt-0.5 text-[11px] text-slate-600 dark:text-slate-300">
             {t('holidays.dependsOnMonthStart')}: {monthStartLabel}
           </div>
         ) : null}
@@ -170,8 +170,8 @@ export default function HolidaysPage() {
             return (
             <div key={c.eventIso} className="space-y-0.5">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-[13px] font-semibold text-slate-900">{isMonthStartEvent ? monthStartDisplay : eventDisplay}</span>
-                <span className="text-[11px] text-slate-500">{weekday(isMonthStartEvent ? c.monthStart : c.event)}</span>
+                <span className="text-[13px] font-semibold text-slate-900 dark:text-slate-100">{isMonthStartEvent ? monthStartDisplay : eventDisplay}</span>
+                <span className="text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-500">{weekday(isMonthStartEvent ? c.monthStart : c.event)}</span>
 
                 <span
                   className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-medium ${c.style.badgeClass}`}
@@ -186,11 +186,11 @@ export default function HolidaysPage() {
                 </span>
 
                 {methodId === 'yallop' && c.yallopQ !== null ? (
-                  <span className="text-[11px] text-slate-600" title={t('probability.yallopQ')}>
+                  <span className="text-[11px] text-slate-600 dark:text-slate-300" title={t('probability.yallopQ')}>
                     q={c.yallopQ.toFixed(3)}{c.yallopZone ? ` (${c.yallopZone})` : ''}
                   </span>
                 ) : methodId === 'odeh' && c.odehV !== null ? (
-                  <span className="text-[11px] text-slate-600" title={t('probability.odehV')}>
+                  <span className="text-[11px] text-slate-600 dark:text-slate-300" title={t('probability.odehV')}>
                     V={c.odehV.toFixed(3)}{c.odehZone ? ` (${c.odehZone})` : ''}
                   </span>
                 ) : null}
@@ -198,20 +198,20 @@ export default function HolidaysPage() {
               </div>
 
               {(typeof c.lagMinutes === 'number' || typeof c.illumPercent === 'number' || typeof c.percent === 'number') && (
-                <div className="ps-4 text-[11px] text-slate-500">
+                <div className="ps-4 text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-500">
                   <span className="me-2">{t('holidays.observedEveningMetrics', { date: eveDisplay })}:</span>
                   {typeof c.lagMinutes === 'number' ? (
-                    <span className="me-1 inline-flex items-center rounded-full bg-white px-2 py-0.5 text-[11px] font-medium text-slate-700 ring-1 ring-slate-200" title={t('probability.lagMinutes')}>
+                    <span className="me-1 inline-flex items-center rounded-full bg-white dark:bg-slate-800 px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:text-slate-200 ring-1 ring-slate-200 dark:ring-slate-700" title={t('probability.lagMinutes')}>
                       {c.lagMinutes}m
                     </span>
                   ) : null}
                   {typeof c.illumPercent === 'number' ? (
-                    <span className="me-1 inline-flex items-center rounded-full bg-white px-2 py-0.5 text-[11px] font-medium text-slate-700 ring-1 ring-slate-200" title={t('holidays.moonIllumination')}>
+                    <span className="me-1 inline-flex items-center rounded-full bg-white dark:bg-slate-800 px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:text-slate-200 ring-1 ring-slate-200 dark:ring-slate-700" title={t('holidays.moonIllumination')}>
                       {c.illumPercent}%
                     </span>
                   ) : null}
                   {typeof c.percent === 'number' ? (
-                    <span className="inline-flex items-center rounded-full bg-white px-2 py-0.5 text-[11px] font-medium text-slate-700 ring-1 ring-slate-200" title={t('probability.crescentScore')}>
+                    <span className="inline-flex items-center rounded-full bg-white dark:bg-slate-800 px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:text-slate-200 ring-1 ring-slate-200 dark:ring-slate-700" title={t('probability.crescentScore')}>
                       {c.percent}%
                     </span>
                   ) : null}
@@ -219,7 +219,7 @@ export default function HolidaysPage() {
               )}
 
               {c.showMonthStartRuleNote && (
-                <div className="ps-4 text-[11px] text-slate-500 italic">
+                <div className="ps-4 text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-500 italic">
                   {t('holidays.monthStartCandidateNote', {
                     level: t(`probability.${c.statusKey}`),
                   })}
@@ -279,7 +279,7 @@ export default function HolidaysPage() {
             type="button"
             onClick={() => setYear((y) => y - 1)}
             aria-label={t('calendar.prevMonth')}
-            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 transition-colors"
+            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 dark:text-slate-100 active:bg-slate-200 dark:active:bg-slate-700 dark:bg-slate-700 transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 rtl:rotate-180"><path fillRule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clipRule="evenodd"/></svg>
           </button>
@@ -294,7 +294,7 @@ export default function HolidaysPage() {
             type="button"
             onClick={() => setYear((y) => y + 1)}
             aria-label={t('calendar.nextMonth')}
-            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 transition-colors"
+            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 dark:text-slate-100 active:bg-slate-200 dark:active:bg-slate-700 dark:bg-slate-700 transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 rtl:rotate-180"><path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd"/></svg>
           </button>
@@ -304,7 +304,7 @@ export default function HolidaysPage() {
               onClick={() => setYear(currentYear)}
               aria-label={t('calendar.today')}
               title={t('calendar.today')}
-              className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 transition-colors"
+              className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 dark:text-slate-100 active:bg-slate-200 dark:active:bg-slate-700 dark:bg-slate-700 transition-colors"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-[18px] h-[18px]"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
             </button>
@@ -323,9 +323,9 @@ export default function HolidaysPage() {
                   {renderCandidateDates(h.gregorian, h.hijri, h.estimatedGregorian ?? undefined)}
                 </>
               ) : (
-                <div className="mt-1 text-xs text-slate-600">
-                  <span className="text-slate-900 font-semibold">{formatIsoDateDisplay(fmtGregorianIso(h.gregorian), i18n.language)}</span>
-                  <span className="ms-1 text-slate-500">{weekday(h.gregorian)}</span>
+                <div className="mt-1 text-xs text-slate-600 dark:text-slate-300">
+                  <span className="text-slate-900 dark:text-slate-100 font-semibold">{formatIsoDateDisplay(fmtGregorianIso(h.gregorian), i18n.language)}</span>
+                  <span className="ms-1 text-slate-500 dark:text-slate-400 dark:text-slate-500">{weekday(h.gregorian)}</span>
                   {' — '}
                   {formatHijriDateDisplay(h.hijri, i18n.language)}
                 </div>
@@ -337,7 +337,7 @@ export default function HolidaysPage() {
 
       {isAstronomicalMethod(methodId) ? <LocationPicker /> : null}
 
-      <div className="text-xs text-slate-600">
+      <div className="text-xs text-slate-600 dark:text-slate-300">
         {t('app.method.label')}: {t(`app.method.${methodId}`)}
       </div>
     </div>

@@ -21,15 +21,15 @@ export default function AboutPage() {
 
       <div className="space-y-4">
         <section className="card">
-          <div className="p-4 text-sm leading-relaxed text-slate-700">
+          <div className="p-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
             {t('methods.about')}
           </div>
         </section>
 
         {/* Features — keyword-rich for SEO */}
-        <h2 className="text-lg font-semibold tracking-tight text-slate-900">{t('about.featuresTitle')}</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">{t('about.featuresTitle')}</h2>
         <section className="card">
-          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700">
+          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
             <ul className="list-disc space-y-1.5 ps-5">
               <li>{t('about.featureCalendar')}</li>
               <li>{t('about.featureHolidays')}</li>
@@ -49,9 +49,9 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <h2 className="text-lg font-semibold tracking-tight text-slate-900">{t('about.privacyTitle')}</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">{t('about.privacyTitle')}</h2>
         <section className="card">
-          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700">
+          <div className="space-y-3 p-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
             <p>{t('about.privacyBody')}</p>
             <ul className="list-disc space-y-1 ps-5">
               <li>{t('about.privacyNoServer')}</li>
@@ -62,9 +62,9 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <h2 className="text-lg font-semibold tracking-tight text-slate-900">{t('about.openSourceTitle')}</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">{t('about.openSourceTitle')}</h2>
         <section className="card">
-          <div className="space-y-2 p-4 text-sm leading-relaxed text-slate-700">
+          <div className="space-y-2 p-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
             <p>{t('about.openSourceBody')}</p>
             <a
               href="https://github.com/sameraamar/hijri"

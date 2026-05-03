@@ -38,7 +38,7 @@ export default function NavMore({ items }: { items: NavItem[] }) {
         onClick={() => setOpen((o) => !o)}
         aria-haspopup="menu"
         aria-expanded={open}
-        className="rounded-full px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100 inline-flex items-center gap-1"
+        className="rounded-full px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 dark:bg-slate-800 hover:text-slate-900 dark:text-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100 inline-flex items-center gap-1"
       >
         {t('app.nav.more')}
         <svg

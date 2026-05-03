@@ -59,10 +59,10 @@ type CalendarDay = {
 };
 
 function heatClassForPercent(p: number): string {
-  if (p >= 85) return 'bg-slate-300';
-  if (p >= 65) return 'bg-slate-200';
-  if (p >= 40) return 'bg-slate-100';
-  if (p >= 20) return 'bg-slate-50';
+  if (p >= 85) return 'bg-slate-300 dark:bg-slate-600';
+  if (p >= 65) return 'bg-slate-200 dark:bg-slate-700';
+  if (p >= 40) return 'bg-slate-100 dark:bg-slate-700/70';
+  if (p >= 20) return 'bg-slate-50 dark:bg-slate-800';
   return '';
 }
 
@@ -81,8 +81,8 @@ function visibilityStatusFromEstimate(
 function MetricRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="grid grid-cols-[1fr_auto] gap-x-3">
-      <div className="text-slate-600">{label}</div>
-      <div className="text-slate-900 whitespace-nowrap">{value}</div>
+      <div className="text-slate-600 dark:text-slate-300">{label}</div>
+      <div className="text-slate-900 dark:text-slate-100 whitespace-nowrap">{value}</div>
     </div>
   );
 }
@@ -530,7 +530,7 @@ export default function CalendarPage() {
                 type="button"
                 onClick={goPrevMonth}
                 aria-label={t('calendar.prevMonth')}
-                className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 transition-colors"
+                className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 dark:text-slate-100 active:bg-slate-200 dark:active:bg-slate-700 dark:bg-slate-700 transition-colors"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 rtl:rotate-180"><path fillRule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clipRule="evenodd"/></svg>
               </button>
@@ -555,7 +555,7 @@ export default function CalendarPage() {
                 type="button"
                 onClick={goNextMonth}
                 aria-label={t('calendar.nextMonth')}
-                className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 transition-colors"
+                className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 dark:text-slate-100 active:bg-slate-200 dark:active:bg-slate-700 dark:bg-slate-700 transition-colors"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 rtl:rotate-180"><path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd"/></svg>
               </button>
@@ -564,26 +564,31 @@ export default function CalendarPage() {
                 onClick={() => { const now = new Date(); setYear(now.getFullYear()); setMonth(now.getMonth() + 1); }}
                 aria-label={t('calendar.today')}
                 title={t('calendar.today')}
-                className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 transition-colors"
+                className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 dark:text-slate-100 active:bg-slate-200 dark:active:bg-slate-700 dark:bg-slate-700 transition-colors"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-[18px] h-[18px]"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
               </button>
             </div>
             {hijriRangeLabel ? (
-              <span className="text-xs text-slate-500">({hijriRangeLabel})</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">({hijriRangeLabel})</span>
             ) : null}
           </div>
-          <div className="grid grid-cols-7 gap-px bg-slate-200 p-px">
+          <div className="grid grid-cols-7 gap-px bg-slate-200 dark:bg-slate-700 p-px">
             {weekdayLabels.map((w) => (
-              <div key={w} className="bg-slate-50 px-1 py-1.5 text-center text-[10px] font-semibold text-slate-700 sm:px-2 sm:py-2 sm:text-xs">
+              <div key={w} className="bg-slate-50 dark:bg-slate-800 px-1 py-1.5 text-center text-[10px] font-semibold text-slate-700 dark:text-slate-200 sm:px-2 sm:py-2 sm:text-xs">
                 {w}
               </div>
             ))}
             {Array.from({ length: monthData.offset }, (_, idx) => (
-              <div key={`blank-${monthData.month}-${idx}`} className="bg-white p-2" />
+              <div key={`blank-${monthData.month}-${idx}`} className="bg-white dark:bg-slate-800 p-2" />
             ))}
             {monthData.days.map((d) => {
-              const bg = d.isHijriMonthStart ? 'bg-slate-50' : 'bg-white';
+              const isSelected = expandedDay === d.day;
+              const bg = isSelected
+                ? 'bg-blue-50 dark:bg-slate-700'
+                : d.isHijriMonthStart
+                  ? 'bg-slate-50 dark:bg-slate-900/40'
+                  : 'bg-white dark:bg-slate-800';
               const hijriDisplay =
                 d.hijriDay && d.hijriMonth && d.hijriYear
                   ? formatHijriDateDisplay({ day: d.hijriDay, month: d.hijriMonth, year: d.hijriYear }, i18n.language)
@@ -618,9 +623,8 @@ export default function CalendarPage() {
                   aria-label={`${d.day} — ${hijriDisplay}`}
                   className={
                     `group relative ${bg} p-1 text-start transition-colors sm:p-2.5 ` +
-                    `dark:bg-slate-800 ${d.isHijriMonthStart ? 'dark:bg-slate-700/40' : ''} ` +
-                    `${d.isToday ? 'ring-2 ring-blue-400' : ''} ` +
-                    `${expandedDay === d.day ? 'bg-blue-50 dark:bg-slate-700' : 'hover:bg-slate-50 dark:hover:bg-slate-700/60'} ` +
+                    `${d.isToday && !isSelected ? 'ring-1 ring-blue-300 dark:ring-blue-500/60' : ''} ` +
+                    `${isSelected ? 'ring-2 ring-offset-1 ring-slate-900 dark:ring-slate-100 ring-offset-white dark:ring-offset-slate-900 z-10' : 'hover:bg-slate-50 dark:hover:bg-slate-700/60'} ` +
                     'cursor-pointer'
                   }
                   tabIndex={0}
@@ -663,8 +667,8 @@ export default function CalendarPage() {
                 >
                   {/* ── Mobile cell: compact ── */}
                   <div className="flex flex-col items-center gap-0.5 sm:hidden" style={{ minHeight: '2.25rem' }}>
-                    <div className="text-sm font-semibold leading-none text-slate-900">{d.day}</div>
-                    <div className="text-[8px] leading-none text-slate-500">{hijriDayDisplay}</div>
+                    <div className="text-sm font-semibold leading-none text-slate-900 dark:text-slate-100">{d.day}</div>
+                    <div className="text-[8px] leading-none text-slate-500 dark:text-slate-400 dark:text-slate-500">{hijriDayDisplay}</div>
                     {d.showIndicator ? (
                       isMostLikely ? (
                         <span className="mt-auto text-[11px] leading-none" aria-hidden="true">★</span>
@@ -677,8 +681,8 @@ export default function CalendarPage() {
                   {/* ── Desktop cell: full detail ── */}
                   <div className="hidden sm:flex sm:min-h-16 sm:flex-col sm:gap-1">
                     <div className="flex items-baseline justify-between gap-2">
-                      <div className="text-base font-semibold leading-none text-slate-900">{d.day}</div>
-                      <div className="text-[11px] leading-none text-slate-700">{hijriDisplay}</div>
+                      <div className="text-base font-semibold leading-none text-slate-900 dark:text-slate-100">{d.day}</div>
+                      <div className="text-[11px] leading-none text-slate-700 dark:text-slate-200">{hijriDisplay}</div>
                     </div>
 
                     {d.showIndicator ? (
@@ -707,22 +711,22 @@ export default function CalendarPage() {
                         <div className="flex flex-wrap items-center gap-2">
                           {dayLagMinutes !== null ? (
                             <span
-                              className="inline-flex items-center gap-1.5 rounded-full bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-700 ring-1 ring-slate-200"
+                              className="inline-flex items-center gap-1.5 rounded-full bg-slate-50 dark:bg-slate-800 px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:text-slate-200 ring-1 ring-slate-200 dark:ring-slate-700"
                               title={t('probability.lagMinutes')}
                             >
-                              <span className="text-[10px] leading-none text-slate-500" aria-hidden="true">⏱</span>
+                              <span className="text-[10px] leading-none text-slate-500 dark:text-slate-400 dark:text-slate-500" aria-hidden="true">⏱</span>
                               {dayLagMinutes}m
                             </span>
                           ) : null}
 
                           {dayIllumPercent !== null ? (
                             <span
-                              className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-700 ring-1 ring-slate-200"
+                              className="inline-flex items-center gap-1 rounded-full bg-slate-50 dark:bg-slate-800 px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:text-slate-200 ring-1 ring-slate-200 dark:ring-slate-700"
                               title={t('holidays.moonIllumination')}
                             >
                               {typeof thisEst?.metrics.moonIlluminationFraction === 'number'
                                 ? <MoonPhaseIcon illumination={thisEst.metrics.moonIlluminationFraction} size={14} />
-                                : <span className="text-[10px] leading-none text-slate-500" aria-hidden="true">☾</span>}
+                                : <span className="text-[10px] leading-none text-slate-500 dark:text-slate-400 dark:text-slate-500" aria-hidden="true">☾</span>}
                               {dayIllumPercent}%
                             </span>
                           ) : null}
@@ -733,7 +737,7 @@ export default function CalendarPage() {
 
                   {expandedDay === d.day ? (
                     <div className="hidden sm:block absolute left-0 right-0 top-full z-50 mt-1 sm:left-2 sm:right-auto sm:w-96 sm:max-w-[calc(100vw-2rem)]">
-                      <div className="max-h-[60vh] overflow-auto select-text rounded-md border border-slate-200 bg-white p-2.5 text-xs shadow-lg sm:max-h-[70vh] sm:p-3">
+                      <div className="max-h-[60vh] overflow-auto select-text rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-2.5 text-xs shadow-lg sm:max-h-[70vh] sm:p-3">
                         <div className="space-y-3">
                           <div className="text-[11px] leading-relaxed text-slate-600 dark:text-slate-300">
                             {eveStatusKey === 'notApplicable'
@@ -742,7 +746,7 @@ export default function CalendarPage() {
                           </div>
 
                           <div>
-                            <div className="text-[11px] font-semibold text-slate-900">
+                            <div className="text-[11px] font-semibold text-slate-900 dark:text-slate-100">
                               {t('probability.eveningEstimate')}: {t('holidays.eveOf')}{' '}
                               <span className="font-mono font-normal">{thisIso}</span>
                             </div>
@@ -756,13 +760,13 @@ export default function CalendarPage() {
                                 />
                               </div>
                             ) : (
-                              <div className="mt-2 text-[11px] text-slate-600">—</div>
+                              <div className="mt-2 text-[11px] text-slate-600 dark:text-slate-300">—</div>
                             )}
                           </div>
 
                           {eveEst ? (
-                            <div className="border-t border-slate-100 pt-3">
-                              <div className="text-[11px] font-semibold text-slate-900">
+                            <div className="border-t border-slate-100 dark:border-slate-700 pt-3">
+                              <div className="text-[11px] font-semibold text-slate-900 dark:text-slate-100">
                                 {t('probability.monthStartSignalFor')}{' '}
                                 <span className="font-mono font-normal">{prevIso}</span>
                               </div>
@@ -825,10 +829,10 @@ export default function CalendarPage() {
         return (
           <div className="sm:hidden card p-3 text-sm">
             <div className="flex items-center justify-between mb-2">
-              <div className="font-semibold text-slate-900">
-                {d.day} — <span className="text-slate-600 font-normal">{d.hijriDay && d.hijriMonth && d.hijriYear ? formatHijriDateDisplay({ day: d.hijriDay, month: d.hijriMonth, year: d.hijriYear }, i18n.language) : d.hijri}</span>
+              <div className="font-semibold text-slate-900 dark:text-slate-100">
+                {d.day} — <span className="text-slate-600 dark:text-slate-300 font-normal">{d.hijriDay && d.hijriMonth && d.hijriYear ? formatHijriDateDisplay({ day: d.hijriDay, month: d.hijriMonth, year: d.hijriYear }, i18n.language) : d.hijri}</span>
               </div>
-              <button type="button" className="text-slate-400 hover:text-slate-600" onClick={() => setExpandedDay(null)} aria-label="Close">✕</button>
+              <button type="button" className="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 dark:text-slate-300" onClick={() => setExpandedDay(null)} aria-label="Close">✕</button>
             </div>
 
             <div className="mb-2">
@@ -852,19 +856,19 @@ export default function CalendarPage() {
                   size="comfortable"
                 />
               </div>
-            ) : <div className="text-xs text-slate-500">—</div>}
+            ) : <div className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">—</div>}
           </div>
         );
       })() : null}
 
       <LocationPicker />
 
-      <div className="text-xs text-slate-600">
+      <div className="text-xs text-slate-600 dark:text-slate-300">
         {t('app.method.label')}: {t(`app.method.${methodId}`)}
       </div>
 
       {methodId ? (
-        <div className="space-y-2 text-xs text-slate-600">
+        <div className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
           <div>{t('probability.disclaimer')}</div>
 
           <div className="card p-3">
@@ -888,7 +892,7 @@ export default function CalendarPage() {
                 );
               })}
               <div className="flex flex-wrap items-start gap-2 pt-1 border-t border-slate-100 dark:border-slate-700">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-700 ring-1 ring-slate-200 dark:bg-slate-700/60 dark:text-slate-100 dark:ring-slate-600">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-50 dark:bg-slate-800 px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:text-slate-200 ring-1 ring-slate-200 dark:ring-slate-700 dark:bg-slate-700/60 dark:text-slate-100 dark:ring-slate-600">
                   <span aria-hidden="true">★</span>
                   {t('probability.mostLikely')}
                 </span>

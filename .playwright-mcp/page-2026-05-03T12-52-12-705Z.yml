@@ -1,0 +1,54 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - link "Hijri Calendar" [ref=e7] [cursor=pointer]:
+          - /url: /hijri/calendar
+          - img [ref=e8]
+          - text: Hijri Calendar
+        - navigation [ref=e13]:
+          - link "Today" [ref=e14] [cursor=pointer]:
+            - /url: /hijri/today
+          - link "Calendar" [ref=e15] [cursor=pointer]:
+            - /url: /hijri/calendar
+          - link "Holidays" [ref=e16] [cursor=pointer]:
+            - /url: /hijri/holidays
+          - link "Convert" [ref=e17] [cursor=pointer]:
+            - /url: /hijri/convert
+          - link "Methods" [ref=e18] [cursor=pointer]:
+            - /url: /hijri/methods
+          - button "More" [ref=e20] [cursor=pointer]:
+            - text: More
+            - img [ref=e21]
+      - generic [ref=e23]:
+        - combobox "Method" [ref=e24]:
+          - option "Visibility heuristic" [selected]
+          - option "MABIMS"
+          - option "Yallop (q)"
+          - option "Odeh (V)"
+          - option "Tabular"
+        - combobox "Language" [ref=e25] [cursor=pointer]:
+          - option "EN" [selected]
+          - option "AR"
+          - option "TR"
+          - option "FR"
+          - option "ID"
+          - option "UR"
+        - button "Switch to dark mode" [ref=e26] [cursor=pointer]:
+          - img [ref=e27]
+  - main [ref=e29]
+  - contentinfo [ref=e71]:
+    - generic [ref=e72]:
+      - paragraph [ref=e73]: "Disclaimer: this website provides estimated astronomical guidance and is not an official religious announcement."
+      - generic [ref=e74]:
+        - link "GitHub" [ref=e75] [cursor=pointer]:
+          - /url: https://github.com/sameraamar/hijri
+          - img [ref=e76]
+          - text: GitHub
+        - generic [ref=e78]: ·
+        - link "samer.aamar@gmail.com" [ref=e79] [cursor=pointer]:
+          - /url: mailto:samer.aamar@gmail.com
+        - generic [ref=e80]: ·
+        - link "MIT License" [ref=e81] [cursor=pointer]:
+          - /url: https://github.com/sameraamar/hijri/blob/main/LICENSE
+      - paragraph [ref=e82]: © 2026 Samer Aamar. All rights reserved.

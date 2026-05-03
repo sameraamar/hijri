@@ -160,17 +160,17 @@ export default function LocationPicker() {
 
       <div className="grid grid-cols-1 gap-3 p-3 md:grid-cols-2">
         <div className="text-sm">
-          <div className="text-xs text-slate-600">{t('location.locationUsed')}</div>
+          <div className="text-xs text-slate-600 dark:text-slate-300">{t('location.locationUsed')}</div>
           <div className="mt-1 font-medium">
             {location.name} ({formatCoord(location.latitude)}, {formatCoord(location.longitude)})
           </div>
 
-          <div className="mt-1 text-xs text-slate-600">
+          <div className="mt-1 text-xs text-slate-600 dark:text-slate-300">
             {t('location.timezone')}: {timeZone}
           </div>
 
           <div className="mt-3 grid grid-cols-2 gap-2">
-            <label className="text-xs text-slate-700">
+            <label className="text-xs text-slate-700 dark:text-slate-200">
               {t('location.latitude')}
               <input
                 className="control mt-1"
@@ -179,7 +179,7 @@ export default function LocationPicker() {
                 onChange={(e) => pick(Number(e.target.value), location.longitude)}
               />
             </label>
-            <label className="text-xs text-slate-700">
+            <label className="text-xs text-slate-700 dark:text-slate-200">
               {t('location.longitude')}
               <input
                 className="control mt-1"
@@ -190,10 +190,10 @@ export default function LocationPicker() {
             </label>
           </div>
 
-          <div className="mt-2 text-xs text-slate-600">{t('location.pickOnMap')}</div>
+          <div className="mt-2 text-xs text-slate-600 dark:text-slate-300">{t('location.pickOnMap')}</div>
         </div>
 
-        <div className="relative z-0 h-64 overflow-hidden rounded-md border border-slate-200">
+        <div className="relative z-0 h-64 overflow-hidden rounded-md border border-slate-200 dark:border-slate-700">
           <MapContainer center={center} zoom={5} style={{ height: '100%', width: '100%' }}>
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
