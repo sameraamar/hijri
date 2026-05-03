@@ -1,41 +1,12 @@
 import { useEffect, useState } from 'react';
 
-/**
- * Compact "horizon diagram" showing the Sun and Moon at local sunset.
- *
- * Layout: a half-dome (semicircle) representing the visible sky from West
- * (left endpoint of the diameter, where the Sun is setting) to East (right
- * endpoint). The Moon sits on the dome at an angular position derived from
- * its synodic phase (0 = new, 0.5 = full, 1 = next new):
- *
- *   - phase 0      → at the Sun (conjunction, west horizon)
- *   - phase 0.25   → zenith                     (first quarter)
- *   - phase 0.5    → east horizon               (full moon, just rising)
- *   - phase 0.75   → nadir, below the horizon   (last quarter — under-dome)
- *
- * The dashed arc connecting the Sun and Moon visualises the angular
- * separation: it bulges UP across the sky when waxing, and DOWN under the
- * horizon when waning, so the visible angle naturally reads acute for
- * crescents and obtuse near full moon.
- *
- * Click (or hover) the diagram to expand it into a modal at a larger size,
- * with the Gregorian / Hijri dates above when the caller passes them.
- */
-
 interface HorizonDiagramProps {
-  /** Moon altitude in degrees above the horizon at sunset (can be negative). */
   moonAltitudeDeg: number;
-  /** Arc of Vision (ARCV) or elongation in degrees – shown as label. */
   arcDeg?: number;
-  /** Lag time in minutes (moonset − sunset). */
   lagMinutes?: number;
-  /** Synodic phase fraction 0..1 (0 = new, 0.5 = full). */
   phase?: number;
-  /** Optional Gregorian date label, only shown in the expanded modal. */
   gregorianDateStr?: string;
-  /** Optional Hijri date label, only shown in the expanded modal. */
   hijriDateStr?: string;
-  /** When false, the click-to-expand wrapper is omitted (used inside the modal). */
   interactive?: boolean;
   width?: number;
   height?: number;
@@ -51,7 +22,7 @@ export default function HorizonDiagram({
   hijriDateStr,
   interactive = true,
   width = 160,
-  height = 100,
+  height = 160,
   className,
 }: HorizonDiagramProps) {
   const [expanded, setExpanded] = useState(false);
@@ -65,8 +36,6 @@ export default function HorizonDiagram({
     return () => document.removeEventListener('keydown', onKey);
   }, [expanded]);
 
-  // Resolve a phase fraction 0..1. Prefer the synodic phase passed in;
-  // otherwise estimate from the geocentric elongation, defaulting to waxing.
   const resolvedPhase = (() => {
     if (typeof phase === 'number' && Number.isFinite(phase)) {
       return ((phase % 1) + 1) % 1;
@@ -77,44 +46,56 @@ export default function HorizonDiagram({
     return 0;
   })();
 
-  const isWaxingHalf = resolvedPhase <= 0.5;
-
   function renderSvg(w: number, h: number) {
-    const padTop = h < 140 ? 16 : 22;
-    const padBottom = h < 140 ? 16 : 22;
-    const padHoriz = 14;
-    const horizonY = h * 0.55;
+    const padTop = h < 140 ? 14 : 20;
+    const padBottom = h < 140 ? 14 : 20;
+    const padHoriz = 16;
+    const horizonY = h * 0.5;
     const cx = w / 2;
 
-    const rx = Math.max(8, (w - padHoriz * 2) / 2);
-    const ryUp = Math.max(8, horizonY - padTop);
-    const ryDown = Math.max(8, h - horizonY - padBottom);
+    // True circular dome: pick a single radius that fits inside the box on
+    // every side so both halves of the ellipse degenerate into a circle.
+    const maxRx = (w - padHoriz * 2) / 2;
+    const maxRyUp = horizonY - padTop;
+    const maxRyDown = h - horizonY - padBottom;
+    const r = Math.max(8, Math.min(maxRx, maxRyUp, maxRyDown));
+    const rx = r;
+    const ryUp = r;
+    const ryDown = r;
 
     const sunX = cx - rx;
     const sunY = horizonY;
 
-    // Angle on the dome (math convention): π = sun position, 0 = east horizon,
-    // -π/2 = nadir, etc.
     const moonAngleRad = Math.PI - 2 * Math.PI * resolvedPhase;
     const cosA = Math.cos(moonAngleRad);
     const sinA = Math.sin(moonAngleRad);
+
     const moonX = cx + rx * cosA;
     const moonY = sinA >= 0
       ? horizonY - ryUp * sinA
       : horizonY - ryDown * sinA;
 
     const moonAboveHorizon = moonY <= horizonY + 0.5;
-    const sunR = Math.max(5, Math.round(w / 23));
-    const moonR = Math.max(4, Math.round(w / 32));
-    const moonFill = moonAboveHorizon ? '#fbbf24' : '#94a3b8';
+    const sunR = Math.max(5, Math.round(w / 24));
+    const moonR = Math.max(4, Math.round(w / 34));
+    const moonFill = '#fbbf24';
+    const moonDark = '#1e293b';
 
-    // Sun→Moon arc on the dome, matching the half (sky for waxing, ground for
-    // waning) so the arc and moon position are consistent. This is the *only*
-    // dome path drawn — there are no separate "guide" arcs that could
-    // contradict the elongation arc visually.
-    const ry = isWaxingHalf ? ryUp : ryDown;
-    const sweep = isWaxingHalf ? 0 : 1; // 0 = arc bulges up, 1 = arc bulges down
-    const arcPath = `M ${sunX} ${sunY} A ${rx} ${ry} 0 0 ${sweep} ${moonX} ${moonY}`;
+    const moonRotDeg = (Math.atan2(sunY - moonY, sunX - moonX) * 180) / Math.PI;
+    const cosPh = Math.cos(2 * Math.PI * resolvedPhase);
+    const termRx = moonR * Math.abs(cosPh);
+    const termSweep = cosPh > 0 ? 0 : 1;
+    const litPath = `M 0 ${-moonR} A ${moonR} ${moonR} 0 0 1 0 ${moonR} A ${termRx} ${moonR} 0 0 ${termSweep} 0 ${-moonR} Z`;
+
+    // Arc from the Sun's position to the Moon's, always swept in the same
+    // direction (clockwise in screen coords) so it visually grows with
+    // elongation. For waxing phases (p ≤ 0.5) it's a single arc along the
+    // upper dome; for waning (p > 0.5) it crosses the east horizon and
+    // continues along the under-horizon ellipse, so the path can wrap more
+    // than half the ellipse just like the moon does over a synodic month.
+    const arcPath = resolvedPhase <= 0.5
+      ? `M ${sunX} ${sunY} A ${rx} ${ryUp} 0 0 1 ${moonX} ${moonY}`
+      : `M ${sunX} ${sunY} A ${rx} ${ryUp} 0 0 1 ${cx + rx} ${horizonY} A ${rx} ${ryDown} 0 0 1 ${moonX} ${moonY}`;
 
     const fontBase = h < 140 ? 11 : 14;
 
@@ -124,6 +105,7 @@ export default function HorizonDiagram({
         height={h}
         viewBox={`0 0 ${w} ${h}`}
         className={className}
+        style={{ overflow: 'visible' }}
         aria-label={`Horizon diagram: moon at ${moonAltitudeDeg.toFixed(1)}°`}
       >
         <defs>
@@ -132,79 +114,90 @@ export default function HorizonDiagram({
             <stop offset="100%" stopColor="#475569" />
           </linearGradient>
         </defs>
+
         <rect x={0} y={0} width={w} height={horizonY} fill="url(#hd-sky)" rx={4} />
-        <rect x={0} y={horizonY} width={w} height={h - horizonY} fill="#1e293b" rx={0} />
+        <rect x={0} y={horizonY} width={w} height={h - horizonY} fill="#1e293b" />
 
-        {/* Horizon line + W / E orientation labels — placed at the FAR edges
-            of the box at horizon height (vertical centre), pointing outward
-            away from the diagram, so they never overlap the Sun or Moon. */}
-        <line x1={0} y1={horizonY} x2={w} y2={horizonY} stroke="#64748b" strokeWidth={1} strokeDasharray="4 2" />
-        <text x={2} y={horizonY - 4} fill="#94a3b8" fontSize={fontBase - 1} fontFamily="system-ui" fontWeight="600">
-          ← W
-        </text>
-        <text x={w - 2} y={horizonY - 4} textAnchor="end" fill="#94a3b8" fontSize={fontBase - 1} fontFamily="system-ui" fontWeight="600">
-          E →
-        </text>
+        <line x1={0} y1={horizonY} x2={w} y2={horizonY} stroke="#94a3b8" strokeWidth={1} strokeDasharray="4 2" />
+        <text x={4} y={horizonY - 6} fill="#e2e8f0" fontSize={fontBase} fontFamily="system-ui" fontWeight="700">W</text>
+        <text x={w - 4} y={horizonY - 6} textAnchor="end" fill="#e2e8f0" fontSize={fontBase} fontFamily="system-ui" fontWeight="700">E</text>
 
-        {/* The Sun→Moon arc — the only dome path in the diagram, so it can't
-            visually contradict any "guide" arc going the other way. */}
-        <path d={arcPath} fill="none" stroke="#cbd5e1" strokeWidth={1} strokeDasharray="3 2" opacity={0.85} />
+        <path d={arcPath} fill="none" stroke="#f1f5f9" strokeWidth={1.5} strokeDasharray="3 3" opacity={0.85} />
 
         {/* Sun */}
-        <circle cx={sunX} cy={sunY} r={sunR} fill="#f97316" opacity={0.85} />
-        <text x={sunX} y={sunY + sunR + fontBase + 1} textAnchor="middle" fill="#f97316" fontSize={fontBase} fontFamily="system-ui">☉</text>
+        <circle cx={sunX} cy={sunY} r={sunR * 1.5} fill="#f97316" opacity={0.2} />
+        <circle cx={sunX} cy={sunY} r={sunR} fill="#f97316" />
 
-        {/* Moon */}
-        <circle cx={moonX} cy={moonY} r={moonR} fill={moonFill} opacity={moonAboveHorizon ? 1 : 0.55} />
-        <text
-          x={moonX}
-          y={moonAboveHorizon ? moonY - moonR - 4 : moonY + moonR + fontBase}
-          textAnchor="middle"
-          fill="#e2e8f0"
-          fontSize={fontBase + 1}
-          fontFamily="system-ui"
-        >
-          ☽
-        </text>
+        {/* Moon — phase-shaped, lit limb facing the Sun */}
+        <g transform={`translate(${moonX} ${moonY}) rotate(${moonRotDeg})`}>
+          <circle r={moonR} fill={moonDark} />
+          <path d={litPath} fill={moonFill} />
+          <circle r={moonR} fill="none" stroke="#ffffff" strokeWidth={0.5} opacity={0.3} />
+        </g>
 
         {/* Moon altitude label */}
-        {(() => {
-          const text = `alt ${moonAltitudeDeg.toFixed(1)}°`;
-          const approxW = text.length * (fontBase * 0.55) + 4;
-          const labelX = Math.min(moonX + moonR + 4 + approxW, w - 4);
-          const labelY = moonAboveHorizon
-            ? (moonAltitudeDeg > 12 ? moonY + moonR + fontBase + 2 : moonY + 4)
-            : moonY - moonR - 4;
-          return (
-            <text x={labelX} y={labelY} textAnchor="end" fill="#fbbf24" fontSize={fontBase} fontFamily="system-ui" fontWeight="600">
-              <title>Moon altitude above horizon at sunset</title>
-              {text}
-            </text>
-          );
-        })()}
+        <text
+          x={moonX > w * 0.7 ? moonX - moonR - 4 : moonX + moonR + 4}
+          y={moonY > h * 0.8 ? moonY - 8 : moonY + 4}
+          textAnchor={moonX > w * 0.7 ? 'end' : 'start'}
+          fill={moonAboveHorizon ? '#fbbf24' : '#94a3b8'}
+          fontSize={fontBase}
+          fontFamily="system-ui"
+          fontWeight="bold"
+          stroke="#020617"
+          strokeWidth={3}
+          paintOrder="stroke"
+        >
+          <title>Moon altitude above horizon at sunset</title>
+          {moonAltitudeDeg.toFixed(1)}°
+        </text>
 
-        {/* Elongation label, anchored on whichever half of the dome the arc traces. */}
+        {/* Elongation label — pinned to the top corner OPPOSITE the moon so
+            the two never overlap when the moon is near zenith. */}
         {typeof arcDeg === 'number' && (() => {
-          const midAngle = (Math.PI + moonAngleRad) / 2;
-          const labelOffset = 6;
-          const apexX = cx + (rx + labelOffset) * Math.cos(midAngle);
-          const apexYRaw = horizonY - (ry + labelOffset) * Math.sin(midAngle);
-          const labelX = Math.min(w - 4, Math.max(20, apexX));
-          const labelY = isWaxingHalf
-            ? Math.max(13, apexYRaw)
-            : Math.min(h - padBottom - 2, apexYRaw);
+          const onRight = moonX < cx;
           return (
-            <text x={labelX} y={labelY} textAnchor="middle" fill="#f1f5f9" fontSize={fontBase} fontFamily="system-ui" fontWeight="bold">
+            <text
+              x={onRight ? w - 6 : 6}
+              y={18}
+              textAnchor={onRight ? 'end' : 'start'}
+              fill="#e2e8f0"
+              fontSize={fontBase}
+              fontFamily="system-ui"
+              fontWeight="bold"
+              stroke="#020617"
+              strokeWidth={3}
+              paintOrder="stroke"
+            >
               <title>Sun–Moon elongation (0° at conjunction, ~180° at full moon)</title>
               Δ {arcDeg.toFixed(1)}°
             </text>
           );
         })()}
 
-        {/* Lag label at bottom */}
+        {/* Lag label, anchored to the bottom edge so it never collides with
+            the moon when it sits below the horizon. */}
         {typeof lagMinutes === 'number' && (
-          <text x={w / 2} y={h - 4} textAnchor="middle" fill="#cbd5e1" fontSize={fontBase} fontFamily="system-ui">
-            lag {Math.round(lagMinutes)} min
+          <text
+            x={w / 2}
+            y={h - 6}
+            textAnchor="middle"
+            fill="#e2e8f0"
+            fontSize={fontBase}
+            fontFamily="system-ui"
+            fontWeight="600"
+            stroke="#1e293b"
+            strokeWidth={3}
+            paintOrder="stroke"
+          >
+            lag {(() => {
+              const totalMin = Math.round(lagMinutes);
+              const sign = totalMin < 0 ? '-' : '';
+              const abs = Math.abs(totalMin);
+              const h = Math.floor(abs / 60);
+              const m = abs % 60;
+              return h > 0 ? `${sign}${h}h ${m}m` : `${sign}${m}m`;
+            })()}
           </text>
         )}
       </svg>
@@ -219,13 +212,10 @@ export default function HorizonDiagram({
         <button
           type="button"
           onClick={(e) => {
-            // Stop propagation so callers that wrap the diagram in a clickable
-            // row (e.g. DetailsPage's expandable day card) don't toggle when
-            // the user is just trying to enlarge the diagram.
             e.stopPropagation();
             setExpanded(true);
           }}
-          className="cursor-zoom-in border-0 bg-transparent p-0 leading-none hover:opacity-95"
+          className="cursor-zoom-in border-0 bg-transparent p-0 leading-none transition-transform hover:scale-[1.02]"
           aria-label="Expand horizon diagram"
           title="Click to enlarge"
         >
@@ -239,26 +229,28 @@ export default function HorizonDiagram({
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
           onClick={() => setExpanded(false)}
         >
           <div
-            className="max-w-full rounded-lg bg-slate-900 p-4 shadow-2xl"
+            className="w-full max-w-lg rounded-xl border border-slate-800 bg-slate-950 p-6 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {(gregorianDateStr || hijriDateStr) && (
-              <div className="mb-3 text-center text-slate-100">
-                {hijriDateStr && <div className="text-lg font-semibold">{hijriDateStr}</div>}
-                {gregorianDateStr && <div className="text-sm text-slate-300">{gregorianDateStr}</div>}
+              <div className="mb-6 text-center">
+                {hijriDateStr && <div className="mb-1 text-2xl font-bold text-white">{hijriDateStr}</div>}
+                {gregorianDateStr && <div className="font-medium text-slate-400">{gregorianDateStr}</div>}
               </div>
             )}
-            <div className="flex justify-center">
-              {renderSvg(440, 300)}
+
+            <div className="flex justify-center rounded-lg border border-slate-800/50 bg-slate-900/50 p-4">
+              {renderSvg(420, 420)}
             </div>
+
             <button
               type="button"
               onClick={() => setExpanded(false)}
-              className="mt-3 w-full rounded-md bg-slate-700 px-3 py-1.5 text-sm font-medium text-slate-100 hover:bg-slate-600"
+              className="mt-6 w-full rounded-lg bg-slate-800 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-700"
             >
               Close
             </button>

@@ -77,7 +77,7 @@ export default function DayMetrics({
 }: Props) {
   const { t } = useTranslation();
   const horizonW = size === 'compact' ? 170 : 200;
-  const horizonH = size === 'compact' ? 105 : 120;
+  const horizonH = size === 'compact' ? 170 : 200;
   const phaseSize = size === 'compact' ? 40 : 44;
   const scoreBarW = size === 'compact' ? 90 : 110;
 
