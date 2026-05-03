@@ -13,7 +13,6 @@ import CrescentScoreBar from '../components/CrescentScoreBar';
 import DayMetrics from '../components/DayMetrics';
 import LocaleLink from '../components/LocaleLink';
 import LocationPicker from '../components/LocationPicker';
-import MoonPhaseIcon from '../components/MoonPhaseIcon';
 import { likelihoodStyle, type VisibilityStatusKey } from '../components/likelihood';
 import { useAppLocation } from '../location/LocationContext';
 import { useMethod } from '../method/MethodContext';
