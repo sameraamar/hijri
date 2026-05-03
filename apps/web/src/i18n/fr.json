@@ -50,6 +50,9 @@
   "today": {
     "title": "Aujourd'hui",
     "todayIs": "Aujourd'hui",
+    "selectedDayIs": "Jour sélectionné",
+    "prevDay": "Jour précédent",
+    "nextDay": "Jour suivant",
     "currentLocation": "Lieu",
     "nextHolidayLabel": "Prochaine fête",
     "inDays": "dans {{count}} jours",

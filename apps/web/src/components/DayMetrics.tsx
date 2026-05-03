@@ -62,13 +62,18 @@ type Props = {
   size?: DayMetricsSize;
   /** How to arrange the metrics list relative to the diagram + phase + score. */
   layout?: DayMetricsLayout;
+  /** Optional date strings shown only inside the expanded HorizonDiagram modal. */
+  gregorianDateStr?: string;
+  hijriDateStr?: string;
 };
 
 export default function DayMetrics({
   est,
   fmtLocalTime,
   size = 'compact',
-  layout = 'stacked'
+  layout = 'stacked',
+  gregorianDateStr,
+  hijriDateStr,
 }: Props) {
   const { t } = useTranslation();
   const horizonW = size === 'compact' ? 170 : 200;
@@ -151,9 +156,11 @@ export default function DayMetrics({
         {typeof est.metrics.moonAltitudeDeg === 'number' && (
           <HorizonDiagram
             moonAltitudeDeg={est.metrics.moonAltitudeDeg}
-            sunAltitudeDeg={est.metrics.sunAltitudeDeg ?? -1}
             arcDeg={est.metrics.moonElongationDeg}
             lagMinutes={est.metrics.lagMinutes}
+            phase={est.metrics.moonPhase}
+            gregorianDateStr={gregorianDateStr}
+            hijriDateStr={hijriDateStr}
             width={horizonW}
             height={horizonH}
           />

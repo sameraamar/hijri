@@ -49,6 +49,9 @@
   "today": {
     "title": "Today",
     "todayIs": "Today is",
+    "selectedDayIs": "Selected day",
+    "prevDay": "Previous day",
+    "nextDay": "Next day",
     "currentLocation": "Showing for",
     "nextHolidayLabel": "Next holiday",
     "inDays": "in {{count}} days",

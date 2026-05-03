@@ -47,6 +47,7 @@ type DetailRow = {
     sunAltitudeDeg?: number;
     moonElongationDeg?: number;
     moonAgeHours?: number;
+    moonPhase?: number;
     // Yallop-specific
     yallopQ?: number;
     yallopZone?: string;
@@ -280,6 +281,7 @@ export default function DetailsPage() {
           sunAltitudeDeg: est?.metrics.sunAltitudeDeg,
           moonElongationDeg: est?.metrics.moonElongationDeg,
           moonAgeHours: est?.metrics.moonAgeHours,
+          moonPhase: est?.metrics.moonPhase,
           // Yallop-specific
           yallopQ: est?.metrics.yallopQ,
           yallopZone: est?.metrics.yallopZone,
@@ -544,9 +546,15 @@ export default function DetailsPage() {
                     <div className="flex justify-center mb-2">
                       <HorizonDiagram
                         moonAltitudeDeg={row.estimate.moonAltitudeDeg}
-                        sunAltitudeDeg={row.estimate.sunAltitudeDeg ?? -1}
                         arcDeg={row.estimate.moonElongationDeg}
                         lagMinutes={row.estimate.lagMinutes}
+                        phase={row.estimate.moonPhase}
+                        gregorianDateStr={formatIsoDateDisplay(row.gregorianIso, i18n.language)}
+                        hijriDateStr={
+                          row.hijriDay && row.hijriMonth && row.hijriYear
+                            ? formatHijriDateDisplay({ day: row.hijriDay, month: row.hijriMonth, year: row.hijriYear }, i18n.language)
+                            : row.hijriText
+                        }
                         width={200}
                         height={110}
                       />

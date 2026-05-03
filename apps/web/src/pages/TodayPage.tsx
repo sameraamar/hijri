@@ -6,7 +6,7 @@ import {
   yallopMonthStartEstimate,
   odehMonthStartEstimate
 } from '@hijri/calendar-engine';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import CrescentScoreBar from '../components/CrescentScoreBar';
@@ -19,7 +19,7 @@ import { useAppLocation } from '../location/LocationContext';
 import { useMethod } from '../method/MethodContext';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { getTimeZoneForLocation } from '../timezone';
-import { daysBetweenUtc, sameDate } from '../utils/dateMath';
+import { addDaysUtc, daysBetweenUtc, sameDate } from '../utils/dateMath';
 import { formatHijriDateDisplay, formatGregorianDateDisplay } from '../utils/dateFormat';
 import { buildIcal, downloadIcal } from '../utils/icalExport';
 
@@ -44,24 +44,30 @@ export default function TodayPage() {
   const { location } = useAppLocation();
   usePageMeta('seo.today.title', 'seo.today.description');
 
-  const today = useMemo(() => todayGregorian(), []);
+  // The page is "Today" by default but the user can navigate day-by-day with
+  // the < / > chevrons in the header. `isViewingToday` lets us continue to
+  // show the "today" badge / styling only when the focused date matches the
+  // real-world current date.
+  const realToday = useMemo(() => todayGregorian(), []);
+  const [currentDate, setCurrentDate] = useState(realToday);
+  const isViewingToday = sameDate(currentDate, realToday);
 
-  const hijriToday = useMemo(() => gregorianToHijriCivil(today), [today]);
+  const hijriCurrent = useMemo(() => gregorianToHijriCivil(currentDate), [currentDate]);
 
   const tonightEst = useMemo(() => {
     const fn =
       methodId === 'yallop' ? yallopMonthStartEstimate
       : methodId === 'odeh' ? odehMonthStartEstimate
       : estimateMonthStartLikelihoodAtSunset;
-    return fn(today, { latitude: location.latitude, longitude: location.longitude });
-  }, [methodId, location.latitude, location.longitude, today]);
+    return fn(currentDate, { latitude: location.latitude, longitude: location.longitude });
+  }, [methodId, location.latitude, location.longitude, currentDate]);
 
   const tonightStatus = visibilityFromEstimate(tonightEst);
   const tonightStyle = likelihoodStyle(tonightStatus);
   const tonightPercent = clamp0to100(tonightEst.metrics.visibilityPercent ?? 0);
 
   const nextHoliday = useMemo(() => {
-    const yearList = [today.year, today.year + 1];
+    const yearList = [currentDate.year, currentDate.year + 1];
     for (const y of yearList) {
       const list = getCivilHolidaysForGregorianYearWithEstimate(y, {
         latitude: location.latitude,
@@ -69,12 +75,12 @@ export default function TodayPage() {
       });
       for (const h of list) {
         const target = h.estimatedGregorian ?? h.gregorian;
-        const delta = daysBetweenUtc(today, target);
+        const delta = daysBetweenUtc(currentDate, target);
         if (delta >= 0) return { holiday: h, target, delta };
       }
     }
     return null;
-  }, [today, location.latitude, location.longitude]);
+  }, [currentDate, location.latitude, location.longitude]);
 
   const exportToIcs = () => {
     if (!nextHoliday) return;
@@ -88,8 +94,8 @@ export default function TodayPage() {
     downloadIcal(`hijri-next-holiday.ics`, ics);
   };
 
-  const hijriDisplay = formatHijriDateDisplay(hijriToday, i18n.language);
-  const gregorianDisplay = formatGregorianDateDisplay(today, i18n.language);
+  const hijriDisplay = formatHijriDateDisplay(hijriCurrent, i18n.language);
+  const gregorianDisplay = formatGregorianDateDisplay(currentDate, i18n.language);
 
   const timeZone = useMemo(
     () => getTimeZoneForLocation(location.latitude, location.longitude),
@@ -113,12 +119,60 @@ export default function TodayPage() {
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t('today.title')}</h1>
           <div className="muted">{t('app.method.label')}: {t(`app.method.${methodId}`)}</div>
         </div>
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={() => setCurrentDate((d) => addDaysUtc(d, -1))}
+            aria-label={t('today.prevDay')}
+            title={t('today.prevDay')}
+            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 transition-colors dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 rtl:rotate-180" aria-hidden="true">
+              <path fillRule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clipRule="evenodd"/>
+            </svg>
+          </button>
+          <label className="text-xs text-slate-600 dark:text-slate-400">
+            <span className="sr-only">{t('today.selectedDayIs')}</span>
+            <input
+              type="date"
+              className="control-sm"
+              aria-label={t('today.selectedDayIs')}
+              value={`${currentDate.year}-${String(currentDate.month).padStart(2, '0')}-${String(currentDate.day).padStart(2, '0')}`}
+              onChange={(e) => {
+                const m = e.target.value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+                if (!m) return;
+                setCurrentDate({ year: Number(m[1]), month: Number(m[2]), day: Number(m[3]) });
+              }}
+            />
+          </label>
+          <button
+            type="button"
+            onClick={() => setCurrentDate((d) => addDaysUtc(d, 1))}
+            aria-label={t('today.nextDay')}
+            title={t('today.nextDay')}
+            className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 transition-colors dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 rtl:rotate-180" aria-hidden="true">
+              <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd"/>
+            </svg>
+          </button>
+          <button
+            type="button"
+            className="btn-sm whitespace-nowrap"
+            onClick={() => setCurrentDate(realToday)}
+            disabled={isViewingToday}
+          >
+            {t('calendar.today')}
+          </button>
+        </div>
       </div>
 
       <section className="card p-4 sm:p-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <div className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">{t('today.todayIs')}</div>
+            <div className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              {isViewingToday ? t('today.todayIs') : t('today.selectedDayIs')}
+            </div>
             <div className="mt-1 text-2xl font-semibold text-slate-900 dark:text-slate-100 sm:text-3xl">{hijriDisplay}</div>
             <div className="text-sm text-slate-600 dark:text-slate-300">{gregorianDisplay}</div>
             <div className="mt-2 text-xs text-slate-500 dark:text-slate-400">
@@ -151,7 +205,7 @@ export default function TodayPage() {
                 {formatGregorianDateDisplay(nextHoliday.target, i18n.language)}
               </div>
               <div className="mt-2 text-sm font-medium text-slate-700 dark:text-slate-200">
-                {sameDate(nextHoliday.target, today)
+                {sameDate(nextHoliday.target, currentDate)
                   ? t('today.todayBadge')
                   : nextHoliday.delta === 1
                     ? t('today.inDay', { count: 1 })
@@ -183,7 +237,7 @@ export default function TodayPage() {
             </div>
           </div>
           <LocaleLink
-            to={`/calendar?year=${today.year}&month=${today.month}`}
+            to={`/calendar?year=${currentDate.year}&month=${currentDate.month}`}
             className="whitespace-nowrap text-xs text-blue-600 hover:underline dark:text-blue-300"
           >
             {t('app.nav.calendar')} →
@@ -225,7 +279,14 @@ export default function TodayPage() {
         {/* Full per-day metrics — same card the Calendar popup shows.
             Side-by-side on wide screens, stacked on mobile. */}
         <div className="mt-4 border-t border-slate-100 pt-3 text-xs dark:border-slate-700">
-          <DayMetrics est={tonightEst} fmtLocalTime={fmtLocalTime} size="comfortable" layout="split" />
+          <DayMetrics
+            est={tonightEst}
+            fmtLocalTime={fmtLocalTime}
+            size="comfortable"
+            layout="split"
+            gregorianDateStr={gregorianDisplay}
+            hijriDateStr={hijriDisplay}
+          />
         </div>
 
         <div className="mt-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">

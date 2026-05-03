@@ -49,6 +49,9 @@
   "today": {
     "title": "اليوم",
     "todayIs": "اليوم هو",
+    "selectedDayIs": "اليوم المحدد",
+    "prevDay": "اليوم السابق",
+    "nextDay": "اليوم التالي",
     "currentLocation": "الموقع الحالي",
     "nextHolidayLabel": "المناسبة التالية",
     "inDays": "بعد {{count}} يومًا",

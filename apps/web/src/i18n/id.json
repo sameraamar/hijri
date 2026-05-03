@@ -50,6 +50,9 @@
   "today": {
     "title": "Hari ini",
     "todayIs": "Hari ini",
+    "selectedDayIs": "Hari yang dipilih",
+    "prevDay": "Hari sebelumnya",
+    "nextDay": "Hari berikutnya",
     "currentLocation": "Lokasi",
     "nextHolidayLabel": "Hari raya berikutnya",
     "inDays": "dalam {{count}} hari",

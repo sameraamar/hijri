@@ -50,6 +50,9 @@
   "today": {
     "title": "Bugün",
     "todayIs": "Bugün",
+    "selectedDayIs": "Seçili gün",
+    "prevDay": "Önceki gün",
+    "nextDay": "Sonraki gün",
     "currentLocation": "Konum",
     "nextHolidayLabel": "Sonraki önemli gün",
     "inDays": "{{count}} gün sonra",

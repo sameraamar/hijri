@@ -50,6 +50,9 @@
   "today": {
     "title": "آج",
     "todayIs": "آج",
+    "selectedDayIs": "منتخب دن",
+    "prevDay": "پچھلا دن",
+    "nextDay": "اگلا دن",
     "currentLocation": "مقام",
     "nextHolidayLabel": "اگلا تہوار",
     "inDays": "{{count}} دن میں",
