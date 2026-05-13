@@ -15,6 +15,10 @@ function formatCoord(n: number): string {
   return Number.isFinite(n) ? n.toFixed(5) : '';
 }
 
+function sameCoords(a: AppLocation, b: AppLocation): boolean {
+  return Math.abs(a.latitude - b.latitude) < 1e-4 && Math.abs(a.longitude - b.longitude) < 1e-4;
+}
+
 function MapClickHandler({ onPick }: { onPick: (lat: number, lng: number) => void }) {
   useMapEvents({
     click(e: LeafletMouseEvent) {
@@ -58,6 +62,10 @@ export default function LocationPicker() {
   const [geoError, setGeoError] = useState<string | null>(null);
 
   const center = useMemo<[number, number]>(() => [location.latitude, location.longitude], [location]);
+  const selectedPreset = useMemo(
+    () => PRESET_LOCATIONS.find((p) => sameCoords(p, location)) ?? PRESET_LOCATIONS.find((p) => p.name === location.name),
+    [location]
+  );
   const timeZone = useMemo(
     () => getTimeZoneForLocation(location.latitude, location.longitude),
     [location.latitude, location.longitude]
@@ -115,7 +123,7 @@ export default function LocationPicker() {
         <div className="flex flex-wrap items-center gap-2">
           <select
             className="control-sm min-w-0 flex-1 sm:w-56 sm:flex-none"
-            value={location.name}
+            value={selectedPreset?.name ?? location.name}
             onChange={(e) => {
               const v = e.target.value;
               const preset = PRESET_LOCATIONS.find((p) => p.name === v);
@@ -123,6 +131,9 @@ export default function LocationPicker() {
             }}
             aria-label="Preset location"
           >
+            {!selectedPreset && (
+              <option value={location.name}>{location.name}</option>
+            )}
             {PRESET_LOCATIONS.map((p) => (
               <option key={p.name} value={p.name}>
                 {p.name}

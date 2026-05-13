@@ -10,7 +10,7 @@ type LocationContextValue = {
 
 const LocationContext = createContext<LocationContextValue | null>(null);
 
-const STORAGE_KEY = 'hijri.location';
+const STORAGE_KEY = 'hijri.location.v2';
 
 function isValidLocation(v: unknown): v is AppLocation {
   if (!v || typeof v !== 'object') return false;

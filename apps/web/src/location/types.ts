@@ -5,7 +5,7 @@ export type AppLocation = {
 };
 
 export const MAKKAH_LOCATION: AppLocation = {
-  name: 'Makkah',
+  name: 'Saudi Arabia, Makkah',
   latitude: 21.3891,
   longitude: 39.8579
 };
