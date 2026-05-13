@@ -37,14 +37,18 @@ function MapRecenter({ center }: { center: [number, number] }) {
 }
 
 const PRESET_LOCATIONS: AppLocation[] = [
-  { name: 'Makkah, Saudi Arabia', latitude: 21.3891, longitude: 39.8579 },
-  { name: 'Riyadh, Saudi Arabia', latitude: 24.7136, longitude: 46.6753 },
-  { name: 'Cairo, Egypt', latitude: 30.0444, longitude: 31.2357 },
-  { name: 'Jerusalem (Al-Quds)', latitude: 31.7683, longitude: 35.2137 },
-  { name: 'Istanbul, Türkiye', latitude: 41.0082, longitude: 28.9784 },
-  { name: 'London, UK', latitude: 51.5072, longitude: -0.1276 },
-  { name: 'New York, USA', latitude: 40.7128, longitude: -74.006 },
-  { name: 'Jakarta, Indonesia', latitude: -6.2088, longitude: 106.8456 }
+  { name: 'Egypt, Cairo', latitude: 30.0444, longitude: 31.2357 },
+  { name: 'Indonesia, Jakarta', latitude: -6.2088, longitude: 106.8456 },
+  { name: 'Malaysia, Kuala Lumpur', latitude: 3.1390, longitude: 101.6869 },
+  { name: 'Morocco, Rabat', latitude: 34.0209, longitude: -6.8416 },
+  { name: 'Nigeria, Abuja', latitude: 9.0579, longitude: 7.4951 },
+  { name: 'Pakistan, Islamabad', latitude: 33.6844, longitude: 73.0479 },
+  { name: 'Palestine, Jerusalem (Al-Quds)', latitude: 31.7683, longitude: 35.2137 },
+  { name: 'Saudi Arabia, Makkah', latitude: 21.3891, longitude: 39.8579 },
+  { name: 'South Africa, Pretoria', latitude: -25.7479, longitude: 28.2293 },
+  { name: 'Türkiye, Istanbul', latitude: 41.0082, longitude: 28.9784 },
+  { name: 'UK, London', latitude: 51.5072, longitude: -0.1276 },
+  { name: 'USA, New York', latitude: 40.7128, longitude: -74.006 }
 ];
 
 export default function LocationPicker() {
