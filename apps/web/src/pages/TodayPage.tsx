@@ -1,4 +1,5 @@
 import {
+  buildEstimatedHijriCalendarRange,
   estimateMonthStartLikelihoodAtSunset,
   getCivilHolidaysForGregorianYearWithEstimate,
   getMonthStartSignalLevel,
@@ -16,6 +17,7 @@ import LocationPicker from '../components/LocationPicker';
 import { likelihoodStyle, type VisibilityStatusKey } from '../components/likelihood';
 import { useAppLocation } from '../location/LocationContext';
 import { useMethod } from '../method/MethodContext';
+import { isAstronomicalMethod, methodIdToRule } from '../method/types';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { getTimeZoneForLocation } from '../timezone';
 import { addDaysUtc, daysBetweenUtc, sameDate } from '../utils/dateMath';
@@ -51,7 +53,26 @@ export default function TodayPage() {
   const [currentDate, setCurrentDate] = useState(realToday);
   const isViewingToday = sameDate(currentDate, realToday);
 
-  const hijriCurrent = useMemo(() => gregorianToHijriCivil(currentDate), [currentDate]);
+  const hijriCurrent = useMemo(() => {
+    if (methodId === 'civil') return gregorianToHijriCivil(currentDate);
+    if (!isAstronomicalMethod(methodId)) return gregorianToHijriCivil(currentDate);
+
+    const center = new Date(Date.UTC(currentDate.year, currentDate.month - 1, currentDate.day, 0, 0, 0));
+    const start = new Date(center);
+    start.setUTCDate(start.getUTCDate() - 90);
+    const end = new Date(center);
+    end.setUTCDate(end.getUTCDate() + 1);
+
+    const calendar = buildEstimatedHijriCalendarRange(
+      { year: start.getUTCFullYear(), month: start.getUTCMonth() + 1, day: start.getUTCDate() },
+      { year: end.getUTCFullYear(), month: end.getUTCMonth() + 1, day: end.getUTCDate() },
+      { latitude: location.latitude, longitude: location.longitude },
+      { monthStartRule: methodIdToRule(methodId) }
+    );
+
+    const match = calendar.find((item) => sameDate(item.gregorian, currentDate));
+    return match?.hijri ?? gregorianToHijriCivil(currentDate);
+  }, [methodId, location.latitude, location.longitude, currentDate]);
 
   const tonightEst = useMemo(() => {
     const fn =

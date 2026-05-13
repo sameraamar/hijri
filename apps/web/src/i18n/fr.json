@@ -42,8 +42,8 @@
       "license": "Licence MIT"
     },
     "aiBanner": {
-      "title": "Traduction IA — à relire",
-      "body": "Cette page est en français, traduite automatiquement par IA depuis l’anglais. Des erreurs et imprécisions sont possibles. Une relecture par un locuteur natif est bienvenue — ouvrez une Issue ou une PR sur GitHub.",
+      "title": "Avertissement de traduction IA",
+      "body": "Cette page a été traduite automatiquement par IA depuis l’anglais et peut contenir des erreurs ou des imprécisions.",
       "dismiss": "Masquer"
     }
   },

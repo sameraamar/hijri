@@ -41,8 +41,8 @@
       "license": "MIT License"
     },
     "aiBanner": {
-      "title": "AI translation — review needed",
-      "body": "This page is in English, the original language. The non-English versions of this site (Arabic, Turkish, French, Indonesian, Urdu) were machine-translated from English by AI; mistakes and inaccuracies are possible there. Native-speaker review is welcome — open an issue or PR on GitHub.",
+      "title": "AI translation warning",
+      "body": "Some pages are machine-translated from English by AI and may contain errors or inaccuracies.",
       "dismiss": "Dismiss"
     }
   },

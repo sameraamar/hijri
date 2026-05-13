@@ -42,8 +42,8 @@
       "license": "Lisensi MIT"
     },
     "aiBanner": {
-      "title": "Terjemahan AI — perlu ditinjau",
-      "body": "Halaman ini dalam bahasa Indonesia, diterjemahkan oleh AI dari bahasa Inggris. Kesalahan dan ketidakakuratan mungkin terjadi. Tinjauan dari penutur asli sangat dipersilakan — buka Issue atau PR di GitHub.",
+      "title": "Peringatan terjemahan AI",
+      "body": "Halaman ini diterjemahkan otomatis oleh AI dari bahasa Inggris dan mungkin mengandung kesalahan atau ketidakakuratan.",
       "dismiss": "Tutup"
     }
   },

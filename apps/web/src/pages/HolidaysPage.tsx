@@ -9,7 +9,7 @@ import {
   odehMonthStartEstimate,
   meetsOdehCriteriaAtSunset
 } from '@hijri/calendar-engine';
-import { useMemo } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import i18n from '../i18n/i18n';
 import LocationPicker from '../components/LocationPicker';
@@ -45,6 +45,7 @@ export default function HolidaysPage() {
   const { location } = useAppLocation();
   const currentYear = new Date().getFullYear();
   const [year, setYear] = useUrlNumber('year', currentYear);
+  const [expandedHolidayKeys, setExpandedHolidayKeys] = useState<Set<string>>(new Set());
 
   const holidays = useMemo(() => {
     return getCivilHolidaysForGregorianYearWithEstimate(year, {
@@ -258,19 +259,21 @@ export default function HolidaysPage() {
           <h1 className="text-2xl font-semibold tracking-tight">{t('holidays.title')}</h1>
           <div className="muted">{t('app.method.label')}: {t(`app.method.${methodId}`)}</div>
         </div>
-        <button
-          type="button"
-          onClick={exportToIcs}
-          disabled={holidays.length === 0}
-          className="btn-sm whitespace-nowrap"
-          aria-label={t('today.exportHolidays')}
-          title={t('today.exportHolidays')}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 sm:mr-1.5" aria-hidden="true">
-            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-          </svg>
-          <span>{t('today.exportHolidays')}</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={exportToIcs}
+            disabled={holidays.length === 0}
+            className="btn-sm whitespace-nowrap"
+            aria-label={t('today.exportHolidays')}
+            title={t('today.exportHolidays')}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 sm:mr-1.5" aria-hidden="true">
+              <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+            </svg>
+            <span>{t('today.exportHolidays')}</span>
+          </button>
+        </div>
       </div>
 
       <div className="card">
@@ -310,28 +313,71 @@ export default function HolidaysPage() {
             </button>
           )}
         </div>
-        <div className="grid grid-cols-1 divide-y divide-slate-200">
-          {holidays.map((h) => (
-            <div
-              key={`${h.id}-${h.gregorian.year}-${h.gregorian.month}-${h.gregorian.day}`}
-              className="p-3"
-            >
-              <div className="text-sm font-medium">{t(h.nameKey)}</div>
-
-              {isAstronomicalMethod(methodId) ? (
-                <>
-                  {renderCandidateDates(h.gregorian, h.hijri, h.estimatedGregorian ?? undefined)}
-                </>
-              ) : (
-                <div className="mt-1 text-xs text-slate-600 dark:text-slate-300">
-                  <span className="text-slate-900 dark:text-slate-100 font-semibold">{formatIsoDateDisplay(fmtGregorianIso(h.gregorian), i18n.language)}</span>
-                  <span className="ms-1 text-slate-500 dark:text-slate-400 dark:text-slate-500">{weekday(h.gregorian)}</span>
-                  {' — '}
-                  {formatHijriDateDisplay(h.hijri, i18n.language)}
-                </div>
-              )}
-            </div>
-          ))}
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-sm">
+            <thead className="bg-slate-50 dark:bg-slate-800/60">
+              <tr className="text-left text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400 dark:text-slate-500">
+                <th scope="col" className="px-3 py-2 font-semibold">{t('app.nav.holidays')}</th>
+                <th scope="col" className="px-3 py-2 font-semibold">{t('convert.hijriDate')}</th>
+                <th scope="col" className="px-3 py-2 font-semibold">{t('convert.gregorianDate')}</th>
+                <th scope="col" className="px-3 py-2 font-semibold">{t('app.method.label')}</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
+              {holidays.map((h) => {
+                const key = `${h.id}-${h.gregorian.year}-${h.gregorian.month}-${h.gregorian.day}`;
+                const eventDate = h.estimatedGregorian ?? h.gregorian;
+                const isAstronomical = isAstronomicalMethod(methodId);
+                const isExpanded = isAstronomical && expandedHolidayKeys.has(key);
+                return (
+                  <Fragment key={key}>
+                    <tr
+                      className={`align-top ${isAstronomical ? 'cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/40' : ''}`}
+                      onClick={isAstronomical ? () => {
+                        setExpandedHolidayKeys((prev) => {
+                          const next = new Set(prev);
+                          if (next.has(key)) next.delete(key);
+                          else next.add(key);
+                          return next;
+                        });
+                      } : undefined}
+                    >
+                      <td className="px-3 py-3 font-medium text-slate-900 dark:text-slate-100">
+                        <span className="inline-flex items-center gap-2">
+                          {isAstronomical ? (
+                            <span className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-slate-300 text-xs text-slate-600 dark:border-slate-600 dark:text-slate-300">
+                              {isExpanded ? '−' : '+'}
+                            </span>
+                          ) : null}
+                          {t(h.nameKey)}
+                        </span>
+                      </td>
+                      <td className="px-3 py-3 text-slate-700 dark:text-slate-200">{formatHijriDateDisplay(h.hijri, i18n.language)}</td>
+                      <td className="px-3 py-3">
+                        <div className="font-medium text-slate-900 dark:text-slate-100">
+                          {formatIsoDateDisplay(fmtGregorianIso(eventDate), i18n.language)}
+                        </div>
+                        <div className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
+                          {weekday(eventDate)}
+                          {isAstronomical && h.estimatedGregorian ? ` • ${t('holidays.estimated')}` : ''}
+                        </div>
+                      </td>
+                      <td className="px-3 py-3 text-xs text-slate-600 dark:text-slate-300">
+                        {t(`app.method.${methodId}`)}
+                      </td>
+                    </tr>
+                    {isExpanded ? (
+                      <tr>
+                        <td colSpan={4} className="px-3 pb-3 pt-0">
+                          {renderCandidateDates(h.gregorian, h.hijri, h.estimatedGregorian ?? undefined)}
+                        </td>
+                      </tr>
+                    ) : null}
+                  </Fragment>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
 

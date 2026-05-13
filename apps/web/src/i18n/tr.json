@@ -42,8 +42,8 @@
       "license": "MIT Lisansı"
     },
     "aiBanner": {
-      "title": "Yapay zekâ çevirisi — gözden geçirin",
-      "body": "Bu sayfa Türkçe’dir ve İngilizce’den yapay zekâ ile makine çevirisi yapılmıştır. Hatalar ve yanlışlıklar olabilir. Ana dili konuşanların incelemesi memnuniyetle karşılanır — GitHub’da bir Issue veya PR açın.",
+      "title": "Yapay zekâ çeviri uyarısı",
+      "body": "Bu sayfa İngilizceden yapay zekâ ile otomatik çevrilmiştir ve hata veya tutarsızlıklar içerebilir.",
       "dismiss": "Gizle"
     }
   },
