@@ -13,6 +13,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import LocationPicker from '../components/LocationPicker';
+import PageIntro from '../components/PageIntro';
 import MoonPhaseIcon from '../components/MoonPhaseIcon';
 import DayMetrics from '../components/DayMetrics';
 import { likelihoodStyle, VISIBILITY_LEGEND_ORDER, type VisibilityStatusKey } from '../components/likelihood';
@@ -506,6 +507,8 @@ export default function CalendarPage() {
           <div className="muted">{t('app.method.label')}: {t(`app.method.${methodId}`)}</div>
         </div>
       </div>
+
+      <PageIntro pageKey="calendar" />
 
       {(() => {
         // Compute Hijri month/year range from the first and last day of the Gregorian month.

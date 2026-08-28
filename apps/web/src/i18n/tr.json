@@ -558,6 +558,41 @@
     "ourResearchLink": "Hicri Hesaplama Yöntemleri — Bilimsel Özet",
     "ourResearchDesc": "Akademik literatürdeki formüller, sözde kodlar ve atıflarla birlikte 15 Hicri ay başlangıcı yönteminin kapsamlı incelemesi"
   },
+  "pageIntro": {
+    "moreLabel": "Bu sayfa nedir?",
+    "today": {
+      "short": "Bugünün Hicri tarihini ve Miladi tarihini yan yana görün; bu geceki hilal görünürlüğü ve bir sonraki İslami güne kalan süreyle birlikte.",
+      "more": "Bugün sayfası, seçtiğiniz hesaplama yöntemi ve konuma göre güncel Miladi tarihi Hicri tarihe çevirir. Ayrıca gün batımında Ay'ın yüksekliğini, uzanımını, yaşını ve aydınlanmasını göstererek yeni bir Hicri ayın bu gece başlayıp başlamayacağını değerlendirmenize yardımcı olur."
+    },
+    "calendar": {
+      "short": "Miladi aylarla hizalanmış aylık Hicri takvime göz atın ve yeni bir İslami ayın başlaması muhtemel günleri görün.",
+      "more": "Her hücre Miladi günü Hicri tarihiyle eşleştirir. Ay geçişlerinde takvim, yeni hilal için aday günleri vurgular; böylece Ramazan, Ramazan Bayramı veya Kurban Bayramı'nın konumunuza ve yönteminize göre nereye düşebileceğini görürsünüz."
+    },
+    "convert": {
+      "short": "Herhangi bir Miladi tarihi Hicri'ye ya da herhangi bir Hicri tarihi Miladi'ye çevirin; doğum tarihleri ve tarihî tarihler dâhil.",
+      "more": "Karşılık gelen Hicri tarihi almak için Miladi gün, ay ve yılı girin; ya da Miladi tarihi almak için bir Hicri tarih girin. Sonuçlar seçtiğiniz hesaplama yöntemini izler ve birkaç biçimde kopyalanabilir."
+    },
+    "holidays": {
+      "short": "Ramazan, Ramazan Bayramı, Kurban Bayramı, Aşure, Arefe Günü ve Hicri yılbaşının tahmini tarihlerini bulun.",
+      "more": "İslami günler her Hicri ayın başlangıcına bağlıdır; bu nedenle tarihler resmî duyuru değil tahmindir. Aday tarihleri ve her birinde hilalin görülme olasılığını görmek için bir günü genişletin."
+    },
+    "details": {
+      "short": "Her Hicri ay başlangıcının ardındaki günlük astronomik verileri inceleyin: Ay yüksekliği, uzanım, yaş, batış gecikmesi ve aydınlanma.",
+      "more": "Bu sayfa görünürlük ölçütlerinin gerçekte kullandığı sayıları gösterir. Yalnızca nihai tarihi değil, tahmin edilen ay başlangıcının gerekçesini de denetlemek isteyen okuyucular içindir."
+    },
+    "visibilityMap": {
+      "short": "Dünyanın hangi bölgelerinde Ay'ın gün batımında ufkun üzerinde olduğunu ve ay geçişine yakın günlerde yeni hilalin nerede görülebileceğini görün.",
+      "more": "Üstteki harita her zaman yerel gün batımındaki Ay yüksekliğini gösterir. Her kameri ayın yaklaşık yarısında Ay, küçüldüğü ve gece daha geç doğduğu için gün batımında ufkun altındadır; bu normaldir, hata değildir. İkinci harita yalnızca Hicri ay geçişi çevresinde, yeni bir hilalin gerçekten görülebileceği günlerde belirir."
+    },
+    "history": {
+      "short": "Resmî olarak ilan edilen Hicri ay başlangıçlarını, geçmiş yıllar boyunca astronomik hesaplanan tarihlerle karşılaştırın.",
+      "more": "Tablo, her hesaplama yönteminin resmî duyuruyla ne sıklıkta örtüştüğünü ve kaç gün saptığını gösterir; böylece izlediğiniz uygulamaya en uygun yöntemi değerlendirebilirsiniz."
+    },
+    "countdown": {
+      "short": "Ramazan, Ramazan Bayramı, Kurban Bayramı ve diğer İslami tarihlere kaç gün kaldığını görün.",
+      "more": "Her geri sayım, seçtiğiniz yöntem ve konuma göre olayın tahmini Miladi tarihini kullanır. Ülkenizdeki resmî duyurular yine de bir gün farklı olabilir."
+    }
+  },
   "faq": {
     "title": "Sık sorulan sorular",
     "intro": "Hicri takvim hakkında en sık sorulan sorulara kısa yanıtlar.",
@@ -568,7 +603,11 @@
     "q3": "Hicri tarihler ülkeler arasında neden farklıdır?",
     "a3": "Hicri ay hilalin görülmesiyle başlar; görünürlük konuma, hava koşullarına ve her makamın uyguladığı ölçüte bağlıdır. Bu nedenle komşu ülkeler aya farklı günlerde başlayabilir.",
     "q4": "Hangi hesaplama yöntemini seçmeliyim?",
-    "a4": "Tablosal, sabit aritmetik bir takvimdir. MABIMS, Yallop ve Odeh yayımlanmış hilal görünürlük ölçütleridir. Emin değilseniz varsayılanı bırakın ve Yöntemler sayfasında karşılaştırın."
+    "a4": "Tablosal, sabit aritmetik bir takvimdir. MABIMS, Yallop ve Odeh yayımlanmış hilal görünürlük ölçütleridir. Emin değilseniz varsayılanı bırakın ve Yöntemler sayfasında karşılaştırın.",
+    "q5": "Görünürlük haritası neden günlerce Ay'ı ufkun altında gösteriyor?",
+    "a5": "Bu beklenen bir durumdur. Dolunaydan sonra Ay küçülür; gün batımında henüz doğmamıştır ve yüksekliği negatiftir. Bu durum her kameri ayın yaklaşık yarısı boyunca sürer ve yeni aydan bir iki gün sonra, büyüyen hilal yeniden ufkun üzerine çıktığında tersine döner.",
+    "q6": "Bu Hicri takvimi farklı kılan nedir?",
+    "a6": "Tek bir yönteme bağlanmak yerine yayımlanmış birkaç yöntemi yan yana karşılaştırır, her tahminin ardındaki astronomik sayıları gösterir, tarihi yerel rüyete göre ayarlamanıza izin verir ve her yöntemin gerçek resmî ilanlarla ne kadar örtüştüğünü bildirir. Ücretsizdir, açık kaynaklıdır ve çevrimdışı çalışır."
   },
   "countdown": {
     "title": "İslami günlere geri sayım",
@@ -640,6 +679,7 @@
     "computing": "~500 konum için görünürlük hesaplanıyor…",
     "skyHeader": "Bu gece gökyüzünde Ay",
     "skyBanner": "Her hücre, yerel gün batımında ufkun üzerindeki Ay yüksekliğini gösterir — Ay bu gece gökyüzünde işte buralarda olacaktır.",
+    "allBelowHorizonNote": "Bu gece Ay, gün batımında her yerde ufkun altındadır. Bu normaldir: her kameri ayın yaklaşık yarısında Ay küçülür ve gece daha geç doğar, dolayısıyla Güneş batarken henüz doğmamıştır. Yeni aydan bir iki gün sonra yeniden ufkun üzerine çıkar.",
     "crescentHeader": "Bu gece yeni bir Hicri ay başlayabilir mi? — şüphe dönemi",
     "crescentBanner": "Bir Hicri ay sınırına yakınız. Hilalin bir konumdan görünür olup olmadığı; etkin yönteme, yerel gün batımı zamanına, Ay'ın yüksekliğine, yaşına ve sapmasına bağlıdır. Aşağıdaki harita, etkin yöntemin her konum için verdiği kararı gösterir.",
     "summary": "Hilal {{positive}}/{{total}} konumda görünür.",

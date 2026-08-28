@@ -558,6 +558,41 @@
     "ourResearchLink": "Metode Perhitungan Hijriah — Ringkasan Ilmiah",
     "ourResearchDesc": "Survei komprehensif kami atas 15 metode awal bulan Hijriah, dengan rumus, pseudokode, dan kutipan dari literatur akademik"
   },
+  "pageIntro": {
+    "moreLabel": "Tentang halaman ini",
+    "today": {
+      "short": "Lihat tanggal Hijriah hari ini dan tanggal Masehi berdampingan, lengkap dengan visibilitas hilal malam ini dan hitung mundur hari raya Islam berikutnya.",
+      "more": "Halaman Hari Ini mengubah tanggal Masehi saat ini menjadi tanggal Hijriah sesuai metode perhitungan dan lokasi yang Anda pilih. Halaman ini juga menampilkan ketinggian, elongasi, umur, dan iluminasi bulan saat matahari terbenam agar Anda dapat menilai apakah bulan Hijriah baru mungkin dimulai malam ini."
+    },
+    "calendar": {
+      "short": "Telusuri kalender Hijriah bulanan yang sejajar dengan bulan Masehi, dan lihat hari-hari yang berpeluang memulai bulan Islam baru.",
+      "more": "Setiap sel memasangkan tanggal Masehi dengan tanggal Hijriahnya. Di sekitar pergantian bulan, kalender menyoroti hari kandidat kemunculan hilal sehingga Anda bisa melihat kemungkinan jatuhnya Ramadan, Idulfitri, atau Iduladha untuk lokasi dan metode Anda."
+    },
+    "convert": {
+      "short": "Konversikan tanggal Masehi ke Hijriah atau tanggal Hijriah ke Masehi, termasuk tanggal lahir dan tanggal bersejarah.",
+      "more": "Masukkan tanggal, bulan, dan tahun Masehi untuk mendapatkan tanggal Hijriah yang sesuai, atau masukkan tanggal Hijriah untuk mendapatkan tanggal Masehi. Hasil mengikuti metode perhitungan yang Anda pilih dan dapat disalin dalam beberapa format."
+    },
+    "holidays": {
+      "short": "Temukan perkiraan tanggal Ramadan, Idulfitri, Iduladha, Asyura, Hari Arafah, dan Tahun Baru Hijriah.",
+      "more": "Hari raya Islam bergantung pada awal setiap bulan Hijriah, sehingga tanggal ini bersifat perkiraan, bukan pengumuman resmi. Buka salah satu hari raya untuk melihat tanggal kandidat dan peluang terlihatnya hilal pada tiap tanggal."
+    },
+    "details": {
+      "short": "Telaah data astronomi harian di balik awal setiap bulan Hijriah: ketinggian bulan, elongasi, umur, selisih terbenam, dan iluminasi.",
+      "more": "Halaman ini menampilkan angka yang benar-benar dipakai oleh kriteria visibilitas. Ditujukan bagi pembaca yang ingin memeriksa dasar perhitungan awal bulan, bukan sekadar tanggal akhirnya."
+    },
+    "visibilityMap": {
+      "short": "Lihat di bagian dunia mana bulan berada di atas ufuk saat matahari terbenam, dan — menjelang pergantian bulan — di mana hilal baru berpeluang terlihat.",
+      "more": "Peta atas selalu menampilkan ketinggian bulan saat matahari terbenam setempat. Selama sekitar separuh tiap bulan kamariah, bulan berada di bawah ufuk saat matahari terbenam karena sedang menyusut dan terbit lebih larut; ini normal, bukan kesalahan. Peta kedua hanya muncul di sekitar pergantian bulan Hijriah, saat hilal baru benar-benar mungkin terlihat."
+    },
+    "history": {
+      "short": "Bandingkan awal bulan Hijriah yang diumumkan resmi dengan tanggal hasil perhitungan astronomi selama tahun-tahun lalu.",
+      "more": "Tabel menunjukkan seberapa sering tiap metode perhitungan sesuai dengan pengumuman resmi dan berapa hari selisihnya, sehingga membantu menilai metode yang paling cocok dengan praktik yang Anda ikuti."
+    },
+    "countdown": {
+      "short": "Lihat berapa hari lagi menuju Ramadan, Idulfitri, Iduladha, dan tanggal Islam lainnya.",
+      "more": "Setiap hitung mundur memakai perkiraan tanggal Masehi acara tersebut untuk metode dan lokasi yang Anda pilih. Pengumuman resmi di negara Anda tetap bisa berbeda satu hari."
+    }
+  },
   "faq": {
     "title": "Pertanyaan umum",
     "intro": "Jawaban singkat atas pertanyaan yang paling sering diajukan tentang kalender Hijriah.",
@@ -568,7 +603,11 @@
     "q3": "Mengapa tanggal Hijriah berbeda antarnegara?",
     "a3": "Bulan Hijriah dimulai saat hilal terlihat, dan visibilitas bergantung pada lokasi, cuaca, serta kriteria yang dipakai tiap otoritas. Karena itu negara bertetangga bisa memulai bulan pada hari berbeda.",
     "q4": "Metode perhitungan mana yang sebaiknya dipilih?",
-    "a4": "Tabular adalah kalender aritmetika tetap. MABIMS, Yallop, dan Odeh adalah kriteria visibilitas hilal yang dipublikasikan. Jika ragu, gunakan metode bawaan dan bandingkan di halaman Metode."
+    "a4": "Tabular adalah kalender aritmetika tetap. MABIMS, Yallop, dan Odeh adalah kriteria visibilitas hilal yang dipublikasikan. Jika ragu, gunakan metode bawaan dan bandingkan di halaman Metode.",
+    "q5": "Mengapa peta visibilitas menampilkan bulan di bawah ufuk selama beberapa hari?",
+    "a5": "Itu wajar. Setelah purnama, bulan menyusut sehingga saat matahari terbenam bulan belum terbit dan ketinggiannya negatif. Kondisi ini berlangsung sekitar separuh tiap bulan kamariah dan berbalik satu atau dua hari setelah konjungsi, ketika hilal muda kembali tampak di atas ufuk.",
+    "q6": "Apa yang membedakan kalender Hijriah ini?",
+    "a6": "Situs ini membandingkan beberapa metode yang dipublikasikan secara berdampingan, menampilkan angka astronomi di balik tiap prediksi, memungkinkan Anda menyesuaikan tanggal dengan rukyat setempat, dan melaporkan kecocokan tiap metode dengan pengumuman resmi yang nyata. Gratis, sumber terbuka, dan dapat dipakai luring."
   },
   "countdown": {
     "title": "Hitung mundur hari besar Islam",
@@ -640,6 +679,7 @@
     "computing": "Menghitung visibilitas untuk ~500 lokasi…",
     "skyHeader": "Bulan di langit malam ini",
     "skyBanner": "Setiap sel menunjukkan ketinggian Bulan di atas ufuk saat matahari terbenam lokal — di sanalah Bulan akan berada di langit malam ini.",
+    "allBelowHorizonNote": "Malam ini Bulan berada di bawah ufuk di semua tempat saat matahari terbenam. Ini normal: selama sekitar separuh tiap bulan kamariah Bulan sedang menyusut dan terbit lebih larut, sehingga belum terbit ketika matahari terbenam. Bulan kembali di atas ufuk satu atau dua hari setelah konjungsi.",
     "crescentHeader": "Mungkinkah bulan Hijriah baru dimulai malam ini? — masa keraguan",
     "crescentBanner": "Kita dekat batas bulan Hijriah. Apakah hilal akan terlihat dari suatu lokasi bergantung pada metode aktif, waktu matahari terbenam lokal, ketinggian Bulan, usianya, dan elongasinya. Peta di bawah menunjukkan keputusan metode aktif untuk setiap lokasi.",
     "summary": "Hilal terlihat di {{positive}}/{{total}} lokasi sampel.",

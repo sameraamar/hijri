@@ -8,6 +8,7 @@ import {
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import LocationPicker from '../components/LocationPicker';
+import PageIntro from '../components/PageIntro';
 import { useAppLocation } from '../location/LocationContext';
 import { useMethod } from '../method/MethodContext';
 import { isAstronomicalMethod, methodIdToRule } from '../method/types';
@@ -112,6 +113,8 @@ export default function ConvertPage() {
           <div className="muted">{t('app.method.label')}: {t(`app.method.${methodId}`)}</div>
         </div>
       </div>
+
+      <PageIntro pageKey="convert" />
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
       <section className="card">

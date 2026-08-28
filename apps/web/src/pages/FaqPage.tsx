@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import { usePageMeta } from '../hooks/usePageMeta';
 
-export const FAQ_KEYS = ['1', '2', '3', '4'];
+export const FAQ_KEYS = ['1', '2', '3', '4', '5', '6'];
 
 export default function FaqPage() {
   const { t } = useTranslation();

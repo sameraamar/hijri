@@ -13,6 +13,7 @@ import { Fragment, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import i18n from '../i18n/i18n';
 import LocationPicker from '../components/LocationPicker';
+import PageIntro from '../components/PageIntro';
 import { likelihoodStyle, type VisibilityStatusKey } from '../components/likelihood';
 import { useAppLocation } from '../location/LocationContext';
 import { useMethod } from '../method/MethodContext';
@@ -276,6 +277,8 @@ export default function HolidaysPage() {
           </button>
         </div>
       </div>
+
+      <PageIntro pageKey="holidays" />
 
       <div className="card">
         <div className="card-header flex items-center justify-center gap-1">

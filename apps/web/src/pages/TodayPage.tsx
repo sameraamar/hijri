@@ -14,6 +14,7 @@ import CrescentScoreBar from '../components/CrescentScoreBar';
 import DayMetrics from '../components/DayMetrics';
 import LocaleLink from '../components/LocaleLink';
 import LocationPicker from '../components/LocationPicker';
+import PageIntro from '../components/PageIntro';
 import { likelihoodStyle, type VisibilityStatusKey } from '../components/likelihood';
 import { useAppLocation } from '../location/LocationContext';
 import { useMethod } from '../method/MethodContext';
@@ -190,6 +191,8 @@ export default function TodayPage() {
           </button>
         </div>
       </div>
+
+      <PageIntro pageKey="today" />
 
       <section className="card p-4 sm:p-6">
         <div>

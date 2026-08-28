@@ -2,6 +2,7 @@ import { getCivilHolidaysForGregorianYearWithEstimate } from '@hijri/calendar-en
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import PageIntro from '../components/PageIntro';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { useAppLocation } from '../location/LocationContext';
 import { formatGregorianDateDisplay } from '../utils/dateFormat';
@@ -54,6 +55,8 @@ export default function CountdownPage() {
           <p className="muted mt-1">{t('countdown.intro')}</p>
         </div>
       </div>
+
+      <PageIntro pageKey="countdown" />
 
       <div className="space-y-2">
         {upcoming.map((event) => (

@@ -10,6 +10,7 @@ import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import LocationPicker from '../components/LocationPicker';
+import PageIntro from '../components/PageIntro';
 import MoonPhaseIcon from '../components/MoonPhaseIcon';
 import HorizonDiagram from '../components/HorizonDiagram';
 import CrescentScoreBar from '../components/CrescentScoreBar';
@@ -346,6 +347,8 @@ export default function DetailsPage() {
           <div className="muted">{t('app.method.label')}: {t(`app.method.${methodId}`)}</div>
         </div>
       </div>
+
+      <PageIntro pageKey="details" />
 
       <div className="card-header flex flex-col items-center gap-1">
         <div className="flex items-center gap-1">

@@ -6,6 +6,7 @@ import {
 import { useDeferredValue, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import i18n from '../i18n/i18n';
+import PageIntro from '../components/PageIntro';
 import { COUNTRIES } from '../data/countries';
 import { getOfficialDeclaration, hasAnyOfficialData } from '../data/officialDeclarations';
 import { usePageMeta } from '../hooks/usePageMeta';
@@ -255,6 +256,8 @@ export default function HistoryPage() {
         </div>
       </div>
 
+      <PageIntro pageKey="history" />
+
       {/* Selectors */}
       <div className="flex flex-wrap items-end gap-3 mb-4">
         {/* Country */}
@@ -267,7 +270,7 @@ export default function HistoryPage() {
           >
             {COUNTRIES.map((c) => (
               <option key={c.id} value={c.id}>
-                {t(c.nameKey)} — {t(c.cityKey)}
+                {t(c.cityKey)}
               </option>
             ))}
           </select>

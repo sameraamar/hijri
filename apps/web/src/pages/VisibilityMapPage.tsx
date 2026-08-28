@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { CircleMarker, MapContainer, TileLayer } from 'react-leaflet';
 
 import { likelihoodStyle } from '../components/likelihood';
+import PageIntro from '../components/PageIntro';
 import { useMethod } from '../method/MethodContext';
 import { isAstronomicalMethod } from '../method/types';
 import { usePageMeta } from '../hooks/usePageMeta';
@@ -254,6 +255,8 @@ export default function VisibilityMapPage() {
         </div>
       </div>
 
+      <PageIntro pageKey="visibilityMap" />
+
       {!isAstronomicalMethod(methodId) ? (
         <div className="card p-4 text-sm text-slate-700 dark:text-slate-200">
           {t('visibilityMap.notAvailableForCivil')}
@@ -269,6 +272,12 @@ export default function VisibilityMapPage() {
               <div className="text-slate-600 dark:text-slate-300">
                 {t('visibilityMap.skyBanner')}
               </div>
+              {!computing && grid.length > 0 && !altitudeBucketsPresent.has('high')
+                && !altitudeBucketsPresent.has('medium') && !altitudeBucketsPresent.has('low') && (
+                <div className="mt-2 text-slate-600 dark:text-slate-300">
+                  {t('visibilityMap.allBelowHorizonNote')}
+                </div>
+              )}
             </div>
 
             <div className="card overflow-hidden">

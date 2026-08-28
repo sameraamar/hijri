@@ -558,6 +558,41 @@
     "ourResearchLink": "Méthodes de calcul hégirien — Résumé scientifique",
     "ourResearchDesc": "Notre étude exhaustive de 15 méthodes de début de mois hégirien, avec formules, pseudo-code et citations de la littérature académique"
   },
+  "pageIntro": {
+    "moreLabel": "À propos de cette page",
+    "today": {
+      "short": "Consultez la date hégirienne d'aujourd'hui et la date grégorienne côte à côte, avec la visibilité du croissant ce soir et le compte à rebours vers la prochaine fête islamique.",
+      "more": "La page Aujourd'hui convertit la date grégorienne actuelle en date hégirienne selon la méthode de calcul et le lieu que vous choisissez. Elle affiche aussi la hauteur, l'élongation, l'âge et l'illumination de la Lune au coucher du soleil, pour estimer si un nouveau mois hégirien peut commencer ce soir."
+    },
+    "calendar": {
+      "short": "Parcourez un calendrier hégirien mensuel aligné sur les mois grégoriens et repérez les jours susceptibles de commencer un nouveau mois islamique.",
+      "more": "Chaque case associe le jour grégorien à sa date hégirienne. Aux changements de mois, le calendrier met en évidence les jours candidats à l'observation du croissant, pour voir où peuvent tomber le Ramadan, l'Aïd al-Fitr ou l'Aïd al-Adha selon votre lieu et votre méthode."
+    },
+    "convert": {
+      "short": "Convertissez n'importe quelle date grégorienne en date hégirienne, ou l'inverse — y compris les dates de naissance et les dates historiques.",
+      "more": "Saisissez le jour, le mois et l'année grégoriens pour obtenir la date hégirienne correspondante, ou saisissez une date hégirienne pour obtenir la date grégorienne. Les résultats suivent la méthode de calcul choisie et peuvent être copiés en plusieurs formats."
+    },
+    "holidays": {
+      "short": "Trouvez les dates estimées du Ramadan, de l'Aïd al-Fitr, de l'Aïd al-Adha, de l'Achoura, du jour d'Arafat et du Nouvel An hégirien.",
+      "more": "Les fêtes islamiques dépendent du début de chaque mois hégirien : ces dates sont donc des estimations et non des annonces officielles. Ouvrez une fête pour voir les dates candidates et la probabilité d'observation du croissant."
+    },
+    "details": {
+      "short": "Examinez les données astronomiques jour par jour derrière chaque début de mois hégirien : hauteur de la Lune, élongation, âge, décalage du coucher et illumination.",
+      "more": "Cette page montre les valeurs réellement utilisées par les critères de visibilité. Elle s'adresse à ceux qui veulent vérifier le raisonnement derrière un début de mois prévu, et pas seulement la date finale."
+    },
+    "visibilityMap": {
+      "short": "Voyez où, dans le monde, la Lune est au-dessus de l'horizon au coucher du soleil et, près d'un changement de mois, où le nouveau croissant pourrait être observé.",
+      "more": "La carte du haut montre toujours la hauteur de la Lune au coucher du soleil local. Pendant environ la moitié de chaque mois lunaire, la Lune est sous l'horizon au coucher du soleil car elle décroît et se lève plus tard dans la nuit : c'est normal, ce n'est pas une erreur. La seconde carte n'apparaît qu'autour d'un changement de mois hégirien, quand un nouveau croissant peut réellement être observé."
+    },
+    "history": {
+      "short": "Comparez les débuts de mois hégiriens annoncés officiellement avec les dates calculées astronomiquement au fil des années passées.",
+      "more": "Le tableau indique à quelle fréquence chaque méthode de calcul a correspondu à l'annonce officielle et de combien de jours elle s'en écartait, ce qui aide à choisir la méthode la plus proche de la pratique que vous suivez."
+    },
+    "countdown": {
+      "short": "Voyez combien de jours restent avant le Ramadan, l'Aïd al-Fitr, l'Aïd al-Adha et d'autres dates islamiques.",
+      "more": "Chaque compte à rebours utilise la date grégorienne estimée de l'événement pour la méthode et le lieu choisis. Les annonces officielles de votre pays peuvent encore différer d'un jour."
+    }
+  },
   "faq": {
     "title": "Questions fréquentes",
     "intro": "Réponses brèves aux questions les plus fréquentes sur le calendrier hégirien.",
@@ -568,7 +603,11 @@
     "q3": "Pourquoi les dates hégiriennes diffèrent-elles selon les pays ?",
     "a3": "Le mois hégirien commence à l'observation du croissant, qui dépend du lieu, de la météo et du critère retenu par chaque autorité. Des pays voisins peuvent donc commencer un mois des jours différents.",
     "q4": "Quelle méthode de calcul choisir ?",
-    "a4": "La méthode tabulaire est un calendrier arithmétique fixe. MABIMS, Yallop et Odeh sont des critères publiés de visibilité du croissant. Dans le doute, gardez la méthode par défaut et comparez-les sur la page Méthodes."
+    "a4": "La méthode tabulaire est un calendrier arithmétique fixe. MABIMS, Yallop et Odeh sont des critères publiés de visibilité du croissant. Dans le doute, gardez la méthode par défaut et comparez-les sur la page Méthodes.",
+    "q5": "Pourquoi la carte de visibilité montre-t-elle la Lune sous l'horizon plusieurs jours de suite ?",
+    "a5": "C'est normal. Après la pleine lune, la Lune décroît : au coucher du soleil elle n'est pas encore levée et sa hauteur est négative. Cela dure environ la moitié de chaque mois lunaire et s'inverse un ou deux jours après la nouvelle lune, quand le croissant réapparaît au-dessus de l'horizon.",
+    "q6": "Qu'est-ce qui distingue ce calendrier hégirien ?",
+    "a6": "Il compare plusieurs méthodes publiées côte à côte au lieu d'en imposer une seule, affiche les données astronomiques derrière chaque prévision, permet d'ajuster la date selon l'observation locale et indique la correspondance de chaque méthode avec les annonces officielles réelles. Il est gratuit, open source et fonctionne hors ligne."
   },
   "countdown": {
     "title": "Compte à rebours des fêtes islamiques",
@@ -640,6 +679,7 @@
     "computing": "Calcul de la visibilité pour ~500 emplacements…",
     "skyHeader": "La Lune dans le ciel ce soir",
     "skyBanner": "Chaque cellule indique la hauteur de la Lune au-dessus de l'horizon au coucher du Soleil local — c'est là que la Lune se trouvera dans le ciel ce soir.",
+    "allBelowHorizonNote": "Ce soir, la Lune est sous l'horizon partout au coucher du Soleil. C'est normal : pendant environ la moitié de chaque mois lunaire, la Lune décroît et se lève plus tard dans la nuit, elle n'est donc pas encore levée quand le Soleil se couche. Elle repasse au-dessus de l'horizon un ou deux jours après la nouvelle lune.",
     "crescentHeader": "Un nouveau mois hégirien peut-il commencer ce soir ? — période de doute",
     "crescentBanner": "Nous sommes près d'une frontière de mois hégirien. La possibilité d'observer le croissant depuis un lieu dépend de la méthode active, du coucher du Soleil local, de la hauteur de la Lune, de son âge et de son élongation. La carte ci-dessous montre le verdict de la méthode active pour chaque lieu.",
     "summary": "Croissant visible dans {{positive}} des {{total}} emplacements.",

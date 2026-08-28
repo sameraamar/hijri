@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+- **Page introductions** — every data page (Today, Calendar, Convert, Holidays, Details, Visibility map, History, Countdown) now opens with a short keyword-rich lead paragraph plus a collapsed "What is this page?" explanation, via a shared [PageIntro](apps/web/src/components/PageIntro.tsx) component. Translated into all six languages.
+- **Two new FAQ entries** — why the visibility map can show the Moon below the horizon for days at a time, and what distinguishes this calendar from other Hijri converters. Both are included in the `FAQPage` structured data.
+- **Below-horizon explanation on the visibility map** — when the Moon is below the horizon everywhere at sunset, the map now says so explicitly and explains that this is the normal waning half of the lunar month.
+
+### Notes
+- Investigated a report that the visibility map shows the Moon below the horizon for every date after 4 September. This is correct astronomy, not a defect: from 28 August to 10 September 2026 the Moon is waning and has not yet risen at sunset, and it returns above the horizon from 11 September. The new copy above exists to make that legible in the UI instead of looking like missing data.
+
 ## [1.2.0] - 2026-08-28
 
 ### Added

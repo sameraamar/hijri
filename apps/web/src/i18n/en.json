@@ -557,6 +557,41 @@
     "ourResearchLink": "Hijri Calculation Methods — Scientific Summary",
     "ourResearchDesc": "Our comprehensive survey of 15 Hijri month-start methods, with formulae, pseudocode, and citations from the academic literature"
   },
+  "pageIntro": {
+    "moreLabel": "What is this page?",
+    "today": {
+      "short": "See today's Hijri date and today's Gregorian date side by side, with tonight's crescent moon visibility and a countdown to the next Islamic holiday.",
+      "more": "The Today page converts the current Gregorian date to the Hijri (Islamic) date using your chosen calculation method and location. It also shows the moon's altitude, elongation, age, and illumination at sunset, so you can judge whether a new Hijri month is likely to begin tonight."
+    },
+    "calendar": {
+      "short": "Browse a monthly Hijri calendar aligned with the Gregorian months, and see which days are likely to start a new Islamic month.",
+      "more": "Each cell pairs the Gregorian day with its Hijri date. Around month boundaries the calendar highlights candidate days for the new crescent, so you can see where Ramadan, Eid al-Fitr, or Eid al-Adha may fall for your location and method."
+    },
+    "convert": {
+      "short": "Convert any Gregorian date to Hijri, or any Hijri date to Gregorian \u2014 including birth dates and historical dates.",
+      "more": "Enter a Gregorian day, month, and year to get the matching Hijri date, or enter a Hijri date to get the Gregorian one. Results follow the calculation method you select, and you can copy the result in several formats."
+    },
+    "holidays": {
+      "short": "Find the estimated dates of Ramadan, Eid al-Fitr, Eid al-Adha, Ashura, the Day of Arafah, and the Islamic New Year.",
+      "more": "Islamic holidays depend on when each Hijri month begins, so these dates are estimates rather than official announcements. Expand a holiday to see the candidate dates and how likely the crescent is to be sighted on each."
+    },
+    "details": {
+      "short": "Inspect the day-by-day astronomical data behind each Hijri month start: moon altitude, elongation, age, moonset lag, and illumination.",
+      "more": "This page shows the numbers the visibility criteria actually use. It is aimed at readers who want to check the reasoning behind a predicted month start rather than only the final date."
+    },
+    "visibilityMap": {
+      "short": "See where in the world the moon is above the horizon at sunset, and \u2014 near a month boundary \u2014 where the new crescent could be sighted.",
+      "more": "The top map always shows the moon's altitude at local sunset. For roughly half of every lunar month the moon is below the horizon at sunset because it is waning and rises later at night; this is normal, not an error. The second map appears only around a Hijri month boundary, when a new crescent could realistically be sighted."
+    },
+    "history": {
+      "short": "Compare officially declared Hijri month starts with astronomically calculated dates across past years.",
+      "more": "The table shows how often each calculation method matched the official announcement and by how many days it differed, which helps you judge which method best fits the practice you follow."
+    },
+    "countdown": {
+      "short": "See how many days remain until Ramadan, Eid al-Fitr, Eid al-Adha, and other Islamic dates.",
+      "more": "Each countdown uses the estimated Gregorian date of the event for your selected method and location. Official announcements in your country may still differ by a day."
+    }
+  },
   "faq": {
     "title": "Frequently asked questions",
     "intro": "Short answers to the questions we get asked most about the Hijri calendar.",
@@ -567,7 +602,11 @@
     "q3": "Why do Hijri dates differ between countries?",
     "a3": "The Hijri month begins when the new crescent is sighted, and visibility depends on your location, the weather, and the criterion each authority applies. This is why neighbouring countries can start a month on different days.",
     "q4": "Which calculation method should I choose?",
-    "a4": "Tabular is a fixed arithmetic calendar. MABIMS, Yallop, and Odeh are published crescent-visibility criteria. If you are unsure, keep the default and compare them on the Methods page."
+    "a4": "Tabular is a fixed arithmetic calendar. MABIMS, Yallop, and Odeh are published crescent-visibility criteria. If you are unsure, keep the default and compare them on the Methods page.",
+    "q5": "Why does the visibility map show the moon below the horizon for days at a time?",
+    "a5": "That is expected. After the full moon the moon is waning, so at sunset it has not yet risen and its altitude is negative. This lasts for roughly half of every lunar month and reverses a day or two after the new moon, when the waxing crescent appears above the horizon again.",
+    "q6": "What makes this Hijri calendar different?",
+    "a6": "It compares several published methods side by side instead of committing to one, shows the astronomical numbers behind every prediction, lets you adjust the date to match your local sighting, and reports how each method scored against real official declarations. It is free, open source, and works offline."
   },
   "countdown": {
     "title": "Countdown to Islamic events",
@@ -639,6 +678,7 @@
     "computing": "Computing visibility for ~500 locations…",
     "skyHeader": "Moon in the sky tonight",
     "skyBanner": "Each cell shows the Moon's altitude above the horizon at local sunset — that's where the Moon will be in the sky tonight.",
+    "allBelowHorizonNote": "Tonight the Moon is below the horizon everywhere at sunset. This is normal: for roughly half of every lunar month the Moon is waning and rises later at night, so it has not yet risen when the Sun sets. It returns above the horizon a day or two after the new moon.",
     "crescentHeader": "Could a new Hijri month start tonight? — period of doubt",
     "crescentBanner": "We're near a Hijri month boundary. Whether the new crescent will be visible from a location depends on the active method, the local sunset, the Moon's altitude, age and elongation. The map below shows the active method's verdict per location.",
     "summary": "Crescent visible at {{positive}} of {{total}} sample locations.",
