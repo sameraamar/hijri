@@ -17,9 +17,11 @@ import ThemeToggle from './components/ThemeToggle';
 import PageSkeleton from './components/PageSkeleton';
 import NavMore, { type NavItem } from './components/NavMore';
 import LocaleNavLink from './components/LocaleNavLink';
+import LocaleLink from './components/LocaleLink';
 import AiTranslationBanner from './components/AiTranslationBanner';
 import { useLanguageSync } from './hooks/useLanguageSync';
 import { useLocale, useLocalelessPath } from './hooks/useLocale';
+import { APP_VERSION } from './releaseNotes';
 
 const CalendarPage = lazy(() => import('./pages/CalendarPage'));
 const ConvertPage = lazy(() => import('./pages/ConvertPage'));
@@ -29,6 +31,7 @@ const MethodsPage = lazy(() => import('./pages/MethodsPage'));
 const HistoryPage = lazy(() => import('./pages/HistoryPage'));
 const ScholarsPage = lazy(() => import('./pages/ScholarsPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ReleaseNotesPage = lazy(() => import('./pages/ReleaseNotesPage'));
 const TodayPage = lazy(() => import('./pages/TodayPage'));
 const VisibilityMapPage = lazy(() => import('./pages/VisibilityMapPage'));
 
@@ -54,6 +57,7 @@ function LocaleRoutes() {
       <Route path="visibility-map" element={<VisibilityMapPage />} />
       <Route path="scholars" element={<ScholarsPage />} />
       <Route path="about" element={<AboutPage />} />
+      <Route path="releases" element={<ReleaseNotesPage />} />
     </Routes>
   );
 }
@@ -239,6 +243,14 @@ export default function App() {
             >
               {t('app.footer.license')}
             </a>
+            <span className="text-slate-300">·</span>
+            <LocaleLink
+              to="/releases"
+              className="hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200"
+              aria-label={`${t('app.footer.releaseNotes')}, ${t('app.footer.version', { version: APP_VERSION })}`}
+            >
+              {t('app.footer.releaseNotes')} · {t('app.footer.version', { version: APP_VERSION })}
+            </LocaleLink>
           </div>
 
           <p className="text-[11px] text-slate-400 dark:text-slate-500">

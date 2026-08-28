@@ -53,6 +53,7 @@ const ROUTES = [
   { path: 'methods', seoKey: 'methods' },
   { path: 'scholars', seoKey: 'scholars' },
   { path: 'about', seoKey: 'about' },
+  { path: 'releases', seoKey: 'releaseNotes' },
   { path: 'visibility-map', seoKey: 'calendar' }
 ];
 

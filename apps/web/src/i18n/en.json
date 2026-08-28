@@ -38,7 +38,9 @@
       "disclaimer": "Disclaimer: this website provides estimated astronomical guidance and is not an official religious announcement.",
       "contact": "Direct contact / suggestions:",
       "copyright": "© {{year}} Samer Aamar. All rights reserved.",
-      "license": "MIT License"
+      "license": "MIT License",
+      "releaseNotes": "Release notes",
+      "version": "v{{version}}"
     },
     "aiBanner": {
       "title": "AI translation warning",
@@ -60,8 +62,30 @@
     "moonPhase": "Moon phase",
     "tonightVisibility": "Tonight's month-start signal",
     "tonightVisibilityHint": "Whether tonight (around local sunset) could mark the start of a new Hijri month. Not a measure of how bright the Moon is.",
-    "exportHolidays": "Export holidays (.ics)",
+    "addHolidayToCalendar": "Add to calendar",
+    "addHolidaysToCalendar": "Add holidays to calendar",
+    "holidayCalendarName": "Hijri holidays",
     "nextMonthInDays": "Next Hijri month in approximately {{count}} days."
+  },
+  "releaseNotes": {
+    "title": "Release notes",
+    "intro": "A short record of what changed in each published version.",
+    "current": "Current",
+    "released": "Released {{date}}",
+    "versions": {
+      "v1_0_0": {
+        "pages": "Added Today, Calendar, Holidays, Convert, History, Methods, Scholars, and About pages.",
+        "methods": "Added tabular, visibility heuristic, MABIMS, Yallop, and Odeh calculation methods.",
+        "languages": "Added English, Arabic, Turkish, French, Indonesian, and Urdu interfaces.",
+        "visibility": "Added location-based crescent details and a world visibility map.",
+        "calendar": "Added calendar files for saving Islamic holidays to calendar apps."
+      },
+      "v1_1_0": {
+        "analytics": "Added private, cookie-free aggregate traffic measurement with GoatCounter.",
+        "calendarLabels": "Renamed calendar export buttons to \u201cAdd to calendar\u201d with a clearer icon.",
+        "releaseNotesPage": "Added this release notes page and a version number in the footer."
+      }
+    }
   },
   "calendar": {
     "year": "Year",
@@ -491,10 +515,10 @@
   "about": {
     "title": "About",
     "privacyTitle": "Privacy & Your Data",
-    "privacyBody": "Your privacy matters. This application is designed to work entirely in your browser:",
-    "privacyNoServer": "No data is ever sent to a remote server — all date calculations and astronomical computations happen locally on your device.",
-    "privacyNoTracking": "No analytics, tracking pixels, or third-party scripts are used.",
-    "privacyNoCookies": "No cookies are stored. Your preferences (language, location, method) are kept in your browser's local storage and never shared.",
+    "privacyBody": "Your privacy matters. Calendar features and calculations run in your browser:",
+    "privacyNoServer": "All date and astronomical calculations happen locally on your device; calculation inputs are not sent to a server.",
+    "privacyNoTracking": "We use GoatCounter to collect privacy-friendly aggregate page-view statistics. It does not use tracking cookies or persistent identifiers.",
+    "privacyNoCookies": "Neither this app nor GoatCounter stores visitor cookies. Your preferences (language, location, method) stay in your browser's local storage and are not shared with GoatCounter.",
     "privacyLocation": "If you choose to share your location, it is used only for local sunset/moonset calculations and is never transmitted anywhere.",
     "disclaimerTitle": "Disclaimer",
     "disclaimerBody": "This tool is for informational and educational purposes only. It is not an official religious authority and should not be used as a substitute for local moon-sighting committees or official Hijri calendar announcements in your country. Crescent-visibility estimates are based on astronomical models and may differ from actual observed conditions.",
@@ -548,7 +572,11 @@
     },
     "about": {
       "title": "About Hijri Calendar — Free Open-Source Islamic Calendar",
-      "description": "Hijri Calendar is a free, open-source Islamic calendar app. No tracking, no cookies, fully private. Built by Samer Aamar."
+      "description": "Hijri Calendar is a free, open-source Islamic calendar app with cookie-free, privacy-friendly aggregate analytics. Built by Samer Aamar."
+    },
+    "releaseNotes": {
+      "title": "Release Notes — Hijri Calendar Version History",
+      "description": "See concise release notes and changes for each published version of the Hijri Calendar app."
     },
     "visibilityMap": {
       "title": "Moon Visibility — World Map",

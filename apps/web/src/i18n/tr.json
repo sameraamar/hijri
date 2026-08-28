@@ -39,7 +39,9 @@
       "disclaimer": "Sorumluluk reddi: Bu web sitesi tahmini astronomik bilgi sağlar ve resmi dini bir duyuru değildir.",
       "contact": "Doğrudan iletişim / öneriler:",
       "copyright": "© {{year}} Samer Aamar. Tüm hakları saklıdır.",
-      "license": "MIT Lisansı"
+      "license": "MIT Lisansı",
+      "releaseNotes": "Sürüm notları",
+      "version": "v{{version}}"
     },
     "aiBanner": {
       "title": "Yapay zekâ çeviri uyarısı",
@@ -61,8 +63,30 @@
     "moonPhase": "Ay evresi",
     "tonightVisibility": "Bu geceki ay başlangıç sinyali",
     "tonightVisibilityHint": "Bu gecenin (yerel gün batımı civarında) yeni bir Hicri ayın başlangıcı olup olamayacağı. Ay'ın ne kadar parlak olduğunun bir ölçüsü değildir.",
-    "exportHolidays": "Bayramları dışa aktar (.ics)",
+    "addHolidayToCalendar": "Takvime ekle",
+    "addHolidaysToCalendar": "Önemli günleri takvime ekle",
+    "holidayCalendarName": "Hicri önemli günler",
     "nextMonthInDays": "Sonraki Hicri ay yaklaşık {{count}} gün içinde."
+  },
+  "releaseNotes": {
+    "title": "Sürüm notları",
+    "intro": "Yayımlanan her sürümde nelerin değiştiğine dair kısa bir kayıt.",
+    "current": "Güncel",
+    "released": "Yayımlanma tarihi: {{date}}",
+    "versions": {
+      "v1_0_0": {
+        "pages": "Bugün, Takvim, Önemli Günler, Dönüştürme, Tarihçe, Yöntemler, Alimler ve Hakkında sayfaları eklendi.",
+        "methods": "Tablosal, görünürlük sezgiseli, MABIMS, Yallop ve Odeh hesaplama yöntemleri eklendi.",
+        "languages": "İngilizce, Arapça, Türkçe, Fransızca, Endonezce ve Urduca arayüzler eklendi.",
+        "visibility": "Konuma dayalı hilal ayrıntıları ve dünya görünürlük haritası eklendi.",
+        "calendar": "İslami önemli günleri takvim uygulamalarına kaydetmek için takvim dosyaları eklendi."
+      },
+      "v1_1_0": {
+        "analytics": "GoatCounter ile gizli, çerezsiz ve toplu trafik ölçümü eklendi.",
+        "calendarLabels": "Takvim dışa aktarma düğmeleri daha net bir simgeyle \u201cTakvime ekle\u201d olarak yeniden adlandırıldı.",
+        "releaseNotesPage": "Bu sürüm notları sayfası ve altbilgideki sürüm numarası eklendi."
+      }
+    }
   },
   "calendar": {
     "year": "Yıl",
@@ -492,10 +516,10 @@
   "about": {
     "title": "Hakkında",
     "privacyTitle": "Gizlilik ve Verileriniz",
-    "privacyBody": "Gizliliğiniz önemlidir. Bu uygulama tamamen tarayıcınızda çalışacak şekilde tasarlanmıştır:",
-    "privacyNoServer": "Hiçbir veri uzak sunucuya gönderilmez — tüm tarih hesaplamaları ve astronomik hesaplamalar yerel olarak cihazınızda yapılır.",
-    "privacyNoTracking": "Analitik, izleme pikselleri veya üçüncü taraf betikler kullanılmaz.",
-    "privacyNoCookies": "Hiçbir çerez saklanmaz. Tercihleriniz (dil, konum, yöntem) tarayıcınızın yerel deposunda tutulur ve asla paylaşılmaz.",
+    "privacyBody": "Gizliliğiniz önemlidir. Takvim özellikleri ve hesaplamaları tarayıcınızda çalışır:",
+    "privacyNoServer": "Tüm tarih ve astronomi hesaplamaları cihazınızda yerel olarak yapılır; hesaplama girdileri bir sunucuya gönderilmez.",
+    "privacyNoTracking": "Gizliliğe saygılı toplu sayfa görüntüleme istatistikleri için GoatCounter kullanıyoruz. GoatCounter izleme çerezleri veya kalıcı tanımlayıcılar kullanmaz.",
+    "privacyNoCookies": "Bu uygulama da GoatCounter da ziyaretçi çerezi saklamaz. Tercihleriniz (dil, konum, yöntem) tarayıcınızın yerel deposunda kalır ve GoatCounter ile paylaşılmaz.",
     "privacyLocation": "Konumunuzu paylaşmayı seçerseniz, yalnızca yerel gün batımı/ay batımı hesaplamaları için kullanılır ve hiçbir yere iletilmez.",
     "disclaimerTitle": "Sorumluluk Reddi",
     "disclaimerBody": "Bu araç yalnızca bilgilendirme ve eğitim amaçlıdır. Resmi bir dini makam değildir ve ülkenizdeki yerel hilal gözlem komiteleri veya resmi Hicri takvim duyurularının yerine kullanılmamalıdır. Hilal görünürlük tahminleri astronomik modellere dayanır ve gerçek gözlem koşullarından farklılık gösterebilir.",
@@ -549,7 +573,11 @@
     },
     "about": {
       "title": "Hicri Takvim Hakkında — Ücretsiz Açık Kaynaklı İslami Takvim",
-      "description": "Hicri Takvim ücretsiz, açık kaynaklı bir İslami takvim uygulamasıdır. İzleme yok, çerez yok, tam gizlilik. Samer Aamar tarafından geliştirildi."
+      "description": "Hicri Takvim, ziyaretçi çerezi kullanmayan ve gizliliğe saygılı toplu analizler içeren ücretsiz, açık kaynaklı bir İslami takvim uygulamasıdır. Samer Aamar tarafından geliştirildi."
+    },
+    "releaseNotes": {
+      "title": "Sürüm Notları — Hicri Takvim Sürüm Geçmişi",
+      "description": "Hicri Takvim uygulamasının yayımlanan her sürümüne ait kısa notları ve değişiklikleri görün."
     },
     "visibilityMap": {
       "title": "Ay Görünürlüğü — Dünya Haritası",

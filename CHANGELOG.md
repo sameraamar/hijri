@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-08-27
+
+### Added
+- **Release notes and visible version** — the footer now links to a concise, user-facing version history.
+- **Private traffic measurement** — GoatCounter records aggregate page views without visitor cookies.
+
+### Changed
+- **Calendar actions clarified** — holiday `.ics` actions now say “Add to calendar” and use a calendar-plus icon.
+
+## [1.0.0] - 2026-08-27
+
 ### Added
 - **Visibility map — two stacked sections.** Page is **"Moon visibility — world map"** (was "Crescent visibility"). Earlier iterations tried to combine two genuinely different questions on one map ("where is the Moon in the sky?" — meaningful every night; "could a new Hijri month start tonight?" — meaningful only ~3 days/month around boundaries). Combining them produced either a global mode toggle that confused users on adjacent dates or an overloaded multi-layer rendering. The page is now two stacked sections:
   - **Top — always shown — "Moon in the sky tonight."** Cells colored by Moon altitude at local sunset (>30° / 10–30° / 0–10° / below-horizon). Same on every date. Legend lists only buckets that appear tonight (context-aware).

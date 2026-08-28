@@ -265,13 +265,14 @@ export default function HolidaysPage() {
             onClick={exportToIcs}
             disabled={holidays.length === 0}
             className="btn-sm whitespace-nowrap"
-            aria-label={t('today.exportHolidays')}
-            title={t('today.exportHolidays')}
+            aria-label={t('today.addHolidaysToCalendar')}
+            title={t('today.addHolidaysToCalendar')}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 sm:mr-1.5" aria-hidden="true">
-              <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4 sm:me-1.5" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3.75 9h16.5M5.25 4.5h13.5a1.5 1.5 0 0 1 1.5 1.5v13.5a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V6a1.5 1.5 0 0 1 1.5-1.5Z"/>
+              <path strokeLinecap="round" d="M12 12.75v5M9.5 15.25h5"/>
             </svg>
-            <span>{t('today.exportHolidays')}</span>
+            <span>{t('today.addHolidaysToCalendar')}</span>
           </button>
         </div>
       </div>

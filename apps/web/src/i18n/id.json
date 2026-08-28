@@ -39,7 +39,9 @@
       "disclaimer": "Penafian: situs ini menyediakan panduan astronomi perkiraan dan bukan pengumuman keagamaan resmi.",
       "contact": "Kontak langsung / saran:",
       "copyright": "© {{year}} Samer Aamar. Hak cipta dilindungi.",
-      "license": "Lisensi MIT"
+      "license": "Lisensi MIT",
+      "releaseNotes": "Catatan rilis",
+      "version": "v{{version}}"
     },
     "aiBanner": {
       "title": "Peringatan terjemahan AI",
@@ -61,8 +63,30 @@
     "moonPhase": "Fase Bulan",
     "tonightVisibility": "Sinyal awal bulan malam ini",
     "tonightVisibilityHint": "Apakah malam ini (sekitar matahari terbenam lokal) dapat menandai awal bulan Hijriah baru. Bukan ukuran kecerahan Bulan.",
-    "exportHolidays": "Ekspor hari raya (.ics)",
+    "addHolidayToCalendar": "Tambahkan ke kalender",
+    "addHolidaysToCalendar": "Tambahkan hari raya ke kalender",
+    "holidayCalendarName": "Hari raya Hijriah",
     "nextMonthInDays": "Bulan Hijriah berikutnya kira-kira dalam {{count}} hari."
+  },
+  "releaseNotes": {
+    "title": "Catatan rilis",
+    "intro": "Catatan singkat tentang perubahan pada setiap versi yang diterbitkan.",
+    "current": "Saat ini",
+    "released": "Dirilis {{date}}",
+    "versions": {
+      "v1_0_0": {
+        "pages": "Menambahkan halaman Hari Ini, Kalender, Hari Raya, Konversi, Riwayat, Metode, Ulama, dan Tentang.",
+        "methods": "Menambahkan metode tabular, heuristik visibilitas, MABIMS, Yallop, dan Odeh.",
+        "languages": "Menambahkan antarmuka bahasa Inggris, Arab, Turki, Prancis, Indonesia, dan Urdu.",
+        "visibility": "Menambahkan detail hilal berbasis lokasi dan peta visibilitas dunia.",
+        "calendar": "Menambahkan berkas kalender untuk menyimpan hari raya Islam ke aplikasi kalender."
+      },
+      "v1_1_0": {
+        "analytics": "Menambahkan pengukuran lalu lintas agregat yang privat dan tanpa cookie dengan GoatCounter.",
+        "calendarLabels": "Mengganti nama tombol ekspor kalender menjadi \u201cTambahkan ke kalender\u201d dengan ikon yang lebih jelas.",
+        "releaseNotesPage": "Menambahkan halaman catatan rilis ini dan nomor versi di footer."
+      }
+    }
   },
   "calendar": {
     "year": "Tahun",
@@ -492,10 +516,10 @@
   "about": {
     "title": "Tentang",
     "privacyTitle": "Privasi & Data Anda",
-    "privacyBody": "Privasi Anda penting. Aplikasi ini dirancang sepenuhnya bekerja di browser Anda:",
-    "privacyNoServer": "Tidak ada data yang pernah dikirim ke server jarak jauh — semua perhitungan tanggal dan astronomi dilakukan secara lokal di perangkat Anda.",
-    "privacyNoTracking": "Tidak ada analitik, piksel pelacakan, atau skrip pihak ketiga yang digunakan.",
-    "privacyNoCookies": "Tidak ada cookie disimpan. Preferensi Anda (bahasa, lokasi, metode) disimpan di penyimpanan lokal browser Anda dan tidak pernah dibagikan.",
+    "privacyBody": "Privasi Anda penting. Fitur dan perhitungan kalender berjalan di browser Anda:",
+    "privacyNoServer": "Semua perhitungan tanggal dan astronomi dilakukan secara lokal di perangkat Anda; masukan perhitungan tidak dikirim ke server.",
+    "privacyNoTracking": "Kami menggunakan GoatCounter untuk mengumpulkan statistik tampilan halaman agregat yang ramah privasi. GoatCounter tidak menggunakan cookie pelacakan atau pengenal tetap.",
+    "privacyNoCookies": "Baik aplikasi ini maupun GoatCounter tidak menyimpan cookie pengunjung. Preferensi Anda (bahasa, lokasi, metode) tetap berada di penyimpanan lokal browser dan tidak dibagikan kepada GoatCounter.",
     "privacyLocation": "Jika Anda memilih membagikan lokasi Anda, ia hanya digunakan untuk perhitungan matahari/bulan terbenam lokal dan tidak dikirim ke mana pun.",
     "disclaimerTitle": "Penafian",
     "disclaimerBody": "Alat ini hanya untuk tujuan informatif dan pendidikan. Ia bukan otoritas keagamaan resmi dan tidak boleh digunakan sebagai pengganti komite penglihatan hilal lokal atau pengumuman kalender Hijriah resmi di negara Anda. Perkiraan visibilitas hilal didasarkan pada model astronomi dan dapat berbeda dari kondisi sebenarnya yang diamati.",
@@ -549,7 +573,11 @@
     },
     "about": {
       "title": "Tentang Kalender Hijriah — Kalender Islam Gratis Sumber Terbuka",
-      "description": "Kalender Hijriah adalah aplikasi kalender Islam gratis dan sumber terbuka. Tanpa pelacakan, tanpa cookie, sepenuhnya privat. Dibangun oleh Samer Aamar."
+      "description": "Kalender Hijriah adalah aplikasi kalender Islam gratis dan sumber terbuka dengan analitik agregat yang ramah privasi dan tanpa cookie pengunjung. Dibangun oleh Samer Aamar."
+    },
+    "releaseNotes": {
+      "title": "Catatan Rilis — Riwayat Versi Kalender Hijriah",
+      "description": "Lihat catatan rilis singkat dan perubahan pada setiap versi aplikasi Kalender Hijriah yang diterbitkan."
     },
     "visibilityMap": {
       "title": "Visibilitas Bulan — Peta Dunia",

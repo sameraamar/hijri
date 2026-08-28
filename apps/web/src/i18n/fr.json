@@ -39,7 +39,9 @@
       "disclaimer": "Avertissement : ce site fournit des estimations astronomiques à titre indicatif et ne constitue pas une annonce religieuse officielle.",
       "contact": "Contact direct / suggestions :",
       "copyright": "© {{year}} Samer Aamar. Tous droits réservés.",
-      "license": "Licence MIT"
+      "license": "Licence MIT",
+      "releaseNotes": "Notes de version",
+      "version": "v{{version}}"
     },
     "aiBanner": {
       "title": "Avertissement de traduction IA",
@@ -61,8 +63,30 @@
     "moonPhase": "Phase de la Lune",
     "tonightVisibility": "Signal de début de mois ce soir",
     "tonightVisibilityHint": "Indique si ce soir (autour du coucher de Soleil local) pourrait marquer le début d'un nouveau mois hégirien. Ce n'est pas une mesure de la luminosité de la Lune.",
-    "exportHolidays": "Exporter les fêtes (.ics)",
+    "addHolidayToCalendar": "Ajouter au calendrier",
+    "addHolidaysToCalendar": "Ajouter les fêtes au calendrier",
+    "holidayCalendarName": "Fêtes du calendrier hégirien",
     "nextMonthInDays": "Prochain mois hégirien dans environ {{count}} jours."
+  },
+  "releaseNotes": {
+    "title": "Notes de version",
+    "intro": "Un relevé concis des changements de chaque version publiée.",
+    "current": "Actuelle",
+    "released": "Publiée le {{date}}",
+    "versions": {
+      "v1_0_0": {
+        "pages": "Ajout des pages Aujourd'hui, Calendrier, Fêtes, Conversion, Historique, Méthodes, Savants et À propos.",
+        "methods": "Ajout des méthodes tabulaire, heuristique de visibilité, MABIMS, Yallop et Odeh.",
+        "languages": "Ajout des interfaces en anglais, arabe, turc, français, indonésien et ourdou.",
+        "visibility": "Ajout des détails du croissant selon le lieu et d'une carte mondiale de visibilité.",
+        "calendar": "Ajout de fichiers permettant d'enregistrer les fêtes islamiques dans les applications de calendrier."
+      },
+      "v1_1_0": {
+        "analytics": "Ajout de mesures agrégées et privées du trafic avec GoatCounter, sans cookies.",
+        "calendarLabels": "Renommage des boutons d'exportation du calendrier en « Ajouter au calendrier » avec une icône plus claire.",
+        "releaseNotesPage": "Ajout de cette page de notes de version et du numéro de version dans le pied de page."
+      }
+    }
   },
   "calendar": {
     "year": "Année",
@@ -492,10 +516,10 @@
   "about": {
     "title": "À propos",
     "privacyTitle": "Vie privée et vos données",
-    "privacyBody": "Votre vie privée compte. Cette application est conçue pour fonctionner entièrement dans votre navigateur :",
-    "privacyNoServer": "Aucune donnée n'est envoyée à un serveur distant — tous les calculs de date et calculs astronomiques se font localement sur votre appareil.",
-    "privacyNoTracking": "Aucune analyse, pixel de suivi ou script tiers n'est utilisé.",
-    "privacyNoCookies": "Aucun cookie n'est stocké. Vos préférences (langue, lieu, méthode) sont conservées dans le stockage local de votre navigateur et ne sont jamais partagées.",
+    "privacyBody": "Votre vie privée compte. Les fonctionnalités et les calculs du calendrier s'exécutent dans votre navigateur :",
+    "privacyNoServer": "Tous les calculs de date et astronomiques s'effectuent localement sur votre appareil ; leurs données d'entrée ne sont envoyées à aucun serveur.",
+    "privacyNoTracking": "Nous utilisons GoatCounter pour recueillir des statistiques agrégées de consultation respectueuses de la vie privée. Il n'utilise ni cookie de suivi ni identifiant persistant.",
+    "privacyNoCookies": "Ni cette application ni GoatCounter ne stockent de cookies visiteurs. Vos préférences (langue, lieu, méthode) restent dans le stockage local de votre navigateur et ne sont pas partagées avec GoatCounter.",
     "privacyLocation": "Si vous choisissez de partager votre position, elle n'est utilisée que pour les calculs locaux de coucher du Soleil/Lune et n'est transmise nulle part.",
     "disclaimerTitle": "Avertissement",
     "disclaimerBody": "Cet outil est uniquement à des fins informatives et éducatives. Ce n'est pas une autorité religieuse officielle et ne doit pas être utilisé en remplacement des comités locaux d'observation du croissant ou des annonces officielles du calendrier hégirien dans votre pays. Les estimations de visibilité du croissant sont basées sur des modèles astronomiques et peuvent différer des conditions réelles observées.",
@@ -549,7 +573,11 @@
     },
     "about": {
       "title": "À propos du Calendrier hégirien — Calendrier islamique gratuit et open source",
-      "description": "Le Calendrier hégirien est une application de calendrier islamique gratuite et open source. Pas de suivi, pas de cookies, entièrement privé. Construit par Samer Aamar."
+      "description": "Le Calendrier hégirien est une application islamique gratuite et open source avec des statistiques agrégées, sans cookies et respectueuses de la vie privée. Créée par Samer Aamar."
+    },
+    "releaseNotes": {
+      "title": "Notes de version — Historique du Calendrier hégirien",
+      "description": "Consultez les notes concises et les changements de chaque version publiée du Calendrier hégirien."
     },
     "visibilityMap": {
       "title": "Visibilité de la Lune — Carte mondiale",

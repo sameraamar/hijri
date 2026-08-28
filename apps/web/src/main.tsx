@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
 import App from './App.tsx';
+import GoatCounter from './components/GoatCounter';
 import { initI18n, detectInitialLanguage } from './i18n/i18n';
 import { LocationProvider } from './location/LocationContext';
 import { MethodProvider } from './method/MethodContext';
@@ -34,6 +35,7 @@ createRoot(document.getElementById('root')!).render(
             basename={import.meta.env.BASE_URL}
             future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
           >
+            <GoatCounter />
             <App />
           </BrowserRouter>
         </MethodProvider>

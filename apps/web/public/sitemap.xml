@@ -133,4 +133,16 @@
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
+  <url>
+    <loc>https://sameraamar.github.io/hijri/releases</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sameraamar.github.io/hijri/releases" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://sameraamar.github.io/hijri/ar/releases" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sameraamar.github.io/hijri/tr/releases" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sameraamar.github.io/hijri/fr/releases" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://sameraamar.github.io/hijri/id/releases" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://sameraamar.github.io/hijri/ur/releases" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sameraamar.github.io/hijri/releases" />
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
 </urlset>
