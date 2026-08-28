@@ -53,6 +53,8 @@ const ROUTES = [
   { path: 'methods', seoKey: 'methods' },
   { path: 'scholars', seoKey: 'scholars' },
   { path: 'about', seoKey: 'about' },
+  { path: 'faq', seoKey: 'faq' },
+  { path: 'countdown', seoKey: 'countdown' },
   { path: 'releases', seoKey: 'releaseNotes' },
   { path: 'visibility-map', seoKey: 'calendar' }
 ];
@@ -186,6 +188,33 @@ function rewriteHead(template, { route, lang, t, allTranslations }) {
     /<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/?>/i,
     `<meta name="twitter:description" content="${escapeHtml(description)}" />`
   );
+
+  // FAQ answers are also emitted as structured data. Note that Google deprecated
+  // FAQ rich results in 2026; this is kept for other consumers (Bing, AI answers).
+  if (route.seoKey === 'faq' && t.faq) {
+    const mainEntity = ['1', '2', '3', '4']
+      .map((key) => ({
+        '@type': 'Question',
+        name: t.faq[`q${key}`],
+        acceptedAnswer: { '@type': 'Answer', text: t.faq[`a${key}`] }
+      }))
+      .filter((entry) => entry.name && entry.acceptedAnswer.text);
+
+    if (mainEntity.length > 0) {
+      const faqLd = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        '@id': `${canonicalUrl}#faq`,
+        inLanguage: lang,
+        mainEntity
+      };
+      const serialized = JSON.stringify(faqLd).replace(/</g, '\\u003c');
+      html = html.replace(
+        /<\/head>/i,
+        `    <script type="application/ld+json">${serialized}</script>\n  </head>`
+      );
+    }
+  }
 
   return html;
 }

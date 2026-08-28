@@ -1,5 +1,17 @@
 export const RELEASES = [
   {
+    version: '1.2.0',
+    date: '2026-08-28',
+    changeKeys: [
+      'releaseNotes.versions.v1_2_0.adjust',
+      'releaseNotes.versions.v1_2_0.copy',
+      'releaseNotes.versions.v1_2_0.pwa',
+      'releaseNotes.versions.v1_2_0.countdown',
+      'releaseNotes.versions.v1_2_0.faq',
+      'releaseNotes.versions.v1_2_0.embed',
+    ],
+  },
+  {
     version: '1.1.0',
     date: '2026-08-27',
     changeKeys: [

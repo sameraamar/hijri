@@ -21,6 +21,7 @@ import LocaleLink from './components/LocaleLink';
 import AiTranslationBanner from './components/AiTranslationBanner';
 import { useLanguageSync } from './hooks/useLanguageSync';
 import { useLocale, useLocalelessPath } from './hooks/useLocale';
+import { ADJUST_OPTIONS, useHijriAdjust } from './adjust/HijriAdjustContext';
 import { APP_VERSION } from './releaseNotes';
 
 const CalendarPage = lazy(() => import('./pages/CalendarPage'));
@@ -32,6 +33,8 @@ const HistoryPage = lazy(() => import('./pages/HistoryPage'));
 const ScholarsPage = lazy(() => import('./pages/ScholarsPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const ReleaseNotesPage = lazy(() => import('./pages/ReleaseNotesPage'));
+const FaqPage = lazy(() => import('./pages/FaqPage'));
+const CountdownPage = lazy(() => import('./pages/CountdownPage'));
 const TodayPage = lazy(() => import('./pages/TodayPage'));
 const VisibilityMapPage = lazy(() => import('./pages/VisibilityMapPage'));
 
@@ -57,6 +60,8 @@ function LocaleRoutes() {
       <Route path="visibility-map" element={<VisibilityMapPage />} />
       <Route path="scholars" element={<ScholarsPage />} />
       <Route path="about" element={<AboutPage />} />
+      <Route path="faq" element={<FaqPage />} />
+      <Route path="countdown" element={<CountdownPage />} />
       <Route path="releases" element={<ReleaseNotesPage />} />
     </Routes>
   );
@@ -65,6 +70,7 @@ function LocaleRoutes() {
 export default function App() {
   const { t } = useTranslation();
   const { methodId, setMethodId } = useMethod();
+  const { adjustDays, setAdjustDays } = useHijriAdjust();
   const navigate = useNavigate();
   const localelessPath = useLocalelessPath();
   const currentLocale = useLocale();
@@ -127,7 +133,9 @@ export default function App() {
                   { to: '/details', label: t('app.nav.details') },
                   { to: '/history', label: t('app.nav.history') },
                   { to: '/visibility-map', label: t('app.nav.visibilityMap') },
+                  { to: '/countdown', label: t('countdown.title') },
                   { to: '/scholars', label: t('app.nav.scholars') },
+                  { to: '/faq', label: t('faq.title') },
                   { to: '/about', label: t('app.nav.about') },
                 ]}
               />
@@ -148,6 +156,19 @@ export default function App() {
               {METHODS.map((m) => (
                 <option key={m.id} value={m.id} disabled={!m.enabled}>
                   {t(m.labelKey)}{!m.enabled ? ` (${t('app.method.comingSoon')})` : ''}
+                </option>
+              ))}
+            </select>
+            <select
+              className="control-sm w-auto cursor-pointer text-xs"
+              value={adjustDays}
+              onChange={(e) => setAdjustDays(Number(e.target.value))}
+              aria-label={t('app.adjust.label')}
+              title={t('app.adjust.label')}
+            >
+              {ADJUST_OPTIONS.map((n) => (
+                <option key={n} value={n}>
+                  {n === 0 ? t('app.adjust.none') : `${n > 0 ? '+' : '\u2212'}${Math.abs(n)}`}
                 </option>
               ))}
             </select>
@@ -175,8 +196,10 @@ export default function App() {
             { to: '/details', label: t('app.nav.details') },
             { to: '/history', label: t('app.nav.history') },
             { to: '/visibility-map', label: t('app.nav.visibilityMap') },
+            { to: '/countdown', label: t('countdown.title') },
             { to: '/methods', label: t('app.nav.methods') },
             { to: '/scholars', label: t('app.nav.scholars') },
+            { to: '/faq', label: t('faq.title') },
             { to: '/about', label: t('app.nav.about') },
           ].map((item) => (
             <LocaleNavLink

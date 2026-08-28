@@ -70,6 +70,24 @@ Production deployment is via GitHub Pages:
 - Base path: `/hijri/`
 - SPA deep-link fallback: `apps/web/public/404.html`
 
+## Embed widget
+
+Show today's Hijri date on any site with an iframe:
+
+```html
+<iframe
+  src="https://sameraamar.github.io/hijri/embed.html"
+  title="Hijri date"
+  width="220"
+  height="120"
+  style="border:0"
+  loading="lazy"
+></iframe>
+```
+
+Append `?lang=ar` for Arabic. The widget uses the tabular (Islamic civil) calendar so it stays
+small and dependency-free; open the site itself for location-aware crescent-visibility methods.
+
 ## SEO and indexing
 
 Included in repo:

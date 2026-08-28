@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-08-28
+
+### Added
+- **Hijri day adjustment (±2 days)** — a header control shifts the Hijri date to match local moon-sighting announcements. Applied on the Today, Convert, Calendar, and Details pages and persisted in `localStorage` (`hijri.adjustDays`). The shift is applied to the Gregorian input so varying Hijri month lengths stay correct.
+- **Copy date in multiple formats** — one-click copy of numeric, full, Gregorian, and combined formats on the Today and Convert pages.
+- **PWA offline support** — a hand-written service worker ([apps/web/public/sw.js](apps/web/public/sw.js)) caches the app shell (network-first) and content-hashed assets (cache-first). Registered in production only.
+- **Countdown page (`/countdown`)** — days remaining until upcoming Islamic events, targeting long-tail queries such as "كم باقي على رمضان".
+- **FAQ page (`/faq`)** — visible question/answer content plus `FAQPage` JSON-LD injected per language at build time.
+- **Embeddable widget (`/embed.html`)** — a dependency-light second Vite entry rendering today's Hijri date for other sites, with `?lang=ar` support and a backlink.
+
+### Changed
+- `WebApplication` structured data now declares `@id` and `browserRequirements`.
+- Prerendering now covers 14 routes × 6 languages.
+
+### Notes
+- Google [deprecated FAQ rich results](https://developers.google.com/search/blog/2023/08/howto-faq-changes) (restricted 2023, removed May 2026), so `FAQPage` markup is retained only for non-Google consumers.
+- A per-request dynamic Open Graph image is not achievable on GitHub Pages; it would require an external image service.
+
 ## [1.1.0] - 2026-08-27
 
 ### Added

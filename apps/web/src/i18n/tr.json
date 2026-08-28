@@ -43,6 +43,18 @@
       "releaseNotes": "Sürüm notları",
       "version": "v{{version}}"
     },
+    "adjust": {
+      "label": "Hicri gün düzeltmesi",
+      "none": "Varsayılan"
+    },
+    "copy": {
+      "label": "Tarihi kopyala",
+      "copied": "Kopyalandı",
+      "numeric": "Sayısal",
+      "full": "Tam",
+      "gregorian": "Miladi",
+      "both": "İkisi"
+    },
     "aiBanner": {
       "title": "Yapay zekâ çeviri uyarısı",
       "body": "Bu sayfa İngilizceden yapay zekâ ile otomatik çevrilmiştir ve hata veya tutarsızlıklar içerebilir.",
@@ -80,6 +92,14 @@
         "languages": "İngilizce, Arapça, Türkçe, Fransızca, Endonezce ve Urduca arayüzler eklendi.",
         "visibility": "Konuma dayalı hilal ayrıntıları ve dünya görünürlük haritası eklendi.",
         "calendar": "İslami önemli günleri takvim uygulamalarına kaydetmek için takvim dosyaları eklendi."
+      },
+      "v1_2_0": {
+        "adjust": "Yerel hilal gözlemine uyacak şekilde ±1 gün Hicri düzeltmesi eklendi.",
+        "copy": "Tarihleri sayısal, tam ve Miladi biçimlerde tek tıkla kopyalama eklendi.",
+        "pwa": "Çevrimdışı destek ve siteyi uygulama olarak yükleme özelliği eklendi.",
+        "countdown": "Yaklaşan İslami günler için geri sayım sayfası eklendi.",
+        "faq": "Sık sorulan sorular sayfası eklendi.",
+        "embed": "Diğer sitelerde bugünün Hicri tarihini gösteren gömülebilir bileşen eklendi."
       },
       "v1_1_0": {
         "analytics": "GoatCounter ile gizli, çerezsiz ve toplu trafik ölçümü eklendi.",
@@ -538,6 +558,26 @@
     "ourResearchLink": "Hicri Hesaplama Yöntemleri — Bilimsel Özet",
     "ourResearchDesc": "Akademik literatürdeki formüller, sözde kodlar ve atıflarla birlikte 15 Hicri ay başlangıcı yönteminin kapsamlı incelemesi"
   },
+  "faq": {
+    "title": "Sık sorulan sorular",
+    "intro": "Hicri takvim hakkında en sık sorulan sorulara kısa yanıtlar.",
+    "q1": "Miladi tarihi Hicri tarihe nasıl çeviririm?",
+    "a1": "Dönüştürme sayfasını açın, miladi gün, ay ve yılı girin; karşılık gelen Hicri tarih anında görünür. Ters yönde dönüştürme de yapabilirsiniz.",
+    "q2": "Bugünün Hicri tarihini nasıl öğrenirim?",
+    "a2": "Bugün sayfası, seçtiğiniz konum için güncel Hicri ve Miladi tarihi, bu geceki hilal görünürlüğünü ve bir sonraki İslami günü gösterir.",
+    "q3": "Hicri tarihler ülkeler arasında neden farklıdır?",
+    "a3": "Hicri ay hilalin görülmesiyle başlar; görünürlük konuma, hava koşullarına ve her makamın uyguladığı ölçüte bağlıdır. Bu nedenle komşu ülkeler aya farklı günlerde başlayabilir.",
+    "q4": "Hangi hesaplama yöntemini seçmeliyim?",
+    "a4": "Tablosal, sabit aritmetik bir takvimdir. MABIMS, Yallop ve Odeh yayımlanmış hilal görünürlük ölçütleridir. Emin değilseniz varsayılanı bırakın ve Yöntemler sayfasında karşılaştırın."
+  },
+  "countdown": {
+    "title": "İslami günlere geri sayım",
+    "intro": "Seçilen yönteme ve konuma göre yaklaşan İslami tarihlere kalan gün sayısı.",
+    "daysLeft": "{{count}} gün kaldı",
+    "dayLeft": "{{count}} gün kaldı",
+    "today": "Bugün",
+    "note": "Tarihler astronomik tahminlerdir ve ülkenizdeki resmi duyurulardan farklı olabilir."
+  },
   "seo": {
     "today": {
       "title": "Bugünün Hicri Tarihi — Hicri Takvim",
@@ -574,6 +614,14 @@
     "about": {
       "title": "Hicri Takvim Hakkında — Ücretsiz Açık Kaynaklı İslami Takvim",
       "description": "Hicri Takvim, ziyaretçi çerezi kullanmayan ve gizliliğe saygılı toplu analizler içeren ücretsiz, açık kaynaklı bir İslami takvim uygulamasıdır. Samer Aamar tarafından geliştirildi."
+    },
+    "faq": {
+      "title": "Hicri Takvim SSS — Tarih Dönüştürme ve Hilal Gözlemi",
+      "description": "Miladi ve Hicri tarih dönüştürme, bugünün Hicri tarihi ve İslami ayların neden farklı günlerde başladığına dair sık sorulan soruların yanıtları."
+    },
+    "countdown": {
+      "title": "Ramazan, Ramazan Bayramı ve Kurban Bayramı'na Ne Kadar Kaldı?",
+      "description": "Ramazan, Ramazan Bayramı, Kurban Bayramı, Aşure ve Hicri Yılbaşı'na geri sayım; konumunuza göre tahmini tarihlerle."
     },
     "releaseNotes": {
       "title": "Sürüm Notları — Hicri Takvim Sürüm Geçmişi",

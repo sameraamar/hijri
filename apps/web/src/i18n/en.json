@@ -42,6 +42,18 @@
       "releaseNotes": "Release notes",
       "version": "v{{version}}"
     },
+    "adjust": {
+      "label": "Hijri day adjustment",
+      "none": "Default"
+    },
+    "copy": {
+      "label": "Copy date",
+      "copied": "Copied",
+      "numeric": "Numeric",
+      "full": "Full",
+      "gregorian": "Gregorian",
+      "both": "Both"
+    },
     "aiBanner": {
       "title": "AI translation warning",
       "body": "Some pages are machine-translated from English by AI and may contain errors or inaccuracies.",
@@ -79,6 +91,14 @@
         "languages": "Added English, Arabic, Turkish, French, Indonesian, and Urdu interfaces.",
         "visibility": "Added location-based crescent details and a world visibility map.",
         "calendar": "Added calendar files for saving Islamic holidays to calendar apps."
+      },
+      "v1_2_0": {
+        "adjust": "Added a ±1 day Hijri adjustment so the calendar can match your local moon sighting.",
+        "copy": "Added one-click copying of dates in numeric, full, and Gregorian formats.",
+        "pwa": "Added offline support and the ability to install the site as an app.",
+        "countdown": "Added a countdown page for upcoming Islamic events.",
+        "faq": "Added a frequently asked questions page.",
+        "embed": "Added an embeddable widget that shows today's Hijri date on other sites."
       },
       "v1_1_0": {
         "analytics": "Added private, cookie-free aggregate traffic measurement with GoatCounter.",
@@ -537,6 +557,26 @@
     "ourResearchLink": "Hijri Calculation Methods — Scientific Summary",
     "ourResearchDesc": "Our comprehensive survey of 15 Hijri month-start methods, with formulae, pseudocode, and citations from the academic literature"
   },
+  "faq": {
+    "title": "Frequently asked questions",
+    "intro": "Short answers to the questions we get asked most about the Hijri calendar.",
+    "q1": "How do I convert a Gregorian date to a Hijri date?",
+    "a1": "Open the Convert page, enter the Gregorian day, month, and year, and the matching Hijri date appears instantly. You can also convert in the other direction, from Hijri to Gregorian.",
+    "q2": "How do I find today's Hijri date?",
+    "a2": "The Today page shows the current Hijri and Gregorian date for your selected location, along with tonight's crescent visibility and the next Islamic holiday.",
+    "q3": "Why do Hijri dates differ between countries?",
+    "a3": "The Hijri month begins when the new crescent is sighted, and visibility depends on your location, the weather, and the criterion each authority applies. This is why neighbouring countries can start a month on different days.",
+    "q4": "Which calculation method should I choose?",
+    "a4": "Tabular is a fixed arithmetic calendar. MABIMS, Yallop, and Odeh are published crescent-visibility criteria. If you are unsure, keep the default and compare them on the Methods page."
+  },
+  "countdown": {
+    "title": "Countdown to Islamic events",
+    "intro": "Days remaining until the next Islamic dates, based on the selected method and location.",
+    "daysLeft": "in {{count}} days",
+    "dayLeft": "in {{count}} day",
+    "today": "Today",
+    "note": "Dates are astronomical estimates and may differ from official announcements in your country."
+  },
   "seo": {
     "today": {
       "title": "Today's Hijri Date — Hijri Calendar",
@@ -573,6 +613,14 @@
     "about": {
       "title": "About Hijri Calendar — Free Open-Source Islamic Calendar",
       "description": "Hijri Calendar is a free, open-source Islamic calendar app with cookie-free, privacy-friendly aggregate analytics. Built by Samer Aamar."
+    },
+    "faq": {
+      "title": "Hijri Calendar FAQ — Date Conversion & Moon Sighting Questions",
+      "description": "Answers to common questions about converting Gregorian and Hijri dates, finding today's Hijri date, and why Islamic months start on different days."
+    },
+    "countdown": {
+      "title": "How Long Until Ramadan, Eid al-Fitr & Eid al-Adha?",
+      "description": "Live countdown to Ramadan, Eid al-Fitr, Eid al-Adha, Ashura, and the Islamic New Year, with estimated dates for your location."
     },
     "releaseNotes": {
       "title": "Release Notes — Hijri Calendar Version History",

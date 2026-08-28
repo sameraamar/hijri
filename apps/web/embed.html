@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Hijri date widget</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: transparent;
+      }
+      #hijri-embed {
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        padding: 12px 14px;
+        border: 1px solid rgba(100, 116, 139, 0.35);
+        border-radius: 10px;
+        text-align: center;
+      }
+      #hijri-embed .hijri {
+        font-size: 18px;
+        font-weight: 600;
+      }
+      #hijri-embed .greg {
+        margin-top: 2px;
+        font-size: 13px;
+        opacity: 0.75;
+      }
+      #hijri-embed a {
+        display: inline-block;
+        margin-top: 6px;
+        font-size: 11px;
+        color: #2563eb;
+        text-decoration: none;
+      }
+      #hijri-embed a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="hijri-embed"></div>
+    <script type="module" src="/src/embed.ts"></script>
+  </body>
+</html>

@@ -21,7 +21,8 @@ import { getTimeZoneForLocation } from '../timezone';
 import { formatHijriDateDisplay, formatLocalizedNumber, formatIsoDateDisplay } from '../utils/dateFormat';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { useUrlNumber } from '../hooks/useUrlNumber';
-import { daysInGregorianMonth, isoDate } from '../utils/dateMath';
+import { addDaysUtc, daysInGregorianMonth, isoDate } from '../utils/dateMath';
+import { MAX_ADJUST_DAYS, useHijriAdjust } from '../adjust/HijriAdjustContext';
 
 type DetailRow = {
   gregorianIso: string;
@@ -84,6 +85,7 @@ export default function DetailsPage() {
   const [expandedDay, setExpandedDay] = useState<number | null>(null);
   const { location } = useAppLocation();
   const { methodId } = useMethod();
+  const { adjustDays } = useHijriAdjust();
 
   const timeZone = useMemo(
     () => getTimeZoneForLocation(location.latitude, location.longitude),
@@ -133,7 +135,7 @@ export default function DetailsPage() {
       const startDate = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0));
       startDate.setUTCDate(startDate.getUTCDate() - 90);
       const endDate = new Date(Date.UTC(year, month - 1, dim, 0, 0, 0));
-      endDate.setUTCDate(endDate.getUTCDate() + 1);
+      endDate.setUTCDate(endDate.getUTCDate() + 1 + MAX_ADJUST_DAYS);
       const start = { year: startDate.getUTCFullYear(), month: startDate.getUTCMonth() + 1, day: startDate.getUTCDate() };
       const end = { year: endDate.getUTCFullYear(), month: endDate.getUTCMonth() + 1, day: endDate.getUTCDate() };
       const calendar = buildEstimatedHijriCalendarRange(
@@ -163,9 +165,11 @@ export default function DetailsPage() {
     }
 
     const getHijriForDay = (d: number) => {
-      const iso = isoDate(year, month, d);
-      if (methodId === 'civil') return gregorianToHijriCivil({ year, month, day: d });
-      if (isAstronomicalMethod(methodId)) return estimatedByIso.get(iso) ?? null;
+      const shifted = addDaysUtc({ year, month, day: d }, adjustDays);
+      if (methodId === 'civil') return gregorianToHijriCivil(shifted);
+      if (isAstronomicalMethod(methodId)) {
+        return estimatedByIso.get(isoDate(shifted.year, shifted.month, shifted.day)) ?? null;
+      }
       return null;
     };
 
@@ -302,7 +306,7 @@ export default function DetailsPage() {
     }
 
     return { rows, indicatorDays };
-  }, [i18n.language, location.latitude, location.longitude, methodId, month, year]);
+  }, [i18n.language, location.latitude, location.longitude, methodId, month, year, adjustDays]);
 
   const mostLikelyIndicator = useMemo(() => {
     const candidates = data.rows

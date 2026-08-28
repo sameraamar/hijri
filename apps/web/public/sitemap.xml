@@ -134,6 +134,30 @@
     <priority>0.4</priority>
   </url>
   <url>
+    <loc>https://sameraamar.github.io/hijri/countdown</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sameraamar.github.io/hijri/countdown" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://sameraamar.github.io/hijri/ar/countdown" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sameraamar.github.io/hijri/tr/countdown" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sameraamar.github.io/hijri/fr/countdown" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://sameraamar.github.io/hijri/id/countdown" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://sameraamar.github.io/hijri/ur/countdown" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sameraamar.github.io/hijri/countdown" />
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sameraamar.github.io/hijri/faq</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sameraamar.github.io/hijri/faq" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://sameraamar.github.io/hijri/ar/faq" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://sameraamar.github.io/hijri/tr/faq" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sameraamar.github.io/hijri/fr/faq" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://sameraamar.github.io/hijri/id/faq" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://sameraamar.github.io/hijri/ur/faq" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sameraamar.github.io/hijri/faq" />
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://sameraamar.github.io/hijri/releases</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://sameraamar.github.io/hijri/releases" />
     <xhtml:link rel="alternate" hreflang="ar" href="https://sameraamar.github.io/hijri/ar/releases" />

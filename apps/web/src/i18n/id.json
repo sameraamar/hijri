@@ -43,6 +43,18 @@
       "releaseNotes": "Catatan rilis",
       "version": "v{{version}}"
     },
+    "adjust": {
+      "label": "Penyesuaian hari Hijriah",
+      "none": "Bawaan"
+    },
+    "copy": {
+      "label": "Salin tanggal",
+      "copied": "Tersalin",
+      "numeric": "Numerik",
+      "full": "Lengkap",
+      "gregorian": "Masehi",
+      "both": "Keduanya"
+    },
     "aiBanner": {
       "title": "Peringatan terjemahan AI",
       "body": "Halaman ini diterjemahkan otomatis oleh AI dari bahasa Inggris dan mungkin mengandung kesalahan atau ketidakakuratan.",
@@ -80,6 +92,14 @@
         "languages": "Menambahkan antarmuka bahasa Inggris, Arab, Turki, Prancis, Indonesia, dan Urdu.",
         "visibility": "Menambahkan detail hilal berbasis lokasi dan peta visibilitas dunia.",
         "calendar": "Menambahkan berkas kalender untuk menyimpan hari raya Islam ke aplikasi kalender."
+      },
+      "v1_2_0": {
+        "adjust": "Menambahkan penyesuaian ±1 hari agar kalender sesuai dengan rukyat setempat.",
+        "copy": "Menambahkan penyalinan tanggal sekali klik dalam format numerik, lengkap, dan Masehi.",
+        "pwa": "Menambahkan dukungan offline dan pemasangan situs sebagai aplikasi.",
+        "countdown": "Menambahkan halaman hitung mundur untuk hari besar Islam berikutnya.",
+        "faq": "Menambahkan halaman pertanyaan umum.",
+        "embed": "Menambahkan widget yang dapat disematkan untuk menampilkan tanggal Hijriah di situs lain."
       },
       "v1_1_0": {
         "analytics": "Menambahkan pengukuran lalu lintas agregat yang privat dan tanpa cookie dengan GoatCounter.",
@@ -538,6 +558,26 @@
     "ourResearchLink": "Metode Perhitungan Hijriah — Ringkasan Ilmiah",
     "ourResearchDesc": "Survei komprehensif kami atas 15 metode awal bulan Hijriah, dengan rumus, pseudokode, dan kutipan dari literatur akademik"
   },
+  "faq": {
+    "title": "Pertanyaan umum",
+    "intro": "Jawaban singkat atas pertanyaan yang paling sering diajukan tentang kalender Hijriah.",
+    "q1": "Bagaimana cara mengonversi tanggal Masehi ke Hijriah?",
+    "a1": "Buka halaman Konversi, masukkan tanggal, bulan, dan tahun Masehi, lalu tanggal Hijriah yang sesuai langsung muncul. Konversi arah sebaliknya juga tersedia.",
+    "q2": "Bagaimana mengetahui tanggal Hijriah hari ini?",
+    "a2": "Halaman Hari Ini menampilkan tanggal Hijriah dan Masehi saat ini untuk lokasi yang Anda pilih, beserta visibilitas hilal malam ini dan hari raya berikutnya.",
+    "q3": "Mengapa tanggal Hijriah berbeda antarnegara?",
+    "a3": "Bulan Hijriah dimulai saat hilal terlihat, dan visibilitas bergantung pada lokasi, cuaca, serta kriteria yang dipakai tiap otoritas. Karena itu negara bertetangga bisa memulai bulan pada hari berbeda.",
+    "q4": "Metode perhitungan mana yang sebaiknya dipilih?",
+    "a4": "Tabular adalah kalender aritmetika tetap. MABIMS, Yallop, dan Odeh adalah kriteria visibilitas hilal yang dipublikasikan. Jika ragu, gunakan metode bawaan dan bandingkan di halaman Metode."
+  },
+  "countdown": {
+    "title": "Hitung mundur hari besar Islam",
+    "intro": "Sisa hari menuju tanggal Islam berikutnya, berdasarkan metode dan lokasi yang dipilih.",
+    "daysLeft": "dalam {{count}} hari",
+    "dayLeft": "dalam {{count}} hari",
+    "today": "Hari ini",
+    "note": "Tanggal merupakan perkiraan astronomi dan dapat berbeda dari pengumuman resmi di negara Anda."
+  },
   "seo": {
     "today": {
       "title": "Tanggal Hijriah Hari Ini — Kalender Hijriah",
@@ -574,6 +614,14 @@
     "about": {
       "title": "Tentang Kalender Hijriah — Kalender Islam Gratis Sumber Terbuka",
       "description": "Kalender Hijriah adalah aplikasi kalender Islam gratis dan sumber terbuka dengan analitik agregat yang ramah privasi dan tanpa cookie pengunjung. Dibangun oleh Samer Aamar."
+    },
+    "faq": {
+      "title": "FAQ Kalender Hijriah — Konversi Tanggal & Rukyat Hilal",
+      "description": "Jawaban atas pertanyaan umum tentang konversi tanggal Masehi dan Hijriah, tanggal Hijriah hari ini, dan alasan awal bulan Islam berbeda."
+    },
+    "countdown": {
+      "title": "Berapa Hari Lagi Ramadan, Idulfitri, dan Iduladha?",
+      "description": "Hitung mundur Ramadan, Idulfitri, Iduladha, Asyura, dan Tahun Baru Hijriah dengan perkiraan tanggal untuk lokasi Anda."
     },
     "releaseNotes": {
       "title": "Catatan Rilis — Riwayat Versi Kalender Hijriah",

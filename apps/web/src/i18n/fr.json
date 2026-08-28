@@ -43,6 +43,18 @@
       "releaseNotes": "Notes de version",
       "version": "v{{version}}"
     },
+    "adjust": {
+      "label": "Ajustement du jour hégirien",
+      "none": "Par défaut"
+    },
+    "copy": {
+      "label": "Copier la date",
+      "copied": "Copié",
+      "numeric": "Numérique",
+      "full": "Complet",
+      "gregorian": "Grégorien",
+      "both": "Les deux"
+    },
     "aiBanner": {
       "title": "Avertissement de traduction IA",
       "body": "Cette page a été traduite automatiquement par IA depuis l’anglais et peut contenir des erreurs ou des imprécisions.",
@@ -80,6 +92,14 @@
         "languages": "Ajout des interfaces en anglais, arabe, turc, français, indonésien et ourdou.",
         "visibility": "Ajout des détails du croissant selon le lieu et d'une carte mondiale de visibilité.",
         "calendar": "Ajout de fichiers permettant d'enregistrer les fêtes islamiques dans les applications de calendrier."
+      },
+      "v1_2_0": {
+        "adjust": "Ajout d'un ajustement de ±1 jour pour correspondre à l'observation locale du croissant.",
+        "copy": "Ajout de la copie des dates en un clic aux formats numérique, complet et grégorien.",
+        "pwa": "Ajout du mode hors ligne et de l'installation du site comme application.",
+        "countdown": "Ajout d'une page de compte à rebours pour les prochaines fêtes islamiques.",
+        "faq": "Ajout d'une page de questions fréquentes.",
+        "embed": "Ajout d'un widget intégrable affichant la date hégirienne du jour sur d'autres sites."
       },
       "v1_1_0": {
         "analytics": "Ajout de mesures agrégées et privées du trafic avec GoatCounter, sans cookies.",
@@ -538,6 +558,26 @@
     "ourResearchLink": "Méthodes de calcul hégirien — Résumé scientifique",
     "ourResearchDesc": "Notre étude exhaustive de 15 méthodes de début de mois hégirien, avec formules, pseudo-code et citations de la littérature académique"
   },
+  "faq": {
+    "title": "Questions fréquentes",
+    "intro": "Réponses brèves aux questions les plus fréquentes sur le calendrier hégirien.",
+    "q1": "Comment convertir une date grégorienne en date hégirienne ?",
+    "a1": "Ouvrez la page Conversion, saisissez le jour, le mois et l'année grégoriens, et la date hégirienne correspondante s'affiche immédiatement. La conversion inverse est également possible.",
+    "q2": "Comment connaître la date hégirienne d'aujourd'hui ?",
+    "a2": "La page Aujourd'hui affiche la date hégirienne et grégorienne actuelle pour le lieu choisi, avec la visibilité du croissant ce soir et la prochaine fête islamique.",
+    "q3": "Pourquoi les dates hégiriennes diffèrent-elles selon les pays ?",
+    "a3": "Le mois hégirien commence à l'observation du croissant, qui dépend du lieu, de la météo et du critère retenu par chaque autorité. Des pays voisins peuvent donc commencer un mois des jours différents.",
+    "q4": "Quelle méthode de calcul choisir ?",
+    "a4": "La méthode tabulaire est un calendrier arithmétique fixe. MABIMS, Yallop et Odeh sont des critères publiés de visibilité du croissant. Dans le doute, gardez la méthode par défaut et comparez-les sur la page Méthodes."
+  },
+  "countdown": {
+    "title": "Compte à rebours des fêtes islamiques",
+    "intro": "Jours restants avant les prochaines dates islamiques, selon la méthode et le lieu choisis.",
+    "daysLeft": "dans {{count}} jours",
+    "dayLeft": "dans {{count}} jour",
+    "today": "Aujourd'hui",
+    "note": "Les dates sont des estimations astronomiques et peuvent différer des annonces officielles de votre pays."
+  },
   "seo": {
     "today": {
       "title": "Date hégirienne d'aujourd'hui — Calendrier hégirien",
@@ -574,6 +614,14 @@
     "about": {
       "title": "À propos du Calendrier hégirien — Calendrier islamique gratuit et open source",
       "description": "Le Calendrier hégirien est une application islamique gratuite et open source avec des statistiques agrégées, sans cookies et respectueuses de la vie privée. Créée par Samer Aamar."
+    },
+    "faq": {
+      "title": "FAQ du Calendrier hégirien — conversion de dates et observation du croissant",
+      "description": "Réponses aux questions fréquentes sur la conversion entre dates grégoriennes et hégiriennes, la date hégirienne du jour et le début des mois islamiques."
+    },
+    "countdown": {
+      "title": "Combien de temps avant le Ramadan, l'Aïd al-Fitr et l'Aïd al-Adha ?",
+      "description": "Compte à rebours du Ramadan, de l'Aïd al-Fitr, de l'Aïd al-Adha, d'Achoura et du nouvel an hégirien, avec des dates estimées pour votre position."
     },
     "releaseNotes": {
       "title": "Notes de version — Historique du Calendrier hégirien",
