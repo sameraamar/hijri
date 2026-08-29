@@ -21,6 +21,12 @@ export type IcalHoliday = {
 
 const PRODID = '-//hijri-calendar//github.com/sameraamar/hijri//EN';
 
+/** Attribution embedded in every exported calendar and event. */
+export const PROJECT_NAME = 'Hijri Calendar';
+export const PROJECT_URL = 'https://sameraamar.github.io/hijri/';
+
+const ATTRIBUTION = `${PROJECT_NAME} — ${PROJECT_URL}`;
+
 function escapeIcsText(s: string): string {
   // RFC 5545 §3.3.11: escape \\, \, ;, , and CRLF.
   return s
@@ -56,7 +62,9 @@ export function buildIcal(holidays: IcalHoliday[], calendarName: string): string
     `PRODID:${PRODID}`,
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
-    `X-WR-CALNAME:${escapeIcsText(calendarName)}`
+    `X-WR-CALNAME:${escapeIcsText(calendarName)}`,
+    `X-WR-CALDESC:${escapeIcsText(`${calendarName}. ${ATTRIBUTION}`)}`,
+    `SOURCE;VALUE=URI:${PROJECT_URL}`
   ];
 
   for (const h of holidays) {
@@ -76,7 +84,8 @@ export function buildIcal(holidays: IcalHoliday[], calendarName: string): string
       `DTSTART;VALUE=DATE:${fmtDate(start)}`,
       `DTEND;VALUE=DATE:${fmtDate(end)}`,
       `SUMMARY:${escapeIcsText(h.name)}`,
-      `DESCRIPTION:${escapeIcsText(h.description ?? '')}`,
+      `DESCRIPTION:${escapeIcsText(h.description ? `${h.description}\n\n${ATTRIBUTION}` : ATTRIBUTION)}`,
+      `URL;VALUE=URI:${PROJECT_URL}`,
       'TRANSP:TRANSPARENT',
       'END:VEVENT'
     );

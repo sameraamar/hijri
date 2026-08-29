@@ -92,6 +92,21 @@ export default function App() {
     navigate(newPath + window.location.search + window.location.hash, { replace: true });
   };
 
+  const primaryNav: NavItem[] = [
+    { to: '/today', label: t('app.nav.today') },
+    { to: '/calendar', label: t('app.nav.calendar') },
+    { to: '/convert', label: t('app.nav.convert') },
+    { to: '/holidays', label: t('app.nav.holidays') },
+    { to: '/methods', label: t('app.nav.methods') },
+  ];
+
+  const moreNav: NavItem[] = [
+    { to: '/visibility-map', label: t('app.nav.visibilityMap') },
+    { to: '/details', label: t('app.nav.details') },
+    { to: '/history', label: t('app.nav.history') },
+    { to: '/scholars', label: t('app.nav.scholars') },
+  ];
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-800 text-slate-900 dark:bg-slate-900 dark:text-slate-100">
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-white dark:bg-slate-800/95 backdrop-blur supports-[backdrop-filter]:bg-white dark:bg-slate-800/80 dark:border-slate-700 dark:bg-slate-900/95 dark:supports-[backdrop-filter]:bg-slate-900/80">
@@ -107,13 +122,7 @@ export default function App() {
               {t('app.title')}
             </LocaleNavLink>
             <nav className="hidden items-center gap-1 md:flex">
-              {([
-                { to: '/today', label: t('app.nav.today') },
-                { to: '/calendar', label: t('app.nav.calendar') },
-                { to: '/holidays', label: t('app.nav.holidays') },
-                { to: '/convert', label: t('app.nav.convert') },
-                { to: '/methods', label: t('app.nav.methods') },
-              ] as NavItem[]).map((item) => (
+              {primaryNav.map((item) => (
                 <LocaleNavLink
                   key={item.to}
                   to={item.to}
@@ -128,17 +137,7 @@ export default function App() {
                   {item.label}
                 </LocaleNavLink>
               ))}
-              <NavMore
-                items={[
-                  { to: '/details', label: t('app.nav.details') },
-                  { to: '/history', label: t('app.nav.history') },
-                  { to: '/visibility-map', label: t('app.nav.visibilityMap') },
-                  { to: '/countdown', label: t('countdown.title') },
-                  { to: '/scholars', label: t('app.nav.scholars') },
-                  { to: '/faq', label: t('faq.title') },
-                  { to: '/about', label: t('app.nav.about') },
-                ]}
-              />
+              <NavMore items={moreNav} />
             </nav>
           </div>
 
@@ -188,25 +187,12 @@ export default function App() {
         </div>
 
         <nav className="mx-auto flex max-w-6xl items-center gap-1 overflow-x-auto px-4 pb-2 md:hidden">
-          {[
-            { to: '/today', label: t('app.nav.today') },
-            { to: '/calendar', label: t('app.nav.calendar') },
-            { to: '/holidays', label: t('app.nav.holidays') },
-            { to: '/convert', label: t('app.nav.convert') },
-            { to: '/details', label: t('app.nav.details') },
-            { to: '/history', label: t('app.nav.history') },
-            { to: '/visibility-map', label: t('app.nav.visibilityMap') },
-            { to: '/countdown', label: t('countdown.title') },
-            { to: '/methods', label: t('app.nav.methods') },
-            { to: '/scholars', label: t('app.nav.scholars') },
-            { to: '/faq', label: t('faq.title') },
-            { to: '/about', label: t('app.nav.about') },
-          ].map((item) => (
+          {primaryNav.map((item) => (
             <LocaleNavLink
               key={item.to}
               to={item.to}
               className={({ isActive }: { isActive: boolean }) =>
-                `flex-shrink-0 rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+                `flex-shrink-0 rounded-full px-2.5 py-1.5 text-sm font-medium transition-colors ${
                   isActive
                     ? 'bg-slate-900 text-white shadow-sm dark:bg-slate-100 dark:text-slate-900'
                     : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100 dark:active:bg-slate-700'
@@ -216,6 +202,9 @@ export default function App() {
               {item.label}
             </LocaleNavLink>
           ))}
+          <div className="flex-shrink-0">
+            <NavMore items={moreNav} />
+          </div>
         </nav>
       </header>
 
@@ -241,35 +230,44 @@ export default function App() {
           <p className="max-w-2xl mx-auto leading-relaxed">{t('app.footer.disclaimer')}</p>
 
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-500 dark:text-slate-400 dark:text-slate-500">
+            <LocaleLink to="/faq" className="py-1 hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200">
+              {t('faq.title')}
+            </LocaleLink>
+            <LocaleLink to="/countdown" className="py-1 hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200">
+              {t('countdown.short')}
+            </LocaleLink>
+            <LocaleLink to="/about" className="py-1 hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200">
+              {t('app.nav.about')}
+            </LocaleLink>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-500 dark:text-slate-400 dark:text-slate-500">
             <a
               href="https://github.com/sameraamar/hijri"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1 hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200"
+              className="inline-flex items-center gap-1 py-1 hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200"
             >
               <svg className="h-3.5 w-3.5" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
               GitHub
             </a>
-            <span className="text-slate-300">·</span>
             <a
               href="mailto:samer.aamar@gmail.com"
-              className="hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200"
+              className="py-1 hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200"
             >
-              samer.aamar@gmail.com
+              {t('app.footer.contact')}
             </a>
-            <span className="text-slate-300">·</span>
             <a
               href="https://github.com/sameraamar/hijri/blob/main/LICENSE"
               target="_blank"
               rel="noreferrer"
-              className="hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200"
+              className="py-1 hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200"
             >
               {t('app.footer.license')}
             </a>
-            <span className="text-slate-300">·</span>
             <LocaleLink
               to="/releases"
-              className="hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200"
+              className="py-1 hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200"
               aria-label={`${t('app.footer.releaseNotes')}, ${t('app.footer.version', { version: APP_VERSION })}`}
             >
               {t('app.footer.releaseNotes')} · {t('app.footer.version', { version: APP_VERSION })}

@@ -192,7 +192,7 @@ function rewriteHead(template, { route, lang, t, allTranslations }) {
   // FAQ answers are also emitted as structured data. Note that Google deprecated
   // FAQ rich results in 2026; this is kept for other consumers (Bing, AI answers).
   if (route.seoKey === 'faq' && t.faq) {
-    const mainEntity = ['1', '2', '3', '4', '5', '6']
+    const mainEntity = ['b1', 'b2', 'b3', 'b4', 'h1', 'h2', 'h3', 'm1', 'm2', 'm3', 'm4', 'u1', 'u2', 'u3', 'u4']
       .map((key) => ({
         '@type': 'Question',
         name: t.faq[`q${key}`],

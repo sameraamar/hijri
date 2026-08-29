@@ -1,45 +1,17 @@
-import { getCivilHolidaysForGregorianYearWithEstimate } from '@hijri/calendar-engine';
-import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import PageIntro from '../components/PageIntro';
 import { usePageMeta } from '../hooks/usePageMeta';
+import { useUpcomingHolidays } from '../hooks/useUpcomingHolidays';
 import { useAppLocation } from '../location/LocationContext';
 import { formatGregorianDateDisplay } from '../utils/dateFormat';
-import { daysBetweenUtc, type GregorianDate } from '../utils/dateMath';
-
-function todayGregorian(): GregorianDate {
-  const now = new Date();
-  return { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
-}
 
 export default function CountdownPage() {
   const { t, i18n } = useTranslation();
   const { location } = useAppLocation();
   usePageMeta('seo.countdown.title', 'seo.countdown.description');
 
-  const today = useMemo(() => todayGregorian(), []);
-
-  const upcoming = useMemo(() => {
-    const events: { key: string; nameKey: string; target: GregorianDate; delta: number }[] = [];
-
-    for (const year of [today.year, today.year + 1]) {
-      const list = getCivilHolidaysForGregorianYearWithEstimate(year, {
-        latitude: location.latitude,
-        longitude: location.longitude
-      });
-      for (const holiday of list) {
-        const target = holiday.estimatedGregorian ?? holiday.gregorian;
-        const delta = daysBetweenUtc(today, target);
-        if (delta >= 0) {
-          events.push({ key: `${year}-${holiday.id}`, nameKey: holiday.nameKey, target, delta });
-        }
-      }
-    }
-
-    events.sort((a, b) => a.delta - b.delta);
-    return events.slice(0, 10);
-  }, [today, location.latitude, location.longitude]);
+  const upcoming = useUpcomingHolidays(location, 10);
 
   const remainingLabel = (delta: number) => {
     if (delta === 0) return t('countdown.today');

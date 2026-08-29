@@ -22,7 +22,7 @@ import { formatHijriDateDisplay, formatIsoDateDisplay } from '../utils/dateForma
 import { buildIcal, downloadIcal } from '../utils/icalExport';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { useUrlNumber } from '../hooks/useUrlNumber';
-import { addDaysUtc, fmtIso as fmtGregorianIso, utcKey, type GregorianDate } from '../utils/dateMath';
+import { addDaysUtc, daysBetweenUtc, fmtIso as fmtGregorianIso, utcKey, type GregorianDate } from '../utils/dateMath';
 
 function weekday(d: GregorianDate): string {
   return new Date(d.year, d.month - 1, d.day).toLocaleDateString(i18n.language, { weekday: 'short' });
@@ -45,6 +45,10 @@ export default function HolidaysPage() {
   const { methodId } = useMethod();
   const { location } = useAppLocation();
   const currentYear = new Date().getFullYear();
+  const today = useMemo<GregorianDate>(() => {
+    const now = new Date();
+    return { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
+  }, []);
   const [year, setYear] = useUrlNumber('year', currentYear);
   const [expandedHolidayKeys, setExpandedHolidayKeys] = useState<Set<string>>(new Set());
 
@@ -237,9 +241,14 @@ export default function HolidaysPage() {
 
   usePageMeta('seo.holidays.title', 'seo.holidays.description', year);
 
-  const exportToIcs = () => {
-    const calendarName = `Hijri holidays ${year} (${t(`app.method.${methodId}`)})`;
-    const events = holidays.map((h) => {
+  const exportToIcs = (subset?: typeof holidays) => {
+    const list = subset ?? holidays;
+    if (list.length === 0) return;
+    const single = list.length === 1 ? list[0] : null;
+    const calendarName = single
+      ? `${t(single.nameKey)} (${t(`app.method.${methodId}`)})`
+      : `Hijri holidays ${year} (${t(`app.method.${methodId}`)})`;
+    const events = list.map((h) => {
       const target = h.estimatedGregorian ?? h.gregorian;
       return {
         id: h.id,
@@ -248,9 +257,26 @@ export default function HolidaysPage() {
         description: `${t('app.method.label')}: ${t(`app.method.${methodId}`)}`
       };
     });
-    if (events.length === 0) return;
     const ics = buildIcal(events, calendarName);
-    downloadIcal(`hijri-holidays-${year}-${methodId}.ics`, ics);
+    const filename = single
+      ? `${single.id}-${year}-${methodId}.ics`
+      : `hijri-holidays-${year}-${methodId}.ics`;
+    downloadIcal(filename, ics);
+  };
+
+  const countdownNode = (target: GregorianDate) => {
+    const delta = daysBetweenUtc(today, target);
+    if (delta < 0) return <span className="text-slate-400 dark:text-slate-500">{t('holidays.passed')}</span>;
+    const label = delta === 0
+      ? t('countdown.today')
+      : delta === 1
+        ? t('countdown.dayLeft', { count: 1 })
+        : t('countdown.daysLeft', { count: delta });
+    return (
+      <span className={delta === 0 ? 'font-semibold text-slate-900 dark:text-slate-100' : 'text-slate-700 dark:text-slate-200'}>
+        {label}
+      </span>
+    );
   };
 
   return (
@@ -263,17 +289,17 @@ export default function HolidaysPage() {
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={exportToIcs}
+            onClick={() => exportToIcs()}
             disabled={holidays.length === 0}
             className="btn-sm whitespace-nowrap"
-            aria-label={t('today.addHolidaysToCalendar')}
-            title={t('today.addHolidaysToCalendar')}
+            aria-label={t('holidays.addAllToCalendar')}
+            title={t('holidays.addAllToCalendar')}
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4 sm:me-1.5" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3.75 9h16.5M5.25 4.5h13.5a1.5 1.5 0 0 1 1.5 1.5v13.5a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V6a1.5 1.5 0 0 1 1.5-1.5Z"/>
               <path strokeLinecap="round" d="M12 12.75v5M9.5 15.25h5"/>
             </svg>
-            <span>{t('today.addHolidaysToCalendar')}</span>
+            <span>{t('holidays.addAllToCalendar')}</span>
           </button>
         </div>
       </div>
@@ -324,7 +350,11 @@ export default function HolidaysPage() {
                 <th scope="col" className="px-3 py-2 font-semibold">{t('app.nav.holidays')}</th>
                 <th scope="col" className="px-3 py-2 font-semibold">{t('convert.hijriDate')}</th>
                 <th scope="col" className="px-3 py-2 font-semibold">{t('convert.gregorianDate')}</th>
-                <th scope="col" className="px-3 py-2 font-semibold">{t('app.method.label')}</th>
+                <th scope="col" className="hidden px-3 py-2 font-semibold sm:table-cell">{t('countdown.short')}</th>
+                <th scope="col" className="hidden px-3 py-2 font-semibold sm:table-cell">{t('app.method.label')}</th>
+                <th scope="col" className="px-3 py-2 font-semibold">
+                  <span className="sr-only">{t('holidays.addThisToCalendar')}</span>
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
@@ -365,14 +395,32 @@ export default function HolidaysPage() {
                           {weekday(eventDate)}
                           {isAstronomical && h.estimatedGregorian ? ` • ${t('holidays.estimated')}` : ''}
                         </div>
+                        <div className="mt-0.5 text-xs sm:hidden">{countdownNode(eventDate)}</div>
                       </td>
-                      <td className="px-3 py-3 text-xs text-slate-600 dark:text-slate-300">
+                      <td className="hidden px-3 py-3 text-sm sm:table-cell">
+                        {countdownNode(eventDate)}
+                      </td>
+                      <td className="hidden px-3 py-3 text-xs text-slate-600 dark:text-slate-300 sm:table-cell">
                         {t(`app.method.${methodId}`)}
+                      </td>
+                      <td className="px-3 py-3 text-end">
+                        <button
+                          type="button"
+                          onClick={(e) => { e.stopPropagation(); exportToIcs([h]); }}
+                          className="inline-flex items-center justify-center h-8 w-8 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100 transition-colors"
+                          aria-label={t('holidays.addThisToCalendar')}
+                          title={t('holidays.addThisToCalendar')}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4" aria-hidden="true">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3.75 9h16.5M5.25 4.5h13.5a1.5 1.5 0 0 1 1.5 1.5v13.5a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V6a1.5 1.5 0 0 1 1.5-1.5Z"/>
+                            <path strokeLinecap="round" d="M12 12.75v5M9.5 15.25h5"/>
+                          </svg>
+                        </button>
                       </td>
                     </tr>
                     {isExpanded ? (
                       <tr>
-                        <td colSpan={4} className="px-3 pb-3 pt-0">
+                        <td colSpan={6} className="px-3 pb-3 pt-0">
                           {renderCandidateDates(h.gregorian, h.hijri, h.estimatedGregorian ?? undefined)}
                         </td>
                       </tr>
