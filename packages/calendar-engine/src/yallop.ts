@@ -123,7 +123,7 @@ function classifyZone(q: number): YallopZone {
  * A → high  (easily visible naked eye)
  * B → high  (visible under perfect conditions — still naked-eye)
  * C → medium/Fair  (may need optical aid to find — naked-eye possible)
- * D → medium/Fair  (will need optical aid — valid for Islamic sighting)
+ * D → medium/Fair  (will need optical aid to find)
  * E → low/Faint  (not visible even with telescope)
  * F → low/None  (below Danjon limit)
  */
@@ -139,7 +139,8 @@ function zoneToLikelihood(zone: YallopZone): MonthStartLikelihood {
 }
 
 /**
- * Map Yallop zone to a visibility percentage for UI display.
+ * Map Yallop zone to an ordinal 0..100 display index.
+ * This is not a probability of human observation.
  */
 function zoneToVisibilityPercent(zone: YallopZone): number {
   switch (zone) {
@@ -408,9 +409,9 @@ export function yallopMonthStartEstimate(
 export function meetsYallopCriteriaAtSunset(
   est: MonthStartEstimate
 ): boolean {
-  // Use the visibilityPercent which maps from zone:
-  // A=95, B=80 → High (naked-eye); C=55, D=40 → Fair (optical aid valid)
+  // Use the ordinal display index which maps from zone:
+  // A=95, B=80 → High (naked-eye); C=55, D=40 → Fair (optical aid category)
   // E=10, F=0 → below threshold
   const percent = est.metrics.visibilityPercent ?? 0;
-  return percent >= 40; // Zones A, B, C, D (optical aid acceptable)
+  return percent >= 40; // Zones A, B, C, D
 }

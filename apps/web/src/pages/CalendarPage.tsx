@@ -618,6 +618,7 @@ export default function CalendarPage() {
               const evePercent = clamp0to100(eveEst?.metrics.visibilityPercent ?? 0);
               const eveStatusKey = visibilityStatusFromEstimate(eveEst);
               const eveStyle = likelihoodStyle(eveStatusKey);
+              const showEvePercent = eveEst?.kind === 'heuristic';
               const isMostLikely = mostLikelyIndicator.hasMultiple && mostLikelyIndicator.iso === thisIso;
 
               return (
@@ -695,7 +696,7 @@ export default function CalendarPage() {
                         <div className="flex flex-wrap items-center gap-2">
                           <span
                             className="inline-flex items-center overflow-hidden rounded-full ring-1 ring-black/10"
-                            title={`${t('probability.monthStartSignalFor')}: ${thisIso} (${t('holidays.eveOf')} ${prevIso}) — ${t(`probability.${eveStatusKey}`)} (${t('probability.crescentScore')}: ${evePercent}%)`}
+                            title={`${t('probability.monthStartSignalFor')}: ${thisIso} (${t('holidays.eveOf')} ${prevIso}) — ${t(`probability.${eveStatusKey}`)}${showEvePercent ? ` (${t('probability.crescentScore')}: ${evePercent}%)` : ''}`}
                           >
                             <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 text-[11px] font-medium ${eveStyle.badgeClass} ring-0`}>
                               {isMostLikely ? (
@@ -705,7 +706,7 @@ export default function CalendarPage() {
                               )}
                               {t(`probability.${eveStatusKey}`)}
                             </span>
-                            {typeof eveEst?.metrics.visibilityPercent === 'number' ? (
+                            {showEvePercent && typeof eveEst?.metrics.visibilityPercent === 'number' ? (
                               <span className={`inline-flex items-center px-2 py-0.5 text-[10px] font-semibold ${eveStyle.scoreClass}`}>
                                 {evePercent}%
                               </span>
@@ -842,6 +843,7 @@ export default function CalendarPage() {
         const eveStatusKey = visibilityStatusFromEstimate(eveEst);
         const eveStyle = likelihoodStyle(eveStatusKey);
         const evePercent = clamp0to100(eveEst?.metrics.visibilityPercent ?? 0);
+        const showEvePercent = eveEst?.kind === 'heuristic';
         const isMostLikely = mostLikelyIndicator.hasMultiple && mostLikelyIndicator.iso === thisIso;
 
         return (
@@ -861,7 +863,7 @@ export default function CalendarPage() {
                   ) : (
                     <span className={`h-1.5 w-1.5 rounded-full ${eveStyle.dotClass}`} />
                   )}
-                  {t(`probability.${eveStatusKey}`)} {evePercent}%
+                  {t(`probability.${eveStatusKey}`)}{showEvePercent ? ` ${evePercent}%` : ''}
                 </span>
               </div>
             </div>

@@ -566,7 +566,7 @@ export default function DetailsPage() {
                     </div>
                   )}
                   {/* Crescent score bar */}
-                  {typeof row.estimate.crescentScorePercent === 'number' && (
+                  {methodId === 'estimate' && typeof row.estimate.crescentScorePercent === 'number' && (
                     <div className="flex items-center justify-between gap-2 py-1">
                       <span className="text-slate-600 dark:text-slate-300">{t('probability.crescentScore')}</span>
                       <CrescentScoreBar percent={row.estimate.crescentScorePercent} width={80} />
@@ -590,8 +590,10 @@ export default function DetailsPage() {
                       {row.estimate.odehBestTimeUtcIso ? <MetricRow label={t('probability.odehBestTime')} value={fmtLocalTime(row.estimate.odehBestTimeUtcIso) ?? '—'} /> : null}
                       <div className="mt-1 border-t border-slate-50 pt-1" />
                     </>
-                  ) : (
+                  ) : methodId === 'estimate' ? (
                     <MetricRow label={t('probability.crescentScore')} value={typeof row.estimate.crescentScorePercent === 'number' ? `${Math.round(row.estimate.crescentScorePercent)}%` : '—'} />
+                  ) : (
+                    <MetricRow label={t('probability.labelShort')} value={t(`probability.${row.estimate.monthStartSignalKey.replace('probability.', '')}`)} />
                   )}
                   <MetricRow label={t('probability.lagMinutes')} value={typeof row.estimate.lagMinutes === 'number' ? String(Math.round(row.estimate.lagMinutes)) : '—'} />
                   <MetricRow label={t('holidays.moonIllumination')} value={typeof row.estimate.moonIlluminationPercent === 'number' ? `${row.estimate.moonIlluminationPercent}%` : '—'} />

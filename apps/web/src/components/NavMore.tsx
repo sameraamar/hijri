@@ -4,15 +4,17 @@ import { useTranslation } from 'react-i18next';
 import LocaleNavLink from './LocaleNavLink';
 
 export type NavItem = { to: string; label: string };
+export type NavGroup = { label: string; items: NavItem[] };
 
 /**
  * Overflow menu for secondary nav items. Uses a button + popover pattern:
  * outside click closes; Esc closes; clicking a link closes.
  */
-export default function NavMore({ items }: { items: NavItem[] }) {
+export default function NavMore({ items, groups }: { items?: NavItem[]; groups?: NavGroup[] }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const sections = groups ?? [{ label: '', items: items ?? [] }];
 
   useEffect(() => {
     if (!open) return;
@@ -61,22 +63,31 @@ export default function NavMore({ items }: { items: NavItem[] }) {
           role="menu"
           className="absolute end-0 mt-1 min-w-[10rem] rounded-md border border-slate-200 bg-white py-1 shadow-lg ring-1 ring-black/5 dark:border-slate-700 dark:bg-slate-800 dark:ring-white/5 z-50"
         >
-          {items.map((item) => (
-            <LocaleNavLink
-              key={item.to}
-              to={item.to}
-              role="menuitem"
-              onClick={() => setOpen(false)}
-              className={({ isActive }: { isActive: boolean }) =>
-                `block px-3 py-1.5 text-sm transition-colors ${
-                  isActive
-                    ? 'bg-slate-100 font-medium text-slate-900 dark:bg-slate-700 dark:text-slate-100'
-                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700/60 dark:hover:text-slate-100'
-                }`
-              }
-            >
-              {item.label}
-            </LocaleNavLink>
+          {sections.map((section, sectionIndex) => (
+            <div key={section.label || 'items'} className={sectionIndex > 0 ? 'border-t border-slate-100 pt-1 mt-1 dark:border-slate-700' : ''}>
+              {section.label ? (
+                <div className="px-3 pb-1 pt-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
+                  {section.label}
+                </div>
+              ) : null}
+              {section.items.map((item) => (
+                <LocaleNavLink
+                  key={item.to}
+                  to={item.to}
+                  role="menuitem"
+                  onClick={() => setOpen(false)}
+                  className={({ isActive }: { isActive: boolean }) =>
+                    `block px-3 py-1.5 text-sm transition-colors ${
+                      isActive
+                        ? 'bg-slate-100 font-medium text-slate-900 dark:bg-slate-700 dark:text-slate-100'
+                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700/60 dark:hover:text-slate-100'
+                    }`
+                  }
+                >
+                  {item.label}
+                </LocaleNavLink>
+              ))}
+            </div>
           ))}
         </div>
       ) : null}

@@ -1,11 +1,24 @@
 import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from 'react-leaflet';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import type { LeafletMouseEvent } from 'leaflet';
 
 import { useAppLocation } from '../location/LocationContext';
 import type { AppLocation } from '../location/types';
 import { getTimeZoneForLocation } from '../timezone';
+
+// Fix Leaflet default marker icon paths broken by bundlers (Vite/Webpack).
+delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconUrl: markerIcon,
+  iconRetinaUrl: markerIcon2x,
+  shadowUrl: markerShadow,
+});
 
 function clamp(n: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, n));

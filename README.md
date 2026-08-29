@@ -1,6 +1,8 @@
 # hilal.day — Hijri Calendar
 
-Open-source web app for exploring the Hijri calendar with location-aware astronomical insights.
+Open-source web app for understanding how lunar astronomy relates to the Islamic (Hijri) calendar.
+Hilal.day keeps the familiar calendar and date-conversion tools, but its core identity is clearer:
+where the crescent may be visible, which criterion says so, and why dates can differ by location or authority.
 
 - Live: https://hilal.day/
 - Source: https://github.com/sameraamar/hijri
@@ -87,6 +89,13 @@ Show today's Hijri date on any site with an iframe:
 
 Append `?lang=ar` for Arabic. The widget uses the tabular (Islamic civil) calendar so it stays
 small and dependency-free; open the site itself for location-aware crescent-visibility methods.
+
+Useful widget options:
+
+- `?layout=compact` for a smaller card
+- `?theme=dark` or `?theme=light` to force a theme
+- `?variant=countdown` for a Ramadan countdown
+- `?variant=next-crescent` for the next civil Hijri month start
 
 ## SEO and indexing
 

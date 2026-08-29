@@ -203,7 +203,7 @@ export default function HolidaysPage() {
 
               </div>
 
-              {(typeof c.lagMinutes === 'number' || typeof c.illumPercent === 'number' || typeof c.percent === 'number') && (
+              {(typeof c.lagMinutes === 'number' || typeof c.illumPercent === 'number' || (methodId === 'estimate' && typeof c.percent === 'number')) && (
                 <div className="ps-4 text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-500">
                   <span className="me-2">{t('holidays.observedEveningMetrics', { date: eveDisplay })}:</span>
                   {typeof c.lagMinutes === 'number' ? (
@@ -216,7 +216,7 @@ export default function HolidaysPage() {
                       {c.illumPercent}%
                     </span>
                   ) : null}
-                  {typeof c.percent === 'number' ? (
+                  {methodId === 'estimate' && typeof c.percent === 'number' ? (
                     <span className="inline-flex items-center rounded-full bg-white dark:bg-slate-800 px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:text-slate-200 ring-1 ring-slate-200 dark:ring-slate-700" title={t('probability.crescentScore')}>
                       {c.percent}%
                     </span>
