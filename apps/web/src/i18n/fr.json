@@ -191,7 +191,7 @@
   },
   "methods": {
     "title": "À propos",
-    "about": "Le Calendrier Hégirien est un outil gratuit et open source pour explorer le calendrier islamique (hégirien). Il vous permet de parcourir les calendriers mensuels, de convertir des dates entre hégirien et grégorien, de voir les prochaines fêtes islamiques et d'examiner les estimations astronomiques de visibilité du croissant pour n'importe quel lieu. Tous les calculs s'exécutent entièrement dans votre navigateur — aucune donnée n'est envoyée à un serveur.",
+    "about": "hilal.day est un outil gratuit et open source pour explorer le calendrier islamique (hégirien). Il vous permet de parcourir les calendriers mensuels, de convertir des dates entre hégirien et grégorien, de voir les prochaines fêtes islamiques et d'examiner les estimations astronomiques de visibilité du croissant pour n'importe quel lieu. Tous les calculs s'exécutent entièrement dans votre navigateur — aucune donnée n'est envoyée à un serveur.",
     "methodsHeading": "Méthodes de calcul",
     "keyConcepts": {
       "title": "Concepts astronomiques clés",
@@ -556,7 +556,7 @@
     "featureMonths": "Référence scientifique couvrant 15+ méthodes : Yallop, Odeh, Schaefer, SAAO, limite de Danjon, règle babylonienne, Fotheringham, Maunder, indien, malais et calendrier d'Oumm al-Qoura.",
     "featureBilingual": "Interface entièrement bilingue en anglais et en arabe avec support de droite à gauche (RTL).",
     "openSourceTitle": "Open source",
-    "openSourceBody": "Le Calendrier hégirien est un logiciel libre et open source. Les contributions, rapports de bogues et suggestions sont les bienvenus.",
+    "openSourceBody": "hilal.day est un logiciel libre et open source. Les contributions, rapports de bogues et suggestions sont les bienvenus.",
     "furtherReadingTitle": "Références et crédits",
     "ourResearch": "Notre recherche",
     "ourResearchLink": "Méthodes de calcul hégirien — Résumé scientifique",
@@ -680,8 +680,8 @@
       "description": "Avis savants sur l'observation du croissant pour le calendrier hégirien : observation locale, observation globale, calcul astronomique et approches Oumm al-Qoura."
     },
     "about": {
-      "title": "À propos du Calendrier hégirien — Calendrier islamique gratuit et open source",
-      "description": "Le Calendrier hégirien est une application islamique gratuite et open source avec des statistiques agrégées, sans cookies et respectueuses de la vie privée. Créée par Samer Aamar."
+      "title": "À propos de hilal.day — Calendrier hégirien gratuit et open source",
+      "description": "hilal.day est une application de calendrier hégirien gratuite et open source, avec des statistiques agrégées, sans cookies et respectueuses de la vie privée. Créée par Samer Aamar."
     },
     "faq": {
       "title": "FAQ du Calendrier hégirien — conversion de dates et observation du croissant",

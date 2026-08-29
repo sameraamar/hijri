@@ -9,6 +9,7 @@ import {
   supportedLanguages,
   type SupportedLanguage
 } from '../i18n/i18n';
+import { BRAND } from '../brand';
 
 /**
  * Build the absolute URL for a route in a given UI language. The route is
@@ -61,7 +62,7 @@ export function usePageMeta(titleKey: string, descKey: string, suffix?: string |
     const desc = t(descKey);
 
     const parts = suffix != null ? [title, String(suffix)] : [title];
-    document.title = `${parts.join(' ')} | ${t('app.title')}`;
+    document.title = `${parts.join(' ')} | ${BRAND}`;
 
     let meta = document.querySelector<HTMLMetaElement>('meta[name="description"]');
     if (!meta) {

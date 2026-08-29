@@ -191,7 +191,7 @@
   },
   "methods": {
     "title": "Hakkında",
-    "about": "Hicri Takvim, İslami (Hicri) takvimi keşfetmek için ücretsiz ve açık kaynaklı bir araçtır. Aylık takvimleri görüntülemenize, Hicri ile Miladi tarihler arasında dönüşüm yapmanıza, yaklaşan İslami özel günleri görmenize ve herhangi bir konum için astronomik hilal görünürlük tahminlerini incelemenize olanak tanır. Tüm hesaplamalar tamamen tarayıcınızda çalışır — hiçbir sunucuya veri gönderilmez.",
+    "about": "hilal.day, İslami (Hicri) takvimi keşfetmek için ücretsiz ve açık kaynaklı bir araçtır. Aylık takvimleri görüntülemenize, Hicri ile Miladi tarihler arasında dönüşüm yapmanıza, yaklaşan İslami özel günleri görmenize ve herhangi bir konum için astronomik hilal görünürlük tahminlerini incelemenize olanak tanır. Tüm hesaplamalar tamamen tarayıcınızda çalışır — hiçbir sunucuya veri gönderilmez.",
     "methodsHeading": "Hesaplama Yöntemleri",
     "keyConcepts": {
       "title": "Temel Astronomik Kavramlar",
@@ -556,7 +556,7 @@
     "featureMonths": "15+ yöntemi kapsayan bilimsel referans: Yallop, Odeh, Schaefer, SAAO, Danjon limiti, Babil gecikme kuralı, Fotheringham, Maunder, Hindistan, Malezya ve Ümmülkura takvimi.",
     "featureBilingual": "İngilizce ve Arapça tam iki dilli arayüz, sağdan sola (RTL) desteğiyle.",
     "openSourceTitle": "Açık Kaynak",
-    "openSourceBody": "Hicri Takvim ücretsiz ve açık kaynaklı bir yazılımdır. Katkılar, hata raporları ve öneriler memnuniyetle karşılanır.",
+    "openSourceBody": "hilal.day ücretsiz ve açık kaynaklı bir yazılımdır. Katkılar, hata raporları ve öneriler memnuniyetle karşılanır.",
     "furtherReadingTitle": "Kaynaklar ve Teşekkürler",
     "ourResearch": "Araştırmamız",
     "ourResearchLink": "Hicri Hesaplama Yöntemleri — Bilimsel Özet",
@@ -680,8 +680,8 @@
       "description": "Hicri takvim için hilal görüşüne dair ilmi görüşler: yerel görüş, küresel görüş, astronomik hesaplama ve Ümmülkura yaklaşımları."
     },
     "about": {
-      "title": "Hicri Takvim Hakkında — Ücretsiz Açık Kaynaklı İslami Takvim",
-      "description": "Hicri Takvim, ziyaretçi çerezi kullanmayan ve gizliliğe saygılı toplu analizler içeren ücretsiz, açık kaynaklı bir İslami takvim uygulamasıdır. Samer Aamar tarafından geliştirildi."
+      "title": "hilal.day Hakkında — Ücretsiz Açık Kaynaklı Hicri Takvim",
+      "description": "hilal.day, ziyaretçi çerezi kullanmayan ve gizliliğe saygılı toplu analizler içeren ücretsiz, açık kaynaklı bir Hicri takvim uygulamasıdır. Samer Aamar tarafından geliştirildi."
     },
     "faq": {
       "title": "Hicri Takvim SSS — Tarih Dönüştürme ve Hilal Gözlemi",

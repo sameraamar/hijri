@@ -34,29 +34,30 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..');
 const DIST = resolve(REPO_ROOT, 'apps/web/dist');
 const I18N_DIR = resolve(REPO_ROOT, 'apps/web/src/i18n');
-const SITE_ORIGIN = 'https://sameraamar.github.io';
-const BASE_PATH = '/hijri';
+const SITE_ORIGIN = 'https://hilal.day';
+const BASE_PATH = '';
+const BRAND = 'hilal.day';
 
 const SUPPORTED_LANGS = ['en', 'ar', 'tr', 'fr', 'id', 'ur'];
 const DEFAULT_LANG = 'en';
 const RTL_LANGS = new Set(['ar', 'ur']);
 
-// route → seo.<key> mapping
+// route → seo.<key> mapping, plus sitemap hints
 const ROUTES = [
-  { path: '', seoKey: 'today' },
-  { path: 'today', seoKey: 'today' },
-  { path: 'calendar', seoKey: 'calendar' },
-  { path: 'holidays', seoKey: 'holidays' },
-  { path: 'convert', seoKey: 'convert' },
-  { path: 'details', seoKey: 'details' },
-  { path: 'history', seoKey: 'history' },
-  { path: 'methods', seoKey: 'methods' },
-  { path: 'scholars', seoKey: 'scholars' },
-  { path: 'about', seoKey: 'about' },
-  { path: 'faq', seoKey: 'faq' },
-  { path: 'countdown', seoKey: 'countdown' },
-  { path: 'releases', seoKey: 'releaseNotes' },
-  { path: 'visibility-map', seoKey: 'calendar' }
+  { path: '', seoKey: 'today', changefreq: 'daily', priority: '1.0' },
+  { path: 'today', seoKey: 'today', changefreq: 'daily', priority: '1.0' },
+  { path: 'calendar', seoKey: 'calendar', changefreq: 'weekly', priority: '0.9' },
+  { path: 'holidays', seoKey: 'holidays', changefreq: 'weekly', priority: '0.9' },
+  { path: 'convert', seoKey: 'convert', changefreq: 'monthly', priority: '0.8' },
+  { path: 'details', seoKey: 'details', changefreq: 'weekly', priority: '0.7' },
+  { path: 'history', seoKey: 'history', changefreq: 'monthly', priority: '0.7' },
+  { path: 'methods', seoKey: 'methods', changefreq: 'monthly', priority: '0.6' },
+  { path: 'scholars', seoKey: 'scholars', changefreq: 'monthly', priority: '0.5' },
+  { path: 'about', seoKey: 'about', changefreq: 'monthly', priority: '0.4' },
+  { path: 'faq', seoKey: 'faq', changefreq: 'monthly', priority: '0.6' },
+  { path: 'countdown', seoKey: 'countdown', changefreq: 'daily', priority: '0.8' },
+  { path: 'releases', seoKey: 'releaseNotes', changefreq: 'monthly', priority: '0.3' },
+  { path: 'visibility-map', seoKey: 'calendar', changefreq: 'daily', priority: '0.7' }
 ];
 
 // Map our 2-letter code to BCP-47 / FB OpenGraph locale code.
@@ -103,6 +104,37 @@ function escapeHtml(s) {
     .replace(/>/g, '&gt;');
 }
 
+/** Emit sitemap.xml from the same route table the prerenderer uses, so the two cannot drift. */
+function writeSitemap() {
+  const entries = ROUTES.map((route) => {
+    const alternates = [...SUPPORTED_LANGS, 'x-default']
+      .map((lang) => {
+        const href = buildAbsoluteUrl(route.path, lang === 'x-default' ? DEFAULT_LANG : lang);
+        return `    <xhtml:link rel="alternate" hreflang="${lang}" href="${href}" />`;
+      })
+      .join('\n');
+    return [
+      '  <url>',
+      `    <loc>${buildAbsoluteUrl(route.path, DEFAULT_LANG)}</loc>`,
+      alternates,
+      `    <changefreq>${route.changefreq}</changefreq>`,
+      `    <priority>${route.priority}</priority>`,
+      '  </url>'
+    ].join('\n');
+  });
+
+  const xml = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
+    '        xmlns:xhtml="http://www.w3.org/1999/xhtml">',
+    ...entries,
+    '</urlset>',
+    ''
+  ].join('\n');
+
+  writeFileSync(join(DIST, 'sitemap.xml'), xml);
+}
+
 /**
  * Edit the head section of the template HTML to reflect this route + language.
  * Uses regex over named anchors so we don't pull in cheerio for one task.
@@ -112,8 +144,7 @@ function rewriteHead(template, { route, lang, t, allTranslations }) {
   if (!seo) {
     throw new Error(`Missing seo.${route.seoKey} in ${lang}.json`);
   }
-  const appTitle = t.app?.title ?? 'Hijri Calendar';
-  const fullTitle = `${seo.title} | ${appTitle}`;
+  const fullTitle = `${seo.title} | ${BRAND}`;
   const description = seo.description;
   const canonicalUrl = buildAbsoluteUrl(route.path, lang);
   const isRtl = RTL_LANGS.has(lang);
@@ -264,6 +295,8 @@ function main() {
     allTranslations
   });
   writeFileSync(join(DIST, '404.html'), rootEnHtml);
+
+  writeSitemap();
 
   console.log(`Prerendered ${written} static HTML files (${ROUTES.length} routes × ${SUPPORTED_LANGS.length} languages).`);
 }

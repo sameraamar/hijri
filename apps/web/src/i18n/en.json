@@ -190,7 +190,7 @@
   },
   "methods": {
     "title": "About",
-    "about": "Hijri Calendar is a free, open-source tool for exploring the Islamic (Hijri) calendar. It lets you browse monthly calendars, convert dates between Hijri and Gregorian, view upcoming Islamic holidays, and inspect astronomical crescent-visibility estimates for any location. All calculations run entirely in your browser — no data is sent to any server.",
+    "about": "hilal.day is a free, open-source tool for exploring the Islamic (Hijri) calendar. It lets you browse monthly calendars, convert dates between Hijri and Gregorian, view upcoming Islamic holidays, and inspect astronomical crescent-visibility estimates for any location. All calculations run entirely in your browser — no data is sent to any server.",
     "methodsHeading": "Calculation Methods",
     "keyConcepts": {
       "title": "Key Astronomical Concepts",
@@ -555,7 +555,7 @@
     "featureMonths": "Scientific reference covering 15+ methods: Yallop, Odeh, Schaefer, SAAO, Danjon limit, Babylonian lag rule, Fotheringham, Maunder, Indian, Malaysian, and the Umm al-Qura calendar.",
     "featureBilingual": "Fully bilingual interface in English and Arabic with right-to-left (RTL) support.",
     "openSourceTitle": "Open Source",
-    "openSourceBody": "Hijri Calendar is free and open-source software. Contributions, bug reports, and suggestions are welcome.",
+    "openSourceBody": "hilal.day is free and open-source software. Contributions, bug reports, and suggestions are welcome.",
     "furtherReadingTitle": "References & Credits",
     "ourResearch": "Our Research",
     "ourResearchLink": "Hijri Calculation Methods — Scientific Summary",
@@ -679,8 +679,8 @@
       "description": "Scholarly opinions on moon sighting for Hijri calendar: local sighting, global sighting, astronomical calculation, and Umm al-Qura approaches."
     },
     "about": {
-      "title": "About Hijri Calendar — Free Open-Source Islamic Calendar",
-      "description": "Hijri Calendar is a free, open-source Islamic calendar app with cookie-free, privacy-friendly aggregate analytics. Built by Samer Aamar."
+      "title": "About hilal.day — Free Open-Source Hijri Calendar",
+      "description": "hilal.day is a free, open-source Hijri calendar app with cookie-free, privacy-friendly aggregate analytics. Built by Samer Aamar."
     },
     "faq": {
       "title": "Hijri Calendar FAQ — Date Conversion & Moon Sighting Questions",

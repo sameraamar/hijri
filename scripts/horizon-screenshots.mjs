@@ -1,5 +1,5 @@
 /**
- * Capture per-day screenshots of the HorizonDiagram on /hijri/today across a
+ * Capture per-day screenshots of the HorizonDiagram on /today across a
  * date range, so we can visually verify the elongation arc behaves correctly
  * through a full lunar cycle (waxing crescent → full → waning crescent).
  *
@@ -19,7 +19,7 @@ import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 
 const BASE_URL = process.env.HIJRI_DEV_URL ?? 'http://localhost:5173';
-const TODAY_PATH = '/hijri/today';
+const TODAY_PATH = '/today';
 
 function pad2(n) { return String(n).padStart(2, '0'); }
 function isoFromDate(d) { return `${d.getUTCFullYear()}-${pad2(d.getUTCMonth() + 1)}-${pad2(d.getUTCDate())}`; }

@@ -7,6 +7,7 @@
 
 import type { GregorianDate } from './dateMath';
 import { pad2 } from './dateMath';
+import { BRAND, SITE_URL } from '../brand';
 
 export type IcalHoliday = {
   /** Stable id used for the VEVENT UID. */
@@ -19,13 +20,13 @@ export type IcalHoliday = {
   description?: string;
 };
 
-const PRODID = '-//hijri-calendar//github.com/sameraamar/hijri//EN';
+const PRODID = '-//hilal.day//Hijri Calendar//EN';
 
 /** Attribution embedded in every exported calendar and event. */
 export const PROJECT_NAME = 'Hijri Calendar';
-export const PROJECT_URL = 'https://sameraamar.github.io/hijri/';
+export const PROJECT_URL = SITE_URL;
 
-const ATTRIBUTION = `${PROJECT_NAME} — ${PROJECT_URL}`;
+const ATTRIBUTION = `${PROJECT_NAME} (${BRAND}) — ${PROJECT_URL}`;
 
 function escapeIcsText(s: string): string {
   // RFC 5545 §3.3.11: escape \\, \, ;, , and CRLF.

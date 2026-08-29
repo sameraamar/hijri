@@ -191,7 +191,7 @@
   },
   "methods": {
     "title": "Tentang",
-    "about": "Kalender Hijriah adalah alat gratis dan sumber terbuka untuk menjelajahi kalender Islam (Hijriah). Anda dapat menelusuri kalender bulanan, mengonversi tanggal antara Hijriah dan Masehi, melihat hari raya Islam mendatang, dan memeriksa perkiraan astronomi visibilitas hilal untuk lokasi mana pun. Semua perhitungan berjalan sepenuhnya di browser — tidak ada data yang dikirim ke server.",
+    "about": "hilal.day adalah alat gratis dan sumber terbuka untuk menjelajahi kalender Islam (Hijriah). Anda dapat menelusuri kalender bulanan, mengonversi tanggal antara Hijriah dan Masehi, melihat hari raya Islam mendatang, dan memeriksa perkiraan astronomi visibilitas hilal untuk lokasi mana pun. Semua perhitungan berjalan sepenuhnya di browser — tidak ada data yang dikirim ke server.",
     "methodsHeading": "Metode Perhitungan",
     "keyConcepts": {
       "title": "Konsep Astronomi Utama",
@@ -556,7 +556,7 @@
     "featureMonths": "Referensi ilmiah mencakup 15+ metode: Yallop, Odeh, Schaefer, SAAO, batas Danjon, aturan selisih Babilonia, Fotheringham, Maunder, India, Malaysia, dan kalender Umm al-Qura.",
     "featureBilingual": "Antarmuka dwibahasa penuh dalam bahasa Inggris dan Arab dengan dukungan kanan-ke-kiri (RTL).",
     "openSourceTitle": "Sumber Terbuka",
-    "openSourceBody": "Kalender Hijriah adalah perangkat lunak gratis dan sumber terbuka. Kontribusi, laporan bug, dan saran disambut.",
+    "openSourceBody": "hilal.day adalah perangkat lunak gratis dan sumber terbuka. Kontribusi, laporan bug, dan saran disambut.",
     "furtherReadingTitle": "Referensi & Kredit",
     "ourResearch": "Penelitian Kami",
     "ourResearchLink": "Metode Perhitungan Hijriah — Ringkasan Ilmiah",
@@ -680,8 +680,8 @@
       "description": "Pendapat ulama tentang penglihatan hilal untuk kalender Hijriah: penglihatan lokal, penglihatan global, perhitungan astronomi, dan pendekatan Umm al-Qura."
     },
     "about": {
-      "title": "Tentang Kalender Hijriah — Kalender Islam Gratis Sumber Terbuka",
-      "description": "Kalender Hijriah adalah aplikasi kalender Islam gratis dan sumber terbuka dengan analitik agregat yang ramah privasi dan tanpa cookie pengunjung. Dibangun oleh Samer Aamar."
+      "title": "Tentang hilal.day — Kalender Hijriah Gratis Sumber Terbuka",
+      "description": "hilal.day adalah aplikasi kalender Hijriah gratis dan sumber terbuka dengan analitik agregat yang ramah privasi dan tanpa cookie pengunjung. Dibangun oleh Samer Aamar."
     },
     "faq": {
       "title": "FAQ Kalender Hijriah — Konversi Tanggal & Rukyat Hilal",

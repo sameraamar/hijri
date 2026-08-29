@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const GOATCOUNTER_ENDPOINT = 'https://sameraamar-hijri.goatcounter.com/count';
+const GOATCOUNTER_ENDPOINT = 'https://hilal-day.goatcounter.com/count';
 const GOATCOUNTER_SCRIPT = 'https://gc.zgo.at/count.js';
-const PRODUCTION_HOST = 'sameraamar.github.io';
+const PRODUCTION_HOST = 'hilal.day';
 
 interface GoatCounterApi {
   no_onload?: boolean;

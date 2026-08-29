@@ -1,8 +1,8 @@
-# Hijri Calendar
+# hilal.day — Hijri Calendar
 
 Open-source web app for exploring the Hijri calendar with location-aware astronomical insights.
 
-- Live: https://sameraamar.github.io/hijri/
+- Live: https://hilal.day/
 - Source: https://github.com/sameraamar/hijri
 
 ## Screenshots
@@ -67,7 +67,7 @@ npm run generate:data
 
 Production deployment is via GitHub Pages:
 
-- Base path: `/hijri/`
+- Base path: `/`
 - SPA deep-link fallback: `apps/web/public/404.html`
 
 ## Embed widget
@@ -76,7 +76,7 @@ Show today's Hijri date on any site with an iframe:
 
 ```html
 <iframe
-  src="https://sameraamar.github.io/hijri/embed.html"
+  src="https://hilal.day/embed.html"
   title="Hijri date"
   width="220"
   height="120"
@@ -98,8 +98,8 @@ Included in repo:
 
 After deployment:
 
-1. Verify URL-prefix property in Google Search Console: `https://sameraamar.github.io/hijri/`
-2. Submit sitemap: `https://sameraamar.github.io/hijri/sitemap.xml`
+1. Verify URL-prefix property in Google Search Console: `https://hilal.day/`
+2. Submit sitemap: `https://hilal.day/sitemap.xml`
 3. Request indexing for the main routes from URL Inspection
 
 ## Disclaimer

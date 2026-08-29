@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 const entry = (file: string) => fileURLToPath(new URL(file, import.meta.url));
 
 export default defineConfig({
-  base: '/hijri/',
+  base: '/',
   plugins: [react()],
   build: {
     rollupOptions: {

@@ -23,6 +23,7 @@ import { useLanguageSync } from './hooks/useLanguageSync';
 import { useLocale, useLocalelessPath } from './hooks/useLocale';
 import { ADJUST_OPTIONS, useHijriAdjust } from './adjust/HijriAdjustContext';
 import { APP_VERSION } from './releaseNotes';
+import { BRAND } from './brand';
 
 const CalendarPage = lazy(() => import('./pages/CalendarPage'));
 const ConvertPage = lazy(() => import('./pages/ConvertPage'));
@@ -112,14 +113,17 @@ export default function App() {
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-white dark:bg-slate-800/95 backdrop-blur supports-[backdrop-filter]:bg-white dark:bg-slate-800/80 dark:border-slate-700 dark:bg-slate-900/95 dark:supports-[backdrop-filter]:bg-slate-900/80">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
           <div className="flex items-center gap-4">
-            <LocaleNavLink to="/calendar" className="flex items-center gap-2 text-lg font-bold tracking-tight text-slate-900 hover:opacity-80 transition-opacity dark:text-slate-100">
+            <LocaleNavLink to="/calendar" className="flex items-center gap-2 text-slate-900 hover:opacity-80 transition-opacity dark:text-slate-100">
               <svg className="h-6 w-6 flex-shrink-0" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <rect width="32" height="32" rx="6" fill="#0f172a"/>
                 <circle cx="15" cy="16" r="10" fill="#fbbf24"/>
                 <circle cx="19" cy="14" r="8.5" fill="#0f172a"/>
                 <polygon points="24,8 25.2,11.2 28,11.2 25.8,13.2 26.6,16 24,14.2 21.4,16 22.2,13.2 20,11.2 22.8,11.2" fill="#fbbf24" opacity="0.9"/>
               </svg>
-              {t('app.title')}
+              <span className="text-lg font-bold tracking-tight">{BRAND}</span>
+              <span className="hidden text-xs font-normal text-slate-500 dark:text-slate-400 lg:inline">
+                {t('app.title')}
+              </span>
             </LocaleNavLink>
             <nav className="hidden items-center gap-1 md:flex">
               {primaryNav.map((item) => (
@@ -275,7 +279,7 @@ export default function App() {
           </div>
 
           <p className="text-[11px] text-slate-400 dark:text-slate-500">
-            {t('app.footer.copyright', { year: new Date().getFullYear() })}
+            {BRAND} · {t('app.footer.copyright', { year: new Date().getFullYear() })}
           </p>
         </div>
       </footer>

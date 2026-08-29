@@ -1,6 +1,6 @@
 import { gregorianToHijriCivil } from '@hijri/calendar-engine/civil';
 
-const SITE_URL = 'https://sameraamar.github.io/hijri/';
+import { SITE_URL } from './brand';
 
 const MONTHS: Record<'en' | 'ar', string[]> = {
   en: [
