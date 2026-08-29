@@ -7,7 +7,7 @@
     <title>Hijri Calendar — Today's Hijri Date, Gregorian↔Hijri Converter & Crescent Visibility</title>
     <meta
       name="description"
-      content="Free Hijri (Islamic) calendar app — see today's Hijri date, convert Gregorian to Hijri dates, browse Islamic holidays (Ramadan, Eid al-Fitr, Eid al-Adha, Ashura), and compare crescent moon visibility using MABIMS, Yallop, Odeh, and tabular (civil) methods. Bilingual English/Arabic. التقويم الهجري — التاريخ الهجري اليوم وتحويل التاريخ ومواعيد رمضان وعيد الفطر وعيد الأضحى ورؤية الهلال"
+      content="Free Hijri (Islamic) calendar app — see today's Hijri date, convert Gregorian to Hijri dates, browse Islamic holidays (Ramadan, Eid al-Fitr, Eid al-Adha, Ashura), and compare crescent moon visibility using MABIMS, Yallop, Odeh, and tabular (civil) methods. Available in English, Arabic, Turkish, French, Indonesian, and Urdu. التقويم الهجري — التاريخ الهجري اليوم وتحويل التاريخ ومواعيد رمضان وعيد الفطر وعيد الأضحى ورؤية الهلال"
     />
     <meta
       name="keywords"
@@ -16,15 +16,23 @@
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="googlebot" content="index, follow" />
     <meta name="theme-color" content="#0f172a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="hilal.day" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="canonical" href="https://hilal.day/" />
     <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
 
     <!--
-      Language alternates: deferred to Tier 2.
-      Until distinct per-language URLs exist (e.g. ?lang=ar or /ar/), pointing
-      multiple hreflang values at the same href confuses Google. Keep only the
-      x-default so the page is treated as locale-neutral.
+      Prerendering emits page-specific canonical/hreflang tags for every route.
+      Keep this base block aligned for raw/unprerendered entry HTML.
     -->
+    <link rel="alternate" hreflang="en" href="https://hilal.day/" />
+    <link rel="alternate" hreflang="ar" href="https://hilal.day/ar" />
+    <link rel="alternate" hreflang="tr" href="https://hilal.day/tr" />
+    <link rel="alternate" hreflang="fr" href="https://hilal.day/fr" />
+    <link rel="alternate" hreflang="id" href="https://hilal.day/id" />
+    <link rel="alternate" hreflang="ur" href="https://hilal.day/ur" />
     <link rel="alternate" hreflang="x-default" href="https://hilal.day/" />
 
     <!-- Open Graph -->
@@ -33,7 +41,7 @@
     <meta property="og:title" content="Hijri Calendar — Today's Hijri Date & Gregorian↔Hijri Converter" />
     <meta
       property="og:description"
-      content="See today's Hijri date, convert Gregorian↔Hijri, browse Islamic holidays (Ramadan, Eid al-Fitr, Eid al-Adha), and compare crescent visibility methods (MABIMS, Yallop, Odeh). Bilingual English/Arabic. تحويل التاريخ الهجري ومواعيد رمضان والأعياد"
+      content="See today's Hijri date, convert Gregorian↔Hijri, browse Islamic holidays (Ramadan, Eid al-Fitr, Eid al-Adha), and compare crescent visibility methods (MABIMS, Yallop, Odeh). Available in six languages. تحويل التاريخ الهجري ومواعيد رمضان والأعياد"
     />
     <meta property="og:url" content="https://hilal.day/" />
     <meta property="og:image" content="https://hilal.day/og-image.svg" />
@@ -42,6 +50,10 @@
     <meta property="og:image:alt" content="Hijri Calendar — crescent moon with Islamic calendar app preview" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="ar_SA" />
+    <meta property="og:locale:alternate" content="tr_TR" />
+    <meta property="og:locale:alternate" content="fr_FR" />
+    <meta property="og:locale:alternate" content="id_ID" />
+    <meta property="og:locale:alternate" content="ur_PK" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -65,7 +77,7 @@
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Any",
         "browserRequirements": "Requires JavaScript",
-        "inLanguage": ["en", "ar"],
+        "inLanguage": ["en", "ar", "tr", "fr", "id", "ur"],
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -87,7 +99,7 @@
           "Tabular (Islamic Civil) calendar",
           "iCal/Google Calendar holiday export",
           "Method-vs-official accuracy comparison",
-          "Bilingual English and Arabic interface"
+          "Interface in English, Arabic, Turkish, French, Indonesian, and Urdu"
         ]
       }
     </script>

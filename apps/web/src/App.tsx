@@ -15,13 +15,13 @@ import { METHODS } from './method/types';
 import type { CalculationMethodId } from './method/types';
 import ThemeToggle from './components/ThemeToggle';
 import PageSkeleton from './components/PageSkeleton';
-import NavMore, { type NavItem } from './components/NavMore';
+import NavMore, { type NavGroup, type NavItem } from './components/NavMore';
 import LocaleNavLink from './components/LocaleNavLink';
 import LocaleLink from './components/LocaleLink';
 import AiTranslationBanner from './components/AiTranslationBanner';
+import InstallAppButton from './components/InstallAppButton';
 import { useLanguageSync } from './hooks/useLanguageSync';
 import { useLocale, useLocalelessPath } from './hooks/useLocale';
-import { ADJUST_OPTIONS, useHijriAdjust } from './adjust/HijriAdjustContext';
 import { APP_VERSION } from './releaseNotes';
 import { BRAND } from './brand';
 
@@ -54,7 +54,8 @@ function LocaleRoutes() {
       <Route path="today" element={<TodayPage />} />
       <Route path="calendar" element={<CalendarPage />} />
       <Route path="convert" element={<ConvertPage />} />
-      <Route path="details" element={<DetailsPage />} />
+      <Route path="moon-month-view" element={<DetailsPage />} />
+      <Route path="details" element={<Navigate to="../moon-month-view" replace />} />
       <Route path="holidays" element={<HolidaysPage />} />
       <Route path="history" element={<HistoryPage />} />
       <Route path="methods" element={<MethodsPage />} />
@@ -71,7 +72,6 @@ function LocaleRoutes() {
 export default function App() {
   const { t } = useTranslation();
   const { methodId, setMethodId } = useMethod();
-  const { adjustDays, setAdjustDays } = useHijriAdjust();
   const navigate = useNavigate();
   const localelessPath = useLocalelessPath();
   const currentLocale = useLocale();
@@ -96,16 +96,35 @@ export default function App() {
   const primaryNav: NavItem[] = [
     { to: '/today', label: t('app.nav.today') },
     { to: '/calendar', label: t('app.nav.calendar') },
-    { to: '/convert', label: t('app.nav.convert') },
-    { to: '/holidays', label: t('app.nav.holidays') },
-    { to: '/methods', label: t('app.nav.methods') },
+    { to: '/visibility-map', label: t('app.nav.visibilityMap') },
   ];
 
-  const moreNav: NavItem[] = [
-    { to: '/visibility-map', label: t('app.nav.visibilityMap') },
-    { to: '/details', label: t('app.nav.details') },
-    { to: '/history', label: t('app.nav.history') },
-    { to: '/scholars', label: t('app.nav.scholars') },
+  const moreNavGroups: NavGroup[] = [
+    {
+      label: t('app.nav.tools'),
+      items: [
+        { to: '/convert', label: t('app.nav.convert') },
+        { to: '/moon-month-view', label: t('app.nav.details') },
+        { to: '/holidays', label: t('app.nav.holidays') },
+        { to: '/countdown', label: t('countdown.short') },
+      ]
+    },
+    {
+      label: t('app.nav.learn'),
+      items: [
+        { to: '/methods', label: t('app.nav.methods') },
+        { to: '/history', label: t('app.nav.history') },
+        { to: '/scholars', label: t('app.nav.scholars') },
+        { to: '/faq', label: t('app.nav.faq') },
+      ]
+    },
+    {
+      label: t('app.nav.about'),
+      items: [
+        { to: '/about', label: t('app.nav.about') },
+        { to: '/releases', label: t('app.footer.releaseNotes') },
+      ]
+    },
   ];
 
   return (
@@ -141,7 +160,7 @@ export default function App() {
                   {item.label}
                 </LocaleNavLink>
               ))}
-              <NavMore items={moreNav} />
+              <NavMore groups={moreNavGroups} />
             </nav>
           </div>
 
@@ -159,19 +178,6 @@ export default function App() {
               {METHODS.map((m) => (
                 <option key={m.id} value={m.id} disabled={!m.enabled}>
                   {t(m.labelKey)}{!m.enabled ? ` (${t('app.method.comingSoon')})` : ''}
-                </option>
-              ))}
-            </select>
-            <select
-              className="control-sm w-auto cursor-pointer text-xs"
-              value={adjustDays}
-              onChange={(e) => setAdjustDays(Number(e.target.value))}
-              aria-label={t('app.adjust.label')}
-              title={t('app.adjust.label')}
-            >
-              {ADJUST_OPTIONS.map((n) => (
-                <option key={n} value={n}>
-                  {n === 0 ? t('app.adjust.none') : `${n > 0 ? '+' : '\u2212'}${Math.abs(n)}`}
                 </option>
               ))}
             </select>
@@ -207,7 +213,7 @@ export default function App() {
             </LocaleNavLink>
           ))}
           <div className="flex-shrink-0">
-            <NavMore items={moreNav} />
+            <NavMore groups={moreNavGroups} />
           </div>
         </nav>
       </header>
@@ -235,7 +241,7 @@ export default function App() {
 
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-500 dark:text-slate-400 dark:text-slate-500">
             <LocaleLink to="/faq" className="py-1 hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200">
-              {t('faq.title')}
+              {t('app.nav.faq')}
             </LocaleLink>
             <LocaleLink to="/countdown" className="py-1 hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200">
               {t('countdown.short')}
@@ -276,6 +282,7 @@ export default function App() {
             >
               {t('app.footer.releaseNotes')} · {t('app.footer.version', { version: APP_VERSION })}
             </LocaleLink>
+            <InstallAppButton />
           </div>
 
           <p className="text-[11px] text-slate-400 dark:text-slate-500">

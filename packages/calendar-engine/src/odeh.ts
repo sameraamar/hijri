@@ -127,7 +127,7 @@ function classifyZone(v: number, arclDeg: number): OdehZone {
  *
  * A → high   (visible by naked eye)
  * B → high   (optical aid / possible naked eye)
- * C → medium (optical aid only — still valid for Islamic sighting per many scholars)
+ * C → medium (optical aid only)
  * D → low    (not visible)
  */
 function zoneToLikelihood(zone: OdehZone): MonthStartLikelihood {
@@ -140,7 +140,8 @@ function zoneToLikelihood(zone: OdehZone): MonthStartLikelihood {
 }
 
 /**
- * Map Odeh zone to a visibility percentage for UI display.
+ * Map Odeh zone to an ordinal 0..100 display index.
+ * This is not a probability of human observation.
  */
 function zoneToVisibilityPercent(zone: OdehZone): number {
   switch (zone) {
@@ -398,9 +399,9 @@ export function odehMonthStartEstimate(
 export function meetsOdehCriteriaAtSunset(
   est: MonthStartEstimate
 ): boolean {
-  // Use the visibilityPercent which maps from zone:
+  // Use the ordinal display index which maps from zone:
   // A=95, B=75 → High (naked-eye / optical possible)
-  // C=45 → Fair (optical aid — accepted by many scholars)
+  // C=45 → Fair (optical aid category)
   // D=0 → below threshold
   const percent = est.metrics.visibilityPercent ?? 0;
   return percent >= 45; // Zones A, B, C

@@ -4,6 +4,7 @@ import {
   getCivilHolidaysForGregorianYearWithEstimate,
   getMonthStartSignalLevel,
   gregorianToHijriCivil,
+  meetsMabimsCriteriaAtSunset,
   yallopMonthStartEstimate,
   odehMonthStartEstimate
 } from '@hijri/calendar-engine';
@@ -23,8 +24,8 @@ import { usePageMeta } from '../hooks/usePageMeta';
 import { getTimeZoneForLocation } from '../timezone';
 import { addDaysUtc, daysBetweenUtc, sameDate } from '../utils/dateMath';
 import { formatHijriDateDisplay, formatGregorianDateDisplay } from '../utils/dateFormat';
+import { getMethodNativeClassification, shouldShowMonthStartIndex } from '../utils/visibilityDisplay';
 import CopyDateBar from '../components/CopyDateBar';
-import { useHijriAdjust } from '../adjust/HijriAdjustContext';
 import { buildIcal, downloadIcal } from '../utils/icalExport';
 
 function todayGregorian() {
@@ -46,7 +47,6 @@ export default function TodayPage() {
   const { t, i18n } = useTranslation();
   const { methodId } = useMethod();
   const { location } = useAppLocation();
-  const { adjustDays } = useHijriAdjust();
   usePageMeta('seo.today.title', 'seo.today.description');
 
   // The page is "Today" by default but the user can navigate day-by-day with
@@ -58,7 +58,7 @@ export default function TodayPage() {
   const isViewingToday = sameDate(currentDate, realToday);
 
   const hijriCurrent = useMemo(() => {
-    const anchor = addDaysUtc(currentDate, adjustDays);
+    const anchor = currentDate;
     if (methodId === 'civil') return gregorianToHijriCivil(anchor);
     if (!isAstronomicalMethod(methodId)) return gregorianToHijriCivil(anchor);
 
@@ -77,7 +77,7 @@ export default function TodayPage() {
 
     const match = calendar.find((item) => sameDate(item.gregorian, anchor));
     return match?.hijri ?? gregorianToHijriCivil(anchor);
-  }, [methodId, location.latitude, location.longitude, currentDate, adjustDays]);
+  }, [methodId, location.latitude, location.longitude, currentDate]);
 
   const tonightEst = useMemo(() => {
     const fn =
@@ -90,6 +90,10 @@ export default function TodayPage() {
   const tonightStatus = visibilityFromEstimate(tonightEst);
   const tonightStyle = likelihoodStyle(tonightStatus);
   const tonightPercent = clamp0to100(tonightEst.metrics.visibilityPercent ?? 0);
+  const tonightClassification = getMethodNativeClassification(tonightEst);
+  const tonightCriterionLabel = tonightClassification
+    ? `${t(tonightClassification.labelKey)} ${tonightClassification.zone}`
+    : null;
 
   const nextHoliday = useMemo(() => {
     const yearList = [currentDate.year, currentDate.year + 1];
@@ -136,6 +140,48 @@ export default function TodayPage() {
     if (!Number.isFinite(d.getTime())) return null;
     return localTimeFormatter.format(d);
   };
+
+  const methodComparisons = useMemo(() => {
+    const observer = { latitude: location.latitude, longitude: location.longitude };
+    const heuristic = estimateMonthStartLikelihoodAtSunset(currentDate, observer);
+    const yallop = yallopMonthStartEstimate(currentDate, observer);
+    const odeh = odehMonthStartEstimate(currentDate, observer);
+    const mabimsMeets = meetsMabimsCriteriaAtSunset(heuristic);
+
+    return [
+      {
+        methodKey: 'app.method.estimate',
+        result: t(`probability.${getMonthStartSignalLevel(heuristic)}`),
+        detail: typeof heuristic.metrics.visibilityPercent === 'number'
+          ? `${clamp0to100(heuristic.metrics.visibilityPercent)} ${t('methodComparison.index')}`
+          : t('probability.unknown')
+      },
+      {
+        methodKey: 'app.method.mabims',
+        result: mabimsMeets ? t('methodComparison.meets') : t('methodComparison.doesNotMeet'),
+        detail: t('methodComparison.mabimsDetail')
+      },
+      {
+        methodKey: 'app.method.yallop',
+        result: yallop.metrics.yallopZone
+          ? `${t('probability.yallopZone')} ${yallop.metrics.yallopZone}`
+          : t('probability.unknown'),
+        detail: yallop.metrics.yallopZoneDescription ?? t('probability.unknown')
+      },
+      {
+        methodKey: 'app.method.odeh',
+        result: odeh.metrics.odehZone
+          ? `${t('probability.odehZone')} ${odeh.metrics.odehZone}`
+          : t('probability.unknown'),
+        detail: odeh.metrics.odehZoneDescription ?? t('probability.unknown')
+      },
+      {
+        methodKey: 'app.method.civil',
+        result: hijriDisplay,
+        detail: t('methodComparison.civilDetail')
+      }
+    ];
+  }, [currentDate, hijriDisplay, location.latitude, location.longitude, t]);
 
   return (
     <div className="page">
@@ -300,9 +346,11 @@ export default function TodayPage() {
               </span>
               {t(`probability.${tonightStatus}`)}
             </span>
-            <span className="text-sm text-slate-700 dark:text-slate-200">{tonightPercent}%</span>
-            {typeof tonightEst.metrics.visibilityPercent === 'number' && (
-              <CrescentScoreBar percent={tonightEst.metrics.visibilityPercent} width={120} />
+            <span className="text-sm text-slate-700 dark:text-slate-200">
+              {tonightCriterionLabel ?? `${tonightPercent}%`}
+            </span>
+            {shouldShowMonthStartIndex(tonightEst) && (
+              <CrescentScoreBar percent={tonightEst.metrics.visibilityPercent ?? 0} width={120} />
             )}
           </div>
         )}
@@ -311,6 +359,32 @@ export default function TodayPage() {
 
         <div className="mt-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400 dark:text-slate-500">
           {t('probability.disclaimer')}
+        </div>
+      </section>
+
+      <section className="card p-4 sm:p-6">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <div className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400 dark:text-slate-500">
+              {t('methodComparison.title')}
+            </div>
+            <div className="mt-1 max-w-xl text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 dark:text-slate-500">
+              {t('methodComparison.intro')}
+            </div>
+          </div>
+          <LocaleLink to="/methods" className="whitespace-nowrap text-xs text-blue-600 hover:underline dark:text-blue-300">
+            {t('app.nav.methods')} →
+          </LocaleLink>
+        </div>
+
+        <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
+          {methodComparisons.map((item) => (
+            <div key={item.methodKey} className="rounded-md border border-slate-200 bg-slate-50 p-3 text-xs dark:border-slate-700 dark:bg-slate-800/60">
+              <div className="font-semibold text-slate-900 dark:text-slate-100">{t(item.methodKey)}</div>
+              <div className="mt-1 text-sm font-medium text-slate-800 dark:text-slate-100">{item.result}</div>
+              <div className="mt-1 leading-relaxed text-slate-500 dark:text-slate-400 dark:text-slate-500">{item.detail}</div>
+            </div>
+          ))}
         </div>
       </section>
 

@@ -1,18 +1,21 @@
 {
   "_translation_note": "AI-translated from en.json. Review by a native Turkish speaker is recommended, especially religious-terminology cells (holidays.*, scholars.*, methods.*, probability.*).",
   "app": {
-    "title": "Hicri Takvim",
+    "title": "İslami aylar için astronomik takvim",
     "nav": {
       "today": "Bugün",
       "calendar": "Takvim",
       "convert": "Dönüştür",
-      "details": "Ayrıntılar",
+      "details": "Aylık görünüm",
       "holidays": "Bayramlar",
       "methods": "Yöntemler",
-      "history": "Tarihçe",
+      "history": "Doğruluk",
       "scholars": "Alimler",
+      "faq": "SSS",
       "about": "Hakkında",
       "more": "Daha fazla",
+      "tools": "Araçlar",
+      "learn": "Öğren",
       "visibilityMap": "Görünürlük haritası"
     },
     "theme": {
@@ -26,7 +29,7 @@
     "method": {
       "label": "Yöntem",
       "civil": "Tablosal",
-      "estimate": "Görünürlük tahmini",
+      "estimate": "Hilal.day sezgiseli",
       "mabims": "MABIMS",
       "yallop": "Yallop (q)",
       "odeh": "Odeh (V)",
@@ -37,16 +40,11 @@
       "openSource": "Ücretsiz ve açık kaynak:",
       "repoLabel": "github.com/sameraamar/hijri",
       "disclaimer": "Sorumluluk reddi: Bu web sitesi tahmini astronomik bilgi sağlar ve resmi dini bir duyuru değildir.",
-      "contact": "Doğrudan iletişim / öneriler:",
       "copyright": "© {{year}} Samer Aamar. Tüm hakları saklıdır.",
       "license": "MIT Lisansı",
-    "contact": "İletişim",
+      "contact": "İletişim",
       "releaseNotes": "Sürüm notları",
       "version": "v{{version}}"
-    },
-    "adjust": {
-      "label": "Hicri gün düzeltmesi",
-      "none": "Varsayılan"
     },
     "copy": {
       "label": "Tarihi kopyala",
@@ -60,6 +58,10 @@
       "title": "Yapay zekâ çeviri uyarısı",
       "body": "Bu sayfa İngilizceden yapay zekâ ile otomatik çevrilmiştir ve hata veya tutarsızlıklar içerebilir.",
       "dismiss": "Gizle"
+    },
+    "install": {
+      "label": "Uygulamayı yükle",
+      "iosHint": "iPhone veya iPad'de Paylaş'ı açıp Ana Ekrana Ekle'yi seçin."
     }
   },
   "today": {
@@ -81,12 +83,30 @@
     "holidayCalendarName": "Hicri önemli günler",
     "nextMonthInDays": "Sonraki Hicri ay yaklaşık {{count}} gün içinde."
   },
+  "methodComparison": {
+    "title": "Yöntemleri karşılaştır",
+    "intro": "Aynı gökyüzü, farklı ölçütler. Her yöntemin seçilen konumdaki bu akşamı nasıl sınıflandırdığını karşılaştırın.",
+    "index": "indeks",
+    "meets": "Karşılıyor",
+    "doesNotMeet": "Karşılamıyor",
+    "mabimsDetail": "MABIMS eşik kontrolü: yükseklik, uzanım, yaş ve Ay batış gecikmesi.",
+    "civilDetail": "Tablosal takvim kuralı; hilal görünürlük testi değildir."
+  },
   "releaseNotes": {
     "title": "Sürüm notları",
     "intro": "Yayımlanan her sürümde nelerin değiştiğine dair kısa bir kayıt.",
     "current": "Güncel",
     "released": "Yayımlanma tarihi: {{date}}",
     "versions": {
+      "v1_3_0": {
+        "semantics": "Yallop ve Odeh sonuçları yüzde benzeri olasılık puanları yerine yönteme özgü bölgelerle gösterilecek şekilde hilal görünürlüğü dili yenilendi.",
+        "explain": "Ay metriklerine gökyüzü konumu bağlamı ve “Bu sonuç neden?” açıklaması eklendi; Bugün sayfasına yöntem karşılaştırması eklendi.",
+        "pwa": "PNG, maskable ve Apple ikonları, manifest ekran görüntüleri ve yükleme bağlantısı ile uygulama olarak kurulum iyileştirildi.",
+        "navigation": "Belirsiz gezinme etiketleri netleştirildi ve ikincil sayfalar URL'ler değişmeden Araçlar, Öğren ve Hakkında altında gruplandı.",
+        "validation": "Çeviri anahtarı, yöntem depolama, anlamsal görünüm, sivil artık yıl döngüsü ve astronomik regresyon testleri eklendi.",
+        "performance": "Ana uygulama paketini küçültmek için Leaflet, React, astronomy-engine ve çeviri kaynakları ayrı parçalara bölündü.",
+        "seo": "Altı desteklenen dil için temel metadata güncellendi ve önceden oluşturulan özel gün sayfalarına Event yapılandırılmış verisi eklendi."
+      },
       "v1_0_0": {
         "pages": "Bugün, Takvim, Önemli Günler, Dönüştürme, Tarihçe, Yöntemler, Alimler ve Hakkında sayfaları eklendi.",
         "methods": "Tablosal, görünürlük sezgiseli, MABIMS, Yallop ve Odeh hesaplama yöntemleri eklendi.",
@@ -117,7 +137,7 @@
     "prevMonthShort": "Önceki",
     "nextMonthShort": "Sonraki",
     "tabCalendar": "Takvim",
-    "tabDetails": "Ayrıntılar",
+    "tabDetails": "Aylık Ay görünümü",
     "today": "Bugün",
     "dayOfWeek": "Gün"
   },
@@ -176,7 +196,7 @@
     "moonIllumination": "Aydınlanma",
     "observedEveningMetrics": "{{date}} akşamı gözlemi",
     "monthStartRuleNote": "Tahmin, hilalin bu akşam görülebileceğini öne sürüyor → ertesi gün yeni bir Hicri ayın başlangıcı olabilir.",
-    "monthStartCandidateNote": "{{level}} ihtimalle hilal o akşam görülür, bu da bu tarihin yeni ay başlangıcı olabileceğini gösterir.",
+    "monthStartCandidateNote": "O akşam için {{level}} ay başlangıcı sinyali, bu tarihin yeni ay başlangıcı olabileceğini gösterir.",
     "bestCandidate": "En olası",
     "possibleEventDates": "Olası tarihler",
     "dependsOnMonthStart": "Ay başlangıcına bağlı",
@@ -252,7 +272,7 @@
       "comingSoon": "Bu yöntem planlanmıştır ancak henüz etkin değildir."
     },
     "estimate": {
-      "title": "Astronomik Görünürlük Tahmini",
+      "title": "Hilal.day sezgiseli",
       "summary": "Belirli bir akşamda konumunuzda genç hilalin çıplak gözle görünür olma olasılığını tahmin eden ağırlıklı bir puanlama modeli. Şu soruyu yanıtlar: \"Bu gece yeni bir Hicri ayın başlangıcı olabilir mi?\"",
       "howItWorksTitle": "Nasıl çalışır (adım adım)",
       "step1title": "1. Adım — Yerel gün batımında astronomik değerleri hesapla",
@@ -402,8 +422,8 @@
     "moonsetLocal": "Ay batımı (yerel)",
     "moonRiseSetLocal": "Ay (yerel)",
     "lagMinutes": "Gecikme (dk)",
-    "visibilityPercent": "Görünürlük",
-    "crescentScore": "Hilal puanı",
+    "visibilityPercent": "İndeks",
+    "crescentScore": "Ay başlangıcı indeksi",
     "yallopQ": "Yallop q değeri",
     "yallopZone": "Yallop bölgesi",
     "yallopBestTime": "En iyi gözlem zamanı (yerel)",
@@ -416,6 +436,13 @@
     "odehArcv": "ARCV (görüş yayı)",
     "odehArcl": "ARCL (ayrılma)",
     "odehWidth": "W' (hilal genişliği)",
+    "skyPositionTitle": "Gün batımında gökyüzü konumu",
+    "skyPositionHint": "Ufuk görünümü, gün batımında Ay'ın yerel batı ufku ve Güneş'e göre nerede olduğunu gösterir.",
+    "whyTitle": "Bu sonuç neden?",
+    "whyHeuristic": "Hilal.day sezgiseli; yükseklik, uzanım, Ay yaşı ve batış gecikmesini eğitici bir ay başlangıcı indeksinde birleştirir.",
+    "whyYallop": "Yallop, gün batımından sonraki en iyi gözlem zamanında yayımlanmış hilal görünürlük ölçütündeki q değeri ve bölge eşiklerini kullanır.",
+    "whyOdeh": "Odeh, gün batımından sonraki en iyi gözlem zamanında yayımlanmış hilal görünürlük ölçütündeki V değeri ve bölge eşiklerini kullanır.",
+    "whyCaveat": "Bu, seçilen konum ve yöntem için astronomik bir sınıflandırmadır; resmî dini duyuru değildir.",
     "noChanceDesc": "Hilal testi bu akşam için çalıştırıldı ve koşullar görünürlüğü dışladı (örn. Ay gün batımında ya da öncesinde batıyor, veya puan yeni ay başlangıcı için fazla düşük).",
     "veryLowDesc": "Son derece zayıf koşullar; hilalin görünmesi olası değildir ve ay başlangıcı için güven minimum düzeydedir.",
     "lowDesc": "Görünür bir hilal için zayıf koşullar (örn. Ay çok alçak, çok hızlı batıyor veya çok genç).",
@@ -630,12 +657,12 @@
     "am4": "Âlimler ihtilaf etmiştir. Kimi yerel rüyeti şart koşar, kimi herhangi bir yerdeki rüyeti kabul eder, kimi hesabı kabul eder, kimi de tek bir merkezî makamı izler. Âlimler sayfası her görüşü birini öne çıkarmadan açıklar; bu site hesaplar, fetva vermez.",
     "qu1": "Görünürlük haritası neden günlerce Ay'ı ufkun altında gösteriyor?",
     "au1": "Bu beklenen bir durumdur. Dolunaydan sonra Ay küçülür; gün batımında henüz doğmamıştır ve yüksekliği negatiftir. Bu durum her kameri ayın yaklaşık yarısı boyunca sürer ve yeni aydan bir iki gün sonra, büyüyen hilal yeniden ufkun üzerine çıktığında tersine döner.",
-    "qu2": "Buradaki tarih camimden bir gün farklı. Düzeltebilir miyim?",
-    "au2": "Evet. Hicri gün ayarı, tarihi yerel duyuruya uydurmak için her iki yönde iki güne kadar kaydırmanıza izin verir. Ayar hatırlanır ve Bugün, Takvim, Dönüştürme ve Ayrıntılar sayfalarında geçerlidir.",
+    "qu2": "Buradaki tarih camimden bir gün farklı. Neden?",
+    "au2": "Bir günlük fark normaldir: makamlar farklı ölçütler uygular ve bazıları yerel rüyetin sabit olmasını bekler. Ülkenizin izlediği hesaplama yöntemini seçin — Geçmiş sayfası her ülkenin resmî duyurularıyla en sık örtüşen yöntemi gösterir.",
     "qu3": "Bu site beni izliyor mu, internet bağlantısı gerekiyor mu?",
     "au3": "Tüm hesaplamalar tarayıcınızda çalışır ve konumunuz cihazınızdan hiç çıkmaz. Yalnızca çerezsiz, anonim sayfa sayımı kaydedilir. Yüklendikten sonra site kurulabilir ve çevrimdışı çalışmayı sürdürür.",
     "qu4": "Bu Hicri takvimi farklı kılan nedir?",
-    "au4": "Tek bir yönteme bağlanmak yerine yayımlanmış birkaç yöntemi yan yana karşılaştırır, her tahminin ardındaki astronomik sayıları gösterir, tarihi yerel rüyete göre ayarlamanıza izin verir ve her yöntemin gerçek resmî ilanlarla ne kadar örtüştüğünü bildirir. Ücretsizdir, açık kaynaklıdır ve çevrimdışı çalışır."
+    "au4": "Tek bir yönteme bağlanmak yerine yayımlanmış birkaç yöntemi yan yana karşılaştırır, her tahminin ardındaki astronomik sayıları gösterir ve her yöntemin gerçek resmî ilanlarla ne kadar örtüştüğünü bildirir. Ücretsizdir, açık kaynaklıdır ve çevrimdışı çalışır."
   },
   "countdown": {
     "title": "İslami günlere geri sayım",
@@ -704,7 +731,7 @@
     "title": "Ay görünürlüğü — dünya haritası",
     "eveningOf": "Akşam",
     "nextEvening": "Sonraki akşam",
-    "notAvailableForCivil": "Görünürlük haritası bir astronomik yöntem ister (Görünürlük tahmini, MABIMS, Yallop veya Odeh). Üst kısımdan yöntemi değiştirin.",
+    "notAvailableForCivil": "Görünürlük haritası bir astronomik yöntem ister (Hilal.day sezgiseli, MABIMS, Yallop veya Odeh). Üst kısımdan yöntemi değiştirin.",
     "computing": "~500 konum için görünürlük hesaplanıyor…",
     "skyHeader": "Bu gece gökyüzünde Ay",
     "skyBanner": "Her hücre, yerel gün batımında ufkun üzerindeki Ay yüksekliğini gösterir — Ay bu gece gökyüzünde işte buralarda olacaktır.",

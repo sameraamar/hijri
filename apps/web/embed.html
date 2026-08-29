@@ -21,14 +21,48 @@
         border: 1px solid rgba(100, 116, 139, 0.35);
         border-radius: 10px;
         text-align: center;
+        color: #0f172a;
+        background: rgba(255, 255, 255, 0.92);
+      }
+      #hijri-embed[data-theme="dark"] {
+        color: #f8fafc;
+        background: rgba(15, 23, 42, 0.94);
+        border-color: rgba(148, 163, 184, 0.35);
+      }
+      #hijri-embed[data-layout="compact"] {
+        padding: 8px 10px;
       }
       #hijri-embed .hijri {
         font-size: 18px;
         font-weight: 600;
       }
+      #hijri-embed[data-layout="compact"] .hijri {
+        font-size: 15px;
+      }
       #hijri-embed .greg {
         margin-top: 2px;
         font-size: 13px;
+        opacity: 0.75;
+      }
+      #hijri-embed .kicker {
+        margin-bottom: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        opacity: 0.6;
+      }
+      #hijri-embed .count {
+        margin-top: 4px;
+        font-size: 22px;
+        font-weight: 700;
+      }
+      #hijri-embed[data-layout="compact"] .count {
+        font-size: 17px;
+      }
+      #hijri-embed .note {
+        margin-top: 3px;
+        font-size: 12px;
         opacity: 0.75;
       }
       #hijri-embed a {

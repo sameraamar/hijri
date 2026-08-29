@@ -13,9 +13,7 @@ import { useAppLocation } from '../location/LocationContext';
 import { useMethod } from '../method/MethodContext';
 import { isAstronomicalMethod, methodIdToRule } from '../method/types';
 import { formatGregorianDateDisplay, formatHijriDateDisplay, formatIsoDateDisplay } from '../utils/dateFormat';
-import { addDaysUtc } from '../utils/dateMath';
 import CopyDateBar from '../components/CopyDateBar';
-import { useHijriAdjust } from '../adjust/HijriAdjustContext';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 function isoToday(): string {
@@ -30,7 +28,6 @@ export default function ConvertPage() {
   const { t, i18n } = useTranslation();
   const { methodId } = useMethod();
   const { location } = useAppLocation();
-  const { adjustDays } = useHijriAdjust();
 
   const [gregIso, setGregIso] = useState<string>(isoToday());
   const [hijri, setHijri] = useState<HijriDate>({ year: 1446, month: 1, day: 1 });
@@ -38,7 +35,7 @@ export default function ConvertPage() {
   const hijriFromGregorian = useMemo(() => {
     const [gy, gm, gd] = gregIso.split('-').map((x) => Number(x));
     if (!gy || !gm || !gd) return null;
-    const { year: y, month: m, day: d } = addDaysUtc({ year: gy, month: gm, day: gd }, adjustDays);
+    const { year: y, month: m, day: d } = { year: gy, month: gm, day: gd };
     if (methodId === 'civil') return gregorianToHijriCivil({ year: y, month: m, day: d });
     if (isAstronomicalMethod(methodId)) {
       const dim = new Date(Date.UTC(y, m, 0)).getUTCDate();
@@ -64,11 +61,11 @@ export default function ConvertPage() {
       return match?.hijri ?? null;
     }
     return null;
-  }, [gregIso, methodId, location.latitude, location.longitude, adjustDays]);
+  }, [gregIso, methodId, location.latitude, location.longitude]);
 
   const gregorianFromHijri = useMemo(() => {
     try {
-      if (methodId === 'civil') return addDaysUtc(hijriCivilToGregorian(hijri), -adjustDays);
+      if (methodId === 'civil') return hijriCivilToGregorian(hijri);
       if (isAstronomicalMethod(methodId)) {
         const target = hijriCivilToGregorian(hijri);
         const center = new Date(Date.UTC(target.year, target.month - 1, target.day, 0, 0, 0));
@@ -85,13 +82,13 @@ export default function ConvertPage() {
         );
 
         const match = findEstimatedGregorianForHijriDate(calendar, hijri, target);
-        return match ? addDaysUtc(match.gregorian, -adjustDays) : null;
+        return match ? match.gregorian : null;
       }
       return null;
     } catch {
       return null;
     }
-  }, [hijri, methodId, location.latitude, location.longitude, adjustDays]);
+  }, [hijri, methodId, location.latitude, location.longitude]);
 
   const gregorianDisplay = useMemo(
     () => formatIsoDateDisplay(gregIso, i18n.language),

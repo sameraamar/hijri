@@ -1,17 +1,20 @@
 {
   "app": {
-    "title": "Hijri Calendar",
+    "title": "Astronomical calendar for Islamic months",
     "nav": {
       "today": "Today",
       "calendar": "Calendar",
       "convert": "Convert",
-      "details": "Details",
+      "details": "Month view",
       "holidays": "Holidays",
       "methods": "Methods",
-      "history": "History",
+      "history": "Accuracy",
       "scholars": "Scholars",
+      "faq": "FAQ",
       "about": "About",
       "more": "More",
+      "tools": "Tools",
+      "learn": "Learn",
       "visibilityMap": "Visibility map"
     },
     "theme": {
@@ -25,7 +28,7 @@
     "method": {
       "label": "Method",
       "civil": "Tabular",
-      "estimate": "Visibility heuristic",
+      "estimate": "Hilal.day heuristic",
       "mabims": "MABIMS",
       "yallop": "Yallop (q)",
       "odeh": "Odeh (V)",
@@ -36,16 +39,11 @@
       "openSource": "Free and open source:",
       "repoLabel": "github.com/sameraamar/hijri",
       "disclaimer": "Disclaimer: this website provides estimated astronomical guidance and is not an official religious announcement.",
-      "contact": "Direct contact / suggestions:",
       "copyright": "© {{year}} Samer Aamar. All rights reserved.",
       "license": "MIT License",
-    "contact": "Contact",
+      "contact": "Contact",
       "releaseNotes": "Release notes",
       "version": "v{{version}}"
-    },
-    "adjust": {
-      "label": "Hijri day adjustment",
-      "none": "Default"
     },
     "copy": {
       "label": "Copy date",
@@ -59,6 +57,10 @@
       "title": "AI translation warning",
       "body": "Some pages are machine-translated from English by AI and may contain errors or inaccuracies.",
       "dismiss": "Dismiss"
+    },
+    "install": {
+      "label": "Install app",
+      "iosHint": "On iPhone or iPad, open Share and choose Add to Home Screen."
     }
   },
   "today": {
@@ -80,12 +82,30 @@
     "holidayCalendarName": "Hijri holidays",
     "nextMonthInDays": "Next Hijri month in approximately {{count}} days."
   },
+  "methodComparison": {
+    "title": "Compare methods",
+    "intro": "Same sky, different criteria. Compare how each method classifies this evening at the selected location.",
+    "index": "index",
+    "meets": "Meets",
+    "doesNotMeet": "Does not meet",
+    "mabimsDetail": "MABIMS threshold check: altitude, elongation, age, and moonset lag.",
+    "civilDetail": "Tabular calendar convention; not a crescent-visibility test."
+  },
   "releaseNotes": {
     "title": "Release notes",
     "intro": "A short record of what changed in each published version.",
     "current": "Current",
     "released": "Released {{date}}",
     "versions": {
+      "v1_3_0": {
+        "semantics": "Reworked crescent visibility language so Yallop and Odeh show method-native zones instead of percentage-like probability scores.",
+        "explain": "Added sky-position context and a “Why this result?” explanation to the shared moon metrics, plus a method comparison panel on Today.",
+        "pwa": "Improved installability with raster and maskable icons, an Apple touch icon, manifest screenshots, and an install affordance.",
+        "navigation": "Renamed vague navigation labels and grouped secondary pages into Tools, Learn, and About without changing URLs.",
+        "validation": "Added i18n duplicate-key checks, method-storage fallback tests, semantic display tests, civil leap-cycle tests, and astronomical regression fixtures.",
+        "performance": "Split Leaflet, React, astronomy-engine, and translation resources into separate build chunks to reduce the main app bundle.",
+        "seo": "Updated base metadata for six supported languages and added Event structured data to prerendered Holidays pages."
+      },
       "v1_0_0": {
         "pages": "Added Today, Calendar, Holidays, Convert, History, Methods, Scholars, and About pages.",
         "methods": "Added tabular, visibility heuristic, MABIMS, Yallop, and Odeh calculation methods.",
@@ -116,7 +136,7 @@
     "prevMonthShort": "Prev",
     "nextMonthShort": "Next",
     "tabCalendar": "Calendar",
-    "tabDetails": "Details",
+    "tabDetails": "Moon month view",
     "today": "Today",
     "dayOfWeek": "Day"
   },
@@ -174,8 +194,8 @@
     "moonAge": "Age",
     "moonIllumination": "Illum",
     "observedEveningMetrics": "Observation from evening {{date}}",
-    "monthStartRuleNote": "Estimate suggests the crescent may be visible this evening → next day could start a new Hijri month.",
-    "monthStartCandidateNote": "{{level}} chance the crescent is seen that evening, suggesting this date as a new month start.",
+    "monthStartRuleNote": "The selected method gives a positive month-start signal for this evening → the next day could start a new Hijri month.",
+    "monthStartCandidateNote": "{{level}} month-start signal for that evening, suggesting this date as a new month start.",
     "bestCandidate": "Most likely",
     "possibleEventDates": "Possible event dates",
     "dependsOnMonthStart": "Depends on month start",
@@ -251,8 +271,8 @@
       "comingSoon": "This method is planned but not enabled yet."
     },
     "estimate": {
-      "title": "Astronomical Visibility Estimate",
-      "summary": "A weighted scoring model that estimates whether the young crescent moon is likely visible to the naked eye on a given evening at your location. It answers: \"Could tonight be the start of a new Hijri month?\"",
+      "title": "Hilal.day heuristic",
+      "summary": "A simplified educational index created by Hilal.day. It combines the young crescent's altitude, elongation, age, and moonset lag for a given evening and location. It is not a published visibility criterion and not a probability of human observation.",
       "howItWorksTitle": "How it works (step by step)",
       "step1title": "Step 1 — Compute astronomical values at local sunset",
       "step1": "Using the astronomy-engine library, the app computes for the selected location at the moment of sunset: moon altitude (h), moon–sun elongation (Δ), moon age since last conjunction (A), and moonset lag after sunset (L).",
@@ -376,13 +396,13 @@
     }
   },
   "probability": {
-    "label": "Month start likelihood",
+    "label": "Month-start signal",
     "labelShort": "Signal",
     "estimate": "Estimate",
     "eveningEstimate": "This evening's visibility test",
     "monthStartSignalFor": "Previous evening's test for",
     "basedOn": "Observed on",
-    "noChance": "No chance",
+    "noChance": "Not possible",
     "noChanceHint": "This evening cannot mark a new Hijri month start (we're not near a new moon, or the Moon sets at/before sunset).",
     "veryHigh": "High",
     "veryLow": "Faint",
@@ -390,7 +410,7 @@
     "medium": "Fair",
     "high": "High",
     "unknown": "Unknown",
-    "disclaimer": "Month-start likelihood is an estimate for the evening (around local sunset) at the selected location. If the crescent is seen on this evening, the next Gregorian date becomes Hijri day 1.",
+    "disclaimer": "The month-start signal is an astronomical classification for the evening (around local sunset) at the selected location. It is not an official religious announcement.",
     "legendTitle": "What these labels mean",
     "legendHint": "See legend below.",
     "eveningEstimateHint": "Estimate for this evening; it affects the next day after sunset.",
@@ -401,8 +421,8 @@
     "moonsetLocal": "Moonset (local)",
     "moonRiseSetLocal": "Moon (local)",
     "lagMinutes": "Lag (min)",
-    "visibilityPercent": "Visibility",
-    "crescentScore": "Crescent score",
+    "visibilityPercent": "Index",
+    "crescentScore": "Month-start index",
     "yallopQ": "Yallop q-value",
     "yallopZone": "Yallop zone",
     "yallopBestTime": "Best obs. time (local)",
@@ -415,7 +435,14 @@
     "odehArcv": "ARCV (arc of vision)",
     "odehArcl": "ARCL (elongation)",
     "odehWidth": "W' (crescent width)",
-    "noChanceDesc": "The crescent test was run for tonight and conditions ruled out a sighting (e.g. the Moon sets at or before sunset, or the score is too low to mark a new month).",
+    "skyPositionTitle": "Sky position at sunset",
+    "skyPositionHint": "The horizon view shows where the Moon sits relative to the local western horizon and the Sun at sunset.",
+    "whyTitle": "Why this result?",
+    "whyHeuristic": "The Hilal.day heuristic combines altitude, elongation, lunar age, and moonset lag into an educational month-start index.",
+    "whyYallop": "Yallop uses q and zone thresholds from a published crescent-visibility criterion, evaluated near the best observation time after sunset.",
+    "whyOdeh": "Odeh uses V and zone thresholds from a published crescent-visibility criterion, evaluated near the best observation time after sunset.",
+    "whyCaveat": "This is an astronomical classification for the selected location and method, not an official religious declaration.",
+    "noChanceDesc": "The crescent test was run for tonight and conditions rule out a month-start signal (for example, the Moon sets at or before sunset, or the index is too low).",
     "veryLowDesc": "Extremely weak conditions; crescent is unlikely visible and confidence for month start is minimal.",
     "lowDesc": "Poor conditions for a visible crescent (e.g., Moon very low, setting too soon, or very young).",
     "mediumDesc": "Borderline/mixed conditions; visibility depends on observer skill and local atmosphere.",
@@ -629,12 +656,12 @@
     "am4": "Scholars differ. Some require local sighting, some accept a sighting anywhere, some accept calculation, and some follow one central authority. The Scholars page explains each position without endorsing one; this site calculates, it does not issue rulings.",
     "qu1": "Why does the visibility map show the moon below the horizon for days at a time?",
     "au1": "That is expected. After the full moon the moon is waning, so at sunset it has not yet risen and its altitude is negative. This lasts for roughly half of every lunar month and reverses a day or two after the new moon, when the waxing crescent appears above the horizon again.",
-    "qu2": "The date here is one day off from my mosque. Can I fix that?",
-    "au2": "Yes. The Hijri day adjustment lets you shift the date by up to two days in either direction to match your local announcement. The setting is remembered and applies across the Today, Calendar, Convert, and Details pages.",
+    "qu2": "The date here is one day off from my mosque. Why?",
+    "au2": "A one-day difference is normal: authorities apply different criteria, and some wait for a confirmed local sighting. Switch to the calculation method your country follows — the History page shows which method has matched each country's official announcements most often.",
     "qu3": "Does this site track me or need an internet connection?",
     "au3": "Every calculation runs in your browser, and your location never leaves your device. Only anonymous, cookie-free page counts are recorded. Once loaded, the site is installable and keeps working offline.",
     "qu4": "What makes this Hijri calendar different?",
-    "au4": "It compares several published methods side by side instead of committing to one, shows the astronomical numbers behind every prediction, lets you adjust the date to match your local sighting, and reports how each method scored against real official declarations. It is free, open source, and works offline."
+    "au4": "It compares several published methods side by side instead of committing to one, shows the astronomical numbers behind every prediction, and reports how each method scored against real official declarations. It is free, open source, and works offline."
   },
   "countdown": {
     "title": "Countdown to Islamic events",
@@ -659,8 +686,8 @@
       "description": "Convert dates between the Gregorian (Miladi) and Hijri (Islamic) calendars instantly. Free bilingual converter with multiple calculation methods."
     },
     "details": {
-      "title": "Crescent Moon Details — Daily Visibility Data",
-      "description": "View detailed daily crescent moon visibility data including moon altitude, elongation, age, and illumination for any location. Hilal observation estimates."
+      "title": "Moon Month View — Daily Crescent & Moon Data",
+      "description": "View a month of moon data including altitude, elongation, age, moonset lag, illumination, and crescent visibility classification for any location."
     },
     "holidays": {
       "title": "Islamic Holidays — Ramadan, Eid al-Fitr, Eid al-Adha Dates",
@@ -703,7 +730,7 @@
     "title": "Moon visibility — world map",
     "eveningOf": "Evening of",
     "nextEvening": "Next evening",
-    "notAvailableForCivil": "The visibility map needs an astronomical method (Visibility heuristic, MABIMS, Yallop, or Odeh). Switch the method in the header.",
+    "notAvailableForCivil": "The visibility map needs an astronomical method (Hilal.day heuristic, MABIMS, Yallop, or Odeh). Switch the method in the header.",
     "computing": "Computing visibility for ~500 locations…",
     "skyHeader": "Moon in the sky tonight",
     "skyBanner": "Each cell shows the Moon's altitude above the horizon at local sunset — that's where the Moon will be in the sky tonight.",

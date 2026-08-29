@@ -11,18 +11,26 @@ const MethodContext = createContext<MethodContextValue | null>(null);
 
 const STORAGE_KEY = 'hijri.methodId';
 
-function readInitial(): CalculationMethodId {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  const match = METHODS.find((x) => x.id === raw && x.enabled);
-  if (match) return match.id;
+export function readInitialMethodId(): CalculationMethodId {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    const match = METHODS.find((x) => x.id === raw && x.enabled);
+    if (match) return match.id;
+  } catch {
+    // Storage may be unavailable in private or embedded contexts.
+  }
   return 'estimate';
 }
 
 export function MethodProvider({ children }: { children: React.ReactNode }) {
-  const [methodId, setMethodIdState] = useState<CalculationMethodId>(() => readInitial());
+  const [methodId, setMethodIdState] = useState<CalculationMethodId>(() => readInitialMethodId());
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, methodId);
+    try {
+      localStorage.setItem(STORAGE_KEY, methodId);
+    } catch {
+      // Best-effort; the selected method still works for this session.
+    }
   }, [methodId]);
 
   const setMethodId = (id: CalculationMethodId) => {

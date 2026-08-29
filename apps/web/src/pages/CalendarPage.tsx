@@ -24,8 +24,7 @@ import { usePageMeta } from '../hooks/usePageMeta';
 import { useUrlNumber } from '../hooks/useUrlNumber';
 import { getTimeZoneForLocation } from '../timezone';
 import { formatHijriDateDisplay, formatLocalizedNumber } from '../utils/dateFormat';
-import { addDaysUtc, daysInGregorianMonth, isoDate } from '../utils/dateMath';
-import { MAX_ADJUST_DAYS, useHijriAdjust } from '../adjust/HijriAdjustContext';
+import { daysInGregorianMonth, isoDate } from '../utils/dateMath';
 
 type DayEstimate = {
   likelihoodKey: string;
@@ -98,7 +97,6 @@ export default function CalendarPage() {
   const [expandedDay, setExpandedDay] = useState<number | null>(null);
   const { location } = useAppLocation();
   const { methodId } = useMethod();
-  const { adjustDays } = useHijriAdjust();
 
   // Close expanded popup when month/year changes
   useEffect(() => { setExpandedDay(null); }, [month, year]);
@@ -190,7 +188,7 @@ export default function CalendarPage() {
       const startDate = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0));
       startDate.setUTCDate(startDate.getUTCDate() - 90);
       const endDate = new Date(Date.UTC(year, month - 1, dim, 0, 0, 0));
-      endDate.setUTCDate(endDate.getUTCDate() + 1 + MAX_ADJUST_DAYS);
+      endDate.setUTCDate(endDate.getUTCDate() + 1);
 
       const start = { year: startDate.getUTCFullYear(), month: startDate.getUTCMonth() + 1, day: startDate.getUTCDate() };
       const end = { year: endDate.getUTCFullYear(), month: endDate.getUTCMonth() + 1, day: endDate.getUTCDate() };
@@ -232,7 +230,7 @@ export default function CalendarPage() {
     }
 
     const getHijriForDay = (d: number) => {
-      const shifted = addDaysUtc({ year, month, day: d }, adjustDays);
+      const shifted = { year, month, day: d };
       if (methodId === 'civil') return gregorianToHijriCivil(shifted);
       if (isAstronomicalMethod(methodId)) {
         return estimatedByIso.get(isoDate(shifted.year, shifted.month, shifted.day)) ?? null;
@@ -470,7 +468,7 @@ export default function CalendarPage() {
     }
 
     return { month, days, offset, heatByDay, details, estimateByIso, indicatorDays };
-  }, [location.latitude, location.longitude, methodId, month, year, todayD, todayM, todayY, adjustDays]);
+  }, [location.latitude, location.longitude, methodId, month, year, todayD, todayM, todayY]);
 
   const mostLikelyIndicator = useMemo(() => {
     let bestIso: string | null = null;
@@ -620,6 +618,7 @@ export default function CalendarPage() {
               const evePercent = clamp0to100(eveEst?.metrics.visibilityPercent ?? 0);
               const eveStatusKey = visibilityStatusFromEstimate(eveEst);
               const eveStyle = likelihoodStyle(eveStatusKey);
+              const showEvePercent = eveEst?.kind === 'heuristic';
               const isMostLikely = mostLikelyIndicator.hasMultiple && mostLikelyIndicator.iso === thisIso;
 
               return (
@@ -697,7 +696,7 @@ export default function CalendarPage() {
                         <div className="flex flex-wrap items-center gap-2">
                           <span
                             className="inline-flex items-center overflow-hidden rounded-full ring-1 ring-black/10"
-                            title={`${t('probability.monthStartSignalFor')}: ${thisIso} (${t('holidays.eveOf')} ${prevIso}) — ${t(`probability.${eveStatusKey}`)} (${t('probability.crescentScore')}: ${evePercent}%)`}
+                            title={`${t('probability.monthStartSignalFor')}: ${thisIso} (${t('holidays.eveOf')} ${prevIso}) — ${t(`probability.${eveStatusKey}`)}${showEvePercent ? ` (${t('probability.crescentScore')}: ${evePercent}%)` : ''}`}
                           >
                             <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 text-[11px] font-medium ${eveStyle.badgeClass} ring-0`}>
                               {isMostLikely ? (
@@ -707,7 +706,7 @@ export default function CalendarPage() {
                               )}
                               {t(`probability.${eveStatusKey}`)}
                             </span>
-                            {typeof eveEst?.metrics.visibilityPercent === 'number' ? (
+                            {showEvePercent && typeof eveEst?.metrics.visibilityPercent === 'number' ? (
                               <span className={`inline-flex items-center px-2 py-0.5 text-[10px] font-semibold ${eveStyle.scoreClass}`}>
                                 {evePercent}%
                               </span>
@@ -844,6 +843,7 @@ export default function CalendarPage() {
         const eveStatusKey = visibilityStatusFromEstimate(eveEst);
         const eveStyle = likelihoodStyle(eveStatusKey);
         const evePercent = clamp0to100(eveEst?.metrics.visibilityPercent ?? 0);
+        const showEvePercent = eveEst?.kind === 'heuristic';
         const isMostLikely = mostLikelyIndicator.hasMultiple && mostLikelyIndicator.iso === thisIso;
 
         return (
@@ -863,7 +863,7 @@ export default function CalendarPage() {
                   ) : (
                     <span className={`h-1.5 w-1.5 rounded-full ${eveStyle.dotClass}`} />
                   )}
-                  {t(`probability.${eveStatusKey}`)} {evePercent}%
+                  {t(`probability.${eveStatusKey}`)}{showEvePercent ? ` ${evePercent}%` : ''}
                 </span>
               </div>
             </div>

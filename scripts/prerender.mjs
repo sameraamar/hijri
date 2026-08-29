@@ -29,6 +29,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { getCivilHolidaysForGregorianYear } from '../packages/calendar-engine/dist/index.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..');
@@ -49,7 +50,7 @@ const ROUTES = [
   { path: 'calendar', seoKey: 'calendar', changefreq: 'weekly', priority: '0.9' },
   { path: 'holidays', seoKey: 'holidays', changefreq: 'weekly', priority: '0.9' },
   { path: 'convert', seoKey: 'convert', changefreq: 'monthly', priority: '0.8' },
-  { path: 'details', seoKey: 'details', changefreq: 'weekly', priority: '0.7' },
+  { path: 'moon-month-view', seoKey: 'details', changefreq: 'weekly', priority: '0.7' },
   { path: 'history', seoKey: 'history', changefreq: 'monthly', priority: '0.7' },
   { path: 'methods', seoKey: 'methods', changefreq: 'monthly', priority: '0.6' },
   { path: 'scholars', seoKey: 'scholars', changefreq: 'monthly', priority: '0.5' },
@@ -102,6 +103,10 @@ function escapeHtml(s) {
     .replace(/"/g, '&quot;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
+}
+
+function isoDate(date) {
+  return `${date.year}-${String(date.month).padStart(2, '0')}-${String(date.day).padStart(2, '0')}`;
 }
 
 /** Emit sitemap.xml from the same route table the prerenderer uses, so the two cannot drift. */
@@ -240,6 +245,33 @@ function rewriteHead(template, { route, lang, t, allTranslations }) {
         mainEntity
       };
       const serialized = JSON.stringify(faqLd).replace(/</g, '\\u003c');
+      html = html.replace(
+        /<\/head>/i,
+        `    <script type="application/ld+json">${serialized}</script>\n  </head>`
+      );
+    }
+  }
+
+  if (route.seoKey === 'holidays' && t.holidays) {
+    const year = new Date().getUTCFullYear();
+    const events = getCivilHolidaysForGregorianYear(year).map((holiday) => ({
+      '@context': 'https://schema.org',
+      '@type': 'Event',
+      name: t.holidays[holiday.nameKey.replace('holidays.', '')] ?? holiday.nameKey,
+      startDate: isoDate(holiday.gregorian),
+      eventStatus: 'https://schema.org/EventScheduled',
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      location: {
+        '@type': 'VirtualLocation',
+        url: canonicalUrl
+      },
+      description,
+      inLanguage: lang,
+      url: canonicalUrl
+    }));
+
+    if (events.length > 0) {
+      const serialized = JSON.stringify(events).replace(/</g, '\\u003c');
       html = html.replace(
         /<\/head>/i,
         `    <script type="application/ld+json">${serialized}</script>\n  </head>`

@@ -1,5 +1,5 @@
 /* Hijri Calendar service worker: offline app shell + runtime caching for hashed assets. */
-const VERSION = 'v1';
+const VERSION = 'v2';
 const SHELL_CACHE = `hijri-shell-${VERSION}`;
 const RUNTIME_CACHE = `hijri-runtime-${VERSION}`;
 const SHELL_URL = new URL('index.html', self.registration.scope).toString();

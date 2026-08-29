@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Removed
+- **Hijri day adjustment (±2 days).** The header control, its context provider, its `localStorage` key, and its use across the Today, Calendar, Convert and Details pages are gone. It let a user silently shift every date on the site, which is a sharp edge on a calendar people rely on. The FAQ entry that offered it as the fix for "the date here is one day off from my mosque" now explains the real cause — different authorities apply different criteria — and points at the Methods and History pages instead.
+
 ### Added
 - **Page introductions** — every data page (Today, Calendar, Convert, Holidays, Details, Visibility map, History, Countdown) now opens with a short keyword-rich lead paragraph plus a collapsed "What is this page?" explanation, via a shared [PageIntro](apps/web/src/components/PageIntro.tsx) component. Translated into all six languages.
 - **Two new FAQ entries** — why the visibility map can show the Moon below the horizon for days at a time, and what distinguishes this calendar from other Hijri converters. Both are included in the `FAQPage` structured data.

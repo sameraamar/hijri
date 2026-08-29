@@ -1,18 +1,21 @@
 {
   "_translation_note": "AI-translated from en.json. Review by a native Indonesian speaker is recommended, especially religious-terminology cells (holidays.*, scholars.*, methods.*, probability.*).",
   "app": {
-    "title": "Kalender Hijriah",
+    "title": "Kalender astronomi untuk bulan-bulan Islam",
     "nav": {
       "today": "Hari ini",
       "calendar": "Kalender",
       "convert": "Konversi",
-      "details": "Detail",
+      "details": "Tampilan bulanan",
       "holidays": "Hari raya",
       "methods": "Metode",
-      "history": "Riwayat",
+      "history": "Akurasi",
       "scholars": "Ulama",
+      "faq": "FAQ",
       "about": "Tentang",
       "more": "Lainnya",
+      "tools": "Alat",
+      "learn": "Belajar",
       "visibilityMap": "Peta visibilitas"
     },
     "theme": {
@@ -26,7 +29,7 @@
     "method": {
       "label": "Metode",
       "civil": "Tabular",
-      "estimate": "Heuristik visibilitas",
+      "estimate": "Heuristik Hilal.day",
       "mabims": "MABIMS",
       "yallop": "Yallop (q)",
       "odeh": "Odeh (V)",
@@ -37,16 +40,11 @@
       "openSource": "Gratis dan sumber terbuka:",
       "repoLabel": "github.com/sameraamar/hijri",
       "disclaimer": "Penafian: situs ini menyediakan panduan astronomi perkiraan dan bukan pengumuman keagamaan resmi.",
-      "contact": "Kontak langsung / saran:",
       "copyright": "© {{year}} Samer Aamar. Hak cipta dilindungi.",
       "license": "Lisensi MIT",
-    "contact": "Kontak",
+      "contact": "Kontak",
       "releaseNotes": "Catatan rilis",
       "version": "v{{version}}"
-    },
-    "adjust": {
-      "label": "Penyesuaian hari Hijriah",
-      "none": "Bawaan"
     },
     "copy": {
       "label": "Salin tanggal",
@@ -60,6 +58,10 @@
       "title": "Peringatan terjemahan AI",
       "body": "Halaman ini diterjemahkan otomatis oleh AI dari bahasa Inggris dan mungkin mengandung kesalahan atau ketidakakuratan.",
       "dismiss": "Tutup"
+    },
+    "install": {
+      "label": "Instal aplikasi",
+      "iosHint": "Di iPhone atau iPad, buka Bagikan lalu pilih Tambahkan ke Layar Utama."
     }
   },
   "today": {
@@ -81,12 +83,30 @@
     "holidayCalendarName": "Hari raya Hijriah",
     "nextMonthInDays": "Bulan Hijriah berikutnya kira-kira dalam {{count}} hari."
   },
+  "methodComparison": {
+    "title": "Bandingkan metode",
+    "intro": "Langit yang sama, kriteria berbeda. Bandingkan bagaimana tiap metode mengklasifikasikan malam ini di lokasi yang dipilih.",
+    "index": "indeks",
+    "meets": "Memenuhi",
+    "doesNotMeet": "Tidak memenuhi",
+    "mabimsDetail": "Pemeriksaan ambang MABIMS: ketinggian, elongasi, usia, dan jeda moonset.",
+    "civilDetail": "Konvensi kalender tabular; bukan tes visibilitas hilal."
+  },
   "releaseNotes": {
     "title": "Catatan rilis",
     "intro": "Catatan singkat tentang perubahan pada setiap versi yang diterbitkan.",
     "current": "Saat ini",
     "released": "Dirilis {{date}}",
     "versions": {
+      "v1_3_0": {
+        "semantics": "Bahasa visibilitas hilal diperbarui agar Yallop dan Odeh menampilkan zona asli metode, bukan skor yang tampak seperti probabilitas persentase.",
+        "explain": "Menambahkan konteks posisi langit dan penjelasan “Mengapa hasil ini?” pada metrik Bulan, serta panel perbandingan metode di Hari Ini.",
+        "pwa": "Meningkatkan pemasangan aplikasi dengan ikon PNG dan maskable, ikon Apple, tangkapan layar manifest, dan tombol instal.",
+        "navigation": "Memperjelas label navigasi yang samar dan mengelompokkan halaman sekunder ke Alat, Belajar, dan Tentang tanpa mengubah URL.",
+        "validation": "Menambahkan tes kunci terjemahan, fallback penyimpanan metode, tampilan semantik, siklus tahun kabisat sipil, dan fixture regresi astronomi.",
+        "performance": "Memisahkan Leaflet, React, astronomy-engine, dan sumber terjemahan ke chunk terpisah untuk mengurangi bundle utama.",
+        "seo": "Memperbarui metadata dasar untuk enam bahasa dan menambahkan data terstruktur Event ke halaman Hari Raya prarender."
+      },
       "v1_0_0": {
         "pages": "Menambahkan halaman Hari Ini, Kalender, Hari Raya, Konversi, Riwayat, Metode, Ulama, dan Tentang.",
         "methods": "Menambahkan metode tabular, heuristik visibilitas, MABIMS, Yallop, dan Odeh.",
@@ -117,7 +137,7 @@
     "prevMonthShort": "Sebelum",
     "nextMonthShort": "Berikut",
     "tabCalendar": "Kalender",
-    "tabDetails": "Detail",
+    "tabDetails": "Tampilan Bulan bulanan",
     "today": "Hari ini",
     "dayOfWeek": "Hari"
   },
@@ -176,7 +196,7 @@
     "moonIllumination": "Iluminasi",
     "observedEveningMetrics": "Pengamatan malam {{date}}",
     "monthStartRuleNote": "Perkiraan menunjukkan hilal mungkin terlihat malam ini → hari berikutnya bisa memulai bulan Hijriah baru.",
-    "monthStartCandidateNote": "Peluang {{level}} hilal terlihat malam itu, mengusulkan tanggal ini sebagai awal bulan baru.",
+    "monthStartCandidateNote": "Sinyal awal bulan {{level}} untuk malam itu, mengusulkan tanggal ini sebagai awal bulan baru.",
     "bestCandidate": "Paling mungkin",
     "possibleEventDates": "Tanggal kemungkinan",
     "dependsOnMonthStart": "Tergantung awal bulan",
@@ -252,7 +272,7 @@
       "comingSoon": "Metode ini direncanakan tetapi belum diaktifkan."
     },
     "estimate": {
-      "title": "Perkiraan Visibilitas Astronomi",
+      "title": "Heuristik Hilal.day",
       "summary": "Model penilaian berbobot yang memperkirakan apakah hilal muda kemungkinan terlihat dengan mata telanjang pada malam tertentu di lokasi Anda. Ia menjawab: \"Bisakah malam ini menjadi awal bulan Hijriah baru?\"",
       "howItWorksTitle": "Cara kerjanya (langkah demi langkah)",
       "step1title": "Langkah 1 — Hitung nilai astronomi pada matahari terbenam lokal",
@@ -402,8 +422,8 @@
     "moonsetLocal": "Bulan terbenam (lokal)",
     "moonRiseSetLocal": "Bulan (lokal)",
     "lagMinutes": "Selisih (mnt)",
-    "visibilityPercent": "Visibilitas",
-    "crescentScore": "Skor hilal",
+    "visibilityPercent": "Indeks",
+    "crescentScore": "Indeks awal bulan",
     "yallopQ": "Nilai q Yallop",
     "yallopZone": "Zona Yallop",
     "yallopBestTime": "Waktu obs. terbaik (lokal)",
@@ -416,6 +436,13 @@
     "odehArcv": "ARCV (arc of vision)",
     "odehArcl": "ARCL (elongasi)",
     "odehWidth": "W' (lebar hilal)",
+    "skyPositionTitle": "Posisi langit saat matahari terbenam",
+    "skyPositionHint": "Tampilan horizon menunjukkan posisi Bulan terhadap horizon barat lokal dan Matahari saat matahari terbenam.",
+    "whyTitle": "Mengapa hasil ini?",
+    "whyHeuristic": "Heuristik Hilal.day menggabungkan ketinggian, elongasi, usia Bulan, dan jeda moonset menjadi indeks edukatif awal bulan.",
+    "whyYallop": "Yallop memakai nilai q dan zona dari kriteria visibilitas hilal yang dipublikasikan, dievaluasi dekat waktu observasi terbaik setelah matahari terbenam.",
+    "whyOdeh": "Odeh memakai nilai V dan zona dari kriteria visibilitas hilal yang dipublikasikan, dievaluasi dekat waktu observasi terbaik setelah matahari terbenam.",
+    "whyCaveat": "Ini adalah klasifikasi astronomi untuk lokasi dan metode yang dipilih, bukan pengumuman keagamaan resmi.",
     "noChanceDesc": "Tes hilal dijalankan untuk malam ini dan kondisi mengecualikan pengamatan (mis. Bulan terbenam saat atau sebelum matahari terbenam, atau skor terlalu rendah untuk menandai awal bulan).",
     "veryLowDesc": "Kondisi sangat lemah; hilal kemungkinan tidak terlihat dan kepercayaan untuk awal bulan minimal.",
     "lowDesc": "Kondisi buruk untuk hilal terlihat (mis. Bulan sangat rendah, terbenam terlalu cepat, atau sangat muda).",
@@ -630,12 +657,12 @@
     "am4": "Ulama berbeda pendapat. Ada yang mensyaratkan rukyat setempat, ada yang menerima rukyat di mana pun, ada yang menerima hisab, dan ada yang mengikuti satu otoritas pusat. Halaman Ulama menjelaskan tiap pandangan tanpa memihak; situs ini menghitung, bukan berfatwa.",
     "qu1": "Mengapa peta visibilitas menampilkan bulan di bawah ufuk selama beberapa hari?",
     "au1": "Itu wajar. Setelah purnama, bulan menyusut sehingga saat matahari terbenam bulan belum terbit dan ketinggiannya negatif. Kondisi ini berlangsung sekitar separuh tiap bulan kamariah dan berbalik satu atau dua hari setelah konjungsi, ketika hilal muda kembali tampak di atas ufuk.",
-    "qu2": "Tanggal di sini berbeda satu hari dari masjid saya. Bisakah diperbaiki?",
-    "au2": "Bisa. Penyesuaian hari Hijriah memungkinkan Anda menggeser tanggal hingga dua hari ke salah satu arah agar cocok dengan pengumuman setempat. Setelan ini tersimpan dan berlaku di halaman Hari Ini, Kalender, Konversi, dan Rincian.",
+    "qu2": "Tanggal di sini berbeda satu hari dari masjid saya. Mengapa?",
+    "au2": "Selisih satu hari itu wajar: tiap otoritas memakai kriteria berbeda dan sebagian menunggu rukyat setempat yang sah. Pilih metode perhitungan yang diikuti negara Anda — halaman Riwayat menunjukkan metode mana yang paling sering cocok dengan pengumuman resmi tiap negara.",
     "qu3": "Apakah situs ini melacak saya atau butuh koneksi internet?",
     "au3": "Semua perhitungan berjalan di peramban Anda dan lokasi Anda tidak pernah meninggalkan perangkat. Hanya hitungan kunjungan anonim tanpa kuki yang dicatat. Setelah dimuat, situs ini bisa dipasang dan tetap berfungsi luring.",
     "qu4": "Apa yang membedakan kalender Hijriah ini?",
-    "au4": "Situs ini membandingkan beberapa metode yang dipublikasikan secara berdampingan, menampilkan angka astronomi di balik tiap prediksi, memungkinkan Anda menyesuaikan tanggal dengan rukyat setempat, dan melaporkan kecocokan tiap metode dengan pengumuman resmi yang nyata. Gratis, sumber terbuka, dan dapat dipakai luring."
+    "au4": "Situs ini membandingkan beberapa metode yang dipublikasikan secara berdampingan, menampilkan angka astronomi di balik tiap prediksi, dan melaporkan kecocokan tiap metode dengan pengumuman resmi yang nyata. Gratis, sumber terbuka, dan dapat dipakai luring."
   },
   "countdown": {
     "title": "Hitung mundur hari besar Islam",

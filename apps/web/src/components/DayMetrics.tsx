@@ -4,6 +4,7 @@ import type { MonthStartEstimate } from '@hijri/calendar-engine';
 import CrescentScoreBar from './CrescentScoreBar';
 import HorizonDiagram from './HorizonDiagram';
 import MoonPhaseIcon from './MoonPhaseIcon';
+import { shouldShowMonthStartIndex } from '../utils/visibilityDisplay';
 
 type Estimate = MonthStartEstimate;
 
@@ -80,6 +81,11 @@ export default function DayMetrics({
   const horizonH = size === 'compact' ? 170 : 200;
   const phaseSize = size === 'compact' ? 40 : 44;
   const scoreBarW = size === 'compact' ? 90 : 110;
+  const whyTextKey = est.kind === 'yallop'
+    ? 'probability.whyYallop'
+    : est.kind === 'odeh'
+      ? 'probability.whyOdeh'
+      : 'probability.whyHeuristic';
 
   const list = (
     <div className="space-y-1">
@@ -152,6 +158,14 @@ export default function DayMetrics({
 
   const visuals = (
     <div className="flex flex-col items-center gap-2">
+      <div className="max-w-sm text-center">
+        <div className="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400 dark:text-slate-500">
+          {t('probability.skyPositionTitle')}
+        </div>
+        <div className="mt-0.5 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 dark:text-slate-500">
+          {t('probability.skyPositionHint')}
+        </div>
+      </div>
       <div className="flex items-center justify-center gap-4">
         {typeof est.metrics.moonAltitudeDeg === 'number' && (
           <HorizonDiagram
@@ -174,24 +188,39 @@ export default function DayMetrics({
           </div>
         )}
       </div>
-      {typeof est.metrics.visibilityPercent === 'number' && (
+      {shouldShowMonthStartIndex(est) && (
         <div className="flex items-center gap-2">
           <span className="text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-500">{t('probability.crescentScore')}:</span>
-          <CrescentScoreBar percent={est.metrics.visibilityPercent} width={scoreBarW} />
+          <CrescentScoreBar percent={est.metrics.visibilityPercent ?? 0} width={scoreBarW} />
         </div>
       )}
     </div>
+  );
+
+  const explanation = (
+    <details className="rounded-md border border-slate-100 bg-slate-50 p-2 text-[11px] leading-relaxed text-slate-600 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-300">
+      <summary className="cursor-pointer font-semibold text-slate-800 dark:text-slate-100">
+        {t('probability.whyTitle')}
+      </summary>
+      <div className="mt-2 space-y-1.5">
+        <p>{t(whyTextKey)}</p>
+        <p>{t('probability.whyCaveat')}</p>
+      </div>
+    </details>
   );
 
   if (layout === 'split') {
     // Side-by-side on `sm+`, stacked on mobile. The metrics column is bounded
     // so labels don't drift kilometres away from their values on wide screens.
     return (
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
-        <div className="w-full sm:max-w-xs sm:flex-shrink-0">{list}</div>
-        <div className="w-full sm:flex-1 sm:border-s sm:border-slate-100 sm:ps-4 sm:dark:border-slate-700">
-          {visuals}
+      <div className="space-y-3">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
+          <div className="w-full sm:max-w-xs sm:flex-shrink-0">{list}</div>
+          <div className="w-full sm:flex-1 sm:border-s sm:border-slate-100 sm:ps-4 sm:dark:border-slate-700">
+            {visuals}
+          </div>
         </div>
+        {explanation}
       </div>
     );
   }
@@ -200,6 +229,7 @@ export default function DayMetrics({
     <div className="space-y-3">
       {list}
       <div className="border-t border-slate-100 pt-2 dark:border-slate-700">{visuals}</div>
+      {explanation}
     </div>
   );
 }
