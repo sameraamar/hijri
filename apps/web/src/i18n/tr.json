@@ -44,10 +44,6 @@
       "releaseNotes": "Sürüm notları",
       "version": "v{{version}}"
     },
-    "adjust": {
-      "label": "Hicri gün düzeltmesi",
-      "none": "Varsayılan"
-    },
     "copy": {
       "label": "Tarihi kopyala",
       "copied": "Kopyalandı",
@@ -630,12 +626,12 @@
     "am4": "Âlimler ihtilaf etmiştir. Kimi yerel rüyeti şart koşar, kimi herhangi bir yerdeki rüyeti kabul eder, kimi hesabı kabul eder, kimi de tek bir merkezî makamı izler. Âlimler sayfası her görüşü birini öne çıkarmadan açıklar; bu site hesaplar, fetva vermez.",
     "qu1": "Görünürlük haritası neden günlerce Ay'ı ufkun altında gösteriyor?",
     "au1": "Bu beklenen bir durumdur. Dolunaydan sonra Ay küçülür; gün batımında henüz doğmamıştır ve yüksekliği negatiftir. Bu durum her kameri ayın yaklaşık yarısı boyunca sürer ve yeni aydan bir iki gün sonra, büyüyen hilal yeniden ufkun üzerine çıktığında tersine döner.",
-    "qu2": "Buradaki tarih camimden bir gün farklı. Düzeltebilir miyim?",
-    "au2": "Evet. Hicri gün ayarı, tarihi yerel duyuruya uydurmak için her iki yönde iki güne kadar kaydırmanıza izin verir. Ayar hatırlanır ve Bugün, Takvim, Dönüştürme ve Ayrıntılar sayfalarında geçerlidir.",
+    "qu2": "Buradaki tarih camimden bir gün farklı. Neden?",
+    "au2": "Bir günlük fark normaldir: makamlar farklı ölçütler uygular ve bazıları yerel rüyetin sabit olmasını bekler. Ülkenizin izlediği hesaplama yöntemini seçin — Geçmiş sayfası her ülkenin resmî duyurularıyla en sık örtüşen yöntemi gösterir.",
     "qu3": "Bu site beni izliyor mu, internet bağlantısı gerekiyor mu?",
     "au3": "Tüm hesaplamalar tarayıcınızda çalışır ve konumunuz cihazınızdan hiç çıkmaz. Yalnızca çerezsiz, anonim sayfa sayımı kaydedilir. Yüklendikten sonra site kurulabilir ve çevrimdışı çalışmayı sürdürür.",
     "qu4": "Bu Hicri takvimi farklı kılan nedir?",
-    "au4": "Tek bir yönteme bağlanmak yerine yayımlanmış birkaç yöntemi yan yana karşılaştırır, her tahminin ardındaki astronomik sayıları gösterir, tarihi yerel rüyete göre ayarlamanıza izin verir ve her yöntemin gerçek resmî ilanlarla ne kadar örtüştüğünü bildirir. Ücretsizdir, açık kaynaklıdır ve çevrimdışı çalışır."
+    "au4": "Tek bir yönteme bağlanmak yerine yayımlanmış birkaç yöntemi yan yana karşılaştırır, her tahminin ardındaki astronomik sayıları gösterir ve her yöntemin gerçek resmî ilanlarla ne kadar örtüştüğünü bildirir. Ücretsizdir, açık kaynaklıdır ve çevrimdışı çalışır."
   },
   "countdown": {
     "title": "İslami günlere geri sayım",

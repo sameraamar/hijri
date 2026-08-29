@@ -43,10 +43,6 @@
       "releaseNotes": "Release notes",
       "version": "v{{version}}"
     },
-    "adjust": {
-      "label": "Hijri day adjustment",
-      "none": "Default"
-    },
     "copy": {
       "label": "Copy date",
       "copied": "Copied",
@@ -629,12 +625,12 @@
     "am4": "Scholars differ. Some require local sighting, some accept a sighting anywhere, some accept calculation, and some follow one central authority. The Scholars page explains each position without endorsing one; this site calculates, it does not issue rulings.",
     "qu1": "Why does the visibility map show the moon below the horizon for days at a time?",
     "au1": "That is expected. After the full moon the moon is waning, so at sunset it has not yet risen and its altitude is negative. This lasts for roughly half of every lunar month and reverses a day or two after the new moon, when the waxing crescent appears above the horizon again.",
-    "qu2": "The date here is one day off from my mosque. Can I fix that?",
-    "au2": "Yes. The Hijri day adjustment lets you shift the date by up to two days in either direction to match your local announcement. The setting is remembered and applies across the Today, Calendar, Convert, and Details pages.",
+    "qu2": "The date here is one day off from my mosque. Why?",
+    "au2": "A one-day difference is normal: authorities apply different criteria, and some wait for a confirmed local sighting. Switch to the calculation method your country follows — the History page shows which method has matched each country's official announcements most often.",
     "qu3": "Does this site track me or need an internet connection?",
     "au3": "Every calculation runs in your browser, and your location never leaves your device. Only anonymous, cookie-free page counts are recorded. Once loaded, the site is installable and keeps working offline.",
     "qu4": "What makes this Hijri calendar different?",
-    "au4": "It compares several published methods side by side instead of committing to one, shows the astronomical numbers behind every prediction, lets you adjust the date to match your local sighting, and reports how each method scored against real official declarations. It is free, open source, and works offline."
+    "au4": "It compares several published methods side by side instead of committing to one, shows the astronomical numbers behind every prediction, and reports how each method scored against real official declarations. It is free, open source, and works offline."
   },
   "countdown": {
     "title": "Countdown to Islamic events",

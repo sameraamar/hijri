@@ -21,7 +21,6 @@ import LocaleLink from './components/LocaleLink';
 import AiTranslationBanner from './components/AiTranslationBanner';
 import { useLanguageSync } from './hooks/useLanguageSync';
 import { useLocale, useLocalelessPath } from './hooks/useLocale';
-import { ADJUST_OPTIONS, useHijriAdjust } from './adjust/HijriAdjustContext';
 import { APP_VERSION } from './releaseNotes';
 import { BRAND } from './brand';
 
@@ -71,7 +70,6 @@ function LocaleRoutes() {
 export default function App() {
   const { t } = useTranslation();
   const { methodId, setMethodId } = useMethod();
-  const { adjustDays, setAdjustDays } = useHijriAdjust();
   const navigate = useNavigate();
   const localelessPath = useLocalelessPath();
   const currentLocale = useLocale();
@@ -159,19 +157,6 @@ export default function App() {
               {METHODS.map((m) => (
                 <option key={m.id} value={m.id} disabled={!m.enabled}>
                   {t(m.labelKey)}{!m.enabled ? ` (${t('app.method.comingSoon')})` : ''}
-                </option>
-              ))}
-            </select>
-            <select
-              className="control-sm w-auto cursor-pointer text-xs"
-              value={adjustDays}
-              onChange={(e) => setAdjustDays(Number(e.target.value))}
-              aria-label={t('app.adjust.label')}
-              title={t('app.adjust.label')}
-            >
-              {ADJUST_OPTIONS.map((n) => (
-                <option key={n} value={n}>
-                  {n === 0 ? t('app.adjust.none') : `${n > 0 ? '+' : '\u2212'}${Math.abs(n)}`}
                 </option>
               ))}
             </select>

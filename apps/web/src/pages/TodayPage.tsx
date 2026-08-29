@@ -24,7 +24,6 @@ import { getTimeZoneForLocation } from '../timezone';
 import { addDaysUtc, daysBetweenUtc, sameDate } from '../utils/dateMath';
 import { formatHijriDateDisplay, formatGregorianDateDisplay } from '../utils/dateFormat';
 import CopyDateBar from '../components/CopyDateBar';
-import { useHijriAdjust } from '../adjust/HijriAdjustContext';
 import { buildIcal, downloadIcal } from '../utils/icalExport';
 
 function todayGregorian() {
@@ -46,7 +45,6 @@ export default function TodayPage() {
   const { t, i18n } = useTranslation();
   const { methodId } = useMethod();
   const { location } = useAppLocation();
-  const { adjustDays } = useHijriAdjust();
   usePageMeta('seo.today.title', 'seo.today.description');
 
   // The page is "Today" by default but the user can navigate day-by-day with
@@ -58,7 +56,7 @@ export default function TodayPage() {
   const isViewingToday = sameDate(currentDate, realToday);
 
   const hijriCurrent = useMemo(() => {
-    const anchor = addDaysUtc(currentDate, adjustDays);
+    const anchor = currentDate;
     if (methodId === 'civil') return gregorianToHijriCivil(anchor);
     if (!isAstronomicalMethod(methodId)) return gregorianToHijriCivil(anchor);
 
@@ -77,7 +75,7 @@ export default function TodayPage() {
 
     const match = calendar.find((item) => sameDate(item.gregorian, anchor));
     return match?.hijri ?? gregorianToHijriCivil(anchor);
-  }, [methodId, location.latitude, location.longitude, currentDate, adjustDays]);
+  }, [methodId, location.latitude, location.longitude, currentDate]);
 
   const tonightEst = useMemo(() => {
     const fn =

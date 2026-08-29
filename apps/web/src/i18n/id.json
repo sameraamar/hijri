@@ -44,10 +44,6 @@
       "releaseNotes": "Catatan rilis",
       "version": "v{{version}}"
     },
-    "adjust": {
-      "label": "Penyesuaian hari Hijriah",
-      "none": "Bawaan"
-    },
     "copy": {
       "label": "Salin tanggal",
       "copied": "Tersalin",
@@ -630,12 +626,12 @@
     "am4": "Ulama berbeda pendapat. Ada yang mensyaratkan rukyat setempat, ada yang menerima rukyat di mana pun, ada yang menerima hisab, dan ada yang mengikuti satu otoritas pusat. Halaman Ulama menjelaskan tiap pandangan tanpa memihak; situs ini menghitung, bukan berfatwa.",
     "qu1": "Mengapa peta visibilitas menampilkan bulan di bawah ufuk selama beberapa hari?",
     "au1": "Itu wajar. Setelah purnama, bulan menyusut sehingga saat matahari terbenam bulan belum terbit dan ketinggiannya negatif. Kondisi ini berlangsung sekitar separuh tiap bulan kamariah dan berbalik satu atau dua hari setelah konjungsi, ketika hilal muda kembali tampak di atas ufuk.",
-    "qu2": "Tanggal di sini berbeda satu hari dari masjid saya. Bisakah diperbaiki?",
-    "au2": "Bisa. Penyesuaian hari Hijriah memungkinkan Anda menggeser tanggal hingga dua hari ke salah satu arah agar cocok dengan pengumuman setempat. Setelan ini tersimpan dan berlaku di halaman Hari Ini, Kalender, Konversi, dan Rincian.",
+    "qu2": "Tanggal di sini berbeda satu hari dari masjid saya. Mengapa?",
+    "au2": "Selisih satu hari itu wajar: tiap otoritas memakai kriteria berbeda dan sebagian menunggu rukyat setempat yang sah. Pilih metode perhitungan yang diikuti negara Anda — halaman Riwayat menunjukkan metode mana yang paling sering cocok dengan pengumuman resmi tiap negara.",
     "qu3": "Apakah situs ini melacak saya atau butuh koneksi internet?",
     "au3": "Semua perhitungan berjalan di peramban Anda dan lokasi Anda tidak pernah meninggalkan perangkat. Hanya hitungan kunjungan anonim tanpa kuki yang dicatat. Setelah dimuat, situs ini bisa dipasang dan tetap berfungsi luring.",
     "qu4": "Apa yang membedakan kalender Hijriah ini?",
-    "au4": "Situs ini membandingkan beberapa metode yang dipublikasikan secara berdampingan, menampilkan angka astronomi di balik tiap prediksi, memungkinkan Anda menyesuaikan tanggal dengan rukyat setempat, dan melaporkan kecocokan tiap metode dengan pengumuman resmi yang nyata. Gratis, sumber terbuka, dan dapat dipakai luring."
+    "au4": "Situs ini membandingkan beberapa metode yang dipublikasikan secara berdampingan, menampilkan angka astronomi di balik tiap prediksi, dan melaporkan kecocokan tiap metode dengan pengumuman resmi yang nyata. Gratis, sumber terbuka, dan dapat dipakai luring."
   },
   "countdown": {
     "title": "Hitung mundur hari besar Islam",

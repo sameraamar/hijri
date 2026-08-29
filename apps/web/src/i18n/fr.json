@@ -44,10 +44,6 @@
       "releaseNotes": "Notes de version",
       "version": "v{{version}}"
     },
-    "adjust": {
-      "label": "Ajustement du jour hégirien",
-      "none": "Par défaut"
-    },
     "copy": {
       "label": "Copier la date",
       "copied": "Copié",
@@ -630,12 +626,12 @@
     "am4": "Les avis divergent. Certains exigent l'observation locale, d'autres acceptent une observation où qu'elle soit, d'autres acceptent le calcul, d'autres suivent une autorité centrale. La page Savants présente chaque position sans en privilégier une ; ce site calcule, il n'émet pas d'avis religieux.",
     "qu1": "Pourquoi la carte de visibilité montre-t-elle la Lune sous l'horizon plusieurs jours de suite ?",
     "au1": "C'est normal. Après la pleine lune, la Lune décroît : au coucher du soleil elle n'est pas encore levée et sa hauteur est négative. Cela dure environ la moitié de chaque mois lunaire et s'inverse un ou deux jours après la nouvelle lune, quand le croissant réapparaît au-dessus de l'horizon.",
-    "qu2": "La date affichée décale d'un jour par rapport à ma mosquée. Puis-je corriger ?",
-    "au2": "Oui. Le réglage d'ajustement du jour hégirien permet de décaler la date jusqu'à deux jours dans un sens ou dans l'autre pour coller à l'annonce locale. Le réglage est mémorisé et s'applique aux pages Aujourd'hui, Calendrier, Conversion et Détails.",
+    "qu2": "La date affichée décale d'un jour par rapport à ma mosquée. Pourquoi ?",
+    "au2": "Un écart d'un jour est normal : les autorités appliquent des critères différents et certaines attendent une observation locale confirmée. Choisissez la méthode de calcul suivie par votre pays — la page Historique montre quelle méthode a le plus souvent correspondu aux annonces officielles de chaque pays.",
     "qu3": "Ce site me suit-il, et faut-il une connexion Internet ?",
     "au3": "Tous les calculs se font dans votre navigateur et votre position ne quitte jamais votre appareil. Seul un comptage de pages anonyme, sans cookies, est enregistré. Une fois chargé, le site est installable et continue de fonctionner hors ligne.",
     "qu4": "Qu'est-ce qui distingue ce calendrier hégirien ?",
-    "au4": "Il compare plusieurs méthodes publiées côte à côte au lieu d'en imposer une seule, affiche les données astronomiques derrière chaque prévision, permet d'ajuster la date selon l'observation locale et indique la correspondance de chaque méthode avec les annonces officielles réelles. Il est gratuit, open source et fonctionne hors ligne."
+    "au4": "Il compare plusieurs méthodes publiées côte à côte au lieu d'en imposer une seule, affiche les données astronomiques derrière chaque prévision et indique la correspondance de chaque méthode avec les annonces officielles réelles. Il est gratuit, open source et fonctionne hors ligne."
   },
   "countdown": {
     "title": "Compte à rebours des fêtes islamiques",
