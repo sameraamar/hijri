@@ -3,6 +3,7 @@
   "app": {
     "title": "İslami aylar için astronomik takvim",
     "nav": {
+      "home": "Ana sayfa",
       "today": "Bugün",
       "calendar": "Takvim",
       "convert": "Dönüştür",
@@ -27,7 +28,7 @@
       "ar": "Arapça"
     },
     "method": {
-      "label": "Yöntem",
+      "label": "Hesaplama yöntemi",
       "civil": "Tablosal",
       "estimate": "Hilal.day sezgiseli",
       "mabims": "MABIMS",
@@ -63,6 +64,24 @@
       "label": "Uygulamayı yükle",
       "iosHint": "iPhone veya iPad'de Paylaş'ı açıp Ana Ekrana Ekle'yi seçin."
     }
+  },
+  "home": {
+    "kicker": "Hilal.day",
+    "headline": "Hicri tarihi bilin. Hilali anlayın.",
+    "intro": "Bugünün Hicri tarihini görün, İslami ayları keşfedin ve yeni hilalin konumunuzdan ne zaman görülebileceğini anlayın.",
+    "todayCta": "Bugünün tarihi",
+    "mapCta": "Görünürlük haritası",
+    "skyCardTitle": "Bu geceki gökyüzü",
+    "todayCardTitle": "Bugünün Hicri tarihi",
+    "nextEventTitle": "Sonraki İslami tarih",
+    "methodCardTitle": "Seçili yöntem",
+    "methodCardText": "Farklı kriterlerin aynı gökyüzünü nasıl sınıflandırdığını görmek için yöntem değiştirin.",
+    "exploreTitle": "Hilal.day'i keşfet",
+    "todayLink": "Bugünün Hicri ve Miladi tarihine odaklanan görünüm.",
+    "calendarLink": "Hicri ayların Miladi takvimle nasıl hizalandığını görün.",
+    "monthViewLink": "Bir ay boyunca Ay yüksekliği, uzanım, yaş, gecikme ve aydınlanmayı inceleyin.",
+    "mapLink": "Ay'ın nerede ufkun üstünde olduğunu ve yeni hilalin nerede görülebileceğini görün.",
+    "methodsLink": "Farklı hilal görünürlük kriterlerinin neden ayrışabileceğini öğrenin."
   },
   "today": {
     "title": "Bugün",
@@ -102,7 +121,7 @@
         "semantics": "Yallop ve Odeh sonuçları yüzde benzeri olasılık puanları yerine yönteme özgü bölgelerle gösterilecek şekilde hilal görünürlüğü dili yenilendi.",
         "explain": "Ay metriklerine gökyüzü konumu bağlamı ve “Bu sonuç neden?” açıklaması eklendi; Bugün sayfasına yöntem karşılaştırması eklendi.",
         "pwa": "PNG, maskable ve Apple ikonları, manifest ekran görüntüleri ve yükleme bağlantısı ile uygulama olarak kurulum iyileştirildi.",
-        "navigation": "Belirsiz gezinme etiketleri netleştirildi ve ikincil sayfalar URL'ler değişmeden Araçlar, Öğren ve Hakkında altında gruplandı.",
+        "navigation": "Belirsiz gezinme etiketleri netleştirildi, aylık Ay görünümü eski yönlendirmeyle /moon-month-view adresine taşındı ve ikincil sayfalar Araçlar, Öğren ve Hakkında altında gruplandı.",
         "validation": "Çeviri anahtarı, yöntem depolama, anlamsal görünüm, sivil artık yıl döngüsü ve astronomik regresyon testleri eklendi.",
         "performance": "Ana uygulama paketini küçültmek için Leaflet, React, astronomy-engine ve çeviri kaynakları ayrı parçalara bölündü.",
         "seo": "Altı desteklenen dil için temel metadata güncellendi ve önceden oluşturulan özel gün sayfalarına Event yapılandırılmış verisi eklendi."
@@ -674,6 +693,10 @@
     "note": "Tarihler astronomik tahminlerdir ve ülkenizdeki resmi duyurulardan farklı olabilir."
   },
   "seo": {
+    "home": {
+      "title": "Hilal.day — Ay ile bağlantılı Hicri takvim",
+      "description": "Bugünün Hicri tarihini öğrenin; konuma bağlı Ay görünürlüğü, İslami tarihler, yöntem karşılaştırması ve gökyüzü konumu diyagramlarıyla hilali anlayın."
+    },
     "today": {
       "title": "Bugünün Hicri Tarihi — Hicri Takvim",
       "description": "Bugünün Hicri tarihini, geri sayımla bir sonraki İslami önemli günü, bu geceki hilal görünürlüğünü ve mevcut ay evresini görün. Çoklu yöntem destekli (MABIMS, Yallop, Odeh, tablosal) ücretsiz Hicri takvim."

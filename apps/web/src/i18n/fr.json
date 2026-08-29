@@ -3,6 +3,7 @@
   "app": {
     "title": "Calendrier astronomique des mois islamiques",
     "nav": {
+      "home": "Accueil",
       "today": "Aujourd'hui",
       "calendar": "Calendrier",
       "convert": "Convertir",
@@ -27,7 +28,7 @@
       "ar": "Arabe"
     },
     "method": {
-      "label": "Méthode",
+      "label": "Méthode de calcul",
       "civil": "Tabulaire",
       "estimate": "Heuristique Hilal.day",
       "mabims": "MABIMS",
@@ -63,6 +64,24 @@
       "label": "Installer l’app",
       "iosHint": "Sur iPhone ou iPad, ouvrez Partager puis choisissez Ajouter à l’écran d’accueil."
     }
+  },
+  "home": {
+    "kicker": "Hilal.day",
+    "headline": "Connaître la date hégirienne. Comprendre le croissant.",
+    "intro": "Voyez la date hégirienne du jour, explorez les mois islamiques et comprenez quand le nouveau croissant peut être visible depuis votre lieu.",
+    "todayCta": "Date du jour",
+    "mapCta": "Carte de visibilité",
+    "skyCardTitle": "Ciel de ce soir",
+    "todayCardTitle": "Date hégirienne du jour",
+    "nextEventTitle": "Prochaine date islamique",
+    "methodCardTitle": "Méthode choisie",
+    "methodCardText": "Changez de méthode pour voir comment différents critères classent le même ciel.",
+    "exploreTitle": "Explorer Hilal.day",
+    "todayLink": "Vue centrée sur les dates hégirienne et grégorienne du jour.",
+    "calendarLink": "Parcourez l'alignement des mois hégiriens avec le calendrier grégorien.",
+    "monthViewLink": "Inspectez un mois d'altitude lunaire, d'élongation, d'âge, de délai et d'illumination.",
+    "mapLink": "Voyez où la Lune est au-dessus de l'horizon et où le nouveau croissant peut être visible.",
+    "methodsLink": "Découvrez pourquoi les critères de visibilité du croissant peuvent différer."
   },
   "today": {
     "title": "Aujourd'hui",
@@ -102,7 +121,7 @@
         "semantics": "Révision du langage de visibilité du croissant afin que Yallop et Odeh affichent leurs zones natives plutôt que des scores ressemblant à des probabilités.",
         "explain": "Ajout du contexte de position dans le ciel et d’une explication « Pourquoi ce résultat ? » aux métriques lunaires, avec une comparaison des méthodes sur Aujourd’hui.",
         "pwa": "Amélioration de l’installation avec icônes PNG et maskable, icône Apple, captures manifest et lien d’installation.",
-        "navigation": "Clarification des libellés de navigation vagues et regroupement des pages secondaires en Outils, Apprendre et À propos sans changer les URL.",
+        "navigation": "Clarification des libellés de navigation, déplacement de la vue lunaire mensuelle vers /moon-month-view avec redirection héritée, et regroupement des pages secondaires en Outils, Apprendre et À propos.",
         "validation": "Ajout de tests pour les traductions, le stockage de méthode, l’affichage sémantique, le cycle bissextile civil et des cas astronomiques de régression.",
         "performance": "Séparation de Leaflet, React, astronomy-engine et des ressources de traduction en chunks distincts pour réduire le bundle principal.",
         "seo": "Mise à jour des métadonnées de base pour les six langues et ajout de données structurées Event aux pages Fêtes prérendues."
@@ -674,6 +693,10 @@
     "note": "Les dates sont des estimations astronomiques et peuvent différer des annonces officielles de votre pays."
   },
   "seo": {
+    "home": {
+      "title": "Hilal.day — Calendrier hégirien connecté à la Lune",
+      "description": "Connaissez la date hégirienne du jour et comprenez le croissant avec visibilité lunaire par lieu, dates islamiques, comparaison des méthodes et diagrammes du ciel."
+    },
     "today": {
       "title": "Date hégirienne d'aujourd'hui — Calendrier hégirien",
       "description": "Voir la date hégirienne d'aujourd'hui, la prochaine fête islamique avec compte à rebours, la visibilité du croissant ce soir et la phase actuelle de la Lune. Calendrier hégirien gratuit avec support multi-méthode (MABIMS, Yallop, Odeh, tabulaire)."

@@ -38,6 +38,7 @@ const FaqPage = lazy(() => import('./pages/FaqPage'));
 const CountdownPage = lazy(() => import('./pages/CountdownPage'));
 const TodayPage = lazy(() => import('./pages/TodayPage'));
 const VisibilityMapPage = lazy(() => import('./pages/VisibilityMapPage'));
+const HomePage = lazy(() => import('./pages/HomePage'));
 
 function isCalculationMethodId(value: string): value is CalculationMethodId {
   return METHODS.some((m) => m.id === value);
@@ -50,7 +51,7 @@ function isCalculationMethodId(value: string): value is CalculationMethodId {
 function LocaleRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="today" replace />} />
+      <Route path="/" element={<HomePage />} />
       <Route path="today" element={<TodayPage />} />
       <Route path="calendar" element={<CalendarPage />} />
       <Route path="convert" element={<ConvertPage />} />
@@ -94,6 +95,7 @@ export default function App() {
   };
 
   const primaryNav: NavItem[] = [
+    { to: '/', label: t('app.nav.home') },
     { to: '/today', label: t('app.nav.today') },
     { to: '/calendar', label: t('app.nav.calendar') },
     { to: '/visibility-map', label: t('app.nav.visibilityMap') },
@@ -132,7 +134,7 @@ export default function App() {
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-white dark:bg-slate-800/95 backdrop-blur supports-[backdrop-filter]:bg-white dark:bg-slate-800/80 dark:border-slate-700 dark:bg-slate-900/95 dark:supports-[backdrop-filter]:bg-slate-900/80">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
           <div className="flex items-center gap-4">
-            <LocaleNavLink to="/calendar" className="flex items-center gap-2 text-slate-900 hover:opacity-80 transition-opacity dark:text-slate-100">
+            <LocaleNavLink to="/" className="flex items-center gap-2 text-slate-900 hover:opacity-80 transition-opacity dark:text-slate-100">
               <svg className="h-6 w-6 flex-shrink-0" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <rect width="32" height="32" rx="6" fill="#0f172a"/>
                 <circle cx="15" cy="16" r="10" fill="#fbbf24"/>

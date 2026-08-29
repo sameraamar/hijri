@@ -2,6 +2,7 @@
   "app": {
     "title": "Astronomical calendar for Islamic months",
     "nav": {
+      "home": "Home",
       "today": "Today",
       "calendar": "Calendar",
       "convert": "Convert",
@@ -26,7 +27,7 @@
       "ar": "Arabic"
     },
     "method": {
-      "label": "Method",
+      "label": "Calculation method",
       "civil": "Tabular",
       "estimate": "Hilal.day heuristic",
       "mabims": "MABIMS",
@@ -62,6 +63,24 @@
       "label": "Install app",
       "iosHint": "On iPhone or iPad, open Share and choose Add to Home Screen."
     }
+  },
+  "home": {
+    "kicker": "Hilal.day",
+    "headline": "Know the Hijri date. Understand the crescent.",
+    "intro": "See today's Hijri date, explore Islamic months, and understand when the new crescent may be visible from your location.",
+    "todayCta": "Today's date",
+    "mapCta": "Explore visibility map",
+    "skyCardTitle": "Tonight's sky",
+    "todayCardTitle": "Today's Hijri date",
+    "nextEventTitle": "Next Islamic date",
+    "methodCardTitle": "Selected method",
+    "methodCardText": "Switch methods to see how different criteria classify the same sky.",
+    "exploreTitle": "Explore Hilal.day",
+    "todayLink": "Focused view of today's Hijri and Gregorian dates.",
+    "calendarLink": "Browse how Hijri months line up with the Gregorian calendar.",
+    "monthViewLink": "Inspect a month of moon altitude, elongation, age, lag, and illumination.",
+    "mapLink": "See where the Moon is above the horizon and where a new crescent may be visible.",
+    "methodsLink": "Learn why different crescent-visibility criteria can disagree."
   },
   "today": {
     "title": "Today",
@@ -101,7 +120,7 @@
         "semantics": "Reworked crescent visibility language so Yallop and Odeh show method-native zones instead of percentage-like probability scores.",
         "explain": "Added sky-position context and a “Why this result?” explanation to the shared moon metrics, plus a method comparison panel on Today.",
         "pwa": "Improved installability with raster and maskable icons, an Apple touch icon, manifest screenshots, and an install affordance.",
-        "navigation": "Renamed vague navigation labels and grouped secondary pages into Tools, Learn, and About without changing URLs.",
+        "navigation": "Renamed vague navigation labels, moved the monthly moon view to /moon-month-view with a legacy redirect, and grouped secondary pages into Tools, Learn, and About.",
         "validation": "Added i18n duplicate-key checks, method-storage fallback tests, semantic display tests, civil leap-cycle tests, and astronomical regression fixtures.",
         "performance": "Split Leaflet, React, astronomy-engine, and translation resources into separate build chunks to reduce the main app bundle.",
         "seo": "Updated base metadata for six supported languages and added Event structured data to prerendered Holidays pages."
@@ -673,6 +692,10 @@
     "note": "Dates are astronomical estimates and may differ from official announcements in your country."
   },
   "seo": {
+    "home": {
+      "title": "Hilal.day — Hijri Calendar Connected to the Moon",
+      "description": "Know today's Hijri date and understand the crescent with location-aware moon visibility, Islamic dates, method comparison, and sky-position diagrams."
+    },
     "today": {
       "title": "Today's Hijri Date — Hijri Calendar",
       "description": "See today's Hijri date, the next Islamic holiday with countdown, tonight's crescent moon visibility, and the current moon phase. Free Hijri calendar with multi-method support (MABIMS, Yallop, Odeh, civil)."

@@ -3,6 +3,7 @@
   "app": {
     "title": "Kalender astronomi untuk bulan-bulan Islam",
     "nav": {
+      "home": "Beranda",
       "today": "Hari ini",
       "calendar": "Kalender",
       "convert": "Konversi",
@@ -27,7 +28,7 @@
       "ar": "Arab"
     },
     "method": {
-      "label": "Metode",
+      "label": "Metode perhitungan",
       "civil": "Tabular",
       "estimate": "Heuristik Hilal.day",
       "mabims": "MABIMS",
@@ -63,6 +64,24 @@
       "label": "Instal aplikasi",
       "iosHint": "Di iPhone atau iPad, buka Bagikan lalu pilih Tambahkan ke Layar Utama."
     }
+  },
+  "home": {
+    "kicker": "Hilal.day",
+    "headline": "Ketahui tanggal Hijriah. Pahami hilal.",
+    "intro": "Lihat tanggal Hijriah hari ini, jelajahi bulan-bulan Islam, dan pahami kapan hilal baru dapat terlihat dari lokasi Anda.",
+    "todayCta": "Tanggal hari ini",
+    "mapCta": "Peta visibilitas",
+    "skyCardTitle": "Langit malam ini",
+    "todayCardTitle": "Tanggal Hijriah hari ini",
+    "nextEventTitle": "Tanggal Islam berikutnya",
+    "methodCardTitle": "Metode terpilih",
+    "methodCardText": "Ganti metode untuk melihat bagaimana kriteria berbeda mengklasifikasikan langit yang sama.",
+    "exploreTitle": "Jelajahi Hilal.day",
+    "todayLink": "Tampilan khusus tanggal Hijriah dan Masehi hari ini.",
+    "calendarLink": "Jelajahi bagaimana bulan Hijriah sejajar dengan kalender Masehi.",
+    "monthViewLink": "Periksa satu bulan ketinggian Bulan, elongasi, usia, jeda, dan iluminasi.",
+    "mapLink": "Lihat di mana Bulan berada di atas ufuk dan di mana hilal baru mungkin terlihat.",
+    "methodsLink": "Pelajari mengapa kriteria visibilitas hilal dapat berbeda."
   },
   "today": {
     "title": "Hari ini",
@@ -102,7 +121,7 @@
         "semantics": "Bahasa visibilitas hilal diperbarui agar Yallop dan Odeh menampilkan zona asli metode, bukan skor yang tampak seperti probabilitas persentase.",
         "explain": "Menambahkan konteks posisi langit dan penjelasan “Mengapa hasil ini?” pada metrik Bulan, serta panel perbandingan metode di Hari Ini.",
         "pwa": "Meningkatkan pemasangan aplikasi dengan ikon PNG dan maskable, ikon Apple, tangkapan layar manifest, dan tombol instal.",
-        "navigation": "Memperjelas label navigasi yang samar dan mengelompokkan halaman sekunder ke Alat, Belajar, dan Tentang tanpa mengubah URL.",
+        "navigation": "Memperjelas label navigasi, memindahkan tampilan Bulan bulanan ke /moon-month-view dengan redirect lama, dan mengelompokkan halaman sekunder ke Alat, Belajar, dan Tentang.",
         "validation": "Menambahkan tes kunci terjemahan, fallback penyimpanan metode, tampilan semantik, siklus tahun kabisat sipil, dan fixture regresi astronomi.",
         "performance": "Memisahkan Leaflet, React, astronomy-engine, dan sumber terjemahan ke chunk terpisah untuk mengurangi bundle utama.",
         "seo": "Memperbarui metadata dasar untuk enam bahasa dan menambahkan data terstruktur Event ke halaman Hari Raya prarender."
@@ -674,6 +693,10 @@
     "note": "Tanggal merupakan perkiraan astronomi dan dapat berbeda dari pengumuman resmi di negara Anda."
   },
   "seo": {
+    "home": {
+      "title": "Hilal.day — Kalender Hijriah yang terhubung ke Bulan",
+      "description": "Ketahui tanggal Hijriah hari ini dan pahami hilal dengan visibilitas Bulan berbasis lokasi, tanggal Islam, perbandingan metode, dan diagram posisi langit."
+    },
     "today": {
       "title": "Tanggal Hijriah Hari Ini — Kalender Hijriah",
       "description": "Lihat tanggal Hijriah hari ini, hari raya Islam berikutnya dengan hitungan mundur, visibilitas hilal malam ini, dan fase Bulan saat ini. Kalender Hijriah gratis dengan dukungan multi-metode (MABIMS, Yallop, Odeh, sipil)."

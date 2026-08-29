@@ -45,7 +45,7 @@ const RTL_LANGS = new Set(['ar', 'ur']);
 
 // route → seo.<key> mapping, plus sitemap hints
 const ROUTES = [
-  { path: '', seoKey: 'today', changefreq: 'daily', priority: '1.0' },
+  { path: '', seoKey: 'home', changefreq: 'daily', priority: '1.0' },
   { path: 'today', seoKey: 'today', changefreq: 'daily', priority: '1.0' },
   { path: 'calendar', seoKey: 'calendar', changefreq: 'weekly', priority: '0.9' },
   { path: 'holidays', seoKey: 'holidays', changefreq: 'weekly', priority: '0.9' },

@@ -1,11 +1,19 @@
-# hilal.day — Hijri Calendar
+# hilal.day — Hijri Calendar Connected to the Moon
 
-Open-source web app for understanding how lunar astronomy relates to the Islamic (Hijri) calendar.
-Hilal.day keeps the familiar calendar and date-conversion tools, but its core identity is clearer:
-where the crescent may be visible, which criterion says so, and why dates can differ by location or authority.
+Hilal.day is an open-source Hijri calendar that combines Islamic dates with astronomical crescent-visibility calculations.
 
-- Live: https://hilal.day/
+- Live demo: https://hilal.day/
 - Source: https://github.com/sameraamar/hijri
+
+## What makes it different?
+
+- Hijri ↔ Gregorian conversion
+- Multiple crescent-visibility criteria
+- Location-aware astronomical calculations
+- Islamic events and countdowns
+- Sky-position diagrams and world visibility maps
+- English, Arabic, Turkish, French, Indonesian, and Urdu
+- Free and open source
 
 ## Screenshots
 
@@ -15,7 +23,7 @@ where the crescent may be visible, which criterion says so, and why dates can di
 | ![Hijri Calendar — Calendar page](docs/images/hijri-calendar-calendar-page.png) | **Calendar page** — Monthly Hijri/Gregorian view with method selector and location panel. |
 | ![Hijri Calendar — Concepts and references (English)](docs/images/hijri-calendar-concepts-and-references-page-en.png) | **Concepts and references (English)** — Research-oriented section summarizing scientific papers and visually explaining key crescent-visibility terms. |
 | ![Hijri Calendar — Concepts and references (Arabic)](docs/images/hijri-calendar-concepts-and-references-page-ar.png) | **Concepts and references** — Research-oriented section summarizing scientific papers and visually explaining key crescent-visibility terms. |
-| ![Hijri Calendar — Visibility details popup](docs/images/hijri-calendar-visibility-popup.png) | **Visibility details popup** — Crescent score breakdown (altitude, elongation, lag, age, illumination). |
+| ![Hijri Calendar — Visibility details popup](docs/images/hijri-calendar-visibility-popup.png) | **Visibility details popup** — Month-start signal breakdown (altitude, elongation, lag, age, illumination). |
 | ![Hijri Calendar — Holidays page](docs/images/hijri-calendar-holidays-page.png) | **Holidays page** — Year-based Islamic events with visibility likelihood details. |
 
 ## Features
@@ -24,7 +32,7 @@ where the crescent may be visible, which criterion says so, and why dates can di
 - Browse calendar and holiday/event dates by year
 - Estimate crescent visibility with multiple methods
 - View astronomical indicators (for selected location/date)
-- English + Arabic (RTL), and translation-driven structure for adding more languages
+- English, Arabic (RTL), Turkish, French, Indonesian, and Urdu (RTL)
 
 ## Implemented methods
 
