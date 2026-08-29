@@ -671,15 +671,15 @@ export default function CalendarPage() {
                     }
                   }}
                 >
-                  {/* ── Mobile cell: compact ── */}
-                  <div className="flex flex-col items-center gap-0.5 sm:hidden" style={{ minHeight: '2.25rem' }}>
-                    <div className="text-sm font-semibold leading-none text-slate-900 dark:text-slate-100">{d.day}</div>
-                    <div className="text-[8px] leading-none text-slate-500 dark:text-slate-400 dark:text-slate-500">{hijriDayDisplay}</div>
+                  {/* ── Mobile cell: compact with larger touch target ── */}
+                  <div className="flex flex-col items-center gap-0.5 sm:hidden justify-center" style={{ minHeight: '3.5rem' }}>
+                    <div className="text-base font-semibold leading-none text-slate-900 dark:text-slate-100">{d.day}</div>
+                    <div className="text-xs leading-none text-slate-600 dark:text-slate-400">{hijriDayDisplay}</div>
                     {d.showIndicator ? (
                       isMostLikely ? (
-                        <span className="mt-auto text-[11px] leading-none" aria-hidden="true">★</span>
+                        <span className="mt-auto text-lg leading-none" aria-hidden="true">★</span>
                       ) : (
-                        <span className={`mt-auto h-1.5 w-1.5 rounded-full ${eveStyle.dotClass}`} />
+                        <span className={`mt-auto h-2 w-2 rounded-full ${eveStyle.dotClass}`} />
                       )
                     ) : null}
                   </div>
@@ -842,41 +842,52 @@ export default function CalendarPage() {
         const thisEst = monthData.estimateByIso.get(thisIso);
         const eveStatusKey = visibilityStatusFromEstimate(eveEst);
         const eveStyle = likelihoodStyle(eveStatusKey);
-        const evePercent = clamp0to100(eveEst?.metrics.visibilityPercent ?? 0);
-        const showEvePercent = eveEst?.kind === 'heuristic';
         const isMostLikely = mostLikelyIndicator.hasMultiple && mostLikelyIndicator.iso === thisIso;
+        const gregorianDateStr = `${thisIso.split('-')[0]}-${thisIso.split('-')[1]}-${thisIso.split('-')[2]}`;
+        const hijriDateStr = d.hijriDay && d.hijriMonth && d.hijriYear 
+          ? formatHijriDateDisplay({ day: d.hijriDay, month: d.hijriMonth, year: d.hijriYear }, i18n.language) 
+          : d.hijri;
 
         return (
-          <div className="sm:hidden card p-3 text-sm">
-            <div className="flex items-center justify-between mb-2">
-              <div className="font-semibold text-slate-900 dark:text-slate-100">
-                {d.day} — <span className="text-slate-600 dark:text-slate-300 font-normal">{d.hijriDay && d.hijriMonth && d.hijriYear ? formatHijriDateDisplay({ day: d.hijriDay, month: d.hijriMonth, year: d.hijriYear }, i18n.language) : d.hijri}</span>
+          <div className="sm:hidden card p-3 text-sm mt-3">
+            <div className="flex items-start justify-between gap-2 mb-3">
+              <div className="flex-1 min-w-0">
+                <div className="text-sm font-semibold text-slate-900 dark:text-slate-100">{d.day}</div>
+                <div className="text-xs text-slate-600 dark:text-slate-300">{hijriDateStr}</div>
               </div>
-              <button type="button" className="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 dark:text-slate-300" onClick={() => setExpandedDay(null)} aria-label="Close">✕</button>
+              <button type="button" className="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 text-lg flex-shrink-0" onClick={() => setExpandedDay(null)} aria-label="Close">×</button>
             </div>
 
-            <div className="mb-2">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium ${eveStyle.badgeClass}`}>
-                  {isMostLikely ? (
-                    <span className="text-[11px] leading-none" aria-hidden="true">★</span>
-                  ) : (
-                    <span className={`h-1.5 w-1.5 rounded-full ${eveStyle.dotClass}`} />
-                  )}
-                  {t(`probability.${eveStatusKey}`)}{showEvePercent ? ` ${evePercent}%` : ''}
-                </span>
-              </div>
-            </div>
-
+            {/* Visual illustration — full DayMetrics component for complete rendering like Today tab */}
             {thisEst ? (
-              <div className="text-xs">
+              <div className="mb-3 pb-3 border-b border-slate-200 dark:border-slate-700">
                 <DayMetrics
                   est={thisEst}
                   fmtLocalTime={fmtLocalTime}
                   size="comfortable"
+                  layout="stacked"
+                  gregorianDateStr={gregorianDateStr}
+                  hijriDateStr={hijriDateStr}
                 />
               </div>
-            ) : <div className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">—</div>}
+            ) : null}
+
+            {/* Status badge */}
+            {eveEst ? (
+              <div className="text-xs space-y-1">
+                <div className="flex items-center gap-1">
+                  <span className={`inline-flex items-center gap-0.5 rounded px-1.5 py-0.5 text-xs font-medium ${eveStyle.badgeClass}`}>
+                    {isMostLikely ? '★' : <span className={`h-1 w-1 rounded-full ${eveStyle.dotClass}`} />}
+                    {t(`probability.${eveStatusKey}`)}
+                  </span>
+                </div>
+                {typeof eveEst.metrics.lagMinutes === 'number' && (
+                  <div className="text-slate-600 dark:text-slate-300 text-xs">
+                    {t('probability.lag')}: {Math.round(eveEst.metrics.lagMinutes)}m
+                  </div>
+                )}
+              </div>
+            ) : null}
           </div>
         );
       })() : null}

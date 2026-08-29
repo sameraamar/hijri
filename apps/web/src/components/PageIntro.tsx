@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
 
 /** Short SEO-facing lead paragraph plus a collapsed longer explanation. */
-export default function PageIntro({ pageKey }: { pageKey: string }) {
+export default function PageIntro({ pageKey, className }: { pageKey: string; className?: string }) {
   const { t } = useTranslation();
 
   return (
-    <section className="mb-4">
+    <section className={`mb-4 ${className ?? ''}`}>
       <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-200">
         {t(`pageIntro.${pageKey}.short`)}
       </p>

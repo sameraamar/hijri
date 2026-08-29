@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 
 interface HorizonDiagramProps {
   moonAltitudeDeg: number;
@@ -26,6 +26,12 @@ export default function HorizonDiagram({
   className,
 }: HorizonDiagramProps) {
   const [expanded, setExpanded] = useState(false);
+  // Unique per instance: several diagrams can coexist on one page (e.g. the
+  // calendar's hidden desktop popover plus the mobile panel). A shared id makes
+  // every `url(#…)` resolve to the FIRST match in document order — which may sit
+  // inside a `display:none` subtree, so the paint server is never built and the
+  // sky renders transparent.
+  const skyGradientId = `hd-sky-${useId().replace(/:/g, '')}`;
 
   useEffect(() => {
     if (!expanded) return;
@@ -106,20 +112,25 @@ export default function HorizonDiagram({
         viewBox={`0 0 ${w} ${h}`}
         preserveAspectRatio="xMidYMid meet"
         className={className}
-        // `max-width: 100%` + `height: auto` lets the SVG shrink to fit narrow
-        // containers (e.g. mobile day-detail card) while preserving its
-        // square aspect ratio so the dome and labels never get clipped.
-        style={{ overflow: 'visible', maxWidth: '100%', height: 'auto', display: 'block' }}
+        // Mobile-friendly SVG rendering: ensure proper scaling and no clipping
+        style={{ 
+          overflow: 'visible', 
+          maxWidth: '100%', 
+          height: 'auto', 
+          display: 'block',
+          // Ensure the SVG doesn't get squeezed on narrow viewports
+          minHeight: `${Math.min(w, h)}px`
+        }}
         aria-label={`Horizon diagram: moon at ${moonAltitudeDeg.toFixed(1)}°`}
       >
         <defs>
-          <linearGradient id="hd-sky" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id={skyGradientId} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#1e3a5f" />
             <stop offset="100%" stopColor="#475569" />
           </linearGradient>
         </defs>
 
-        <rect x={0} y={0} width={w} height={horizonY} fill="url(#hd-sky)" rx={4} />
+        <rect x={0} y={0} width={w} height={horizonY} fill={`url(#${skyGradientId})`} rx={4} />
         <rect x={0} y={horizonY} width={w} height={h - horizonY} fill="#1e293b" />
 
         <line x1={0} y1={horizonY} x2={w} y2={horizonY} stroke="#94a3b8" strokeWidth={1} strokeDasharray="4 2" />

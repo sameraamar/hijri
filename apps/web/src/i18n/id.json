@@ -117,6 +117,12 @@
     "current": "Saat ini",
     "released": "Dirilis {{date}}",
     "versions": {
+      "v1_3_1": {
+        "horizonDiagram": "Memperbaiki ilustrasi posisi langit yang tampil kosong di halaman yang menampilkan lebih dari satu diagram horizon, seperti panel detail hari pada kalender.",
+        "dayPopupOrder": "Panel detail hari pada kalender kini diawali ilustrasi posisi langit, dengan rincian angka di bawahnya.",
+        "mobileToday": "Menata ulang halaman Hari Ini untuk layar kecil: diagram horizon terlihat tanpa menggulir, dan penyalinan tanggal memakai tombol ikon ringkas.",
+        "mobileCalendar": "Menambahkan panel detail hari di bawah kisi kalender pada ponsel, dengan area sentuh lebih besar pada tampilan bulan."
+      },
       "v1_3_0": {
         "semantics": "Bahasa visibilitas hilal diperbarui agar Yallop dan Odeh menampilkan zona asli metode, bukan skor yang tampak seperti probabilitas persentase.",
         "explain": "Menambahkan konteks posisi langit dan penjelasan “Mengapa hasil ini?” pada metrik Bulan, serta panel perbandingan metode di Hari Ini.",

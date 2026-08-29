@@ -26,6 +26,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Notes
 - Investigated a report that the visibility map shows the Moon below the horizon for every date after 4 September. This is correct astronomy, not a defect: from 28 August to 10 September 2026 the Moon is waning and has not yet risen at sunset, and it returns above the horizon from 11 September. The new copy above exists to make that legible in the UI instead of looking like missing data.
 
+## [1.3.1] - 2026-08-29
+
+### Fixed
+- **Horizon diagram rendered without its sky on the calendar.** [HorizonDiagram](apps/web/src/components/HorizonDiagram.tsx) hard-coded `<linearGradient id="hd-sky">`. The calendar renders two diagrams — the desktop popover (`hidden sm:block`, so `display: none` on phones) and the mobile day panel — and duplicate IDs resolve to the *first* match in document order. That match sat inside a non-rendered subtree, so the browser never built the paint server and `fill="url(#hd-sky)"` painted nothing: the upper half of the illustration came out transparent while the plain-coloured ground below it drew normally. The gradient ID is now derived from `useId()`, so every instance owns its own paint server. Today was unaffected because it only ever renders one diagram.
+
+### Changed
+- **Calendar day popup leads with the illustration.** The `stacked` layout in [DayMetrics](apps/web/src/components/DayMetrics.tsx) now puts the horizon diagram, moon phase and crescent score above the numeric metrics list rather than below it, matching the reading order of the `split` layout used on Today. This affects both calendar day surfaces — the desktop popover and the mobile panel.
+- **Today reworked for small screens.** The horizon diagram sits at the top of the first card so it is visible without scrolling when stepping between dates, the page introduction is desktop-only, the location line drops the raw coordinates, and [CopyDateBar](apps/web/src/components/CopyDateBar.tsx) gained an `icons` mode that replaces the four labelled buttons with 24 px icon buttons. Page and header spacing tightened on mobile only (`space-y-3 sm:space-y-6`).
+- **Calendar day details are reachable on phones.** Tapping a day now opens a detail panel below the grid; previously the details lived only in a `sm:`-and-up popover. Month-view cells and the most-likely star marker were enlarged for touch.
+
 ## [1.2.0] - 2026-08-28
 
 ### Added

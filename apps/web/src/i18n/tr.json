@@ -117,6 +117,12 @@
     "current": "Güncel",
     "released": "Yayımlanma tarihi: {{date}}",
     "versions": {
+      "v1_3_1": {
+        "horizonDiagram": "Takvimin gün ayrıntı panelinde olduğu gibi birden fazla ufuk diyagramı gösteren sayfalarda boş görünen gökyüzü konumu görselinin sorunu giderildi.",
+        "dayPopupOrder": "Takvimin gün ayrıntı paneli artık önce gökyüzü konumu görselini, ardından sayısal ayrıntıları gösteriyor.",
+        "mobileToday": "Bugün sayfası küçük ekranlar için yenilendi: ufuk diyagramı kaydırmadan görünüyor ve tarih kopyalama derli toplu simge düğmeleri kullanıyor.",
+        "mobileCalendar": "Telefonlarda takvim ızgarasının altına gün ayrıntı paneli eklendi; ay görünümünde dokunma alanları büyütüldü."
+      },
       "v1_3_0": {
         "semantics": "Yallop ve Odeh sonuçları yüzde benzeri olasılık puanları yerine yönteme özgü bölgelerle gösterilecek şekilde hilal görünürlüğü dili yenilendi.",
         "explain": "Ay metriklerine gökyüzü konumu bağlamı ve “Bu sonuç neden?” açıklaması eklendi; Bugün sayfasına yöntem karşılaştırması eklendi.",

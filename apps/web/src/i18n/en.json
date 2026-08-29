@@ -116,6 +116,12 @@
     "current": "Current",
     "released": "Released {{date}}",
     "versions": {
+      "v1_3_1": {
+        "horizonDiagram": "Fixed the sky-position illustration rendering blank on pages that show more than one horizon diagram, such as the calendar day popup.",
+        "dayPopupOrder": "The calendar day popup now leads with the sky-position illustration and lists the numeric details beneath it.",
+        "mobileToday": "Reworked Today for small screens: the horizon diagram is visible without scrolling, and copying a date uses compact icon buttons.",
+        "mobileCalendar": "Added a day detail panel below the calendar grid on phones, with larger tap targets in the month view."
+      },
       "v1_3_0": {
         "semantics": "Reworked crescent visibility language so Yallop and Odeh show method-native zones instead of percentage-like probability scores.",
         "explain": "Added sky-position context and a “Why this result?” explanation to the shared moon metrics, plus a method comparison panel on Today.",

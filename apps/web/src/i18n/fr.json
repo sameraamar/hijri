@@ -117,6 +117,12 @@
     "current": "Actuelle",
     "released": "Publiée le {{date}}",
     "versions": {
+      "v1_3_1": {
+        "horizonDiagram": "Correction de l’illustration de position dans le ciel qui s’affichait vide sur les pages comportant plusieurs diagrammes d’horizon, comme la fiche du jour du calendrier.",
+        "dayPopupOrder": "La fiche du jour du calendrier commence désormais par l’illustration de position dans le ciel, les valeurs chiffrées venant ensuite.",
+        "mobileToday": "Refonte d’Aujourd’hui sur petits écrans : le diagramme d’horizon est visible sans défilement et la copie de date utilise des boutons-icônes compacts.",
+        "mobileCalendar": "Ajout d’un panneau de détail du jour sous la grille du calendrier sur mobile, avec des zones tactiles plus grandes dans la vue mensuelle."
+      },
       "v1_3_0": {
         "semantics": "Révision du langage de visibilité du croissant afin que Yallop et Odeh affichent leurs zones natives plutôt que des scores ressemblant à des probabilités.",
         "explain": "Ajout du contexte de position dans le ciel et d’une explication « Pourquoi ce résultat ? » aux métriques lunaires, avec une comparaison des méthodes sur Aujourd’hui.",

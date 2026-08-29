@@ -28,11 +28,11 @@ body {
 
 @layer components {
   .page {
-    @apply space-y-6;
+    @apply space-y-3 sm:space-y-6;
   }
 
   .page-header {
-    @apply flex flex-col gap-3 md:flex-row md:items-end md:justify-between;
+    @apply flex flex-col gap-2 sm:gap-3 md:flex-row md:items-end md:justify-between;
   }
 
   .card {

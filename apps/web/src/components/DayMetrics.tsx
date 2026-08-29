@@ -45,7 +45,7 @@ function formatMoonAge(hours: number | undefined): string {
 export type DayMetricsSize = 'compact' | 'comfortable';
 
 /**
- * `stacked`  — metrics list on top, visuals (horizon + phase + score) below.
+ * `stacked`  — visuals (horizon + phase + score) on top, metrics list below.
  *              Used in the calendar popover/panel where width is constrained.
  * `split`    — metrics list as a narrow column with visuals beside it on `sm:` and up,
  *              stacking back to the same as `stacked` on mobile. Used on wide pages
@@ -210,14 +210,16 @@ export default function DayMetrics({
   );
 
   if (layout === 'split') {
-    // Side-by-side on `sm+`, stacked on mobile. The metrics column is bounded
-    // so labels don't drift kilometres away from their values on wide screens.
+    // Side-by-side on `sm+`, stacked on mobile. Visuals come first (on the left),
+    // then metrics column on the right, bounded so labels don't drift far from values.
     return (
       <div className="space-y-3">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
-          <div className="w-full sm:max-w-xs sm:flex-shrink-0">{list}</div>
-          <div className="w-full sm:flex-1 sm:border-s sm:border-slate-100 sm:ps-4 sm:dark:border-slate-700">
+          <div className="w-full sm:flex-1">
             {visuals}
+          </div>
+          <div className="w-full sm:max-w-xs sm:flex-shrink-0 sm:border-s sm:border-slate-100 sm:ps-4 sm:dark:border-slate-700">
+            {list}
           </div>
         </div>
         {explanation}
@@ -227,8 +229,8 @@ export default function DayMetrics({
 
   return (
     <div className="space-y-3">
-      {list}
-      <div className="border-t border-slate-100 pt-2 dark:border-slate-700">{visuals}</div>
+      {visuals}
+      <div className="border-t border-slate-100 pt-2 dark:border-slate-700">{list}</div>
       {explanation}
     </div>
   );

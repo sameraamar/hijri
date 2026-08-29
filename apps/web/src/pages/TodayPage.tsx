@@ -238,24 +238,27 @@ export default function TodayPage() {
         </div>
       </div>
 
-      <PageIntro pageKey="today" />
+      <PageIntro pageKey="today" className="hidden sm:block" />
 
-      <section className="card p-4 sm:p-6">
-        <div>
-          <div className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400 dark:text-slate-500">
-            {isViewingToday ? t('today.todayIs') : t('today.selectedDayIs')}
+      <section className="card p-3 sm:p-6">
+        <div className="flex items-start justify-between gap-2 sm:gap-4">
+          <div className="flex-1">
+            <div className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400 dark:text-slate-500">
+              {isViewingToday ? t('today.todayIs') : t('today.selectedDayIs')}
+            </div>
+            <div className="mt-1 text-2xl font-semibold text-slate-900 dark:text-slate-100 sm:text-3xl">{hijriDisplay}</div>
+            <div className="text-sm text-slate-600 dark:text-slate-300">{gregorianDisplay}</div>
           </div>
-          <div className="mt-1 text-2xl font-semibold text-slate-900 dark:text-slate-100 sm:text-3xl">{hijriDisplay}</div>
-          <div className="text-sm text-slate-600 dark:text-slate-300">{gregorianDisplay}</div>
-          <CopyDateBar hijri={hijriCurrent} gregorian={currentDate} />
-          <div className="mt-2 text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
-            {t('today.currentLocation')}: {location.name} ({location.latitude.toFixed(2)}°, {location.longitude.toFixed(2)}°)
-          </div>
+          <CopyDateBar hijri={hijriCurrent} gregorian={currentDate} icons={true} />
+        </div>
+        <div className="mt-1 text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500">
+          <span className="block sm:inline">{t('today.currentLocation')}:</span> <span className="font-medium">{location.name}</span>
         </div>
 
-        {/* Full per-day metrics with the horizon diagram — promoted to the
-            top of the page so it's the first thing the user sees. */}
-        <div className="mt-4 border-t border-slate-100 pt-3 text-xs dark:border-slate-700">
+        {/* Full per-day metrics with the horizon diagram — moved to top
+            so the visual illustration appears immediately without scrolling
+            when the user navigates between dates. */}
+        <div className="mt-4 border-t border-slate-100 pt-4 text-xs dark:border-slate-700">
           <DayMetrics
             est={tonightEst}
             fmtLocalTime={fmtLocalTime}
