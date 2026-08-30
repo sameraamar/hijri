@@ -1,6 +1,8 @@
 {
   "_translation_note": "AI-translated from en.json. Review by a native Indonesian speaker is recommended, especially religious-terminology cells (holidays.*, scholars.*, methods.*, probability.*).",
   "app": {
+    "titleLine1": "Kalender astronomi",
+    "titleLine2": "bulan-bulan Islam",
     "title": "Kalender astronomi untuk bulan-bulan Islam",
     "nav": {
       "home": "Beranda",
@@ -17,7 +19,7 @@
       "more": "Lainnya",
       "tools": "Alat",
       "learn": "Belajar",
-      "visibilityMap": "Peta visibilitas"
+      "visibilityMap": "Peta"
     },
     "theme": {
       "toLight": "Beralih ke mode terang",
@@ -117,6 +119,13 @@
     "current": "Saat ini",
     "released": "Dirilis {{date}}",
     "versions": {
+      "v1_3_2": {
+        "navigation": "Menampilkan Hari Raya di tab navigasi utama, menyingkat Peta Visibilitas menjadi Peta, dan menyederhanakan menu Alat.",
+        "holidayBanner": "Menambahkan spanduk hitung mundur acara mendatang di bagian atas halaman Hari Raya.",
+        "holidayAccent": "Memberi sorotan visual untuk hari raya utama (Ramadan, Idul Fitri, Idul Adha).",
+        "whiteDays": "Menambahkan indikator Ayyamul Bidh (13-15) pada kisi kalender desktop dan seluler.",
+        "homeExplore": "Mendesain ulang kartu jelajahi beranda dengan aksen kategori berwarna dan ikon mikro."
+      },
       "v1_3_1": {
         "horizonDiagram": "Memperbaiki ilustrasi posisi langit yang tampil kosong di halaman yang menampilkan lebih dari satu diagram horizon, seperti panel detail hari pada kalender.",
         "dayPopupOrder": "Panel detail hari pada kalender kini diawali ilustrasi posisi langit, dengan rincian angka di bawahnya.",
@@ -722,6 +731,10 @@
     "holidays": {
       "title": "Hari Raya Islam — Tanggal Ramadan, Idulfitri, Iduladha",
       "description": "Temukan tanggal perkiraan untuk hari raya Islam termasuk Ramadan, Idulfitri, Iduladha, Tahun Baru Hijriah, dan Asyura. Berdasarkan perhitungan visibilitas hilal."
+    },
+    "holidaysYear": {
+      "title": "Hari Raya Islam {{year}} — Tanggal Ramadan, Idulfitri, Iduladha",
+      "description": "Tanggal perkiraan {{year}} untuk Ramadan, Idulfitri, Iduladha, Tahun Baru Hijriah, Asyura, dan Hari Arafah, lengkap dengan tanggal Hijriah masing-masing."
     },
     "history": {
       "title": "Riwayat Awal Bulan Hijriah — Diamati vs Dihitung",

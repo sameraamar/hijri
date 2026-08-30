@@ -9,20 +9,31 @@ import {
   odehMonthStartEstimate,
   meetsOdehCriteriaAtSunset
 } from '@hijri/calendar-engine';
-import { Fragment, useMemo, useState } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import i18n from '../i18n/i18n';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import i18n, { buildLocalePath } from '../i18n/i18n';
 import LocationPicker from '../components/LocationPicker';
 import PageIntro from '../components/PageIntro';
 import { likelihoodStyle, type VisibilityStatusKey } from '../components/likelihood';
+import { useUpcomingHolidays } from '../hooks/useUpcomingHolidays';
 import { useAppLocation } from '../location/LocationContext';
+import { useLocale } from '../hooks/useLocale';
 import { useMethod } from '../method/MethodContext';
 import { isAstronomicalMethod } from '../method/types';
-import { formatHijriDateDisplay, formatIsoDateDisplay } from '../utils/dateFormat';
+import { formatGregorianDateDisplay, formatHijriDateDisplay, formatIsoDateDisplay } from '../utils/dateFormat';
 import { buildIcal, downloadIcal } from '../utils/icalExport';
 import { usePageMeta } from '../hooks/usePageMeta';
-import { useUrlNumber } from '../hooks/useUrlNumber';
 import { addDaysUtc, daysBetweenUtc, fmtIso as fmtGregorianIso, utcKey, type GregorianDate } from '../utils/dateMath';
+
+/**
+ * Years that get their own prerendered page (kept in sync with
+ * `HOLIDAY_YEAR_RANGE` in scripts/prerender.mjs). Only these are linked as real
+ * anchors; other years still work via client-side navigation, they just aren't
+ * advertised to crawlers because no static file exists for them.
+ */
+const PRERENDERED_YEARS_BEFORE = 1;
+const PRERENDERED_YEARS_AFTER = 5;
 
 function weekday(d: GregorianDate): string {
   return new Date(d.year, d.month - 1, d.day).toLocaleDateString(i18n.language, { weekday: 'short' });
@@ -44,12 +55,45 @@ export default function HolidaysPage() {
   const { t } = useTranslation();
   const { methodId } = useMethod();
   const { location } = useAppLocation();
+  const { year: yearParam } = useParams<{ year?: string }>();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const locale = useLocale();
   const currentYear = new Date().getFullYear();
   const today = useMemo<GregorianDate>(() => {
     const now = new Date();
     return { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
   }, []);
-  const [year, setYear] = useUrlNumber('year', currentYear);
+
+  // The year lives in the path (`/holidays/2027`) so each year is its own
+  // document. `?year=` is still honoured for links published before the change.
+  const pathYear = yearParam !== undefined ? Number(yearParam) : NaN;
+  const isYearPage = Number.isInteger(pathYear) && pathYear >= 1 && pathYear <= 9999;
+  const queryYear = Number(searchParams.get('year'));
+  const year = isYearPage
+    ? pathYear
+    : Number.isFinite(queryYear) && searchParams.has('year')
+      ? Math.trunc(queryYear)
+      : currentYear;
+
+  const setYear = useCallback(
+    (next: number | ((prev: number) => number)) => {
+      const resolved = Math.trunc(typeof next === 'function' ? next(year) : next);
+      if (!Number.isFinite(resolved)) return;
+      navigate(buildLocalePath(`/holidays/${resolved}`, locale), { replace: true });
+    },
+    [year, locale, navigate]
+  );
+
+  // Consolidate the legacy query form onto the path form. GitHub Pages can't
+  // issue a real 301, so this plus the canonical tag is what merges the signals.
+  useEffect(() => {
+    if (isYearPage || !searchParams.has('year')) return;
+    const raw = Number(searchParams.get('year'));
+    if (!Number.isFinite(raw)) return;
+    navigate(buildLocalePath(`/holidays/${Math.trunc(raw)}`, locale), { replace: true });
+  }, [isYearPage, searchParams, locale, navigate]);
+
   const [expandedHolidayKeys, setExpandedHolidayKeys] = useState<Set<string>>(new Set());
 
   const holidays = useMemo(() => {
@@ -239,7 +283,19 @@ export default function HolidaysPage() {
     );
   };
 
-  usePageMeta('seo.holidays.title', 'seo.holidays.description', year);
+  usePageMeta(
+    isYearPage ? 'seo.holidaysYear.title' : 'seo.holidays.title',
+    isYearPage ? 'seo.holidaysYear.description' : 'seo.holidays.description',
+    isYearPage ? undefined : year,
+    isYearPage
+      ? {
+          values: { year },
+          // The current year duplicates the evergreen /holidays page, so it
+          // defers to it rather than competing for the same query.
+          canonicalPath: year === currentYear ? '/holidays' : undefined
+        }
+      : undefined
+  );
 
   const exportToIcs = (subset?: typeof holidays) => {
     const list = subset ?? holidays;
@@ -279,6 +335,8 @@ export default function HolidaysPage() {
     );
   };
 
+  const nextUpcoming = useUpcomingHolidays(location, 1)[0] ?? null;
+
   return (
     <div className="page">
       <div className="page-header">
@@ -306,16 +364,42 @@ export default function HolidaysPage() {
 
       <PageIntro pageKey="holidays" />
 
+      {nextUpcoming && (
+        <div className="rounded-lg border border-amber-200 bg-amber-50/60 p-3.5 sm:p-4 text-slate-900 dark:border-amber-900/50 dark:bg-amber-950/20 dark:text-slate-100 flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2.5">
+            <span className="text-xl" aria-hidden="true">🌙</span>
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-400">
+                {t('home.nextEventTitle')}
+              </div>
+              <div className="font-bold text-base sm:text-lg">
+                {t(nextUpcoming.nameKey)}
+                <span className="ms-2 font-normal text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                  ({formatGregorianDateDisplay(nextUpcoming.target, i18n.language)})
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="inline-flex items-center rounded-full bg-amber-100 dark:bg-amber-900/50 px-3 py-1 text-xs font-semibold text-amber-800 dark:text-amber-200 ring-1 ring-amber-300 dark:ring-amber-800">
+            {nextUpcoming.delta === 0
+              ? t('countdown.today')
+              : nextUpcoming.delta === 1
+                ? t('countdown.dayLeft', { count: 1 })
+                : t('countdown.daysLeft', { count: nextUpcoming.delta })}
+          </div>
+        </div>
+      )}
+
       <div className="card">
         <div className="card-header flex items-center justify-center gap-1">
-          <button
-            type="button"
-            onClick={() => setYear((y) => y - 1)}
+          <Link
+            to={buildLocalePath(`/holidays/${year - 1}`, locale)}
+            replace
             aria-label={t('calendar.prevMonth')}
             className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 dark:text-slate-100 active:bg-slate-200 dark:active:bg-slate-700 dark:bg-slate-700 transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 rtl:rotate-180"><path fillRule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clipRule="evenodd"/></svg>
-          </button>
+          </Link>
           <input
             className="control-sm w-20 text-center font-medium"
             type="number"
@@ -323,26 +407,47 @@ export default function HolidaysPage() {
             onChange={(e) => setYear(Number(e.target.value))}
             aria-label={t('calendar.year')}
           />
-          <button
-            type="button"
-            onClick={() => setYear((y) => y + 1)}
+          <Link
+            to={buildLocalePath(`/holidays/${year + 1}`, locale)}
+            replace
             aria-label={t('calendar.nextMonth')}
             className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 dark:text-slate-100 active:bg-slate-200 dark:active:bg-slate-700 dark:bg-slate-700 transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 rtl:rotate-180"><path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd"/></svg>
-          </button>
+          </Link>
           {year !== currentYear && (
-            <button
-              type="button"
-              onClick={() => setYear(currentYear)}
+            <Link
+              to={buildLocalePath('/holidays', locale)}
+              replace
               aria-label={t('calendar.today')}
               title={t('calendar.today')}
               className="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-500 dark:text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 dark:text-slate-100 active:bg-slate-200 dark:active:bg-slate-700 dark:bg-slate-700 transition-colors"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-[18px] h-[18px]"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
-            </button>
+            </Link>
           )}
         </div>
+
+        {/* Real anchors for the prerendered year range, so the year pages form a
+            connected crawl graph instead of sitemap-only orphans. */}
+        <nav aria-label={t('calendar.year')} className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 px-3 pb-2 text-xs">
+          {Array.from(
+            { length: PRERENDERED_YEARS_BEFORE + PRERENDERED_YEARS_AFTER + 1 },
+            (_, i) => currentYear - PRERENDERED_YEARS_BEFORE + i
+          ).map((y) => (
+            y === year ? (
+              <span key={y} aria-current="page" className="font-semibold text-slate-900 dark:text-slate-100">{y}</span>
+            ) : (
+              <Link
+                key={y}
+                to={buildLocalePath(`/holidays/${y}`, locale)}
+                className="text-blue-600 hover:underline dark:text-blue-300"
+              >
+                {y}
+              </Link>
+            )
+          ))}
+        </nav>
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm">
             <thead className="bg-slate-50 dark:bg-slate-800/60">
@@ -363,10 +468,12 @@ export default function HolidaysPage() {
                 const eventDate = h.estimatedGregorian ?? h.gregorian;
                 const isAstronomical = isAstronomicalMethod(methodId);
                 const isExpanded = isAstronomical && expandedHolidayKeys.has(key);
+                const isRamadanOrEid = h.id === 'ramadan-1' || h.id === 'eid-al-fitr' || h.id === 'eid-al-adha';
+                const accentBorder = isRamadanOrEid ? 'bg-amber-50/40 dark:bg-amber-950/20 font-medium' : '';
                 return (
                   <Fragment key={key}>
                     <tr
-                      className={`align-top ${isAstronomical ? 'cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/40' : ''}`}
+                      className={`align-top ${accentBorder} ${isAstronomical ? 'cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/40' : ''}`}
                       onClick={isAstronomical ? () => {
                         setExpandedHolidayKeys((prev) => {
                           const next = new Set(prev);

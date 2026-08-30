@@ -85,11 +85,12 @@ export default function HomePage() {
   const style = likelihoodStyle(status);
 
   const cards = [
-    { to: '/today', label: t('app.nav.today'), text: t('home.todayLink') },
-    { to: '/calendar', label: t('app.nav.calendar'), text: t('home.calendarLink') },
-    { to: '/moon-month-view', label: t('app.nav.details'), text: t('home.monthViewLink') },
-    { to: '/visibility-map', label: t('app.nav.visibilityMap'), text: t('home.mapLink') },
-    { to: '/methods', label: t('app.nav.methods'), text: t('home.methodsLink') }
+    { to: '/today', label: t('app.nav.today'), text: t('home.todayLink'), icon: '☀️', color: 'border-s-4 border-s-amber-500' },
+    { to: '/calendar', label: t('app.nav.calendar'), text: t('home.calendarLink'), icon: '📅', color: 'border-s-4 border-s-emerald-500' },
+    { to: '/holidays', label: t('app.nav.holidays'), text: t('holidays.title'), icon: '✨', color: 'border-s-4 border-s-purple-500' },
+    { to: '/moon-month-view', label: t('app.nav.details'), text: t('home.monthViewLink'), icon: '🌙', color: 'border-s-4 border-s-blue-500' },
+    { to: '/visibility-map', label: t('app.nav.visibilityMap'), text: t('home.mapLink'), icon: '🗺️', color: 'border-s-4 border-s-cyan-500' },
+    { to: '/methods', label: t('app.nav.methods'), text: t('home.methodsLink'), icon: '🔭', color: 'border-s-4 border-s-indigo-500' }
   ];
 
   return (
@@ -196,15 +197,20 @@ export default function HomePage() {
         <div className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400 dark:text-slate-500">
           {t('home.exploreTitle')}
         </div>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {cards.map((card) => (
             <LocaleLink
               key={card.to}
               to={card.to}
-              className="rounded-md border border-slate-200 bg-slate-50 p-3 text-sm transition-colors hover:border-slate-300 hover:bg-white dark:border-slate-700 dark:bg-slate-800/70 dark:hover:border-slate-600 dark:hover:bg-slate-800"
+              className={`group flex items-start gap-3 rounded-lg border border-slate-200 bg-slate-50 p-3.5 text-sm transition-all hover:-translate-y-0.5 hover:border-slate-300 hover:bg-white hover:shadow-sm dark:border-slate-700 dark:bg-slate-800/70 dark:hover:border-slate-600 dark:hover:bg-slate-800 ${card.color}`}
             >
-              <div className="font-semibold text-slate-900 dark:text-slate-100">{card.label}</div>
-              <div className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400 dark:text-slate-500">{card.text}</div>
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white text-lg shadow-sm ring-1 ring-slate-200 dark:bg-slate-700 dark:ring-slate-600">
+                {card.icon}
+              </span>
+              <div>
+                <div className="font-semibold text-slate-900 group-hover:text-amber-600 dark:text-slate-100 dark:group-hover:text-amber-400">{card.label}</div>
+                <div className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400 dark:text-slate-500">{card.text}</div>
+              </div>
             </LocaleLink>
           ))}
         </div>

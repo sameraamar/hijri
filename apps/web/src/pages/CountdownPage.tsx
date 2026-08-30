@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
+import LocaleLink from '../components/LocaleLink';
 import PageIntro from '../components/PageIntro';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { useUpcomingHolidays } from '../hooks/useUpcomingHolidays';
@@ -25,6 +26,11 @@ export default function CountdownPage() {
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">{t('countdown.title')}</h1>
           <p className="muted mt-1">{t('countdown.intro')}</p>
+        </div>
+        <div>
+          <LocaleLink to="/holidays" className="btn-sm">
+            {t('app.nav.holidays')} →
+          </LocaleLink>
         </div>
       </div>
 

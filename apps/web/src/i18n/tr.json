@@ -1,6 +1,8 @@
 {
   "_translation_note": "AI-translated from en.json. Review by a native Turkish speaker is recommended, especially religious-terminology cells (holidays.*, scholars.*, methods.*, probability.*).",
   "app": {
+    "titleLine1": "Astronomik takvim",
+    "titleLine2": "İslami aylar için",
     "title": "İslami aylar için astronomik takvim",
     "nav": {
       "home": "Ana sayfa",
@@ -17,7 +19,7 @@
       "more": "Daha fazla",
       "tools": "Araçlar",
       "learn": "Öğren",
-      "visibilityMap": "Görünürlük haritası"
+      "visibilityMap": "Harita"
     },
     "theme": {
       "toLight": "Açık moda geç",
@@ -117,6 +119,13 @@
     "current": "Güncel",
     "released": "Yayımlanma tarihi: {{date}}",
     "versions": {
+      "v1_3_2": {
+        "navigation": "Bayramlar sekmesi ana gezinme çubuğuna taşındı, Görünürlük Haritası Harita olarak kısaltıldı ve Araçlar menüsü sadeleştirildi.",
+        "holidayBanner": "Bayramlar sayfasının üst kısmına en yakın dini gün için geri sayım şeridi eklendi.",
+        "holidayAccent": "Önemli dini günler (Ramazan, Ramazan Bayramı, Kurban Bayramı) görsel olarak vurgulandı.",
+        "whiteDays": "Takvim ızgaralarına Eyyam-ı Biyz (13-15) gösterge noktaları eklendi.",
+        "homeExplore": "Ana sayfadaki keşif kartları renkli kategori vurguları ve simgelerle yeniden tasarlandı."
+      },
       "v1_3_1": {
         "horizonDiagram": "Takvimin gün ayrıntı panelinde olduğu gibi birden fazla ufuk diyagramı gösteren sayfalarda boş görünen gökyüzü konumu görselinin sorunu giderildi.",
         "dayPopupOrder": "Takvimin gün ayrıntı paneli artık önce gökyüzü konumu görselini, ardından sayısal ayrıntıları gösteriyor.",
@@ -722,6 +731,10 @@
     "holidays": {
       "title": "İslami Önemli Günler — Ramazan, Ramazan Bayramı, Kurban Bayramı Tarihleri",
       "description": "Ramazan, Ramazan Bayramı, Kurban Bayramı, Hicri Yılbaşı ve Aşure dahil İslami önemli günlerin tahmini tarihlerini bulun. Hilal görünürlük hesaplamalarına dayalı."
+    },
+    "holidaysYear": {
+      "title": "İslami Önemli Günler {{year}} — Ramazan, Ramazan Bayramı, Kurban Bayramı Tarihleri",
+      "description": "{{year}} yılı için Ramazan, Ramazan Bayramı, Kurban Bayramı, Hicri Yılbaşı, Aşure ve Arefe gününün tahmini tarihleri; her biri için hicri tarih ve hesaplama yöntemi."
     },
     "history": {
       "title": "Hicri Ay Başlangıcı Tarihçesi — Gözlemlenen ve Hesaplanan",

@@ -50,16 +50,28 @@ function ensureLink(rel: string, hreflang?: string): HTMLLinkElement {
  * @param titleKey   i18n key for the page title  (e.g. `"seo.calendar.title"`)
  * @param descKey    i18n key for the meta description (e.g. `"seo.calendar.description"`)
  * @param suffix     Optional dynamic suffix appended to the title (e.g. `"2026"`)
+ * @param options    `values` are i18next interpolation values (e.g. `{ year: 2027 }`);
+ *                   `canonicalPath` overrides the canonical target when this route
+ *                   should defer to another URL instead of itself.
  */
-export function usePageMeta(titleKey: string, descKey: string, suffix?: string | number): void {
+export function usePageMeta(
+  titleKey: string,
+  descKey: string,
+  suffix?: string | number,
+  options?: { values?: Record<string, string | number>; canonicalPath?: string }
+): void {
   const { t, i18n } = useTranslation();
   const { pathname } = useLocation();
   const { rest: localelessPath } = extractLocaleFromPath(pathname);
   const activeLang = (i18n.language || DEFAULT_LANGUAGE) as SupportedLanguage;
+  const canonicalPath = options?.canonicalPath;
+  // Serialised so the effect doesn't re-run on every render for an inline object.
+  const valuesKey = options?.values ? JSON.stringify(options.values) : '';
 
   useEffect(() => {
-    const title = t(titleKey);
-    const desc = t(descKey);
+    const values = valuesKey ? (JSON.parse(valuesKey) as Record<string, string | number>) : undefined;
+    const title = t(titleKey, values);
+    const desc = t(descKey, values);
 
     const parts = suffix != null ? [title, String(suffix)] : [title];
     document.title = `${parts.join(' ')} | ${BRAND}`;
@@ -75,7 +87,7 @@ export function usePageMeta(titleKey: string, descKey: string, suffix?: string |
     // Canonical: each language version is its own canonical so search engines
     // don't dedupe them against each other.
     const canonicalEl = ensureLink('canonical');
-    canonicalEl.setAttribute('href', buildLocaleUrl(localelessPath, activeLang));
+    canonicalEl.setAttribute('href', buildLocaleUrl(canonicalPath ?? localelessPath, activeLang));
 
     // Bidirectional hreflang per Google's rule: every variant declares every
     // alternate (including itself).
@@ -86,5 +98,5 @@ export function usePageMeta(titleKey: string, descKey: string, suffix?: string |
     // x-default points at the no-prefix (English) URL.
     const xDefault = ensureLink('alternate', 'x-default');
     xDefault.setAttribute('href', buildLocaleUrl(localelessPath, DEFAULT_LANGUAGE));
-  }, [t, titleKey, descKey, suffix, localelessPath, activeLang]);
+  }, [t, titleKey, descKey, suffix, valuesKey, canonicalPath, localelessPath, activeLang]);
 }

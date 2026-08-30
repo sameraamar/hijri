@@ -4,27 +4,20 @@ All notable changes to this project are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased]
-
-### Removed
-- **Hijri day adjustment (±2 days).** The header control, its context provider, its `localStorage` key, and its use across the Today, Calendar, Convert and Details pages are gone. It let a user silently shift every date on the site, which is a sharp edge on a calendar people rely on. The FAQ entry that offered it as the fix for "the date here is one day off from my mosque" now explains the real cause — different authorities apply different criteria — and points at the Methods and History pages instead.
+## [1.3.2] - 2026-08-30
 
 ### Added
-- **Page introductions** — every data page (Today, Calendar, Convert, Holidays, Details, Visibility map, History, Countdown) now opens with a short keyword-rich lead paragraph plus a collapsed "What is this page?" explanation, via a shared [PageIntro](apps/web/src/components/PageIntro.tsx) component. Translated into all six languages.
-- **Two new FAQ entries** — why the visibility map can show the Moon below the horizon for days at a time, and what distinguishes this calendar from other Hijri converters. Both are included in the `FAQPage` structured data.
-- **Below-horizon explanation on the visibility map** — when the Moon is below the horizon everywhere at sunset, the map now says so explicitly and explains that this is the normal waning half of the lunar month.
-- **Per-holiday calendar export** — every row on the Holidays page has its own add-to-calendar button alongside the existing add-all button, and exported `.ics` files now carry the project name and link in the calendar description, each event description, and a `URL` property.
-- **Countdown on the Holidays page** — each holiday row now carries its own days-remaining value, so the countdown reads alongside the date rather than in a separate list. `/countdown` remains a route for the standalone view.
+- **Upcoming holiday countdown hero banner.** The Holidays page now opens with a highlighted countdown banner for the next upcoming Islamic event, showing the remaining days and target Gregorian date.
+- **Visual accents for major holidays.** Major Islamic occasions (1 Ramadan, Eid al-Fitr, Eid al-Adha) are visually highlighted with amber background accents in the annual holidays table.
+- **Ayyam al-Beed (White Days) indicators.** The 13th, 14th, and 15th of each Hijri month now display an amber moon indicator on both desktop and mobile calendar grids with an explanatory tooltip.
+- **Redesigned Home feature cards.** Feature cards on the home page now display category border accents, hover lift animations, and distinct micro-icons.
+- **Per-year holiday pages at `/holidays/2027`.** The year moved from a query string into the path, and each year in a bounded window (current − 1 … current + 5) is prerendered as its own file in all six languages — 42 new documents, taking the prerendered set from 84 to 126. Each year page carries its own `<title>`, description, canonical, hreflang set, and `Event` structured data.
+- **Real body content in prerendered holiday pages.** Holiday pages include a static holiday table (name, Gregorian date, Hijri date) plus crawlable adjacent-year links before React hydration.
 
 ### Changed
-- **Moved to a custom domain: [hilal.day](https://hilal.day/).** The site now serves from its own domain instead of `sameraamar.github.io/hijri/`, still on GitHub Pages with a free Let's Encrypt certificate. The Vite base path becomes `/`, and canonicals, `hreflang`, Open Graph, JSON-LD, the manifest scope, `robots.txt` and the embed/iCal URLs all follow. GitHub 301-redirects the old URLs, so existing links keep working. Analytics moved to a matching GoatCounter site; historical counts stay on the old one.
-- **Brand introduced as `hilal.day`.** The header wordmark, every page `<title>` suffix, the footer, `og:site_name`, the installed app name and the exported `.ics` attribution now carry the domain, so it is visible on every page. The wordmark is deliberately untranslated; the localised "Hijri Calendar" name remains as a descriptor beside it on wide screens. `hilal` is the same word in Arabic, Turkish, Indonesian and Urdu — four of the six supported languages.
-- **`sitemap.xml` is now generated** by [prerender.mjs](scripts/prerender.mjs) from the same route table that produces the pages, replacing ~130 hand-maintained URLs that had to be edited in lockstep with every route change.
-- **FAQ reorganised and expanded** — 6 questions became 15, grouped into "Dates and conversion", "Holidays and reminders", "Methods and accuracy", and "Using this site", rendered as accordions. New entries cover month lengths, calendar export, countdowns, what the individual methods are, which method is most accurate, sighting versus calculation, the day adjustment, and privacy/offline behaviour. All 15 are emitted as `FAQPage` structured data.
-- **Navigation trimmed from 12 entries to 8.** Primary nav is now Today · Calendar · Convert · Holidays · Methods, with Visibility map, Details, History, and Scholars in the overflow menu. Mobile uses the same set instead of a 12-item scroller. FAQ, Countdown, and About moved to the footer, whose separator dots were dropped because they orphaned onto their own lines when the row wrapped on narrow screens.
-
-### Notes
-- Investigated a report that the visibility map shows the Moon below the horizon for every date after 4 September. This is correct astronomy, not a defect: from 28 August to 10 September 2026 the Moon is waning and has not yet risen at sunset, and it returns above the horizon from 11 September. The new copy above exists to make that legible in the UI instead of looking like missing data.
+- **Streamlined navigation hierarchy.** Reordered primary tabs to `Today` · `Calendar` · `Holidays` · `Map` · `More ▾`, shortening "Visibility map" to "Map" and surfacing the high-frequency Holidays section into top navigation.
+- **Stacked two-line header tagline.** The brand descriptor in the header now renders across two stacked lines (`Astronomical calendar` / `for Islamic months`), preserving horizontal space on tablet and laptop screens.
+- **`usePageMeta` accepts i18n interpolation values and a canonical override**, keeping client-rendered `<title>`/description matching prerendered tags.
 
 ## [1.3.1] - 2026-08-29
 

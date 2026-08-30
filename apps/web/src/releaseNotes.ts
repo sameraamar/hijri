@@ -1,5 +1,16 @@
 export const RELEASES = [
   {
+    version: '1.3.2',
+    date: '2026-08-30',
+    changeKeys: [
+      'releaseNotes.versions.v1_3_2.navigation',
+      'releaseNotes.versions.v1_3_2.holidayBanner',
+      'releaseNotes.versions.v1_3_2.holidayAccent',
+      'releaseNotes.versions.v1_3_2.whiteDays',
+      'releaseNotes.versions.v1_3_2.homeExplore',
+    ],
+  },
+  {
     version: '1.3.1',
     date: '2026-08-29',
     changeKeys: [

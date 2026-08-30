@@ -589,11 +589,14 @@ export default function CalendarPage() {
             ))}
             {monthData.days.map((d) => {
               const isSelected = expandedDay === d.day;
+              const isWhiteDay = d.hijriDay === 13 || d.hijriDay === 14 || d.hijriDay === 15;
               const bg = isSelected
                 ? 'bg-blue-50 dark:bg-slate-700'
                 : d.isHijriMonthStart
                   ? 'bg-slate-50 dark:bg-slate-900/40'
-                  : 'bg-white dark:bg-slate-800';
+                  : isWhiteDay
+                    ? 'bg-amber-50/20 dark:bg-amber-950/10'
+                    : 'bg-white dark:bg-slate-800';
               const hijriDisplay =
                 d.hijriDay && d.hijriMonth && d.hijriYear
                   ? formatHijriDateDisplay({ day: d.hijriDay, month: d.hijriMonth, year: d.hijriYear }, i18n.language)
@@ -673,7 +676,10 @@ export default function CalendarPage() {
                 >
                   {/* ── Mobile cell: compact with larger touch target ── */}
                   <div className="flex flex-col items-center gap-0.5 sm:hidden justify-center" style={{ minHeight: '3.5rem' }}>
-                    <div className="text-base font-semibold leading-none text-slate-900 dark:text-slate-100">{d.day}</div>
+                    <div className="flex items-center gap-1">
+                      <span className="text-base font-semibold leading-none text-slate-900 dark:text-slate-100">{d.day}</span>
+                      {isWhiteDay && <span className="h-1.5 w-1.5 rounded-full bg-amber-400 dark:bg-amber-300" title="Ayyam al-Beed" />}
+                    </div>
                     <div className="text-xs leading-none text-slate-600 dark:text-slate-400">{hijriDayDisplay}</div>
                     {d.showIndicator ? (
                       isMostLikely ? (
@@ -687,7 +693,10 @@ export default function CalendarPage() {
                   {/* ── Desktop cell: full detail ── */}
                   <div className="hidden sm:flex sm:min-h-16 sm:flex-col sm:gap-1">
                     <div className="flex items-baseline justify-between gap-2">
-                      <div className="text-base font-semibold leading-none text-slate-900 dark:text-slate-100">{d.day}</div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-base font-semibold leading-none text-slate-900 dark:text-slate-100">{d.day}</span>
+                        {isWhiteDay && <span className="h-1.5 w-1.5 rounded-full bg-amber-400 dark:bg-amber-300" title="Ayyam al-Beed (White Days)" />}
+                      </div>
                       <div className="text-[11px] leading-none text-slate-700 dark:text-slate-200">{hijriDisplay}</div>
                     </div>
 

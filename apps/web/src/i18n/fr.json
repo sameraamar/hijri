@@ -1,6 +1,8 @@
 {
   "_translation_note": "AI-translated from en.json. Review by a native French speaker is recommended, especially religious-terminology cells (holidays.*, scholars.*, methods.*, probability.*).",
   "app": {
+    "titleLine1": "Calendrier astronomique",
+    "titleLine2": "des mois islamiques",
     "title": "Calendrier astronomique des mois islamiques",
     "nav": {
       "home": "Accueil",
@@ -17,7 +19,7 @@
       "more": "Plus",
       "tools": "Outils",
       "learn": "Apprendre",
-      "visibilityMap": "Carte de visibilité"
+      "visibilityMap": "Carte"
     },
     "theme": {
       "toLight": "Passer au mode clair",
@@ -117,6 +119,13 @@
     "current": "Actuelle",
     "released": "Publiée le {{date}}",
     "versions": {
+      "v1_3_2": {
+        "navigation": "Mise en avant des fêtes dans les onglets principaux, renommage de Carte de visibilité en Carte et simplification des outils.",
+        "holidayBanner": "Ajout d'une bannière de compte à rebours pour la prochaine fête en haut de la page des fêtes.",
+        "holidayAccent": "Mise en valeur visuelle des grandes occasions (Ramadan, Aïd al-Fitr, Aïd al-Adha).",
+        "whiteDays": "Ajout d'indicateurs pour les Jours Blancs (13-15) sur les grilles de calendrier.",
+        "homeExplore": "Refonte des cartes d'exploration de la page d'accueil avec des accents colorés et des icônes."
+      },
       "v1_3_1": {
         "horizonDiagram": "Correction de l’illustration de position dans le ciel qui s’affichait vide sur les pages comportant plusieurs diagrammes d’horizon, comme la fiche du jour du calendrier.",
         "dayPopupOrder": "La fiche du jour du calendrier commence désormais par l’illustration de position dans le ciel, les valeurs chiffrées venant ensuite.",
@@ -722,6 +731,10 @@
     "holidays": {
       "title": "Fêtes islamiques — Dates Ramadan, Aïd al-Fitr, Aïd al-Adha",
       "description": "Trouvez les dates estimées des fêtes islamiques : Ramadan, Aïd al-Fitr, Aïd al-Adha, nouvel an hégirien et Achoura. Basées sur des calculs de visibilité du croissant."
+    },
+    "holidaysYear": {
+      "title": "Fêtes islamiques {{year}} — Dates Ramadan, Aïd al-Fitr, Aïd al-Adha",
+      "description": "Dates estimées pour {{year}} du Ramadan, de l’Aïd al-Fitr, de l’Aïd al-Adha, du nouvel an hégirien, d’Achoura et du jour d’Arafat, avec la date hégirienne correspondante."
     },
     "history": {
       "title": "Historique des débuts de mois hégiriens — Observé vs calculé",

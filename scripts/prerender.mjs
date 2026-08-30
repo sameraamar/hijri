@@ -43,6 +43,9 @@ const SUPPORTED_LANGS = ['en', 'ar', 'tr', 'fr', 'id', 'ur'];
 const DEFAULT_LANG = 'en';
 const RTL_LANGS = new Set(['ar', 'ur']);
 
+/** How many holiday years to prerender either side of the current one. */
+const HOLIDAY_YEAR_RANGE = { before: 1, after: 5 };
+
 // route → seo.<key> mapping, plus sitemap hints
 const ROUTES = [
   { path: '', seoKey: 'home', changefreq: 'daily', priority: '1.0' },
@@ -58,8 +61,43 @@ const ROUTES = [
   { path: 'faq', seoKey: 'faq', changefreq: 'monthly', priority: '0.6' },
   { path: 'countdown', seoKey: 'countdown', changefreq: 'daily', priority: '0.8' },
   { path: 'releases', seoKey: 'releaseNotes', changefreq: 'monthly', priority: '0.3' },
-  { path: 'visibility-map', seoKey: 'calendar', changefreq: 'daily', priority: '0.7' }
+  { path: 'visibility-map', seoKey: 'calendar', changefreq: 'daily', priority: '0.7' },
+  ...buildHolidayYearRoutes()
 ];
+
+/**
+ * One prerendered page per holiday year, e.g. `/holidays/2027`.
+ *
+ * Why a path segment rather than `?year=2027`: static hosting resolves a file by
+ * path only, so every `?year=` value would serve byte-identical HTML — one
+ * indexable document for every year. A path segment gives each year its own file
+ * with its own title, description, canonical and Event structured data.
+ *
+ * The range is deliberately bounded. Emitting hundreds of near-identical year
+ * pages reads as doorway content; a handful around the present covers the
+ * queries people actually type ("islamic holidays 2027").
+ *
+ * NOTE: these MUST stay prerendered. GitHub Pages answers unknown deep paths
+ * with the 404.html fallback and an HTTP 404 status, which search engines will
+ * not index — an unprerendered /holidays/2027 would be worse than the query param.
+ */
+function buildHolidayYearRoutes() {
+  const current = new Date().getUTCFullYear();
+  const routes = [];
+  for (let year = current + HOLIDAY_YEAR_RANGE.before * -1; year <= current + HOLIDAY_YEAR_RANGE.after; year += 1) {
+    routes.push({
+      path: `holidays/${year}`,
+      seoKey: 'holidaysYear',
+      year,
+      // The current year duplicates the evergreen /holidays page, so it points
+      // its canonical there rather than competing with it.
+      canonicalPath: year === current ? 'holidays' : undefined,
+      changefreq: 'monthly',
+      priority: '0.7'
+    });
+  }
+  return routes;
+}
 
 // Map our 2-letter code to BCP-47 / FB OpenGraph locale code.
 const OG_LOCALE = {
@@ -111,7 +149,11 @@ function isoDate(date) {
 
 /** Emit sitemap.xml from the same route table the prerenderer uses, so the two cannot drift. */
 function writeSitemap() {
-  const entries = ROUTES.map((route) => {
+  const entries = ROUTES
+    // A route that canonicals elsewhere (the current-year holidays page defers to
+    // the evergreen /holidays) must not be advertised as its own URL.
+    .filter((route) => !route.canonicalPath)
+    .map((route) => {
     const alternates = [...SUPPORTED_LANGS, 'x-default']
       .map((lang) => {
         const href = buildAbsoluteUrl(route.path, lang === 'x-default' ? DEFAULT_LANG : lang);
@@ -149,9 +191,15 @@ function rewriteHead(template, { route, lang, t, allTranslations }) {
   if (!seo) {
     throw new Error(`Missing seo.${route.seoKey} in ${lang}.json`);
   }
-  const fullTitle = `${seo.title} | ${BRAND}`;
-  const description = seo.description;
-  const canonicalUrl = buildAbsoluteUrl(route.path, lang);
+  // Year pages interpolate {{year}} into their title/description so each one is
+  // a distinct document rather than N copies of the same strings.
+  const interpolate = (s) => (route.year == null ? s : String(s).replace(/\{\{year\}\}/g, route.year));
+  const fullTitle = `${interpolate(seo.title)} | ${BRAND}`;
+  const description = interpolate(seo.description);
+  // `canonicalPath` lets a route point elsewhere — the current-year page defers
+  // to the evergreen /holidays rather than duplicating it.
+  const canonicalUrl = buildAbsoluteUrl(route.canonicalPath ?? route.path, lang);
+  const selfUrl = buildAbsoluteUrl(route.path, lang);
   const isRtl = RTL_LANGS.has(lang);
 
   let html = template;
@@ -199,7 +247,7 @@ function rewriteHead(template, { route, lang, t, allTranslations }) {
   );
   html = html.replace(
     /<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/i,
-    `<meta property="og:url" content="${canonicalUrl}" />`
+    `<meta property="og:url" content="${selfUrl}" />`
   );
   html = html.replace(
     /<meta\s+property="og:locale"\s+content="[^"]*"\s*\/?>/i,
@@ -252,8 +300,8 @@ function rewriteHead(template, { route, lang, t, allTranslations }) {
     }
   }
 
-  if (route.seoKey === 'holidays' && t.holidays) {
-    const year = new Date().getUTCFullYear();
+  if ((route.seoKey === 'holidays' || route.seoKey === 'holidaysYear') && t.holidays) {
+    const year = route.year ?? new Date().getUTCFullYear();
     const events = getCivilHolidaysForGregorianYear(year).map((holiday) => ({
       '@context': 'https://schema.org',
       '@type': 'Event',
@@ -263,11 +311,11 @@ function rewriteHead(template, { route, lang, t, allTranslations }) {
       eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
       location: {
         '@type': 'VirtualLocation',
-        url: canonicalUrl
+        url: selfUrl
       },
       description,
       inLanguage: lang,
-      url: canonicalUrl
+      url: selfUrl
     }));
 
     if (events.length > 0) {
@@ -284,6 +332,89 @@ function rewriteHead(template, { route, lang, t, allTranslations }) {
 
 function ensureDir(p) {
   if (!existsSync(p)) mkdirSync(p, { recursive: true });
+}
+
+/**
+ * Static, crawlable body content for a holidays year page.
+ *
+ * The SPA ships an empty `<div id="root">`, so without this the only thing in a
+ * prerendered file is head metadata — every year page would have a byte-identical
+ * body and rely on JS rendering to say anything at all. Googlebot does render JS,
+ * but that is a queued second pass and other crawlers are far less reliable.
+ *
+ * `createRoot().render()` clears the container on first render, so this markup is
+ * replaced the moment the bundle boots. It costs nothing at runtime and doubles as
+ * a real first paint instead of a blank screen.
+ */
+function renderHolidaysBody({ year, lang, t }) {
+  const heading = t.seo?.holidaysYear?.title
+    ? String(t.seo.holidaysYear.title).replace(/\{\{year\}\}/g, year)
+    : `${t.holidays?.title ?? 'Holidays'} ${year}`;
+  const lead = t.pageIntro?.holidays?.short ?? '';
+  const hijriMonths = t.hijriMonths ?? {};
+
+  const formatGregorian = (d) => {
+    try {
+      return new Intl.DateTimeFormat(lang, {
+        year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC'
+      }).format(new Date(Date.UTC(d.year, d.month - 1, d.day)));
+    } catch {
+      return isoDate(d);
+    }
+  };
+  const formatHijri = (d) => `${d.day} ${hijriMonths[String(d.month)] ?? d.month} ${d.year}`;
+
+  const rows = getCivilHolidaysForGregorianYear(year)
+    .map((h) => {
+      const name = t.holidays?.[h.nameKey.replace('holidays.', '')] ?? h.nameKey;
+      return [
+        '        <tr>',
+        `          <th scope="row" style="text-align:start;padding:.5rem .75rem;font-weight:600">${escapeHtml(name)}</th>`,
+        `          <td style="padding:.5rem .75rem"><time datetime="${isoDate(h.gregorian)}">${escapeHtml(formatGregorian(h.gregorian))}</time></td>`,
+        `          <td style="padding:.5rem .75rem">${escapeHtml(formatHijri(h.hijri))} AH</td>`,
+        '        </tr>'
+      ].join('\n');
+    })
+    .join('\n');
+
+  // Adjacent-year links make the year pages a connected crawl graph rather than
+  // 42 orphans reachable only from the sitemap. They are real <a href> so they
+  // work with JS disabled.
+  const current = new Date().getUTCFullYear();
+  const min = current - HOLIDAY_YEAR_RANGE.before;
+  const max = current + HOLIDAY_YEAR_RANGE.after;
+  const yearLinks = [];
+  for (let y = min; y <= max; y += 1) {
+    const href = buildLocalePath(`holidays/${y}`, lang);
+    yearLinks.push(
+      y === year
+        ? `        <strong aria-current="page">${y}</strong>`
+        : `        <a href="${href}">${y}</a>`
+    );
+  }
+
+  return [
+    '    <div id="root">',
+    '      <main style="max-width:48rem;margin:2rem auto;padding:0 1rem;font-family:system-ui,sans-serif">',
+    `        <h1>${escapeHtml(heading)}</h1>`,
+    lead ? `        <p>${escapeHtml(lead)}</p>` : '',
+    '        <table style="width:100%;border-collapse:collapse">',
+    '          <thead><tr>',
+    `            <th scope="col" style="text-align:start;padding:.5rem .75rem">${escapeHtml(t.holidays?.title ?? 'Holiday')}</th>`,
+    `            <th scope="col" style="text-align:start;padding:.5rem .75rem">${escapeHtml(t.convert?.gregorianDate ?? 'Gregorian date')}</th>`,
+    `            <th scope="col" style="text-align:start;padding:.5rem .75rem">${escapeHtml(t.convert?.hijriDate ?? 'Hijri date')}</th>`,
+    '          </tr></thead>',
+    '          <tbody>',
+    rows,
+    '          </tbody>',
+    '        </table>',
+    '        <nav style="margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:.75rem">',
+    ...yearLinks,
+    '        </nav>',
+    `        <p style="margin-top:1rem"><a href="${buildLocalePath('holidays', lang)}">${escapeHtml(t.holidays?.title ?? 'Holidays')}</a></p>`,
+    '      </main>',
+    '    </div>'
+  ].filter(Boolean).join('\n');
 }
 
 function main() {
@@ -304,7 +435,22 @@ function main() {
   for (const lang of SUPPORTED_LANGS) {
     const t = allTranslations[lang];
     for (const route of ROUTES) {
-      const html = rewriteHead(template, { route, lang, t, allTranslations });
+      let html = rewriteHead(template, { route, lang, t, allTranslations });
+
+      // Holidays pages also get real body content, so the served HTML says
+      // something before JS runs. Everything else stays an empty SPA shell.
+      if (route.seoKey === 'holidays' || route.seoKey === 'holidaysYear') {
+        const body = renderHolidaysBody({
+          year: route.year ?? new Date().getUTCFullYear(),
+          lang,
+          t
+        });
+        const replaced = html.replace(/<div id="root">\s*<\/div>/i, body);
+        if (replaced === html) {
+          throw new Error('Could not find <div id="root"></div> to inject prerendered body into.');
+        }
+        html = replaced;
+      }
 
       // Compute output path inside dist/.
       const segments = [];

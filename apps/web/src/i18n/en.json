@@ -1,5 +1,7 @@
 {
   "app": {
+    "titleLine1": "Astronomical calendar",
+    "titleLine2": "for Islamic months",
     "title": "Astronomical calendar for Islamic months",
     "nav": {
       "home": "Home",
@@ -16,7 +18,7 @@
       "more": "More",
       "tools": "Tools",
       "learn": "Learn",
-      "visibilityMap": "Visibility map"
+      "visibilityMap": "Map"
     },
     "theme": {
       "toLight": "Switch to light mode",
@@ -116,6 +118,13 @@
     "current": "Current",
     "released": "Released {{date}}",
     "versions": {
+      "v1_3_2": {
+        "navigation": "Surfaced Holidays into primary navigation tabs, renamed Visibility Map to Map, and simplified Tools dropdown.",
+        "holidayBanner": "Added upcoming holiday countdown banner to the top of the Holidays & Events page.",
+        "holidayAccent": "Added visual highlight accents to major occasions (Ramadan, Eid al-Fitr, Eid al-Adha).",
+        "whiteDays": "Added Ayyam al-Beed (White Days, 13-15) indicator dots across desktop and mobile calendar grids.",
+        "homeExplore": "Redesigned Home feature exploration cards with colorful category accents and micro-icons."
+      },
       "v1_3_1": {
         "horizonDiagram": "Fixed the sky-position illustration rendering blank on pages that show more than one horizon diagram, such as the calendar day popup.",
         "dayPopupOrder": "The calendar day popup now leads with the sky-position illustration and lists the numeric details beneath it.",
@@ -721,6 +730,10 @@
     "holidays": {
       "title": "Islamic Holidays — Ramadan, Eid al-Fitr, Eid al-Adha Dates",
       "description": "Find estimated dates for Islamic holidays including Ramadan, Eid al-Fitr, Eid al-Adha, Islamic New Year, and Ashura. Based on crescent visibility calculations."
+    },
+    "holidaysYear": {
+      "title": "Islamic Holidays {{year}} — Ramadan, Eid al-Fitr, Eid al-Adha Dates",
+      "description": "Estimated {{year}} dates for Ramadan, Eid al-Fitr, Eid al-Adha, the Islamic New Year, Ashura, and the Day of Arafah, with the Hijri date for each and how they are calculated."
     },
     "history": {
       "title": "Hijri Month Start History — Observed vs Calculated",

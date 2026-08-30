@@ -58,6 +58,7 @@ function LocaleRoutes() {
       <Route path="moon-month-view" element={<DetailsPage />} />
       <Route path="details" element={<Navigate to="../moon-month-view" replace />} />
       <Route path="holidays" element={<HolidaysPage />} />
+      <Route path="holidays/:year" element={<HolidaysPage />} />
       <Route path="history" element={<HistoryPage />} />
       <Route path="methods" element={<MethodsPage />} />
       <Route path="visibility-map" element={<VisibilityMapPage />} />
@@ -95,9 +96,9 @@ export default function App() {
   };
 
   const primaryNav: NavItem[] = [
-    { to: '/', label: t('app.nav.home') },
     { to: '/today', label: t('app.nav.today') },
     { to: '/calendar', label: t('app.nav.calendar') },
+    { to: '/holidays', label: t('app.nav.holidays') },
     { to: '/visibility-map', label: t('app.nav.visibilityMap') },
   ];
 
@@ -107,8 +108,6 @@ export default function App() {
       items: [
         { to: '/convert', label: t('app.nav.convert') },
         { to: '/moon-month-view', label: t('app.nav.details') },
-        { to: '/holidays', label: t('app.nav.holidays') },
-        { to: '/countdown', label: t('countdown.short') },
       ]
     },
     {
@@ -142,8 +141,9 @@ export default function App() {
                 <polygon points="24,8 25.2,11.2 28,11.2 25.8,13.2 26.6,16 24,14.2 21.4,16 22.2,13.2 20,11.2 22.8,11.2" fill="#fbbf24" opacity="0.9"/>
               </svg>
               <span className="text-lg font-bold tracking-tight">{BRAND}</span>
-              <span className="hidden text-xs font-normal text-slate-500 dark:text-slate-400 lg:inline">
-                {t('app.title')}
+              <span className="hidden flex-col text-[10px] leading-tight font-normal text-slate-500 dark:text-slate-400 lg:flex">
+                <span>{t('app.titleLine1')}</span>
+                <span>{t('app.titleLine2')}</span>
               </span>
             </LocaleNavLink>
             <nav className="hidden items-center gap-1 md:flex">
@@ -242,11 +242,11 @@ export default function App() {
           <p className="max-w-2xl mx-auto leading-relaxed">{t('app.footer.disclaimer')}</p>
 
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-slate-500 dark:text-slate-400 dark:text-slate-500">
+            <LocaleLink to="/holidays" className="py-1 hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200">
+              {t('app.nav.holidays')}
+            </LocaleLink>
             <LocaleLink to="/faq" className="py-1 hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200">
               {t('app.nav.faq')}
-            </LocaleLink>
-            <LocaleLink to="/countdown" className="py-1 hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200">
-              {t('countdown.short')}
             </LocaleLink>
             <LocaleLink to="/about" className="py-1 hover:text-slate-700 dark:hover:text-slate-200 dark:text-slate-200">
               {t('app.nav.about')}
