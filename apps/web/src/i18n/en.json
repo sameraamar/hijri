@@ -78,6 +78,10 @@
     "methodCardTitle": "Selected method",
     "methodCardText": "Switch methods to see how different criteria classify the same sky.",
     "exploreTitle": "Explore Hilal.day",
+    "walkthroughTitle": "Quick video walkthrough",
+    "walkthroughDesc": "Watch a 2-minute overview of key features, moon-tracking tools, and calculation methods.",
+    "watchVideo": "Watch walkthrough",
+    "closeVideo": "Close video",
     "todayLink": "Focused view of today's Hijri and Gregorian dates.",
     "calendarLink": "Browse how Hijri months line up with the Gregorian calendar.",
     "monthViewLink": "Inspect a month of moon altitude, elongation, age, lag, and illumination.",
@@ -118,6 +122,10 @@
     "current": "Current",
     "released": "Released {{date}}",
     "versions": {
+      "v1_3_3": {
+        "walkthroughs": "Added privacy-enhanced video walkthroughs on Home and About, automatically matched to all six supported languages.",
+        "videoPipeline": "Added a reproducible multilingual narration, browser recording, and video generation pipeline."
+      },
       "v1_3_2": {
         "navigation": "Surfaced Holidays into primary navigation tabs, renamed Visibility Map to Map, and simplified Tools dropdown.",
         "holidayBanner": "Added upcoming holiday countdown banner to the top of the Holidays & Events page.",

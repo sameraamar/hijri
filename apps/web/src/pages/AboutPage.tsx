@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import YouTubeWalkthrough from '../components/YouTubeWalkthrough';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function AboutPage() {
@@ -24,6 +25,18 @@ export default function AboutPage() {
           <div className="p-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
             {t('methods.about')}
           </div>
+        </section>
+
+        <section className="card p-4 sm:p-6">
+          <div className="mb-4">
+            <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+              {t('home.walkthroughTitle')}
+            </h2>
+            <p className="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+              {t('home.walkthroughDesc')}
+            </p>
+          </div>
+          <YouTubeWalkthrough />
         </section>
 
         {/* Features — keyword-rich for SEO */}

@@ -4,6 +4,12 @@ All notable changes to this project are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.3] - 2026-09-01
+
+### Added
+- **Localized video walkthroughs.** The Home and About pages now embed a privacy-enhanced YouTube walkthrough selected automatically for English, Arabic, Turkish, French, Indonesian, and Urdu.
+- **Reproducible walkthrough pipeline.** Added scripts for multilingual Edge TTS narration, Playwright browser recording, and FFmpeg audio mixing and MP4/WebM generation.
+
 ## [1.3.2] - 2026-08-30
 
 ### Added

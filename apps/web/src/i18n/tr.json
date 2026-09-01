@@ -79,6 +79,10 @@
     "methodCardTitle": "Seçili yöntem",
     "methodCardText": "Farklı kriterlerin aynı gökyüzünü nasıl sınıflandırdığını görmek için yöntem değiştirin.",
     "exploreTitle": "Hilal.day'i keşfet",
+    "walkthroughTitle": "Hızlı video rehberi",
+    "walkthroughDesc": "Önemli özellikleri, ay takip araçlarını ve hesaplama yöntemlerini 2 dakikalık video ile keşfedin.",
+    "watchVideo": "Tanıtım videosunu izle",
+    "closeVideo": "Videoyu kapat",
     "todayLink": "Bugünün Hicri ve Miladi tarihine odaklanan görünüm.",
     "calendarLink": "Hicri ayların Miladi takvimle nasıl hizalandığını görün.",
     "monthViewLink": "Bir ay boyunca Ay yüksekliği, uzanım, yaş, gecikme ve aydınlanmayı inceleyin.",
@@ -119,6 +123,10 @@
     "current": "Güncel",
     "released": "Yayımlanma tarihi: {{date}}",
     "versions": {
+      "v1_3_3": {
+        "walkthroughs": "Ana sayfa ve Hakkında sayfasına, desteklenen altı dile otomatik uyarlanan gizlilik odaklı video rehberleri eklendi.",
+        "videoPipeline": "Çok dilli seslendirme, tarayıcı kaydı ve video üretimi için yeniden üretilebilir bir işlem hattı eklendi."
+      },
       "v1_3_2": {
         "navigation": "Bayramlar sekmesi ana gezinme çubuğuna taşındı, Görünürlük Haritası Harita olarak kısaltıldı ve Araçlar menüsü sadeleştirildi.",
         "holidayBanner": "Bayramlar sayfasının üst kısmına en yakın dini gün için geri sayım şeridi eklendi.",

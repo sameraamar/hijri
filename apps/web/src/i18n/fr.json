@@ -79,6 +79,10 @@
     "methodCardTitle": "Méthode choisie",
     "methodCardText": "Changez de méthode pour voir comment différents critères classent le même ciel.",
     "exploreTitle": "Explorer Hilal.day",
+    "walkthroughTitle": "Visite guidée rapide en vidéo",
+    "walkthroughDesc": "Découvrez en 2 minutes les fonctionnalités clés, le suivi de la Lune et les méthodes de calcul.",
+    "watchVideo": "Regarder la vidéo",
+    "closeVideo": "Fermer la vidéo",
     "todayLink": "Vue centrée sur les dates hégirienne et grégorienne du jour.",
     "calendarLink": "Parcourez l'alignement des mois hégiriens avec le calendrier grégorien.",
     "monthViewLink": "Inspectez un mois d'altitude lunaire, d'élongation, d'âge, de délai et d'illumination.",
@@ -119,6 +123,10 @@
     "current": "Actuelle",
     "released": "Publiée le {{date}}",
     "versions": {
+      "v1_3_3": {
+        "walkthroughs": "Ajout de visites vidéo respectueuses de la vie privée sur l’accueil et la page À propos, adaptées automatiquement aux six langues prises en charge.",
+        "videoPipeline": "Ajout d’un processus reproductible de narration multilingue, d’enregistrement du navigateur et de génération vidéo."
+      },
       "v1_3_2": {
         "navigation": "Mise en avant des fêtes dans les onglets principaux, renommage de Carte de visibilité en Carte et simplification des outils.",
         "holidayBanner": "Ajout d'une bannière de compte à rebours pour la prochaine fête en haut de la page des fêtes.",

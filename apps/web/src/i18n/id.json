@@ -79,6 +79,10 @@
     "methodCardTitle": "Metode terpilih",
     "methodCardText": "Ganti metode untuk melihat bagaimana kriteria berbeda mengklasifikasikan langit yang sama.",
     "exploreTitle": "Jelajahi Hilal.day",
+    "walkthroughTitle": "Tur video panduan cepat",
+    "walkthroughDesc": "Tonton ikhtisar 2 menit tentang fitur utama, alat pelacak hilal, dan metode hisab astronomis.",
+    "watchVideo": "Tonton video panduan",
+    "closeVideo": "Tutup video",
     "todayLink": "Tampilan khusus tanggal Hijriah dan Masehi hari ini.",
     "calendarLink": "Jelajahi bagaimana bulan Hijriah sejajar dengan kalender Masehi.",
     "monthViewLink": "Periksa satu bulan ketinggian Bulan, elongasi, usia, jeda, dan iluminasi.",
@@ -119,6 +123,10 @@
     "current": "Saat ini",
     "released": "Dirilis {{date}}",
     "versions": {
+      "v1_3_3": {
+        "walkthroughs": "Menambahkan panduan video yang menjaga privasi di Beranda dan Tentang, otomatis disesuaikan untuk enam bahasa yang didukung.",
+        "videoPipeline": "Menambahkan alur yang dapat direproduksi untuk narasi multibahasa, perekaman browser, dan pembuatan video."
+      },
       "v1_3_2": {
         "navigation": "Menampilkan Hari Raya di tab navigasi utama, menyingkat Peta Visibilitas menjadi Peta, dan menyederhanakan menu Alat.",
         "holidayBanner": "Menambahkan spanduk hitung mundur acara mendatang di bagian atas halaman Hari Raya.",
