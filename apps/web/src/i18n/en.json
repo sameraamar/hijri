@@ -682,7 +682,7 @@
     "qb3": "Why do Hijri dates differ between countries?",
     "ab3": "The Hijri month begins when the new crescent is sighted, and visibility depends on your location, the weather, and the criterion each authority applies. This is why neighbouring countries can start a month on different days.",
     "qb4": "Why do Hijri months have 29 or 30 days?",
-    "ab4": "A lunar month lasts about 29.53 days, so it cannot be a whole number of days. Each Hijri month therefore runs 29 or 30 days depending on whether the crescent is seen on the 29th evening.",
+    "ab4": "A synodic lunar month lasts approximately 29.53 days, so months alternate between 29 and 30 days based on crescent sighting. Across 12 lunar months, a Hijri year totals 354 or 355 days, making it roughly 10 to 12 days shorter than the solar Gregorian year.",
     "qh1": "When are Ramadan and Eid this year?",
     "ah1": "The Holidays page lists estimated dates for Ramadan, Eid al-Fitr, Eid al-Adha, Ashura, the Day of Arafah, and the Islamic New Year, with a countdown to the next ones. These are estimates: your country's official announcement may differ by a day.",
     "qh2": "Can I add Islamic holidays to my calendar?",
