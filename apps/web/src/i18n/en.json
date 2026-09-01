@@ -11,7 +11,7 @@
       "details": "Month view",
       "holidays": "Holidays",
       "methods": "Methods",
-      "history": "Accuracy",
+      "history": "Accuracy (WIP)",
       "scholars": "Scholars",
       "faq": "FAQ",
       "about": "About",
@@ -533,6 +533,7 @@
   "history": {
     "title": "Official Decisions vs. Calculated Methods",
     "subtitle": "Comparing official month-start declarations against each calculation method",
+    "underConstruction": "Under Construction",
     "selectCountry": "Country",
     "selectYear": "Hijri Year",
     "colHijriYear": "Hijri Year",

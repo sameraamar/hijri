@@ -12,7 +12,7 @@
       "details": "Tampilan bulanan",
       "holidays": "Hari raya",
       "methods": "Metode",
-      "history": "Akurasi",
+      "history": "Akurasi (Dalam Pengembangan)",
       "scholars": "Ulama",
       "faq": "FAQ",
       "about": "Tentang",
@@ -534,6 +534,7 @@
   "history": {
     "title": "Keputusan Resmi vs. Metode Hitung",
     "subtitle": "Membandingkan pengumuman awal bulan resmi dengan tiap metode perhitungan",
+    "underConstruction": "Dalam Pengembangan",
     "selectCountry": "Negara",
     "selectYear": "Tahun Hijriah",
     "colHijriYear": "Tahun Hijriah",

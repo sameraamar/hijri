@@ -12,7 +12,7 @@
       "details": "Aylık görünüm",
       "holidays": "Bayramlar",
       "methods": "Yöntemler",
-      "history": "Doğruluk",
+      "history": "Doğruluk (Geliştirme Aşamasında)",
       "scholars": "Alimler",
       "faq": "SSS",
       "about": "Hakkında",
@@ -534,6 +534,7 @@
   "history": {
     "title": "Resmi Kararlar ve Hesaplanan Yöntemler",
     "subtitle": "Resmi ay başlangıcı duyurularının her hesaplama yöntemiyle karşılaştırılması",
+    "underConstruction": "Geliştirme Aşamasında",
     "selectCountry": "Ülke",
     "selectYear": "Hicri Yıl",
     "colHijriYear": "Hicri Yıl",

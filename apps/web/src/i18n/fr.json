@@ -12,7 +12,7 @@
       "details": "Vue du mois",
       "holidays": "Fêtes",
       "methods": "Méthodes",
-      "history": "Précision",
+      "history": "Précision (En cours)",
       "scholars": "Savants",
       "faq": "FAQ",
       "about": "À propos",
@@ -534,6 +534,7 @@
   "history": {
     "title": "Décisions officielles vs. méthodes calculées",
     "subtitle": "Comparaison des annonces officielles de début de mois avec chaque méthode de calcul",
+    "underConstruction": "En cours de développement",
     "selectCountry": "Pays",
     "selectYear": "Année hégirienne",
     "colHijriYear": "Année hégirienne",

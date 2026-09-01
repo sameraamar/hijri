@@ -251,7 +251,12 @@ export default function HistoryPage() {
       {/* Header */}
       <div className="page-header">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">{t('history.title')}</h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-semibold tracking-tight">{t('history.title')}</h1>
+            <span className="inline-flex items-center rounded-full bg-amber-100 dark:bg-amber-950/60 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:text-amber-300 ring-1 ring-inset ring-amber-300 dark:ring-amber-800/60">
+              {t('history.underConstruction')}
+            </span>
+          </div>
           <div className="muted">{t('history.subtitle')}</div>
         </div>
       </div>

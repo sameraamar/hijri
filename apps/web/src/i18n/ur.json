@@ -12,7 +12,7 @@
       "details": "ماہانہ منظر",
       "holidays": "تہوار",
       "methods": "طریقے",
-      "history": "درستگی",
+      "history": "درستگی (زیرِ تکمیل)",
       "scholars": "علماء",
       "faq": "عام سوالات",
       "about": "بارے میں",
@@ -534,6 +534,7 @@
   "history": {
     "title": "سرکاری فیصلے بمقابلہ حسابی طریقے",
     "subtitle": "سرکاری مہینہ آغاز اعلانات اور ہر حسابی طریقے کا موازنہ",
+    "underConstruction": "زیرِ تکمیل",
     "selectCountry": "ملک",
     "selectYear": "ہجری سال",
     "colHijriYear": "ہجری سال",
