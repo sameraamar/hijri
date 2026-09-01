@@ -123,6 +123,10 @@
     "current": "Güncel",
     "released": "Yayımlanma tarihi: {{date}}",
     "versions": {
+      "v1_3_4": {
+        "homeVideo": "Yerelleştirilmiş video rehberi ana sayfada öne çıkan bir bölüme doğrudan yerleştirildi.",
+        "mobileMenu": "Dar mobil ekranlarda kırpılan Daha Fazla menüsü düzeltildi."
+      },
       "v1_3_3": {
         "walkthroughs": "Ana sayfa ve Hakkında sayfasına, desteklenen altı dile otomatik uyarlanan gizlilik odaklı video rehberleri eklendi.",
         "videoPipeline": "Çok dilli seslendirme, tarayıcı kaydı ve video üretimi için yeniden üretilebilir bir işlem hattı eklendi."

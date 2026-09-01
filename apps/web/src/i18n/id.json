@@ -123,6 +123,10 @@
     "current": "Saat ini",
     "released": "Dirilis {{date}}",
     "versions": {
+      "v1_3_4": {
+        "homeVideo": "Menyematkan panduan video lokal langsung di bagian unggulan Beranda.",
+        "mobileMenu": "Memperbaiki menu Lainnya yang terpotong pada layar ponsel sempit."
+      },
       "v1_3_3": {
         "walkthroughs": "Menambahkan panduan video yang menjaga privasi di Beranda dan Tentang, otomatis disesuaikan untuk enam bahasa yang didukung.",
         "videoPipeline": "Menambahkan alur yang dapat direproduksi untuk narasi multibahasa, perekaman browser, dan pembuatan video."

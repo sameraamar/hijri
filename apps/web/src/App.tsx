@@ -198,23 +198,25 @@ export default function App() {
           </div>
         </div>
 
-        <nav className="mx-auto flex max-w-6xl items-center gap-1 overflow-x-auto px-4 pb-2 md:hidden">
-          {primaryNav.map((item) => (
-            <LocaleNavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }: { isActive: boolean }) =>
-                `flex-shrink-0 rounded-full px-2.5 py-1.5 text-sm font-medium transition-colors ${
-                  isActive
-                    ? 'bg-slate-900 text-white shadow-sm dark:bg-slate-100 dark:text-slate-900'
-                    : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100 dark:active:bg-slate-700'
-                }`
-              }
-            >
-              {item.label}
-            </LocaleNavLink>
-          ))}
-          <div className="flex-shrink-0">
+        <nav className="mx-auto flex max-w-6xl items-center gap-1 px-4 pb-2 md:hidden">
+          <div className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
+            {primaryNav.map((item) => (
+              <LocaleNavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }: { isActive: boolean }) =>
+                  `flex-shrink-0 rounded-full px-2.5 py-1.5 text-sm font-medium transition-colors ${
+                    isActive
+                      ? 'bg-slate-900 text-white shadow-sm dark:bg-slate-100 dark:text-slate-900'
+                      : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100 dark:active:bg-slate-700'
+                  }`
+                }
+              >
+                {item.label}
+              </LocaleNavLink>
+            ))}
+          </div>
+          <div className="relative z-50 flex-shrink-0 bg-white ps-1 dark:bg-slate-900">
             <NavMore groups={moreNavGroups} />
           </div>
         </nav>

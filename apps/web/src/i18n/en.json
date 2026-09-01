@@ -122,6 +122,10 @@
     "current": "Current",
     "released": "Released {{date}}",
     "versions": {
+      "v1_3_4": {
+        "homeVideo": "Embedded the localized walkthrough directly in a prominent Home page feature section.",
+        "mobileMenu": "Fixed the More dropdown being clipped on narrow mobile screens."
+      },
       "v1_3_3": {
         "walkthroughs": "Added privacy-enhanced video walkthroughs on Home and About, automatically matched to all six supported languages.",
         "videoPipeline": "Added a reproducible multilingual narration, browser recording, and video generation pipeline."

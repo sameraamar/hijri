@@ -61,7 +61,7 @@ export default function NavMore({ items, groups }: { items?: NavItem[]; groups?:
       {open ? (
         <div
           role="menu"
-          className="absolute end-0 mt-1 min-w-[10rem] rounded-md border border-slate-200 bg-white py-1 shadow-lg ring-1 ring-black/5 dark:border-slate-700 dark:bg-slate-800 dark:ring-white/5 z-50"
+          className="absolute end-0 mt-1 max-h-[min(70vh,28rem)] min-w-[13rem] overflow-y-auto rounded-lg border border-slate-200 bg-white py-1.5 shadow-xl ring-1 ring-black/5 dark:border-slate-700 dark:bg-slate-800 dark:ring-white/5 z-50"
         >
           {sections.map((section, sectionIndex) => (
             <div key={section.label || 'items'} className={sectionIndex > 0 ? 'border-t border-slate-100 pt-1 mt-1 dark:border-slate-700' : ''}>

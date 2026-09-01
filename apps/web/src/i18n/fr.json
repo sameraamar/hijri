@@ -123,6 +123,10 @@
     "current": "Actuelle",
     "released": "Publiée le {{date}}",
     "versions": {
+      "v1_3_4": {
+        "homeVideo": "Intégration directe de la visite localisée dans une section mise en avant sur l’accueil.",
+        "mobileMenu": "Correction du menu Plus qui était tronqué sur les écrans mobiles étroits."
+      },
       "v1_3_3": {
         "walkthroughs": "Ajout de visites vidéo respectueuses de la vie privée sur l’accueil et la page À propos, adaptées automatiquement aux six langues prises en charge.",
         "videoPipeline": "Ajout d’un processus reproductible de narration multilingue, d’enregistrement du navigateur et de génération vidéo."

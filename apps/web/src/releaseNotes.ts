@@ -1,5 +1,13 @@
 export const RELEASES = [
   {
+    version: '1.3.4',
+    date: '2026-09-01',
+    changeKeys: [
+      'releaseNotes.versions.v1_3_4.homeVideo',
+      'releaseNotes.versions.v1_3_4.mobileMenu',
+    ],
+  },
+  {
     version: '1.3.3',
     date: '2026-09-01',
     changeKeys: [

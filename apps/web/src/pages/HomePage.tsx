@@ -7,7 +7,7 @@ import {
   yallopMonthStartEstimate,
   odehMonthStartEstimate
 } from '@hijri/calendar-engine';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import HorizonDiagram from '../components/HorizonDiagram';
@@ -36,8 +36,6 @@ export default function HomePage() {
   const { methodId } = useMethod();
   const { location } = useAppLocation();
   usePageMeta('seo.home.title', 'seo.home.description');
-
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   const currentDate = useMemo(() => todayGregorian(), []);
 
@@ -117,16 +115,17 @@ export default function HomePage() {
               <LocaleLink to="/visibility-map" className="btn-sm bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50 dark:bg-slate-800 dark:text-slate-100 dark:ring-slate-700 dark:hover:bg-slate-700">
                 {t('home.mapCta')}
               </LocaleLink>
-              <button
-                type="button"
-                onClick={() => setIsVideoModalOpen(true)}
-                className="btn-sm inline-flex items-center gap-1.5 border border-amber-300 bg-amber-50/80 text-amber-900 hover:bg-amber-100 dark:border-amber-700/60 dark:bg-amber-950/40 dark:text-amber-200 dark:hover:bg-amber-900/60"
+              <a
+                href="#walkthrough"
+                className="group inline-flex min-h-9 items-center gap-2 rounded-lg bg-amber-500 px-3.5 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-amber-600 hover:shadow-md active:translate-y-0 active:bg-amber-700"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 text-amber-600 dark:text-amber-400">
-                  <path fillRule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653z" clipRule="evenodd" />
-                </svg>
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20 ring-1 ring-white/30 transition-transform group-hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="ms-0.5 h-3.5 w-3.5" aria-hidden="true">
+                    <path fillRule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653z" clipRule="evenodd" />
+                  </svg>
+                </span>
                 <span>{t('home.watchVideo')}</span>
-              </button>
+              </a>
             </div>
           </div>
 
@@ -206,8 +205,39 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section
+        id="walkthrough"
+        className="scroll-mt-36 overflow-hidden rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-slate-50 shadow-sm dark:border-amber-800/60 dark:from-amber-950/35 dark:via-slate-900 dark:to-slate-900"
+      >
+        <div className="grid items-center gap-5 p-4 sm:p-6 lg:grid-cols-[0.72fr_1.28fr] lg:gap-7">
+          <div className="px-1 sm:px-2">
+            <div className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-100/80 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-800 dark:border-amber-800 dark:bg-amber-900/40 dark:text-amber-200">
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-500" aria-hidden="true" />
+              {t('home.kicker')}
+            </div>
+            <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+              {t('home.walkthroughTitle')}
+            </h2>
+            <p className="mt-2 max-w-xl text-sm leading-6 text-slate-600 dark:text-slate-300 sm:text-base">
+              {t('home.walkthroughDesc')}
+            </p>
+            <div className="mt-4 flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4 text-amber-500" aria-hidden="true">
+                <path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm.75-12.75a.75.75 0 0 0-1.5 0v5c0 .414.336.75.75.75h3.5a.75.75 0 0 0 0-1.5h-2.75V5.25Z" clipRule="evenodd" />
+              </svg>
+              <span>2 min</span>
+              <span aria-hidden="true">·</span>
+              <span>{i18n.language.toUpperCase()}</span>
+            </div>
+          </div>
+          <div className="rounded-xl bg-slate-950 p-1.5 shadow-xl ring-1 ring-black/10 dark:ring-white/10 sm:p-2">
+            <YouTubeWalkthrough />
+          </div>
+        </div>
+      </section>
+
       <section className="card p-4 sm:p-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4 dark:border-slate-800">
+        <div className="border-b border-slate-100 pb-4 dark:border-slate-800">
           <div>
             <div className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400 dark:text-slate-500">
               {t('home.exploreTitle')}
@@ -216,16 +246,6 @@ export default function HomePage() {
               {t('home.walkthroughDesc')}
             </div>
           </div>
-          <button
-            type="button"
-            onClick={() => setIsVideoModalOpen(true)}
-            className="inline-flex items-center self-start sm:self-auto gap-2 rounded-lg bg-amber-500 hover:bg-amber-600 active:bg-amber-700 px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition-colors"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
-              <path fillRule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653z" clipRule="evenodd" />
-            </svg>
-            <span>{t('home.watchVideo')}</span>
-          </button>
         </div>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {cards.map((card) => (
@@ -246,33 +266,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Walkthrough Video Modal */}
-      {isVideoModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm animate-in fade-in">
-          <div className="relative w-full max-w-4xl rounded-2xl border border-slate-700 bg-slate-900 p-4 shadow-2xl">
-            <div className="mb-3 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="text-xl">🌙</span>
-                <h2 className="text-base font-semibold text-white sm:text-lg">
-                  {t('home.walkthroughTitle')}
-                </h2>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsVideoModalOpen(false)}
-                className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white transition-colors"
-                aria-label={t('home.closeVideo')}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5">
-                  <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
-                </svg>
-              </button>
-            </div>
-
-            <YouTubeWalkthrough autoPlay />
-          </div>
-        </div>
-      )}
     </div>
   );
 }

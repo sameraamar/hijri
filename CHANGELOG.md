@@ -4,6 +4,14 @@ All notable changes to this project are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.4] - 2026-09-01
+
+### Changed
+- **Prominent Home walkthrough.** The localized video is now embedded directly in a polished Home page feature section instead of opening in a modal.
+
+### Fixed
+- **Mobile More menu.** The dropdown is no longer clipped by the horizontally scrolling primary navigation and all secondary links remain accessible on narrow screens.
+
 ## [1.3.3] - 2026-09-01
 
 ### Added
